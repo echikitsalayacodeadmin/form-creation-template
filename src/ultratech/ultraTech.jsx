@@ -66,7 +66,7 @@ const UltraTech = () => {
             </p>
             <p>
               Date:
-              <span>  24/05/2024
+              <span>  ${dayjs(data.date).format("DD/MM/YYYY")}
               </span>
             </p>
           </div>
@@ -2236,16 +2236,16 @@ const UltraTech = () => {
     `;
 
     const pdfBlob = await html2pdf()
-      .from(contentPhysicalFitnessFormNew)
+      .from(content)
       .output("blob")
       .then((data) => {
         return data;
       });
 
     const formData = new FormData();
-    formData.append("file", pdfBlob, `${data.empId}_Annexure.pdf`);
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&campCycleId=`;
+    formData.append("file", pdfBlob, `${data.empId}_form35.pdf`);
+    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
+    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&campCycleId=`;
 
     const result = await uploadFile(url, formData);
     if (result && result.data) {
@@ -2269,12 +2269,11 @@ const UltraTech = () => {
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-      const temp = result.data;
-      // .filter(
-      //   (item) =>
-      //     new Date(item.date) >= new Date("2024-05-24") &&
-      //     new Date(item.date) <= new Date("2024-05-24")
-      // );
+      const temp = result.data?.filter(
+        (item) =>
+          new Date(item.date) >= new Date("2024-05-23") &&
+          new Date(item.date) <= new Date("2024-05-23")
+      );
       setList(sortDataByName(temp));
       setTotalEmployees(temp.length);
     } else {
@@ -2299,7 +2298,7 @@ const UltraTech = () => {
 
   const deleteFiles = async (data) => {
     // Fetch employees from the API starting from the currentIndex
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&toDeletefiletype=CONSOLIDATED_REPORT&empId=${data.empId}`;
+    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&toDeletefiletype=FORM_35&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
