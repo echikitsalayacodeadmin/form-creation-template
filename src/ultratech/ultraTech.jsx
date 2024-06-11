@@ -110,8 +110,8 @@ const UltraTech = () => {
           <div class="form-group">
             <p style="font-size: 15px; margin-right: 30px">6</p>
             <p style="font-size: 15px; width: 50%">Nature of work:</p>
-            <p style="font-size: 15px; font-weight: bold; width: 50%">
-              Crane Operator / Fork Lift Operator / Hydra Operator
+            <p style="font-size: 15px; font-weight: bold; width: 50%; border-bottom: 1px solid black;">
+            
             </p>
           </div>
           <div class="form-group">
@@ -2246,7 +2246,6 @@ const UltraTech = () => {
     formData.append("file", pdfBlob, `${data.empId}_form35.pdf`);
     // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
     const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&campCycleId=`;
-
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -2271,8 +2270,8 @@ const UltraTech = () => {
       console.log("Fetched Data successfully");
       const temp = result.data?.filter(
         (item) =>
-          new Date(item.date) >= new Date("2024-05-23") &&
-          new Date(item.date) <= new Date("2024-05-23")
+          new Date(item.date) >= new Date("2024-05-18") &&
+          new Date(item.date) <= new Date("2024-05-21")
       );
       setList(sortDataByName(temp));
       setTotalEmployees(temp.length);
