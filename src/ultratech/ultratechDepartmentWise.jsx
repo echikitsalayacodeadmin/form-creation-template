@@ -3,7 +3,7 @@ import { getData } from "../assets/services/GetApiCall";
 import CustomAutocomplete from "../assets/customAutocomplete";
 import { Box, Button, Typography } from "@mui/material";
 import { saveData } from "../assets/services/PostApiCall";
-import { useSnackbar } from "notistack"; // Ensure you have notistack for notifications
+import { useSnackbar } from "notistack";
 
 const sortDepartments = (departments) => {
   return departments.sort((a, b) => a.localeCompare(b));
@@ -17,6 +17,7 @@ const UltratechDepartmentWise = ({
   const [departmentList, setDepartmentList] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [downloadCount, setDownloadCount] = useState(0);
 
   const fetchListOfEmployees = async () => {
     const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
@@ -55,7 +56,7 @@ const UltratechDepartmentWise = ({
   }, [selectedDepartment, employeeList]);
 
   const downloadEmployeeReport = async (employeeID) => {
-    const url = `https://apibackend.uno.care/api/org/print/tests`; // Use your BASE_URL if needed
+    const url = `https://apibackend.uno.care/api/org/print/tests`;
     const payload = {
       corpId: corpId,
       empId: employeeID,
@@ -78,6 +79,8 @@ const UltratechDepartmentWise = ({
         e.click();
         document.body.removeChild(e);
         window.URL.revokeObjectURL(url);
+
+        setDownloadCount((prevCount) => prevCount + 1);
       }
     } catch (error) {
       console.log("Error downloading report:", error);
@@ -92,6 +95,7 @@ const UltratechDepartmentWise = ({
 
   const handleDownloadReports = async () => {
     setIsLoading(true);
+    setDownloadCount(0);
     for (const employee of filterEmployeesByDepartment) {
       await downloadEmployeeReport(employee.empId);
     }
@@ -122,6 +126,9 @@ const UltratechDepartmentWise = ({
             {selectedDepartment}
           </span>{" "}
           Department: {filterEmployeesByDepartment.length}
+        </Typography>
+        <Typography sx={{ marginBlock: 2 }}>
+          Downloaded Reports: {downloadCount}
         </Typography>
 
         <Button
