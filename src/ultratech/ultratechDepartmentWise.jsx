@@ -69,13 +69,15 @@ const UltratechDepartmentWise = ({
         });
         console.log({ error: printData.error });
       } else {
-        const link = document.createElement("a");
-        link.href = printData.data;
-        link.setAttribute("download", `${employeeID}.pdf`);
-        link.setAttribute("target", "_blank");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const blob = new Blob([printData.data], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+        const e = document.createElement("a");
+        e.href = url;
+        e.download = `${employeeID}.pdf`;
+        document.body.appendChild(e);
+        e.click();
+        document.body.removeChild(e);
+        window.URL.revokeObjectURL(url);
       }
     } catch (error) {
       console.log("Error downloading report:", error);
