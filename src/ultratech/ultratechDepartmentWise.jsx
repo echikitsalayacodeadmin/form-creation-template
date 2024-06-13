@@ -10,7 +10,7 @@ const sortDepartments = (departments) => {
   return departments.sort((a, b) => a.localeCompare(b));
 };
 
-const handleDownload = async (url, employeeID) => {
+const handleDownload = async (url, employee) => {
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -18,13 +18,11 @@ const handleDownload = async (url, employeeID) => {
         Accept: "application/pdf",
       },
     });
-
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-
     const blob = await response.blob();
-    saveAs(blob, `${employeeID}.pdf`);
+    saveAs(blob, `${employee.name}-${employee.empId}.pdf`);
   } catch (error) {
     console.error("Error downloading the file:", error);
   }
@@ -76,22 +74,22 @@ const UltratechDepartmentWise = ({
     );
   }, [selectedDepartment, employeeList]);
 
-  const downloadEmployeeReport = async (employeeID) => {
+  const downloadEmployeeReport = async (employee) => {
     const url = `https://apibackend.uno.care/api/org/print/tests`;
     const payload = {
       corpId: corpId,
-      empId: employeeID,
+      empId: employee.empId,
     };
 
     try {
       const printData = await saveData(url, payload, "");
       if (printData.error) {
-        enqueueSnackbar(`No tests found for employee ID: ${employeeID}`, {
+        enqueueSnackbar(`No tests found for employee ID: ${employee.name}`, {
           variant: "error",
         });
         console.log({ error: printData.error });
       } else {
-        handleDownload(printData.data, employeeID);
+        handleDownload(printData.data, employee);
         setDownloadCount((prevCount) => prevCount + 1);
       }
     } catch (error) {
@@ -109,7 +107,7 @@ const UltratechDepartmentWise = ({
     setIsLoading(true);
     setDownloadCount(0);
     for (const employee of filterEmployeesByDepartment) {
-      await downloadEmployeeReport(employee.empId);
+      await downloadEmployeeReport(employee);
     }
     setIsLoading(false);
   };
