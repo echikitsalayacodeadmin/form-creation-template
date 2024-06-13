@@ -2270,8 +2270,8 @@ const UltraTech = () => {
       console.log("Fetched Data successfully");
       const temp = result.data?.filter(
         (item) =>
-          new Date(item.date) >= new Date("2024-05-18") &&
-          new Date(item.date) <= new Date("2024-05-21")
+          new Date(item.date) >= new Date("2024-05-22") &&
+          new Date(item.date) <= new Date("2024-05-24")
       );
       setList(sortDataByName(temp));
       setTotalEmployees(temp.length);
