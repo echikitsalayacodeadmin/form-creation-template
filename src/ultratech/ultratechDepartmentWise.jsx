@@ -4,9 +4,30 @@ import CustomAutocomplete from "../assets/customAutocomplete";
 import { Box, Button, Typography } from "@mui/material";
 import { saveData } from "../assets/services/PostApiCall";
 import { useSnackbar } from "notistack";
+import { saveAs } from "file-saver";
 
 const sortDepartments = (departments) => {
   return departments.sort((a, b) => a.localeCompare(b));
+};
+
+const handleDownload = async (url, employeeID) => {
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/pdf",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const blob = await response.blob();
+    saveAs(blob, `${employeeID}.pdf`);
+  } catch (error) {
+    console.error("Error downloading the file:", error);
+  }
 };
 
 const UltratechDepartmentWise = ({
@@ -70,16 +91,7 @@ const UltratechDepartmentWise = ({
         });
         console.log({ error: printData.error });
       } else {
-        const blob = new Blob([printData.data], { type: "application/pdf" });
-        const url = window.URL.createObjectURL(blob);
-        const e = document.createElement("a");
-        e.href = url;
-        e.download = `${employeeID}.pdf`;
-        document.body.appendChild(e);
-        e.click();
-        document.body.removeChild(e);
-        window.URL.revokeObjectURL(url);
-
+        handleDownload(printData.data, employeeID);
         setDownloadCount((prevCount) => prevCount + 1);
       }
     } catch (error) {
