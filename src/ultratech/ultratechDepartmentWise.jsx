@@ -22,7 +22,7 @@ const handleDownload = async (url, employee) => {
       throw new Error("Network response was not ok");
     }
     const blob = await response.blob();
-    saveAs(blob, `${employee.name}-${employee.empId}.pdf`);
+    saveAs(blob, `${employee.name}_${employee.empId}.pdf`);
   } catch (error) {
     console.error("Error downloading the file:", error);
   }
@@ -43,7 +43,9 @@ const UltratechDepartmentWise = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-      setEmployeeList(result.data.filter((item) => item.date));
+      setEmployeeList(
+        result.data.filter((item) => item.date && item.department)
+      );
     } else {
       console.log("An error Occurred");
     }
