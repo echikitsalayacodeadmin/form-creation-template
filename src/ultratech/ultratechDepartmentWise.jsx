@@ -22,7 +22,7 @@ const handleDownload = async (url, employee) => {
       throw new Error("Network response was not ok");
     }
     const blob = await response.blob();
-    saveAs(blob, `${employee.name}_${employee.empId}.pdf`);
+    saveAs(blob, `${employee.name}-${employee.empId}.pdf`);
   } catch (error) {
     console.error("Error downloading the file:", error);
   }
