@@ -44,7 +44,7 @@ const UltratechDepartmentWise = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
       setEmployeeList(
-        result.data.filter((item) => item.date && item.department)
+        result.data.filter((item) => item.date && item.department === null)
       );
     } else {
       console.log("An error Occurred");
@@ -97,7 +97,7 @@ const UltratechDepartmentWise = ({
     } catch (error) {
       console.log("Error downloading report:", error);
       enqueueSnackbar(
-        `Error downloading report for employee ID: ${employeeID}`,
+        `Error downloading report for employee ID: ${employee.empId}`,
         {
           variant: "error",
         }
@@ -108,7 +108,7 @@ const UltratechDepartmentWise = ({
   const handleDownloadReports = async () => {
     setIsLoading(true);
     setDownloadCount(0);
-    for (const employee of filterEmployeesByDepartment) {
+    for (const employee of employeeList) {
       await downloadEmployeeReport(employee);
     }
     setIsLoading(false);
@@ -146,7 +146,7 @@ const UltratechDepartmentWise = ({
         <Button
           variant="contained"
           onClick={handleDownloadReports}
-          disabled={isLoading || !selectedDepartment}
+          disabled={isLoading}
           sx={{ marginBlock: 2 }}
         >
           {isLoading ? "Downloading..." : "Start Downloading"}
