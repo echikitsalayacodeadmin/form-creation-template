@@ -347,8 +347,8 @@ const UshaKiranPalace = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.bloodTestUrl}>
-              <div key={index}>{item.bloodTestUrl}</div>
+            <a href={item.consolidatedReportUrl}>
+              <div key={index}>{item.consolidatedReportUrl}</div>
             </a>
             <br />
           </div>
