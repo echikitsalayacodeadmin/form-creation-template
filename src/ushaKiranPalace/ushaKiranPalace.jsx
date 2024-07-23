@@ -7,8 +7,8 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 
 const UshaKiranPalace = ({
-  corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
-  fileType = "BLOODTEST",
+  corpId = "3bedab33-5c0d-4fff-8e3e-30d8d81a0f07",
+  fileType = "CONSOLIDATED_REPORT",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -64,11 +64,11 @@ const UshaKiranPalace = ({
       <div>
         <p style="display: flex; justify-content: space-between">
           <span style="width: 80%">
-            Name:
-            <span style="text-decoration: underline; white-space: pre"> </span
+            Name: ${data?.name || ""} 
+            <span style="text-decoration: underline; white-space: pre">  </span
           ></span>
           <span style="width: 20%"
-            >Age:
+            >Age: ${data?.age || ""} 
             <span style="text-decoration: underline; white-space: pre"> </span
           ></span>
         </p>
@@ -89,12 +89,12 @@ const UshaKiranPalace = ({
         </p>
         <p style="display: flex; justify-content: space-between">
           <span style="width: 50%">
-            Height:
+            Height: ${data?.height || ""} 
             <span style="text-decoration: underline; white-space: pre"> </span
             >cm</span
           >
           <span style="width: 50%">
-            Weight:
+            Weight: ${data?.weight || ""} 
             <span style="text-decoration: underline; white-space: pre"> </span>
             kg</span
           >
@@ -123,7 +123,7 @@ const UshaKiranPalace = ({
           </div> -->
         <p style="display: flex; justify-content: space-between">
           <span style="width: 50%"
-            >Eye Test (Color Blindness):<span
+            >Eye Test (Color Blindness): NAD(No Abnormality Detected)<span
               style="text-decoration: underline; white-space: pre"
             >
             </span
@@ -137,7 +137,7 @@ const UshaKiranPalace = ({
             <span style="text-decoration: underline; white-space: pre"> </span
           ></span>
           <span style="width: 12.5%"
-            >Sugar:
+            >Sugar: ${data?.sugar || ""}
             <span style="text-decoration: underline; white-space: pre"> </span
           ></span>
           <span style="width: 12.5%"
@@ -147,7 +147,23 @@ const UshaKiranPalace = ({
         </p>
         <p style="display: flex; justify-content: space-between">
           <span style="width: 50%"
-            >Vision:<span style="text-decoration: underline; white-space: pre">
+            >Vision: ${
+              data?.farRightEyeSight || data?.farLeftEyeSight
+                ? `FAR ( ${
+                    data?.farRightEyeSight ? "R-" + data?.farRightEyeSight : ""
+                  }  ${
+                    data?.farLeftEyeSight ? "L-" + data?.farLeftEyeSight : ""
+                  })`
+                : ""
+            } ${
+      data?.nearRightEyeSight || data?.nearLeftEyeSight
+        ? `NEAR ( ${
+            data?.nearRightEyeSight ? "R-" + data?.nearRightEyeSight : ""
+          }  ${data?.nearLeftEyeSight ? "L-" + data?.nearLeftEyeSight : ""})`
+        : ""
+    }
+            
+            <span style="text-decoration: underline; white-space: pre">
             </span
           ></span>
           <span style="width: 50%"
@@ -163,23 +179,23 @@ const UshaKiranPalace = ({
             </span
           ></span>
           <span style="width: 50%"
-            >Blood Group:
+            >Blood Group: ${data?.bloodGroup || ""} 
             <span style="text-decoration: underline; white-space: pre"> </span
           ></span>
         </p>
         <p style="display: flex; justify-content: space-between">
           <span style="width: 50%"
-            >Blood Pressure:<span
+            >Blood Pressure: ${data?.bp || ""} <span
               style="text-decoration: underline; white-space: pre"
             >
             </span
           ></span>
           <span style="width: 25%"
-            >HB:
+            >HB: ${data?.cholestrolData?.HB || ""}
             <span style="text-decoration: underline; white-space: pre"> </span
           ></span>
           <span style="width: 25%"
-            >VDRL:
+            >VDRL: ${data?.cholestrolData?.VDRL || ""}
             <span style="text-decoration: underline; white-space: pre"> </span
           ></span>
         </p>
@@ -218,7 +234,7 @@ const UshaKiranPalace = ({
           </span>
         </p>
         <p>
-          X-Ray Chest (PA):
+          X-Ray Chest (PA): NAD(No Abnormality Detected)
           <span style="text-decoration: underline; white-space: pre"> </span>
         </p>
         <p>
@@ -330,11 +346,9 @@ const UshaKiranPalace = ({
         <div>Uploaded Files: {uploadedCount}</div> <br />
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div key={index}>
-              {item.empId} {item.name}
-            </div>
-            <a href={item.form35Url}>
-              <div key={index}>{item.form35Url}</div>
+            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+            <a href={item.bloodTestUrl}>
+              <div key={index}>{item.bloodTestUrl}</div>
             </a>
             <br />
           </div>
