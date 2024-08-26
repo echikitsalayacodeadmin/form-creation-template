@@ -340,7 +340,7 @@ const empIDArray = [
 const Hershey = ({
   corpId = "85193c4a-54bc-4780-bdc8-0679e0847775",
   // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
-  fileType = "ANNEXURE",
+  fileType = "CONSOLIDATED_REPORT",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -436,7 +436,9 @@ const Hershey = ({
         <div class="content">
           <p style="font-size: 14px">
             It is certified that Shri/Smt./Miss
-            <span style="text-decoration: underline; text-transform: capitalize;">${data.name?.toLowerCase()}</span>
+            <span style="text-decoration: underline; text-transform: capitalize;">${
+              data.name?.toLowerCase() || ""
+            }</span>
             employed with M/s.
             <strong>HERSHEY INDIA PRIVATE LIMITED, MANDIDEEP</strong>, coming in
             direct contact with food items has been carefully examined * by me
@@ -530,17 +532,33 @@ const Hershey = ({
             data.name?.toLowerCase() || ""
           }</span>
           s/o Mr.
-          <span style="text-decoration: underline; text-transform: capitalize;">${data.fathersName?.toLowerCase()}</span>
+          <span style="text-decoration: underline; text-transform: capitalize;">${
+            data.fathersName?.toLowerCase() || ""
+          }</span>
           employed at
         
           <strong
             >Hershey India Private Limited, Plot No. 5, New Industrial Area No.
             1, Mandideep, Distt. - Raisen</strong
           >
-          in (Department and process)
-          <span style="text-decoration: underline"; text-transform: capitalize;
-            >${data?.department?.toLowerCase() || ""}</span
-          >
+          in 
+          <span style="text-decoration: underline; text-transform: capitalize;">
+  ${
+    data?.department
+      ? data.department.charAt(0).toUpperCase() +
+        data.department.slice(1).toLowerCase()
+      : ""
+  }
+</span>
+          <span 
+            > ${
+              !data?.department?.toLowerCase()
+                ? "______________________________"
+                : ""
+            }</span
+          > 
+           (Department and process)
+          
           and that as nearly as can be ascertained from my examination, is FIT
           for employment at the above noted factory.
         </p>
@@ -555,15 +573,15 @@ const Hershey = ({
         </p>
         <p>
           4. He is advised following further examination
-          <span style="text-decoration: underline">_______________</span>
+          <span >_______________</span>
         </p>
         <p>
           5. He is advised following treatment
-          <span style="text-decoration: underline">_______________</span>
+          <span >_______________</span>
         </p>
         <p>
           6. The serial number of the previous certificate is
-          <span style="text-decoration: underline">_______________</span>
+          <span style="text-decoration: underline">NA</span>
         </p>
 
         <div class="signature2">
@@ -635,45 +653,81 @@ const Hershey = ({
           }</span></li>
           <li>
             2. Name of person examined
-            <span style="text-decoration: underline; text-transform: capitalize;">${data.name?.toLowerCase()}</span>
+            <span style="text-decoration: underline; text-transform: capitalize;">${
+              data.name?.toLowerCase() || ""
+            }</span>
           </li>
           <li>
             3. Father's name
-            <span style="text-decoration: underline;  text-transform: capitalize;">${data.fathersName?.toLowerCase()}</span>
+            <span style="text-decoration: underline;  text-transform: capitalize;">${
+              data.fathersName?.toLowerCase() || ""
+            }</span>
+             <span>${
+               !data.fathersName ? " _____________________" : ""
+             } ${" "}</span>
+
           </li>
           <li>
             4. Age
-            <span style="text-decoration: underline">${data.age} ${" "}</span>
+            <span style="text-decoration: underline">${
+              data.age || ""
+            } ${" "}</span>
+
+            <span>${!data.age ? "_______" : ""} ${" "}</span>
+
             Sex
             <span style="text-decoration: underline; text-transform: capitalize;"> ${
-              data.gender
+              data.gender || ""
             }</span>
+
+             <span>${!data.gender ? "_______" : ""} ${" "}</span>
+          </li>
+          <li>
+            5. Address <span style="text-decoration: underline; text-transform: capitalize;"> Plot No. 5, New Industrial Area
+              No. 1, Mandideep, Distt. - Raisen - 462046<span>
+            
+           
           </li>
 
           <li>
-            5. Name of the factory in which employed/wishes to be employed
-            <strong
+            6. Name of the factory in which employed/wishes to be employed
+            <span
               style="text-decoration: underline; text-underline-offset: 2px"
-              >Hershey India Private Limited, Plot No. 5, New Industrial Area
-              No. 1, Mandideep, Distt. - Raisen - 462046</strong
+              >Hershey India Private Limited</span
             >
           </li>
           <li>
-            6. Process of department in which employed/wishes to be employed
-            <span style="text-decoration: underline; text-underline-offset: 2px"
-              >_______________</span
-            >
+            7. Process of department in which employed/wishes to be employed
+            
+            <span style="text-decoration: underline; text-transform: capitalize; text-underline-offset: 2px">
+  ${
+    data?.department
+      ? data.department.charAt(0).toUpperCase() +
+        data.department.slice(1).toLowerCase()
+      : ""
+  }
+</span>
           </li>
-          <li>7. Whether certificate granted _______________</li>
+          <li>8. Whether certificate granted  <span style="text-decoration: underline; text-underline-offset: 2px"
+              >Yes</span
+            ></li>
           <li>
-            8. Whether declared unfit and certificate refused
+            9. Whether declared unfit and certificate refused
             <span style="text-decoration: underline; text-underline-offset: 2px"
               >NA</span
             >
           </li>
-          <li>9. Process of Department _______________</li>
+          <li>10. Process of Department <span style="text-transform: capitalize; text-decoration: underline; text-underline-offset: 2px"> <span style="text-decoration: underline; text-transform: capitalize; text-underline-offset: 2px">
+  ${
+    data?.department
+      ? data.department.charAt(0).toUpperCase() +
+        data.department.slice(1).toLowerCase()
+      : ""
+  }
+</span>
+          </li>
           <li>
-            10. Reference number of previous certificate granted or refused
+            11. Reference number of previous certificate granted or refused
             <span style="text-decoration: underline; text-underline-offset: 2px"
               >NA</span
             >
@@ -722,7 +776,7 @@ const Hershey = ({
       });
 
     const formData = new FormData();
-    formData.append("file", pdfBlob, `${data.empId}_annexure.pdf`);
+    formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
 
     const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
     const result = await uploadFile(url, formData);
@@ -745,7 +799,7 @@ const Hershey = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-      const temp = result.data;
+      const temp = result.data.filter((item) => item.empId === "110176");
       // .filter((item) =>
       //   empIDArray.includes(item.empId)
       // );
@@ -763,7 +817,7 @@ const Hershey = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i]);
     }
   };
@@ -798,8 +852,8 @@ const Hershey = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.annexureUrl}>
-              <div key={index}>{item.annexureUrl}</div>
+            <a href={item.consolidatedReportUrl}>
+              <div key={index}>{item.consolidatedReportUrl}</div>
             </a>
             <br />
           </div>

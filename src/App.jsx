@@ -7,12 +7,13 @@ import VacinationVIkram from "./vikram/vacinationVIkram";
 import BloodPdf from "./blood/bloodPdf";
 import UshaKiranPalace from "./ushaKiranPalace/ushaKiranPalace";
 import Hershey from "./hershey/hershey";
+import Pepsico from "./pepsico/pepsico";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <Hershey />
+      <Pepsico />
       {/* <GenericFormGenerator /> */}
     </div>
   );
