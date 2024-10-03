@@ -341,6 +341,8 @@ const Hershey = ({
   corpId = "85193c4a-54bc-4780-bdc8-0679e0847775",
   // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
   fileType = "CONSOLIDATED_REPORT",
+  startDate = dayjs("2024-09-11"),
+  endDate = dayjs("2024-09-12"),
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -795,14 +797,17 @@ const Hershey = ({
   };
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
+    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-      const temp = result.data.filter((item) => item.empId === "110176");
-      // .filter((item) =>
-      //   empIDArray.includes(item.empId)
-      // );
+      const temp = result.data?.filter((item) => {
+        const itemDate = dayjs(item.vitalsCreatedDate).format("YYYY-MM-DD");
+        return (
+          itemDate >= dayjs(startDate).format("YYYY-MM-DD") &&
+          itemDate <= dayjs(endDate).format("YYYY-MM-DD")
+        );
+      });
       const length = temp.length;
       console.log({ length });
       setList(sortDataByName(temp));
@@ -852,8 +857,8 @@ const Hershey = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.consolidatedReportUrl}>
-              <div key={index}>{item.consolidatedReportUrl}</div>
+            <a href={item.consolidatedRUrl}>
+              <div key={index}>{item.consolidatedRUrl}</div>
             </a>
             <br />
           </div>
