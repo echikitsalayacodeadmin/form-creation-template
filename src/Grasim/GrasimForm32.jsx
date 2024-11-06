@@ -188,7 +188,7 @@ const GrasimForm32 = ({
     </style>
   </head>
   <body>
-    <div style="padding-left: 10%; padding-right: 10%">
+    <div style="padding-left: 10%; padding-right: 10%;padding-top:70px">
       <h1
         style="
           padding-top: 1pt;
@@ -221,7 +221,7 @@ const GrasimForm32 = ({
                 min-width: 0;
               "
             >
-              ${data.empId || ""}
+              ${data?.empId || ""}
             </span>
           </p>
         </li>
@@ -257,7 +257,7 @@ const GrasimForm32 = ({
                 text-transform: capitalize;
               "
             >
-              ${data.fathersName?.toLowerCase() || ""}
+              ${data?.fathersName?.toLowerCase() || ""}
             </span>
           </p>
         </li>
@@ -275,7 +275,7 @@ const GrasimForm32 = ({
                 text-transform: capitalize;
               "
             >
-              ${data.gender?.toLowerCase() || ""}
+              ${data?.gender?.toLowerCase() || ""}
             </span>
           </p>
         </li>
@@ -321,7 +321,7 @@ const GrasimForm32 = ({
                 text-transform: capitalize;
               "
             >
-              ${data.department?.toLowerCase() || ""}
+              ${data?.department?.toLowerCase() || ""}
             </span>
           </p>
         </li>
@@ -357,7 +357,7 @@ const GrasimForm32 = ({
                 text-transform: capitalize;
               "
             >
-              ${checkVitalsStatus(data.vitalsErrorData) || ""}
+              ${checkVitalsStatus(data?.vitalsErrorData) || ""}
             </span>
           </p>
         </li>
@@ -433,7 +433,7 @@ const GrasimForm32 = ({
           "
         >
           ${
-            data.empId ||
+            data?.empId ||
             "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           }
         </span>
@@ -457,9 +457,9 @@ const GrasimForm32 = ({
           "
         >
           ${
-            data.name?.toLowerCase()
+            data?.name?.toLowerCase()
               ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data.name?.toLowerCase() +
+                data?.name?.toLowerCase() +
                 "&nbsp;&nbsp;&nbsp;&nbsp;"
               : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           }
@@ -475,9 +475,9 @@ const GrasimForm32 = ({
           "
         >
           ${
-            data.fathersName
+            data?.fathersName
               ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data.fathersName?.toLowerCase() +
+                data?.fathersName?.toLowerCase() +
                 "&nbsp;&nbsp;&nbsp;&nbsp;"
               : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           }
@@ -493,9 +493,9 @@ const GrasimForm32 = ({
           "
         >
           ${
-            data.address
+            data?.address
               ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data.address?.toLowerCase() +
+                data?.address?.toLowerCase() +
                 "&nbsp;&nbsp;&nbsp;&nbsp;"
               : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           }
@@ -519,15 +519,15 @@ const GrasimForm32 = ({
           "
         >
           ${
-            data.department
+            data?.department
               ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data.department?.toLowerCase() +
+                data?.department?.toLowerCase() +
                 "&nbsp;&nbsp;&nbsp;&nbsp;"
               : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           } </span
         > (Department and process), and that as nearly as can be ascertained from
-        my examination, is <span class="h4">fit</span><span class="h2">/</span
-        ><span class="h4">unfit</span> for employment at the above noted
+        my examination, is <span class="h4">fit</span><span class="h2"></span
+        ><span class="h4"></span> for employment at the above noted
         factory.
       </p>
       <br/>
@@ -577,14 +577,16 @@ const GrasimForm32 = ({
           <p style="margin-left: 30%; width: 400px; display: flex">
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span
+              class="s2"
               style="
                 flex-grow: 1;
                 border-bottom: 1px dotted;
                 margin-left: 10px;
                 display: inline-block;
                 min-width: 0;
+                text-transform: capitalize;
               "
-            >
+            >NA
             </span>
           </p>
           <p style="margin-left: 30%; width: 400px; display: flex">
@@ -614,38 +616,41 @@ const GrasimForm32 = ({
             </span>
           </p>
         </li>
-         <li data-list-text="5." style="padding-left: 35px; margin-left: 17pt">
-          <p style="text-align: left">
-            He is advised following treatment:
-          </p>
-          <p style="display: flex">
-         &nbsp;
-            <span
-              style="
-                flex-grow: 1;
-                border-bottom: 1px dotted;
-                display: inline-block;
-                margin-left:-5px;
-                min-width: 0;
-              "
-            >
-           
-            </span>
-          </p>
-        </li>
-        <li data-list-text="6." style="padding-left: 35px; margin-left: 17pt">
+       
+
+         <li data-list-text="6." style="padding-left: 35px; margin-left: 17pt">
           <p style="text-align: left; display: flex;">
-            The serial number of the previous 
+            He is advised following treatment:
              <span
+              class="s2"
               style="
                 flex-grow: 1;
                 border-bottom: 1px dotted;
                 margin-left: 10px;
                 display: inline-block;
                 min-width: 0;
+                text-transform: capitalize;
               "
             >
-            
+         NA
+            </span>
+          </p>
+        </li>
+        <li data-list-text="6." style="padding-left: 35px; margin-left: 17pt">
+          <p style="text-align: left; display: flex;">
+            The serial number of the previous: 
+             <span
+              class="s2"
+              style="
+                flex-grow: 1;
+                border-bottom: 1px dotted;
+                margin-left: 10px;
+                display: inline-block;
+                min-width: 0;
+                text-transform: capitalize;
+              "
+            >
+         NA
             </span>
           </p>
         </li>
@@ -716,26 +721,26 @@ const GrasimForm32 = ({
         return data;
       });
 
-    const url = URL.createObjectURL(pdfBlob);
-    window.open(url, "_blank");
+    // const url = URL.createObjectURL(pdfBlob);
+    // window.open(url, "_blank");
 
-    // const formData = new FormData();
-    // formData.append("file", pdfBlob, `${data.empId}_${data?.name}.pdf`);
+    const formData = new FormData();
+    formData.append("file", pdfBlob, `${data.empId}_${data?.name}.pdf`);
 
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-    // const result = await uploadFile(url, formData);
-    // if (result && result.data) {
-    //   enqueueSnackbar("Successfully Uploaded PDF!", {
-    //     variant: "success",
-    //   });
-    //   setUploadedCount((prevCount) => prevCount + 1);
-    //   // const url = URL.createObjectURL(pdfBlob);
-    //   // window.open(url, "_blank");
-    // } else {
-    //   enqueueSnackbar("An error Occurred!", {
-    //     variant: "error",
-    //   });
-    // }
+    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await uploadFile(url, formData);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
   };
 
   const fetchListOfEmployees = async () => {
@@ -745,9 +750,13 @@ const GrasimForm32 = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const filterEmpId = ["342164"];
-      const temp = result?.data?.filter((item) =>
-        filterEmpId.includes(item.empId)
+      const filterEmpId = ["15252132"];
+      // const temp = result?.data?.filter((item) =>
+      //   filterEmpId.includes(item.empId)
+      // );
+
+      const temp = result?.data?.filter(
+        (emp) => emp.vitalsCreatedDate === "2024-10-22"
       );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
@@ -766,7 +775,7 @@ const GrasimForm32 = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < totalEmployees; i++) {
       await generatePDF(list[i], i);
     }
   };

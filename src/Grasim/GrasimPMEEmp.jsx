@@ -417,7 +417,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Chest Expansion: cm
+            Chest Expansion: na
           </td>
         </tr>
         <tr>
@@ -494,17 +494,7 @@ const GrasimPMEEmp = ({
           >
             Murmur: NAD
           </td>
-           <td
-            style="
-              border-right: 1px solid black;
-              padding: 8px;
-              border-bottom: 1px solid #000;
-              background-color: #fff;
-              text-align: left;
-            "
-          >
-            SPO<sub>2</sub>: ${data?.spO2Percent || ""}%
-          </td>
+         
         </tr>
         <tr>
           <td
@@ -541,7 +531,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Resp.Rate:${data?.respRate || ""}
+            Resp.Rate:${data?.respRate || "-"}
           </td>
           <td
             colspan="2"
@@ -976,10 +966,10 @@ const GrasimPMEEmp = ({
 
         <tr>
           <td style="border: 1px solid black; padding: 8px">With Glass</td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px">6/6</td>
+          <td style="border: 1px solid black; padding: 8px">6/6</td>
+          <td style="border: 1px solid black; padding: 8px">N/6</td>
+          <td style="border: 1px solid black; padding: 8px">N/6</td>
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Power of Glass</td>
@@ -1252,7 +1242,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Blood Group: ${data?.cholestrolData?.["Blood Group"] || ""}
+            Blood Group: -
           </td>
           <td
             style="
@@ -1420,7 +1410,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Urea.:
+            B. Urea.:-
           </td>
           <td
             style="
@@ -1501,10 +1491,8 @@ const GrasimPMEEmp = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Albumin: ${
-              data?.cholestrolData?.["Albumin"] || ""
-            }</span>
-            <span style="width: 50%">Sugar: </span>
+            <span style="width: 50%">Albumin: -</span>
+            <span style="width: 50%">Sugar: - </span>
           </td>
         </tr>
         <tr>
@@ -1516,7 +1504,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            SGOT: ${data?.cholestrolData?.["SGOT"] || ""} mg/dl
+            SGOT: -
           </td>
           <td
             colspan="4"
@@ -1603,7 +1591,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            X-Ray Chest Report:
+            X-Ray Chest Report: na
           </td>
           <td
             colspan="3"

@@ -112,7 +112,7 @@ const GrasimFood = ({
                 >${data?.vitalsCreatedDate || ""}</span
               ></div>
             <div style="padding: 2px">Age / Gender: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.gender?.toLowerCase()}</span
+                >${data?.age?.toLowerCase() / data?.gender?.toLowerCase()}</span
               ></div>
             <div style="padding: 2px">Phone no: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.mobileNo || ""}</span
@@ -124,7 +124,7 @@ const GrasimFood = ({
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">Permanent Address: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.address || ""}</span
+                >P.O. Birlagram, Nagda, Madhya Pradesh – 456 331, India.</span
               ></div>
         </div>
         <br />
@@ -150,7 +150,7 @@ const GrasimFood = ({
                 >${data?.empId || ""}</span
               ></div>
             <div style="padding: 2px">Area of work: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.areaOfWork || ""}</span
+                >Canteen</span
               ></div>
           </div>
         </div>
@@ -192,9 +192,7 @@ const GrasimFood = ({
               >
               <span style="width: 110px; display: inline-block"
                 >Abdomen: <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.abdominalGirth ? data?.abdominalGirth + " cm" : ""
-                }</span> </span
+                >na</span> </span
               >
               <span style="width: 110px; display: inline-block">
                 Chest:(in): <span style="text-transform: capitalize; font-weight: 400;"
@@ -223,41 +221,41 @@ const GrasimFood = ({
               >
               <span style="width: 110px; display: inline-block"
                 >Temp : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.temp || ""}</span> </span
+                >${data?.temp || "-"}</span> </span
               >
               <span style="width: 110px; display: inline-block">
                 R.R. : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.respRate ? data?.respRate + " bpm" : ""}</span> </span
+                >${data?.respRate ? data?.respRate + " bpm" : "-"}</span> </span
               >
             </div>
             <div style="padding: 2px">
               <span style="width: 80px; display: inline-block"></span>
               <span style="width: 110px; display: inline-block"
                 >Pallor : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.pallor || ""}</span> </span
+                >${data?.pallor || "-"}</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >Icterus : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.icterus || ""}</span> </span
+                >${data?.icterus || "-"}</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >Halitosis : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.halitosis || ""}</span> </span
+                >${data?.halitosis || "-"}</span> </span
               >
               <span style="width: 110px; display: inline-block">
                 Oedema : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.oedema || ""}</span> </span
+                >${data?.oedema || "-"}</span> </span
               >
             </div>
             <div style="padding: 2px">
               <span style="width: 80px; display: inline-block"></span>
               <span style="width: 110px; display: inline-block"
                 >Nails : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.nails || ""}</span> </span
+                >${data?.nails || "-"}</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >Others : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.others || ""}</span> </span
+                >${data?.others || "-"}</span> </span
               >
              
             </div>
@@ -298,18 +296,19 @@ const GrasimFood = ({
               >Investigations: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.investigations || ""}</span></span
             >
-            <span style="width: 100px; display: inline-block">Hb: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.cholestrolData?.hb || ""}</span> </span>
+            <span style="width: 100px; display: inline-block">Hb: <span style="text-transform: capitalize; font-weight: 400;">${
+              data?.cholestrolData?.["HB"] || ""
+            }</span> </span>
             <span style="width: 100px; display: inline-block">Tc: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.tc || ""}</span> </span>
+                >${data?.cholestrolData?.["WBC"] || ""}</span> </span>
             <span style="width: 100px; display: inline-block">Dc: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.dc || ""}</span> </span>
+                >-</span> </span>
             <span style="width: 100px; display: inline-block">
               BgRH: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bgRH || ""}</span> </span
+                >-</span> </span
             >
             <span style="width: 80px; display: inline-block">ESR: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.esr || ""}</span> </span>
+                >${data?.cholestrolData?.["ESR"] || ""}</span> </span>
           </div>
         </div>
         <div
@@ -317,21 +316,21 @@ const GrasimFood = ({
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">ECG : (If Clinically Required): <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.ecg || ""}</span></div>
+                >NAD</span></div>
         </div>
         <div
           class="section"
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">Urine Exam : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.urine || ""}</span></div>
+                >NAD</span></div>
         </div>
         <div
           class="section"
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">Stool Exam : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.stool || ""}</span></div>
+                >NAD</span></div>
         </div>
         <div
           class="section"
@@ -352,7 +351,7 @@ const GrasimFood = ({
         >
           <div style="width: 50%; padding: 2px">ADVICE / REMARKS :</div>
           <div style="width: 50%; padding: 2px; font-weight: normal"">
-            ${checkVitalsStatus(data.vitalsErrorData) || ""}
+            ${checkVitalsStatus(data?.vitalsErrorData) || ""}
           </div>
         </div>
         <div
@@ -410,8 +409,10 @@ const GrasimFood = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const filterEmpId = ["433952"];
-      const temp = result?.data;
+      const filterEmpId = ["15252132"];
+      const temp = result?.data?.filter((item) =>
+        filterEmpId.includes(item.empId)
+      );
       // ?.filter((item) =>
       //   filterEmpId.includes(item.empId)
       // );
