@@ -22,6 +22,21 @@ const GrasimFood = ({
   const [uploadedCount, setUploadedCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const checkVitalsStatus = (vitalsErrorData) => {
+    // Define allowed keys
+    const allowedKeys = ["height", "weight", "bp", "sugar"];
+
+    // Get keys of vitalsErrorData
+    const vitalsKeys = Object.keys(vitalsErrorData);
+
+    // Check if all keys are allowed or if the object is empty
+    const isFit =
+      vitalsKeys.length === 0 ||
+      vitalsKeys.every((key) => allowedKeys.includes(key));
+
+    return isFit ? "Fit" : "Unfit";
+  };
+
   const generatePDF = async (data, index) => {
     const content = `
     <!DOCTYPE html>
@@ -100,7 +115,7 @@ const GrasimFood = ({
                 >${data?.gender?.toLowerCase()}</span
               ></div>
             <div style="padding: 2px">Phone no: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.mobile || ""}</span
+                >${data?.mobileNo || ""}</span
               ></div>
           </div>
         </div>
@@ -124,7 +139,7 @@ const GrasimFood = ({
         >
           <div style="width: 70%">
             <div style="padding: 2px">Agency Name: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.agency || ""}</span
+                >${data?.vendorName || ""}</span
               ></div>
             <div style="padding: 2px">Canteen location: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.canteenLocation || ""}</span
@@ -132,7 +147,7 @@ const GrasimFood = ({
           </div>
           <div style="width: 30%">
             <div style="padding: 2px">Card / ESIC No. : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.cardNo || ""}</span
+                >${data?.empId || ""}</span
               ></div>
             <div style="padding: 2px">Area of work: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.areaOfWork || ""}</span
@@ -142,10 +157,10 @@ const GrasimFood = ({
         <br />
         <div
           class="section"
-          style="width: 100%; font-size: 12px; font-weight: bold"
+          style="width: 100%; font-size: 12px; font-weight: normal"
         >
           <div style="padding: 2px">
-            Medical History : History of Jaundice / Typhoid / TB / Epilepsy /
+            <strong>Medical History :</strong> History of Jaundice / Typhoid / TB / Epilepsy /
             Worms / <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.medicalHistory || ""}</span
               >
@@ -153,85 +168,94 @@ const GrasimFood = ({
         </div>
         <div
           class="section"
-          style="width: 100%; font-size: 12px; font-weight: bold"
+          style="width: 100%; font-size: 12px; font-weight: normal"
         >
           <div style="padding: 2px">
-            Present Complaints : Fever / Cough / Itching / Diarrhea / Vomiting /
+            <strong>Present Complaints :</strong> Fever / Cough / Itching / Diarrhea / Vomiting /
             Wt. Loss / <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.presentComplaint || ""}</span
               >
           </div>
+          <br/>
           <div style="font-size: 12px; font-weight: bold">
             <div style="padding: 2px">
-              <span style="width: 130px; display: inline-block"
+              <span style="width: 80px; display: inline-block"
                 >Physical Examination:</span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >Height:  <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.height || ""} cm</span> </span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >Weight: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.weight || ""} kg</span> </span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >Abdomen: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.abdomen || ""}</span> </span
+                >${
+                  data?.abdominalGirth ? data?.abdominalGirth + " cm" : ""
+                }</span> </span
               >
-              <span style="width: 100px; display: inline-block">
+              <span style="width: 110px; display: inline-block">
                 Chest:(in): <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.chest || ""}</span> </span
+                >${
+                  data?.chestInspiration ? data?.chestInspiration + " cm" : ""
+                }</span> </span
               >
-              <span style="width: 80px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >(ex): <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.chest || ""}</span> </span
+                >${
+                  data?.chestExpiration ? data?.chestExpiration + " cm" : ""
+                }</span> </span
               >
             </div>
             <div style="padding: 2px">
-              <span style="width: 130px; display: inline-block"></span>
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 80px; display: inline-block"></span>
+              <span style="width: 110px; display: inline-block"
                 >Pulse : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.pulse || ""}</span> </span
+                >${
+                  data?.pulseRate ? data?.pulseRate + " bpm" : ""
+                }</span> </span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >B.P. : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bp || ""}</span> </span
+                >${data?.bp ? data?.bp + " mmHg" : ""}</span> </span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >Temp : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.temp || ""}</span> </span
               >
-              <span style="width: 100px; display: inline-block">
+              <span style="width: 110px; display: inline-block">
                 R.R. : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.resp || ""}</span> </span
+                >${data?.respRate ? data?.respRate + " bpm" : ""}</span> </span
               >
             </div>
             <div style="padding: 2px">
-              <span style="width: 130px; display: inline-block"></span>
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 80px; display: inline-block"></span>
+              <span style="width: 110px; display: inline-block"
                 >Pallor : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.pallor || ""}</span> </span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >Icterus : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.icterus || ""}</span> </span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >Halitosis : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.halitosis || ""}</span> </span
               >
-              <span style="width: 100px; display: inline-block">
+              <span style="width: 110px; display: inline-block">
                 Oedema : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.oedema || ""}</span> </span
               >
             </div>
             <div style="padding: 2px">
-              <span style="width: 130px; display: inline-block"></span>
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 80px; display: inline-block"></span>
+              <span style="width: 110px; display: inline-block"
                 >Nails : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.nails || ""}</span> </span
               >
-              <span style="width: 100px; display: inline-block"
+              <span style="width: 110px; display: inline-block"
                 >Others : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.others || ""}</span> </span
               >
@@ -244,21 +268,21 @@ const GrasimFood = ({
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">Respiratory System : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.respiratorySystem || ""}</span></div>
+                >${data?.respiratorySystem || "NAD"}</span></div>
         </div>
         <div
           class="section"
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">Cardio Vascular System : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.cardioVascularSystem || ""}</span></div>
+                >${data?.cardioVascularSystem || "NAD"}</span></div>
         </div>
         <div
           class="section"
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">CNS : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.cns || ""}</span></div>
+                >${data?.cns || "NAD"}</span></div>
         </div>
         <div
           class="section"
@@ -327,15 +351,17 @@ const GrasimFood = ({
           "
         >
           <div style="width: 50%; padding: 2px">ADVICE / REMARKS :</div>
-          <div style="width: 50%; padding: 2px">
-            FIT / UNFIT / TEMPORARY UNFIT
+          <div style="width: 50%; padding: 2px; font-weight: normal"">
+            ${checkVitalsStatus(data.vitalsErrorData) || ""}
           </div>
         </div>
         <div
           class="section"
           style="display: flex; font-size: 12px; font-weight: bold"
         >
-          <div style="width: 60%; padding: 2px">Date :</div>
+          <div style="width: 60%; padding: 2px">Date : <span style="font-weight: normal""> ${
+            data?.vitalsCreatedDate || ""
+          }</span></div>
           <div style="width: 40%">
             <div style="padding: 2px">Signature & Seal</div>
             <div style="padding: 2px">Examining Doctor</div>
@@ -385,9 +411,10 @@ const GrasimFood = ({
       console.log("Fetched Data successfully");
 
       const filterEmpId = ["433952"];
-      const temp = result?.data?.filter((item) =>
-        filterEmpId.includes(item.empId)
-      );
+      const temp = result?.data;
+      // ?.filter((item) =>
+      //   filterEmpId.includes(item.empId)
+      // );
       // .filter((item) => {
       //   const itemDate = dayjs(item.date).format("YYYY-MM-DD");
       //   return (
@@ -417,7 +444,7 @@ const GrasimFood = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < 3; i++) {
       await generatePDF(list[i], i);
     }
   };

@@ -91,7 +91,7 @@ const GrasimAgencyStaff = ({
               >
           </td>
           <td  colspan="2" style="border: 1px solid black; padding: 8px">ESIC No: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.esicNo || ""}</span
+                >${data?.empId || ""}</span
               ></td>
           <td style="border: 1px solid black; padding: 8px">
             Date of joining: <span style="text-transform: capitalize; font-weight: 400;"
@@ -106,7 +106,7 @@ const GrasimAgencyStaff = ({
               >
           </td>
           <td style="border: 1px solid black; padding: 8px">Occupation: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.occupation?.toLowerCase() || ""}</span
+                >${data?.designation?.toLowerCase() || ""}</span
               ></td>
         </tr>
         <tr>
@@ -120,7 +120,7 @@ const GrasimAgencyStaff = ({
               ></td>
           <td style="border: 1px solid black; padding: 8px">
             Telephone no. in plant: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.contractorName?.toLowerCase() || ""}</span
+                >${""}</span
               >
           </td>
         </tr>
@@ -315,7 +315,9 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Height: cm
+            Height: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.height ? data?.height + " cm" : ""}</span
+              >
           </td>
           <td
             colspan="2"
@@ -327,7 +329,9 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Weight: Kgs
+            Weight: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.weight ? data?.weight + " Kgs" : ""}</span
+              >
           </td>
           <td
             style="
@@ -337,7 +341,9 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            BMI: Kg/m2
+            BMI:  <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.bmi ? data?.bmi + " Kg/m2" : ""}</span
+              >
           </td>
         </tr>
         <tr>
@@ -350,7 +356,11 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Chest Inspiration: cm
+            Chest Inspiration:  <span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  data?.chestInspiration ? data?.chestInspiration + " cm" : ""
+                }</span
+              >
           </td>
           <td
             colspan="2"
@@ -362,7 +372,11 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Chest Expiration: cm
+            Chest Expiration: <span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  data?.chestExpiration ? data?.chestExpiration + " cm" : ""
+                }</span
+              >
           </td>
           <td
             style="
@@ -372,7 +386,9 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Chest Expansion: cm
+            Chest Expansion:  <span style="text-transform: capitalize; font-weight: 400;"
+                >${""}</span
+              >
           </td>
         </tr>
         <tr>
@@ -399,7 +415,9 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Pulse: /min
+            Pulse: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.pulseRate ? data?.pulseRate + " /min" : ""}</span
+              > 
           </td>
           <td
             colspan="2"
@@ -421,7 +439,9 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Blood Pressure:
+            Blood Pressure: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.bp ? data?.bp + " mmHg" : ""}</span
+              >
           </td>
         </tr>
 
@@ -485,7 +505,9 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Resp.Rate:
+            Resp.Rate: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.respRate ? data?.respRate + " /min" : ""}</span
+              >
           </td>
           <td
             colspan="2"
@@ -904,18 +926,48 @@ const GrasimAgencyStaff = ({
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Without Glass</td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  !data?.eyeSightWithGlasses ? data?.farRightEyeSight : ""
+                }</span
+              ></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  !data?.eyeSightWithGlasses ? data?.farLeftEyeSight : ""
+                }</span
+              ></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  !data?.eyeSightWithGlasses ? data?.nearRightEyeSight : ""
+                }</span
+              ></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  !data?.eyeSightWithGlasses ? data?.nearLeftEyeSight : ""
+                }</span
+              ></td>
         </tr>
 
         <tr>
           <td style="border: 1px solid black; padding: 8px">With Glass</td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  data?.eyeSightWithGlasses ? data?.farRightEyeSight : ""
+                }</span
+              ></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.eyeSightWithGlasses ? data?.farLeftEyeSight : ""}</span
+              ></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  data?.eyeSightWithGlasses ? data?.nearRightEyeSight : ""
+                }</span
+              ></td>
+          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  data?.eyeSightWithGlasses ? data?.nearLeftEyeSight : ""
+                }</span
+              ></td>
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Power of Glass</td>
@@ -925,11 +977,12 @@ const GrasimAgencyStaff = ({
           <td style="border: 1px solid black; padding: 8px"></td>
         </tr>
         <tr>
-          <td style="border: 1px solid black; padding: 8px">Color Vision</td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black;border-left: 1px solid black; padding: 8px">Color Vision</td>
+          <td colspan="4" style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
+                >${
+                  data?.colourVision ? data?.colourVision?.toLowerCase() : ""
+                }</span
+              ></td>
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">
@@ -1702,9 +1755,10 @@ const GrasimAgencyStaff = ({
       console.log("Fetched Data successfully");
 
       const filterEmpId = ["433952"];
-      const temp = result?.data?.filter((item) =>
-        filterEmpId.includes(item.empId)
+      const temp = result?.data?.filter(
+        (item) => item.employmentType === "CONTRACTOR"
       );
+
       // .filter((item) => {
       //   const itemDate = dayjs(item.date).format("YYYY-MM-DD");
       //   return (
@@ -1734,7 +1788,7 @@ const GrasimAgencyStaff = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < 3; i++) {
       await generatePDF(list[i], i);
     }
   };

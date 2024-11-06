@@ -12,8 +12,8 @@ const LiteBiteForm = ({
   // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
   // campCycleId = ""
   campCycleId = "",
-  // fileType = "PHYSICAL_FITNESS_FORM",
-  fileType = "FITNESS_CERTIFICATE",
+  fileType = "PHYSICAL_FITNESS_FORM",
+  // fileType = "FITNESS_CERTIFICATE",
   startDate = dayjs("2024-10-22"),
   endDate = dayjs("2024-10-22"),
 }) => {
@@ -1713,7 +1713,7 @@ const LiteBiteForm = ({
         </div>
     `;
     const pdfBlob = await html2pdf()
-      .from(FITNESS_CERTIFICATE)
+      .from(PHYSICAL_FITNESS_FORM)
       .output("blob")
       .then((data) => {
         return data;
@@ -1749,7 +1749,10 @@ const LiteBiteForm = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data;
+      const filterEmpIDs = ["LB29023", "LB28576", "Lb27186"];
+      const temp = result?.data.filter((item) =>
+        filterEmpIDs.includes(item.empId)
+      );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -1802,10 +1805,10 @@ const LiteBiteForm = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            {/* <a href={item.physicalFitnessFormUrl}> */}
-            <a href={item.fitnessCertificateUrl}>
-              {/* <div key={index}>{item.physicalFitnessFormUrl}</div> */}
-              <div key={index}>{item.fitnessCertificateUrl}</div>
+            <a href={item.physicalFitnessFormUrl}>
+              {/* <a href={item.fitnessCertificateUrl}> */}
+              <div key={index}>{item.physicalFitnessFormUrl}</div>
+              {/* <div key={index}>{item.fitnessCertificateUrl}</div> */}
             </a>
             <br />
           </div>
