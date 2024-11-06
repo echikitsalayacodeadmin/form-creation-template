@@ -91,7 +91,6 @@ const GrasimPMEEmp = ({
                 >${data?.name?.toLowerCase() || ""}</span
               >
           </td>
-<<<<<<< HEAD
           <td   style="border: 1px solid black; padding: 8px">Age: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.age || ""}</span
               ></td>
@@ -113,12 +112,6 @@ const GrasimPMEEmp = ({
               >
           </td>
           <td  style="border: 1px solid black; padding: 8px">Employee Code: <span style="text-transform: capitalize; font-weight: 400;"
-=======
-          <td  colspan="2" style="border: 1px solid black; padding: 8px">ESIC No: <span style="text-transform: capitalize; font-weight: 400;"
-<<<<<<< Updated upstream
-=======
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
                 >${data?.empId || ""}</span
               ></td>
           <td style="border: 1px solid black; padding: 8px">
@@ -132,20 +125,7 @@ const GrasimPMEEmp = ({
               >
           </td>
         </tr>
-<<<<<<< HEAD
       
-=======
-        <tr>
-          <td colspan="3" style="border: 1px solid black; padding: 8px">
-            Agency / Contractor: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.contractorName?.toLowerCase() || ""}</span
-              >
-          </td>
-          <td style="border: 1px solid black; padding: 8px">Occupation: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.designation?.toLowerCase() || ""}</span
-              ></td>
-        </tr>
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
         <tr>
           <td style="border: 1px solid black; padding: 8px">
             Occupation: <span style="text-transform: capitalize; font-weight: 400;"
@@ -157,15 +137,7 @@ const GrasimPMEEmp = ({
               ></td>
           <td style="border: 1px solid black; padding: 8px">
             Telephone no. in plant: <span style="text-transform: capitalize; font-weight: 400;"
-<<<<<<< Updated upstream
-                >${""}</span
-=======
-<<<<<<< HEAD
                 ></span
-=======
-                >${""}</span
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
               >
           </td>
         </tr>
@@ -388,19 +360,7 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
-<<<<<<< Updated upstream
-            Height: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.height ? data?.height + " cm" : ""}</span
-              >
-=======
-<<<<<<< HEAD
             Height: ${data.height || ""}cm
-=======
-            Height: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.height ? data?.height + " cm" : ""}</span
-              >
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -412,19 +372,7 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
-<<<<<<< Updated upstream
-            Weight: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.weight ? data?.weight + " Kgs" : ""}</span
-              >
-=======
-<<<<<<< HEAD
             Weight: ${data.weight || ""}Kgs
-=======
-            Weight: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.weight ? data?.weight + " Kgs" : ""}</span
-              >
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
           <td
             style="
@@ -434,19 +382,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-<<<<<<< Updated upstream
-            BMI:  <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bmi ? data?.bmi + " Kg/m2" : ""}</span
-              >
-=======
-<<<<<<< HEAD
             BMI: ${data.bmi || ""}Kg/m2
-=======
-            BMI:  <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bmi ? data?.bmi + " Kg/m2" : ""}</span
-              >
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
         </tr>
         <tr>
@@ -459,21 +395,7 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
             Chest Inspiration: ${data?.chestInspiration}cm
-=======
->>>>>>> Stashed changes
-            Chest Inspiration:  <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.chestInspiration ? data?.chestInspiration + " cm" : ""
-                }</span
-              >
-<<<<<<< Updated upstream
-=======
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -485,21 +407,7 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
             Chest Expiration: ${data?.chestExpiration}cm
-=======
->>>>>>> Stashed changes
-            Chest Expiration: <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.chestExpiration ? data?.chestExpiration + " cm" : ""
-                }</span
-              >
-<<<<<<< Updated upstream
-=======
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
           <td
             style="
@@ -509,9 +417,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Chest Expansion:  <span style="text-transform: capitalize; font-weight: 400;"
-                >${""}</span
-              >
+            Chest Expansion: cm
           </td>
         </tr>
         <tr>
@@ -538,19 +444,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-<<<<<<< Updated upstream
-            Pulse: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.pulseRate ? data?.pulseRate + " /min" : ""}</span
-              > 
-=======
-<<<<<<< HEAD
             Pulse: ${data.pulseRate || ""}/min
-=======
-            Pulse: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.pulseRate ? data?.pulseRate + " /min" : ""}</span
-              > 
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -572,19 +466,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-<<<<<<< Updated upstream
-            Blood Pressure: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bp ? data?.bp + " mmHg" : ""}</span
-              >
-=======
-<<<<<<< HEAD
             Blood Pressure:${data.bp || ""}mmHg
-=======
-            Blood Pressure: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bp ? data?.bp + " mmHg" : ""}</span
-              >
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
         </tr>
 
@@ -659,19 +541,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-<<<<<<< Updated upstream
-            Resp.Rate: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.respRate ? data?.respRate + " /min" : ""}</span
-              >
-=======
-<<<<<<< HEAD
             Resp.Rate:${data.respRate || ""}
-=======
-            Resp.Rate: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.respRate ? data?.respRate + " /min" : ""}</span
-              >
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -1090,9 +960,6 @@ const GrasimPMEEmp = ({
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Without Glass</td>
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
           <td style="border: 1px solid black; padding: 8px"> ${
             data?.farRightEyeSight || ""
           } </td>
@@ -1105,54 +972,14 @@ const GrasimPMEEmp = ({
           <td style="border: 1px solid black; padding: 8px"> ${
             data?.nearLeftEyeSight || ""
           } </td>
-=======
->>>>>>> Stashed changes
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.farRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.farLeftEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.nearRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.nearLeftEyeSight : ""
-                }</span
-              ></td>
-<<<<<<< Updated upstream
-=======
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
         </tr>
 
         <tr>
           <td style="border: 1px solid black; padding: 8px">With Glass</td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.eyeSightWithGlasses ? data?.farRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.eyeSightWithGlasses ? data?.farLeftEyeSight : ""}</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.eyeSightWithGlasses ? data?.nearRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.eyeSightWithGlasses ? data?.nearLeftEyeSight : ""
-                }</span
-              ></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Power of Glass</td>
@@ -1162,23 +989,8 @@ const GrasimPMEEmp = ({
           <td style="border: 1px solid black; padding: 8px"></td>
         </tr>
         <tr>
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
           <td style="border: 1px solid black; padding: 8px">Color Vision</td>
           <td align ="center" colspan="4" style="border: 1px solid black; padding: 8px">NAD</td>
-=======
->>>>>>> Stashed changes
-          <td style="border: 1px solid black;border-left: 1px solid black; padding: 8px">Color Vision</td>
-          <td colspan="4" style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.colourVision ? data?.colourVision?.toLowerCase() : ""
-                }</span
-              ></td>
-<<<<<<< Updated upstream
-=======
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">
@@ -1974,21 +1786,9 @@ const GrasimPMEEmp = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-<<<<<<< Updated upstream
-      const filterEmpId = ["433952"];
-      const temp = result?.data?.filter(
-        (item) => item.employmentType === "ONROLL"
-=======
-<<<<<<< HEAD
       const filterEmpId = ["342164"];
       const temp = result?.data?.filter((item) =>
         filterEmpId.includes(item.empId)
-=======
-      const filterEmpId = ["433952"];
-      const temp = result?.data?.filter(
-        (item) => item.employmentType === "ONROLL"
->>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
->>>>>>> Stashed changes
       );
 
       // filter(
@@ -2024,7 +1824,7 @@ const GrasimPMEEmp = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };
