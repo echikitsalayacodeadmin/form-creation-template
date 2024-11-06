@@ -112,7 +112,9 @@ const GrasimFood = ({
                 >${data?.vitalsCreatedDate || ""}</span
               ></div>
             <div style="padding: 2px">Age / Gender: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.age?.toLowerCase() / data?.gender?.toLowerCase()}</span
+                >${data?.age?.toLowerCase() || ""} / ${
+      data?.gender?.toLowerCase() || ""
+    }</span
               ></div>
             <div style="padding: 2px">Phone no: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.mobileNo || ""}</span
@@ -192,7 +194,7 @@ const GrasimFood = ({
               >
               <span style="width: 110px; display: inline-block"
                 >Abdomen: <span style="text-transform: capitalize; font-weight: 400;"
-                >na</span> </span
+                >NA</span> </span
               >
               <span style="width: 110px; display: inline-block">
                 Chest:(in): <span style="text-transform: capitalize; font-weight: 400;"
@@ -221,41 +223,43 @@ const GrasimFood = ({
               >
               <span style="width: 110px; display: inline-block"
                 >Temp : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.temp || "-"}</span> </span
+                >${data?.temp || "-----"}</span> </span
               >
               <span style="width: 110px; display: inline-block">
                 R.R. : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.respRate ? data?.respRate + " bpm" : "-"}</span> </span
+                >${
+                  data?.respRate ? data?.respRate + " bpm" : "-----"
+                }</span> </span
               >
             </div>
             <div style="padding: 2px">
               <span style="width: 80px; display: inline-block"></span>
               <span style="width: 110px; display: inline-block"
                 >Pallor : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.pallor || "-"}</span> </span
+                >${data?.pallor || "-----"}</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >Icterus : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.icterus || "-"}</span> </span
+                >${data?.icterus || "-----"}</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >Halitosis : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.halitosis || "-"}</span> </span
+                >${data?.halitosis || "-----"}</span> </span
               >
               <span style="width: 110px; display: inline-block">
                 Oedema : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.oedema || "-"}</span> </span
+                >${data?.oedema || "-----"}</span> </span
               >
             </div>
             <div style="padding: 2px">
               <span style="width: 80px; display: inline-block"></span>
               <span style="width: 110px; display: inline-block"
                 >Nails : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.nails || "-"}</span> </span
+                >${data?.nails || "-----"}</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >Others : <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.others || "-"}</span> </span
+                >${data?.others || "-----"}</span> </span
               >
              
             </div>
@@ -302,10 +306,10 @@ const GrasimFood = ({
             <span style="width: 100px; display: inline-block">Tc: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.cholestrolData?.["WBC"] || ""}</span> </span>
             <span style="width: 100px; display: inline-block">Dc: <span style="text-transform: capitalize; font-weight: 400;"
-                >-</span> </span>
+                >-----</span> </span>
             <span style="width: 100px; display: inline-block">
               BgRH: <span style="text-transform: capitalize; font-weight: 400;"
-                >-</span> </span
+                >-----</span> </span
             >
             <span style="width: 80px; display: inline-block">ESR: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.cholestrolData?.["ESR"] || ""}</span> </span>
