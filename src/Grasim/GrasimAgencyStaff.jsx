@@ -55,7 +55,7 @@ const GrasimAgencyStaff = ({
     </style>
   </head>
   <body>
-    <div style="padding-left: 5%; padding-right: 5%; padding-top: 3%">
+     <div style="padding-left: 5%; padding-right: 5%; padding-top: 3%">
       <div style="border: 1px solid #000">
         <div class="section" style="display: flex">
           <img
@@ -76,6 +76,7 @@ const GrasimAgencyStaff = ({
           </div>
         </div>
       </div>
+
       <table
         style="
           width: 100%;
@@ -84,22 +85,45 @@ const GrasimAgencyStaff = ({
           font-weight: bold;
         "
       >
-        <tr>
+
+      <tr>
           <td  style="border: 1px solid black; padding: 8px">
-            Father's Name: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.fathersName?.toLowerCase() || ""}</span
+            Name: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.name?.toLowerCase() || ""}</span
               >
           </td>
-          <td  colspan="2" style="border: 1px solid black; padding: 8px">ESIC No: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.empId || ""}</span
+          <td   style="border: 1px solid black; padding: 8px">Age: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.age || ""}</span
               ></td>
+
+             <td style="border: 1px solid black; padding: 8px">Gender: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.gender || ""}</span
+              ></td>
+              
           <td style="border: 1px solid black; padding: 8px">
-            Date of joining: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.dateOfJoining || ""}</span
+            Date of examination: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.vitalsCreatedDate || ""}</span
               >
           </td>
         </tr>
         <tr>
+         
+          <td  style="border: 1px solid black; padding: 8px">Father's Name: <span style="text-transform: capitalize; font-weight: 400;"
+                > ${data?.fathersName?.toLowerCase() || ""}</span
+              ></td>
+          <td colspan="2"  style="border: 1px solid black; padding: 8px">
+            ESIC No.: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.empId || ""}</span
+              >
+          </td>
+            <td style="border: 1px solid black; padding: 8px">
+            Date of Joining: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.dateOfJoining || ""}</span
+              >
+          </td>
+        </tr>
+
+          <tr>
           <td colspan="3" style="border: 1px solid black; padding: 8px">
             Agency / Contractor: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.contractorName?.toLowerCase() || ""}</span
@@ -109,18 +133,20 @@ const GrasimAgencyStaff = ({
                 >${data?.designation?.toLowerCase() || ""}</span
               ></td>
         </tr>
+      
         <tr>
           <td style="border: 1px solid black; padding: 8px">
             Department: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.department?.toLowerCase() || ""}</span
               >
           </td>
+         
           <td  colspan="2" style="border: 1px solid black; padding: 8px">Mobile no. <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.mobileNo?.toLowerCase() || ""}</span
               ></td>
           <td style="border: 1px solid black; padding: 8px">
             Telephone no. in plant: <span style="text-transform: capitalize; font-weight: 400;"
-                >${""}</span
+                ></span
               >
           </td>
         </tr>
@@ -163,7 +189,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Regular medicines:
+            Regular medicines: NAD
           </td>
         </tr>
         <tr>
@@ -241,7 +267,19 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Diet: Veg / Non-Veg / Mixed
+            Diet: <span>Veg${
+              false
+                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+                : "&nbsp;"
+            }</span><span>/&nbsp;&nbsp;Non-Veg${
+      false
+        ? `<span style="position: relative;top:-10px;left:-25px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span><span>/&nbsp;&nbsp;Mixed${
+      false
+        ? `<span style="position: relative;top:-10px;left:-20px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span>
           </td>
           <td
             colspan="2"
@@ -252,7 +290,15 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Smoking: No / Yes
+            Smoking: <span>No${
+              false
+                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+                : "&nbsp;"
+            }</span> <span>/&nbsp;&nbsp;Yes${
+      false
+        ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span>
           </td>
           <td
             style="
@@ -262,7 +308,15 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Tobacco chewing: No / Yes
+            Tobacco chewing: <span>No${
+              false
+                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+                : "&nbsp;"
+            }</span> <span>/&nbsp;&nbsp;Yes${
+      false
+        ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span>
           </td>
         </tr>
         <tr>
@@ -315,9 +369,7 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Height: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.height ? data?.height + " cm" : ""}</span
-              >
+            Height: ${data?.height || ""}cm
           </td>
           <td
             colspan="2"
@@ -329,9 +381,7 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Weight: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.weight ? data?.weight + " Kgs" : ""}</span
-              >
+            Weight: ${data?.weight || ""}Kgs
           </td>
           <td
             style="
@@ -341,9 +391,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            BMI:  <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bmi ? data?.bmi + " Kg/m2" : ""}</span
-              >
+            BMI: ${data?.bmi || ""}Kg/m2
           </td>
         </tr>
         <tr>
@@ -356,11 +404,7 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Chest Inspiration:  <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.chestInspiration ? data?.chestInspiration + " cm" : ""
-                }</span
-              >
+            Chest Inspiration: ${data?.chestInspiration}cm
           </td>
           <td
             colspan="2"
@@ -372,11 +416,7 @@ const GrasimAgencyStaff = ({
               width: 33%;
             "
           >
-            Chest Expiration: <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.chestExpiration ? data?.chestExpiration + " cm" : ""
-                }</span
-              >
+            Chest Expiration: ${data?.chestExpiration}cm
           </td>
           <td
             style="
@@ -386,9 +426,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Chest Expansion:  <span style="text-transform: capitalize; font-weight: 400;"
-                >${""}</span
-              >
+            Chest Expansion: cm
           </td>
         </tr>
         <tr>
@@ -415,9 +453,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Pulse: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.pulseRate ? data?.pulseRate + " /min" : ""}</span
-              > 
+            Pulse: ${data?.pulseRate || ""}/min
           </td>
           <td
             colspan="2"
@@ -428,7 +464,7 @@ const GrasimAgencyStaff = ({
               border-bottom: 1px solid #000;
             "
           >
-            Regular/Irregular:
+            Regular/Irregular:  NAD
           </td>
           <td
             style="
@@ -439,9 +475,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Blood Pressure: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.bp ? data?.bp + " mmHg" : ""}</span
-              >
+            Blood Pressure:${data?.bp || ""}mmHg
           </td>
         </tr>
 
@@ -458,16 +492,27 @@ const GrasimAgencyStaff = ({
             Heart Sounds:
           </td>
           <td
-            colspan="3"
+            colspan="2"
             style="
               padding: 8px;
               background-color: #fff;
               text-align: left;
               border-bottom: 1px solid #000;
-              border-right: 1px solid #000;
+              
             "
           >
-            Murmur:
+            Murmur: NAD
+          </td>
+           <td
+            style="
+              border-right: 1px solid black;
+              padding: 8px;
+              border-bottom: 1px solid #000;
+              background-color: #fff;
+              text-align: left;
+            "
+          >
+            SPO<sub>2</sub>: ${data?.spO2Percent || ""}%
           </td>
         </tr>
         <tr>
@@ -505,9 +550,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Resp.Rate: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.respRate ? data?.respRate + " /min" : ""}</span
-              >
+            Resp.Rate:${data?.respRate || ""}
           </td>
           <td
             colspan="2"
@@ -519,7 +562,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Shape of Chest:
+            Shape of Chest:NA
           </td>
           <td
             style="
@@ -530,7 +573,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Trachea:
+            Trachea:NAD
           </td>
         </tr>
         <tr>
@@ -543,7 +586,7 @@ const GrasimAgencyStaff = ({
               border-left: 1px solid #000;
             "
           >
-            Breath sounds:
+            Breath sounds:NAD
           </td>
           <td
             colspan="3"
@@ -555,7 +598,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Any Adventitious sound:
+            Any Adventitious sound:NA
           </td>
         </tr>
         <tr>
@@ -593,7 +636,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Cranial Nerves:
+            Cranial Nerves:NAD
           </td>
           <td
             colspan="2"
@@ -605,7 +648,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Sensory Functions:
+            Sensory Functions:NA
           </td>
           <td
             style="
@@ -616,7 +659,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Motor Functions:
+            Motor Functions:NAD
           </td>
         </tr>
         <tr>
@@ -630,7 +673,7 @@ const GrasimAgencyStaff = ({
               border-bottom: 1px solid #000;
             "
           >
-            Reflexes:
+            Reflexes:NAD
           </td>
         </tr>
 
@@ -660,7 +703,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Teeth:
+            Teeth:NAD
           </td>
           <td
             colspan="2"
@@ -672,7 +715,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Gums:
+            Gums:NAD
           </td>
           <td
             style="
@@ -683,7 +726,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Tongue:
+            Tongue:NAD
           </td>
         </tr>
         <tr>
@@ -696,7 +739,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Liver:
+            Liver:NAD
           </td>
           <td
             colspan="2"
@@ -708,7 +751,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Spleen:
+            Spleen:NAD
           </td>
           <td
             style="
@@ -719,7 +762,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Any Lump:
+            Any Lump:NAD
           </td>
         </tr>
          </table>
@@ -759,7 +802,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Hernia:
+            Hernia:NAD
           </td>
           <td
             colspan="2"
@@ -771,7 +814,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Hydrocoele:
+            Hydrocoele:NAD
           </td>
           <td
             style="
@@ -782,7 +825,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-           Phimosis:
+           Phimosis:NAD
           </td>
         </tr>
         <tr>
@@ -795,7 +838,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-           Crypto-Orchidism:
+           Crypto-Orchidism:NAD
           </td>
           <td
             colspan="3"
@@ -808,7 +851,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Any feature of STD:
+            Any feature of STD:NAD
           </td>
           
         </tr>
@@ -926,48 +969,26 @@ const GrasimAgencyStaff = ({
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Without Glass</td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.farRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.farLeftEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.nearRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  !data?.eyeSightWithGlasses ? data?.nearLeftEyeSight : ""
-                }</span
-              ></td>
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.farRightEyeSight || ""
+          } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.farLeftEyeSight || ""
+          } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.nearRightEyeSight || ""
+          } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.nearLeftEyeSight || ""
+          } </td>
         </tr>
 
         <tr>
           <td style="border: 1px solid black; padding: 8px">With Glass</td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.eyeSightWithGlasses ? data?.farRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.eyeSightWithGlasses ? data?.farLeftEyeSight : ""}</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.eyeSightWithGlasses ? data?.nearRightEyeSight : ""
-                }</span
-              ></td>
-          <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.eyeSightWithGlasses ? data?.nearLeftEyeSight : ""
-                }</span
-              ></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px"></td>
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Power of Glass</td>
@@ -977,18 +998,14 @@ const GrasimAgencyStaff = ({
           <td style="border: 1px solid black; padding: 8px"></td>
         </tr>
         <tr>
-          <td style="border: 1px solid black;border-left: 1px solid black; padding: 8px">Color Vision</td>
-          <td colspan="4" style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.colourVision ? data?.colourVision?.toLowerCase() : ""
-                }</span
-              ></td>
+          <td style="border: 1px solid black; padding: 8px">Color Vision</td>
+          <td align ="center" colspan="4" style="border: 1px solid black; padding: 8px">NAD</td>
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">
             Titmus / Key stone Vision
           </td>
-          <td colspan="4" style="border: 1px solid black; padding: 8px"></td>
+          <td colspan="4" style="border: 1px solid black; padding: 8px;"></td>
         </tr>
       </table>
       <table
@@ -1023,7 +1040,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Nose:
+            Nose:NAD
           </td>
           <td
             colspan="2"
@@ -1035,7 +1052,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Throat:
+            Throat:NAD
           </td>
           <td
             style="
@@ -1046,7 +1063,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Ear canal:
+            Ear canal:NAD
           </td>
         </tr>
         <tr>
@@ -1059,7 +1076,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Any Discharge:
+            Any Discharge:NAD
           </td>
           <td
             colspan="2"
@@ -1070,7 +1087,7 @@ const GrasimAgencyStaff = ({
               background-color: #fff;
             "
           >
-            Tympanic membrane:
+            Tympanic membrane:NAD
           </td>
           <td
             style="
@@ -1081,7 +1098,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Whispered voice @ 2 ft:
+            Whispered voice @ 2 ft:NAD
           </td>
         </tr>
         <tr>
@@ -1108,7 +1125,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Gait :
+            Gait :NAD
           </td>
           <td
             colspan="2"
@@ -1120,7 +1137,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Spine :
+            Spine :NAD
           </td>
           <td
             style="
@@ -1131,7 +1148,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Any abnormality:
+            Any abnormality:NAD
           </td>
         </tr>
         <tr>
@@ -1145,7 +1162,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Remarks
+            Remarks : NAD
           </td>
         </tr>
         <tr>
@@ -1231,7 +1248,9 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Sugar F mg/dl
+            B. Sugar F: ${
+              data?.cholestrolData?.["BLOOD_SUGAR_FASTING"] || ""
+            } mg/dl
           </td>
           <td
             colspan="2"
@@ -1242,7 +1261,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Blood Group:
+            Blood Group: ${data?.cholestrolData?.["Blood Group"] || ""}
           </td>
           <td
             style="
@@ -1252,7 +1271,9 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Total Cholesterol: mg/dl
+            Total Cholesterol: ${
+              data?.cholestrolData?.["S.CHOLESTEROL"] || ""
+            } mg/dl
           </td>
         </tr>
         <tr>
@@ -1264,7 +1285,9 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Sugar R mg/dl
+            B. Sugar R: ${
+              data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""
+            } mg/dl
           </td>
           <td
             colspan="2"
@@ -1275,7 +1298,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Haemoglobin gm/dl
+            Haemoglobin: ${data?.cholestrolData?.["HB"] || ""} mg/dl gm/dl
           </td>
           <td
             style="
@@ -1285,7 +1308,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            LDL Cholesterol: mg/dl
+            LDL Cholesterol: ${data?.cholestrolData?.["LDL"] || ""} mg/dl
           </td>
         </tr>
         <tr>
@@ -1297,7 +1320,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Sugar PPBS mg/dl
+            B. Sugar PPBS:
           </td>
           <td
             colspan="2"
@@ -1308,7 +1331,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Total WBC count /cmm
+            Total WBC count: ${data?.cholestrolData?.["WBC"] || ""}/cmm
           </td>
           <td
             style="
@@ -1318,7 +1341,9 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            HDL Cholesterol: mg/dl
+            HDL Cholesterol: ${
+              data?.cholestrolData?.["HDL Cholesterol"] || ""
+            }mg/dl
           </td>
         </tr>
       </table>
@@ -1339,7 +1364,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            S. Creat.<br />mg/dl
+            S. Creat.: ${data?.cholestrolData?.["S.CREATININE"] || ""}mg/dl
           </td>
           <td
             rowspan="2"
@@ -1350,7 +1375,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Differential<br />ial count
+            Differential<br /> count
           </td>
           <td
             style="
@@ -1360,7 +1385,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            N
+            N: ${data?.cholestrolData?.["Neutrophils"] || ""}
           </td>
           <td
             style="
@@ -1370,7 +1395,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            L
+            L: ${data?.cholestrolData?.["Lymphocytes"] || ""}
           </td>
           <td
             style="
@@ -1380,7 +1405,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            E
+            E: ${data?.cholestrolData?.["Eosinophils"] || ""}
           </td>
           <td
             style="
@@ -1390,7 +1415,9 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            S. Triglycerides:<br />mg/dl
+            S. Triglycerides:: ${
+              data?.cholestrolData?.["S.TRIGLYCERIDE"] || ""
+            }mg/dl
           </td>
         </tr>
         <tr>
@@ -1402,7 +1429,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Urea.<br />mg/dl
+            B. Urea.:
           </td>
           <td
             style="
@@ -1412,7 +1439,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            M
+            M: ${data?.cholestrolData?.["Monocytes"] || ""}
           </td>
           <td
             style="
@@ -1422,7 +1449,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B
+            B: ${data?.cholestrolData?.["Basophils"] || ""}
           </td>
 
           <td
@@ -1444,7 +1471,9 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Urine R/M: Colour:<br />Ph:
+            Urine R/M: Colour: ${
+              data?.cholestrolData?.["URINE.COLOUR"] || ""
+            }<br />Ph: 
           </td>
         </tr>
         <tr>
@@ -1456,7 +1485,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            S. Uric Acid mg/dl
+            S. Uric Acid: ${data?.cholestrolData?.["URIC_ACID"] || ""} mg/dl
           </td>
           <td
             colspan="4"
@@ -1467,7 +1496,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Total RBC count /cmm
+            Total RBC count: ${data?.cholestrolData?.["RBC"] || ""}/cmm
           </td>
 
           <td
@@ -1481,8 +1510,10 @@ const GrasimAgencyStaff = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Albumin:</span>
-            <span style="width: 50%">Sugar:</span>
+            <span style="width: 50%">Albumin: ${
+              data?.cholestrolData?.["Albumin"] || ""
+            }</span>
+            <span style="width: 50%">Sugar: </span>
           </td>
         </tr>
         <tr>
@@ -1494,7 +1525,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            SGOT mg/dl
+            SGOT: ${data?.cholestrolData?.["SGOT"] || ""} mg/dl
           </td>
           <td
             colspan="4"
@@ -1505,7 +1536,9 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Total Platelet count /cmm
+            Total Platelet count:  ${
+              data?.cholestrolData?.["PLATELET"] || ""
+            }/cmm
           </td>
 
           <td
@@ -1519,8 +1552,12 @@ const GrasimAgencyStaff = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Pus cells: </span>
-            <span style="width: 50%">RBCs:</span>
+            <span style="width: 50%">Pus cells: ${
+              data?.cholestrolData?.["URINE.PUS_CELLS"] || ""
+            } </span>
+            <span style="width: 50%">RBCs: ${
+              data?.cholestrolData?.["RBC"] || ""
+            }</span>
           </td>
         </tr>
         <tr>
@@ -1532,7 +1569,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            SGPT mg/dl
+            SGPT: ${data?.cholestrolData?.["SGPT"] || ""}mg/dl
           </td>
           <td
             colspan="4"
@@ -1543,7 +1580,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            ESR mm in 1st Hr
+            ESR ${data?.cholestrolData?.["ESR"] || ""} mm in 1st Hr
           </td>
 
           <td
@@ -1557,8 +1594,12 @@ const GrasimAgencyStaff = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Cast:</span>
-            <span style="width: 50%">Crystals:</span>
+            <span style="width: 50%">Cast: ${
+              data?.cholestrolData?.["URINE.CASTS"] || ""
+            }</span>
+            <span style="width: 50%">Crystals: ${
+              data?.cholestrolData?.["URINE.CRYSTALS"] || ""
+            }</span>
           </td>
         </tr>
         <tr>
@@ -1582,7 +1623,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            ECG Report:
+            ECG Report:NAD
           </td>
         </tr>
         <tr>
@@ -1595,7 +1636,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            PFT Report: <span style="width: 50%">FVC </span>
+            PFT Report: <span style="width: 50%">FVC: </span>
             <span style="width: 50%">FEV1/FVC</span>
           </td>
           <td
@@ -1716,7 +1757,6 @@ const GrasimAgencyStaff = ({
     </div>
   </body>
 </html>
-
     `;
     const pdfBlob = await html2pdf()
       .from(content)
@@ -1729,7 +1769,7 @@ const GrasimAgencyStaff = ({
     window.open(url, "_blank");
 
     // const formData = new FormData();
-    // formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
+    // formData.append("file", pdfBlob, `${data?.empId}_consolidated.pdf`);
 
     // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     // const result = await uploadFile(url, formData);
@@ -1754,9 +1794,14 @@ const GrasimAgencyStaff = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const filterEmpId = ["433952"];
-      const temp = result?.data?.filter(
-        (item) => item.employmentType === "CONTRACTOR"
+      // const filterEmpId = ["433952"];
+      // const temp = result?.data?.filter(
+      //   (item) => item.employmentType === "CONTRACTOR"
+      // );
+
+      const filterEmpId = ["1815842448"];
+      const temp = result?.data?.filter((item) =>
+        filterEmpId.includes(item.empId)
       );
 
       // .filter((item) => {
@@ -1799,7 +1844,7 @@ const GrasimAgencyStaff = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data?.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

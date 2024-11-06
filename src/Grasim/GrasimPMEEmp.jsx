@@ -360,7 +360,7 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
-            Height: ${data.height || ""}cm
+            Height: ${data?.height || ""}cm
           </td>
           <td
             colspan="2"
@@ -372,7 +372,7 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
-            Weight: ${data.weight || ""}Kgs
+            Weight: ${data?.weight || ""}Kgs
           </td>
           <td
             style="
@@ -382,7 +382,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            BMI: ${data.bmi || ""}Kg/m2
+            BMI: ${data?.bmi || ""}Kg/m2
           </td>
         </tr>
         <tr>
@@ -444,7 +444,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Pulse: ${data.pulseRate || ""}/min
+            Pulse: ${data?.pulseRate || ""}/min
           </td>
           <td
             colspan="2"
@@ -466,7 +466,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Blood Pressure:${data.bp || ""}mmHg
+            Blood Pressure:${data?.bp || ""}mmHg
           </td>
         </tr>
 
@@ -503,7 +503,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            SPO<sub>2</sub>: ${data.spO2Percent || ""}%
+            SPO<sub>2</sub>: ${data?.spO2Percent || ""}%
           </td>
         </tr>
         <tr>
@@ -541,7 +541,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Resp.Rate:${data.respRate || ""}
+            Resp.Rate:${data?.respRate || ""}
           </td>
           <td
             colspan="2"
