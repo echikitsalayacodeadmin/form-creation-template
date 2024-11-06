@@ -451,7 +451,7 @@ const Pepsico = ({
     const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
-      console.log("Fetched Data successfully");
+      console.log({ "Fetched Data successfully": result.data });
       const temp = result.data;
       const length = temp.length;
       console.log({ length });

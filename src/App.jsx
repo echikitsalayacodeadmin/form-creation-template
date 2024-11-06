@@ -15,12 +15,13 @@ import GrasimFood from "./Grasim/GrasimFood";
 import GrasimAgencyStaff from "./Grasim/GrasimAgencyStaff";
 import GrasimPMEEmp from "./Grasim/GrasimPMEEmp";
 import LiteBiteForm from "./liteBite/LiteBiteForm";
+import Pepsico from "./pepsico/pepsico";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <LiteBiteForm />
+      <GrasimPMEEmp />
       {/* <GenericFormGenerator /> */}
     </div>
   );
