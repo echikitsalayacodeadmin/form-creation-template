@@ -157,17 +157,17 @@ const GrasimPMEEmp = ({
         </tr>
         <!-- This row has four columns -->
         <tr>
-          <td style="border: 1px solid black; padding: 8px">Diabetes:</td>
-          <td style="border: 1px solid black; padding: 8px">Hypertension:</td>
-          <td style="border: 1px solid black; padding: 8px">CAD:</td>
-          <td style="border: 1px solid black; padding: 8px">Other:</td>
+          <td style="border: 1px solid black; padding: 8px">Diabetes: ----------</td>
+          <td style="border: 1px solid black; padding: 8px">Hypertension: ----------</td>
+          <td style="border: 1px solid black; padding: 8px">CAD: ----------</td>
+          <td style="border: 1px solid black; padding: 8px">Other: ----------</td>
         </tr>
         <!-- Other rows have fewer columns, so colspan is used to keep alignment -->
         <tr>
-          <td style="border: 1px solid black; padding: 8px">Angioplasty:</td>
-          <td style="border: 1px solid black; padding: 8px">CABG:</td>
+          <td style="border: 1px solid black; padding: 8px">Angioplasty: ----------</td>
+          <td style="border: 1px solid black; padding: 8px">CABG: ----------</td>
           <td colspan="2" style="border: 1px solid black; padding: 8px">
-            Any other surgery:
+            Any other surgery: -
           </td>
         </tr>
         <tr>
@@ -334,7 +334,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Marks of Identification 1)
+            Marks of Identification 1) ----------
           </td>
         </tr>
         <tr>
@@ -347,7 +347,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) ----------
           </td>
         </tr>
         <tr>
@@ -417,7 +417,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Chest Expansion: na
+            Chest Expansion: NA
           </td>
         </tr>
         <tr>
@@ -480,7 +480,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Heart Sounds:
+            Heart Sounds: ----------
           </td>
           <td
             colspan="2"
@@ -531,7 +531,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Resp.Rate:${data?.respRate || "-"}
+            Resp.Rate: ----------
           </td>
           <td
             colspan="2"
@@ -1229,9 +1229,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Sugar F: ${
-              data?.cholestrolData?.["BLOOD_SUGAR_FASTING"] || ""
-            } mg/dl
+            B. Sugar F: ----------
           </td>
           <td
             colspan="2"
@@ -1242,7 +1240,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Blood Group: -
+            Blood Group: ----------
           </td>
           <td
             style="
@@ -1301,7 +1299,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Sugar PPBS:
+            B. Sugar PPBS: ----------
           </td>
           <td
             colspan="2"
@@ -1410,7 +1408,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Urea.:-
+            B. Urea.: ----------
           </td>
           <td
             style="
@@ -1491,8 +1489,8 @@ const GrasimPMEEmp = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Albumin: -</span>
-            <span style="width: 50%">Sugar: - </span>
+            <span style="width: 50%">Albumin: ----------</span>
+            <span style="width: 50%">Sugar: ----------</span>
           </td>
         </tr>
         <tr>
@@ -1504,7 +1502,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            SGOT: -
+            SGOT: ----------
           </td>
           <td
             colspan="4"
@@ -1591,7 +1589,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            X-Ray Chest Report: na
+            X-Ray Chest Report: NA
           </td>
           <td
             colspan="3"
@@ -1602,7 +1600,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            ECG Report:NAD
+            ECG Report: NAD
           </td>
         </tr>
         <tr>
@@ -1627,7 +1625,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Audiometry Report:
+            Audiometry Report: ${data?.audiometryValue || ""}
           </td>
         </tr>
         <tr>
@@ -1774,10 +1772,60 @@ const GrasimPMEEmp = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
+      const audiometryEmployee = [
+        "150666",
+        "150665",
+        "150674",
+        "150717",
+        "1814690445",
+        "10926039",
+        "10929989",
+        "10926011",
+        "13515672",
+        "1816194334",
+        "13515673",
+        "10928825",
+        "10929539",
+        "1813600467",
+        "1815551588",
+        "1815551585",
+        "10927385",
+        "1815019685",
+        "1814103079",
+        "10929362",
+        "10902885",
+        "1813309127",
+        "1815266904",
+        "244103",
+        "293195",
+        "1815230843",
+        "1813017765",
+        "1815560125",
+        "342240",
+        "9913348",
+        "150670",
+        "141021",
+        "150670",
+        "10916113",
+        "342203",
+        "343182",
+        "343048",
+        "343049",
+        "343050",
+        "141010",
+      ];
+
       const filterEmpId = ["342164"];
-      const temp = result?.data?.filter((item) =>
-        filterEmpId.includes(item.empId)
-      );
+      const temp = result?.data
+        ?.filter((item) => filterEmpId.includes(item.empId))
+        .map((emp) => {
+          return {
+            ...emp,
+            audiometryValue: audiometryEmployee.includes(emp.empId)
+              ? "NAD"
+              : "NA",
+          };
+        });
 
       // filter(
       //   (emp) => emp.vitalsCreatedDate === "2024-10-22"
