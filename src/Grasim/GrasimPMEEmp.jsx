@@ -84,21 +84,57 @@ const GrasimPMEEmp = ({
           font-weight: bold;
         "
       >
-        <tr>
+
+      <tr>
           <td  style="border: 1px solid black; padding: 8px">
-            Father's Name: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.fathersName?.toLowerCase() || ""}</span
+            Name: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.name?.toLowerCase() || ""}</span
               >
           </td>
+<<<<<<< HEAD
+          <td   style="border: 1px solid black; padding: 8px">Age: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.age || ""}</span
+              ></td>
+
+             <td style="border: 1px solid black; padding: 8px">Gender: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.gender || ""}</span
+              ></td>
+              
+          <td style="border: 1px solid black; padding: 8px">
+            Date of examination: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.vitalsCreatedDate || ""}</span
+              >
+          </td>
+        </tr>
+        <tr>
+          <td  style="border: 1px solid black; padding: 8px">
+            Cadre: <span style="text-transform: capitalize; font-weight: 400;"
+                >Staff/Workman</span
+              >
+          </td>
+          <td  style="border: 1px solid black; padding: 8px">Employee Code: <span style="text-transform: capitalize; font-weight: 400;"
+=======
           <td  colspan="2" style="border: 1px solid black; padding: 8px">ESIC No: <span style="text-transform: capitalize; font-weight: 400;"
+<<<<<<< Updated upstream
+=======
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
                 >${data?.empId || ""}</span
               ></td>
           <td style="border: 1px solid black; padding: 8px">
-            Date of joining: <span style="text-transform: capitalize; font-weight: 400;"
+            Department: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.department || ""}</span
+              >
+          </td>
+            <td style="border: 1px solid black; padding: 8px">
+            Date of Joining: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.dateOfJoining || ""}</span
               >
           </td>
         </tr>
+<<<<<<< HEAD
+      
+=======
         <tr>
           <td colspan="3" style="border: 1px solid black; padding: 8px">
             Agency / Contractor: <span style="text-transform: capitalize; font-weight: 400;"
@@ -109,10 +145,11 @@ const GrasimPMEEmp = ({
                 >${data?.designation?.toLowerCase() || ""}</span
               ></td>
         </tr>
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
         <tr>
           <td style="border: 1px solid black; padding: 8px">
-            Department: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.department?.toLowerCase() || ""}</span
+            Occupation: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.occupation?.toLowerCase() || ""}</span
               >
           </td>
           <td  colspan="2" style="border: 1px solid black; padding: 8px">Mobile no. <span style="text-transform: capitalize; font-weight: 400;"
@@ -120,7 +157,15 @@ const GrasimPMEEmp = ({
               ></td>
           <td style="border: 1px solid black; padding: 8px">
             Telephone no. in plant: <span style="text-transform: capitalize; font-weight: 400;"
+<<<<<<< Updated upstream
                 >${""}</span
+=======
+<<<<<<< HEAD
+                ></span
+=======
+                >${""}</span
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
               >
           </td>
         </tr>
@@ -163,7 +208,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Regular medicines:
+            Regular medicines: NAD
           </td>
         </tr>
         <tr>
@@ -241,7 +286,19 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Diet: Veg / Non-Veg / Mixed
+            Diet: <span>Veg${
+              false
+                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+                : "&nbsp;"
+            }</span><span>/&nbsp;&nbsp;Non-Veg${
+      false
+        ? `<span style="position: relative;top:-10px;left:-25px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span><span>/&nbsp;&nbsp;Mixed${
+      false
+        ? `<span style="position: relative;top:-10px;left:-20px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span>
           </td>
           <td
             colspan="2"
@@ -252,7 +309,15 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Smoking: No / Yes
+            Smoking: <span>No${
+              false
+                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+                : "&nbsp;"
+            }</span> <span>/&nbsp;&nbsp;Yes${
+      false
+        ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span>
           </td>
           <td
             style="
@@ -262,7 +327,15 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Tobacco chewing: No / Yes
+            Tobacco chewing: <span>No${
+              false
+                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+                : "&nbsp;"
+            }</span> <span>/&nbsp;&nbsp;Yes${
+      false
+        ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+        : "&nbsp;"
+    }</span>
           </td>
         </tr>
         <tr>
@@ -315,9 +388,19 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
+<<<<<<< Updated upstream
             Height: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.height ? data?.height + " cm" : ""}</span
               >
+=======
+<<<<<<< HEAD
+            Height: ${data.height || ""}cm
+=======
+            Height: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.height ? data?.height + " cm" : ""}</span
+              >
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -329,9 +412,19 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
+<<<<<<< Updated upstream
             Weight: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.weight ? data?.weight + " Kgs" : ""}</span
               >
+=======
+<<<<<<< HEAD
+            Weight: ${data.weight || ""}Kgs
+=======
+            Weight: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.weight ? data?.weight + " Kgs" : ""}</span
+              >
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
           <td
             style="
@@ -341,9 +434,19 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
+<<<<<<< Updated upstream
             BMI:  <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.bmi ? data?.bmi + " Kg/m2" : ""}</span
               >
+=======
+<<<<<<< HEAD
+            BMI: ${data.bmi || ""}Kg/m2
+=======
+            BMI:  <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.bmi ? data?.bmi + " Kg/m2" : ""}</span
+              >
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
         </tr>
         <tr>
@@ -356,11 +459,21 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            Chest Inspiration: ${data?.chestInspiration}cm
+=======
+>>>>>>> Stashed changes
             Chest Inspiration:  <span style="text-transform: capitalize; font-weight: 400;"
                 >${
                   data?.chestInspiration ? data?.chestInspiration + " cm" : ""
                 }</span
               >
+<<<<<<< Updated upstream
+=======
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -372,11 +485,21 @@ const GrasimPMEEmp = ({
               width: 33%;
             "
           >
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            Chest Expiration: ${data?.chestExpiration}cm
+=======
+>>>>>>> Stashed changes
             Chest Expiration: <span style="text-transform: capitalize; font-weight: 400;"
                 >${
                   data?.chestExpiration ? data?.chestExpiration + " cm" : ""
                 }</span
               >
+<<<<<<< Updated upstream
+=======
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
           <td
             style="
@@ -415,9 +538,19 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
+<<<<<<< Updated upstream
             Pulse: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.pulseRate ? data?.pulseRate + " /min" : ""}</span
               > 
+=======
+<<<<<<< HEAD
+            Pulse: ${data.pulseRate || ""}/min
+=======
+            Pulse: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.pulseRate ? data?.pulseRate + " /min" : ""}</span
+              > 
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -428,7 +561,7 @@ const GrasimPMEEmp = ({
               border-bottom: 1px solid #000;
             "
           >
-            Regular/Irregular:
+            Regular/Irregular:  NAD
           </td>
           <td
             style="
@@ -439,9 +572,19 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
+<<<<<<< Updated upstream
             Blood Pressure: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.bp ? data?.bp + " mmHg" : ""}</span
               >
+=======
+<<<<<<< HEAD
+            Blood Pressure:${data.bp || ""}mmHg
+=======
+            Blood Pressure: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.bp ? data?.bp + " mmHg" : ""}</span
+              >
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
         </tr>
 
@@ -458,16 +601,27 @@ const GrasimPMEEmp = ({
             Heart Sounds:
           </td>
           <td
-            colspan="3"
+            colspan="2"
             style="
               padding: 8px;
               background-color: #fff;
               text-align: left;
               border-bottom: 1px solid #000;
-              border-right: 1px solid #000;
+              
             "
           >
-            Murmur:
+            Murmur: NAD
+          </td>
+           <td
+            style="
+              border-right: 1px solid black;
+              padding: 8px;
+              border-bottom: 1px solid #000;
+              background-color: #fff;
+              text-align: left;
+            "
+          >
+            SPO<sub>2</sub>: ${data.spO2Percent || ""}%
           </td>
         </tr>
         <tr>
@@ -505,9 +659,19 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
+<<<<<<< Updated upstream
             Resp.Rate: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.respRate ? data?.respRate + " /min" : ""}</span
               >
+=======
+<<<<<<< HEAD
+            Resp.Rate:${data.respRate || ""}
+=======
+            Resp.Rate: <span style="text-transform: capitalize; font-weight: 400;"
+                >${data?.respRate ? data?.respRate + " /min" : ""}</span
+              >
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
           </td>
           <td
             colspan="2"
@@ -519,7 +683,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Shape of Chest:
+            Shape of Chest:NA
           </td>
           <td
             style="
@@ -530,7 +694,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Trachea:
+            Trachea:NAD
           </td>
         </tr>
         <tr>
@@ -543,7 +707,7 @@ const GrasimPMEEmp = ({
               border-left: 1px solid #000;
             "
           >
-            Breath sounds:
+            Breath sounds:NAD
           </td>
           <td
             colspan="3"
@@ -555,7 +719,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Any Adventitious sound:
+            Any Adventitious sound:NA
           </td>
         </tr>
         <tr>
@@ -593,7 +757,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Cranial Nerves:
+            Cranial Nerves:NAD
           </td>
           <td
             colspan="2"
@@ -605,7 +769,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Sensory Functions:
+            Sensory Functions:NA
           </td>
           <td
             style="
@@ -616,7 +780,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Motor Functions:
+            Motor Functions:NAD
           </td>
         </tr>
         <tr>
@@ -630,7 +794,7 @@ const GrasimPMEEmp = ({
               border-bottom: 1px solid #000;
             "
           >
-            Reflexes:
+            Reflexes:NAD
           </td>
         </tr>
 
@@ -660,7 +824,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Teeth:
+            Teeth:NAD
           </td>
           <td
             colspan="2"
@@ -672,7 +836,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Gums:
+            Gums:NAD
           </td>
           <td
             style="
@@ -683,7 +847,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Tongue:
+            Tongue:NAD
           </td>
         </tr>
         <tr>
@@ -696,7 +860,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Liver:
+            Liver:NAD
           </td>
           <td
             colspan="2"
@@ -708,7 +872,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Spleen:
+            Spleen:NAD
           </td>
           <td
             style="
@@ -719,7 +883,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Any Lump:
+            Any Lump:NAD
           </td>
         </tr>
          </table>
@@ -759,7 +923,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Hernia:
+            Hernia:NAD
           </td>
           <td
             colspan="2"
@@ -771,7 +935,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Hydrocoele:
+            Hydrocoele:NAD
           </td>
           <td
             style="
@@ -782,7 +946,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-           Phimosis:
+           Phimosis:NAD
           </td>
         </tr>
         <tr>
@@ -795,7 +959,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-           Crypto-Orchidism:
+           Crypto-Orchidism:NAD
           </td>
           <td
             colspan="3"
@@ -808,7 +972,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Any feature of STD:
+            Any feature of STD:NAD
           </td>
           
         </tr>
@@ -926,6 +1090,23 @@ const GrasimPMEEmp = ({
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Without Glass</td>
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.farRightEyeSight || ""
+          } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.farLeftEyeSight || ""
+          } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.nearRightEyeSight || ""
+          } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${
+            data?.nearLeftEyeSight || ""
+          } </td>
+=======
+>>>>>>> Stashed changes
           <td style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
                 >${
                   !data?.eyeSightWithGlasses ? data?.farRightEyeSight : ""
@@ -946,6 +1127,10 @@ const GrasimPMEEmp = ({
                   !data?.eyeSightWithGlasses ? data?.nearLeftEyeSight : ""
                 }</span
               ></td>
+<<<<<<< Updated upstream
+=======
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
         </tr>
 
         <tr>
@@ -977,18 +1162,29 @@ const GrasimPMEEmp = ({
           <td style="border: 1px solid black; padding: 8px"></td>
         </tr>
         <tr>
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+          <td style="border: 1px solid black; padding: 8px">Color Vision</td>
+          <td align ="center" colspan="4" style="border: 1px solid black; padding: 8px">NAD</td>
+=======
+>>>>>>> Stashed changes
           <td style="border: 1px solid black;border-left: 1px solid black; padding: 8px">Color Vision</td>
           <td colspan="4" style="border: 1px solid black; padding: 8px"><span style="text-transform: capitalize; font-weight: 400;"
                 >${
                   data?.colourVision ? data?.colourVision?.toLowerCase() : ""
                 }</span
               ></td>
+<<<<<<< Updated upstream
+=======
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">
             Titmus / Key stone Vision
           </td>
-          <td colspan="4" style="border: 1px solid black; padding: 8px"></td>
+          <td colspan="4" style="border: 1px solid black; padding: 8px;"></td>
         </tr>
       </table>
       <table
@@ -1023,7 +1219,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Nose:
+            Nose:NAD
           </td>
           <td
             colspan="2"
@@ -1035,7 +1231,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Throat:
+            Throat:NAD
           </td>
           <td
             style="
@@ -1046,7 +1242,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Ear canal:
+            Ear canal:NAD
           </td>
         </tr>
         <tr>
@@ -1059,7 +1255,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Any Discharge:
+            Any Discharge:NAD
           </td>
           <td
             colspan="2"
@@ -1070,7 +1266,7 @@ const GrasimPMEEmp = ({
               background-color: #fff;
             "
           >
-            Tympanic membrane:
+            Tympanic membrane:NAD
           </td>
           <td
             style="
@@ -1081,7 +1277,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Whispered voice @ 2 ft:
+            Whispered voice @ 2 ft:NAD
           </td>
         </tr>
         <tr>
@@ -1108,7 +1304,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Gait :
+            Gait :NAD
           </td>
           <td
             colspan="2"
@@ -1120,7 +1316,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Spine :
+            Spine :NAD
           </td>
           <td
             style="
@@ -1131,7 +1327,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Any abnormality:
+            Any abnormality:NAD
           </td>
         </tr>
         <tr>
@@ -1145,7 +1341,7 @@ const GrasimPMEEmp = ({
               text-align: left;
             "
           >
-            Remarks
+            Remarks : NAD
           </td>
         </tr>
         <tr>
@@ -1231,7 +1427,9 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Sugar F mg/dl
+            B. Sugar F: ${
+              data?.cholestrolData?.["BLOOD_SUGAR_FASTING"] || ""
+            } mg/dl
           </td>
           <td
             colspan="2"
@@ -1242,7 +1440,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Blood Group:
+            Blood Group: ${data?.cholestrolData?.["Blood Group"] || ""}
           </td>
           <td
             style="
@@ -1252,7 +1450,9 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Total Cholesterol: mg/dl
+            Total Cholesterol: ${
+              data?.cholestrolData?.["S.CHOLESTEROL"] || ""
+            } mg/dl
           </td>
         </tr>
         <tr>
@@ -1264,7 +1464,9 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Sugar R mg/dl
+            B. Sugar R: ${
+              data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""
+            } mg/dl
           </td>
           <td
             colspan="2"
@@ -1275,7 +1477,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Haemoglobin gm/dl
+            Haemoglobin: ${data?.cholestrolData?.["HB"] || ""} mg/dl gm/dl
           </td>
           <td
             style="
@@ -1285,7 +1487,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            LDL Cholesterol: mg/dl
+            LDL Cholesterol: ${data?.cholestrolData?.["LDL"] || ""} mg/dl
           </td>
         </tr>
         <tr>
@@ -1297,7 +1499,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Sugar PPBS mg/dl
+            B. Sugar PPBS:
           </td>
           <td
             colspan="2"
@@ -1308,7 +1510,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Total WBC count /cmm
+            Total WBC count: ${data?.cholestrolData?.["WBC"] || ""}/cmm
           </td>
           <td
             style="
@@ -1318,7 +1520,9 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            HDL Cholesterol: mg/dl
+            HDL Cholesterol: ${
+              data?.cholestrolData?.["HDL Cholesterol"] || ""
+            }mg/dl
           </td>
         </tr>
       </table>
@@ -1339,7 +1543,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            S. Creat.<br />mg/dl
+            S. Creat.: ${data?.cholestrolData?.["S.CREATININE"] || ""}mg/dl
           </td>
           <td
             rowspan="2"
@@ -1350,7 +1554,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Differential<br />ial count
+            Differential<br /> count
           </td>
           <td
             style="
@@ -1360,7 +1564,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            N
+            N: ${data?.cholestrolData?.["Neutrophils"] || ""}
           </td>
           <td
             style="
@@ -1370,7 +1574,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            L
+            L: ${data?.cholestrolData?.["Lymphocytes"] || ""}
           </td>
           <td
             style="
@@ -1380,7 +1584,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            E
+            E: ${data?.cholestrolData?.["Eosinophils"] || ""}
           </td>
           <td
             style="
@@ -1390,7 +1594,9 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            S. Triglycerides:<br />mg/dl
+            S. Triglycerides:: ${
+              data?.cholestrolData?.["S.TRIGLYCERIDE"] || ""
+            }mg/dl
           </td>
         </tr>
         <tr>
@@ -1402,7 +1608,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B. Urea.<br />mg/dl
+            B. Urea.:
           </td>
           <td
             style="
@@ -1412,7 +1618,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            M
+            M: ${data?.cholestrolData?.["Monocytes"] || ""}
           </td>
           <td
             style="
@@ -1422,7 +1628,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            B
+            B: ${data?.cholestrolData?.["Basophils"] || ""}
           </td>
 
           <td
@@ -1444,7 +1650,9 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Urine R/M: Colour:<br />Ph:
+            Urine R/M: Colour: ${
+              data?.cholestrolData?.["URINE.COLOUR"] || ""
+            }<br />Ph: 
           </td>
         </tr>
         <tr>
@@ -1456,7 +1664,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            S. Uric Acid mg/dl
+            S. Uric Acid: ${data?.cholestrolData?.["URIC_ACID"] || ""} mg/dl
           </td>
           <td
             colspan="4"
@@ -1467,7 +1675,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Total RBC count /cmm
+            Total RBC count: ${data?.cholestrolData?.["RBC"] || ""}/cmm
           </td>
 
           <td
@@ -1481,8 +1689,10 @@ const GrasimPMEEmp = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Albumin:</span>
-            <span style="width: 50%">Sugar:</span>
+            <span style="width: 50%">Albumin: ${
+              data?.cholestrolData?.["Albumin"] || ""
+            }</span>
+            <span style="width: 50%">Sugar: </span>
           </td>
         </tr>
         <tr>
@@ -1494,7 +1704,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            SGOT mg/dl
+            SGOT: ${data?.cholestrolData?.["SGOT"] || ""} mg/dl
           </td>
           <td
             colspan="4"
@@ -1505,7 +1715,9 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            Total Platelet count /cmm
+            Total Platelet count:  ${
+              data?.cholestrolData?.["PLATELET"] || ""
+            }/cmm
           </td>
 
           <td
@@ -1519,8 +1731,12 @@ const GrasimPMEEmp = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Pus cells: </span>
-            <span style="width: 50%">RBCs:</span>
+            <span style="width: 50%">Pus cells: ${
+              data?.cholestrolData?.["URINE.PUS_CELLS"] || ""
+            } </span>
+            <span style="width: 50%">RBCs: ${
+              data?.cholestrolData?.["RBC"] || ""
+            }</span>
           </td>
         </tr>
         <tr>
@@ -1532,7 +1748,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            SGPT mg/dl
+            SGPT: ${data?.cholestrolData?.["SGPT"] || ""}mg/dl
           </td>
           <td
             colspan="4"
@@ -1543,7 +1759,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            ESR mm in 1st Hr
+            ESR ${data?.cholestrolData?.["ESR"] || ""} mm in 1st Hr
           </td>
 
           <td
@@ -1557,8 +1773,12 @@ const GrasimPMEEmp = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Cast:</span>
-            <span style="width: 50%">Crystals:</span>
+            <span style="width: 50%">Cast: ${
+              data?.cholestrolData?.["URINE.CASTS"] || ""
+            }</span>
+            <span style="width: 50%">Crystals: ${
+              data?.cholestrolData?.["URINE.CRYSTALS"] || ""
+            }</span>
           </td>
         </tr>
         <tr>
@@ -1582,7 +1802,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            ECG Report:
+            ECG Report:NAD
           </td>
         </tr>
         <tr>
@@ -1595,7 +1815,7 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            PFT Report: <span style="width: 50%">FVC </span>
+            PFT Report: <span style="width: 50%">FVC: </span>
             <span style="width: 50%">FEV1/FVC</span>
           </td>
           <td
@@ -1754,10 +1974,27 @@ const GrasimPMEEmp = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
+<<<<<<< Updated upstream
       const filterEmpId = ["433952"];
       const temp = result?.data?.filter(
         (item) => item.employmentType === "ONROLL"
+=======
+<<<<<<< HEAD
+      const filterEmpId = ["342164"];
+      const temp = result?.data?.filter((item) =>
+        filterEmpId.includes(item.empId)
+=======
+      const filterEmpId = ["433952"];
+      const temp = result?.data?.filter(
+        (item) => item.employmentType === "ONROLL"
+>>>>>>> 26111fe1979558180becbcff6fc148c57edd3b54
+>>>>>>> Stashed changes
       );
+
+      // filter(
+      //   (emp) => emp.vitalsCreatedDate === "2024-10-22"
+      // );
+
       // .filter((item) => {
       //   const itemDate = dayjs(item.date).format("YYYY-MM-DD");
       //   return (
