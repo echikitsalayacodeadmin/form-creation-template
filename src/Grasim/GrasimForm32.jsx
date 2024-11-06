@@ -745,7 +745,10 @@ const GrasimForm32 = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
+      const filterEmpId = ["342164"];
+      const temp = result?.data?.filter((item) =>
+        filterEmpId.includes(item.empId)
+      );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
