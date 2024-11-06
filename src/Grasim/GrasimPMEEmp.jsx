@@ -157,17 +157,17 @@ const GrasimPMEEmp = ({
         </tr>
         <!-- This row has four columns -->
         <tr>
-          <td style="border: 1px solid black; padding: 8px">Diabetes: ----------</td>
-          <td style="border: 1px solid black; padding: 8px">Hypertension: ----------</td>
-          <td style="border: 1px solid black; padding: 8px">CAD: ----------</td>
-          <td style="border: 1px solid black; padding: 8px">Other: ----------</td>
+          <td style="border: 1px solid black; padding: 8px">Diabetes: --------</td>
+          <td style="border: 1px solid black; padding: 8px">Hypertension: --------</td>
+          <td style="border: 1px solid black; padding: 8px">CAD: --------</td>
+          <td style="border: 1px solid black; padding: 8px">Other: --------</td>
         </tr>
         <!-- Other rows have fewer columns, so colspan is used to keep alignment -->
         <tr>
           <td style="border: 1px solid black; padding: 8px">Angioplasty: ----------</td>
           <td style="border: 1px solid black; padding: 8px">CABG: ----------</td>
           <td colspan="2" style="border: 1px solid black; padding: 8px">
-            Any other surgery: -
+            Any other surgery: ----------
           </td>
         </tr>
         <tr>

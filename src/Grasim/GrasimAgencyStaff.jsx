@@ -55,8 +55,8 @@ const GrasimAgencyStaff = ({
     </style>
   </head>
   <body>
-     <div style="padding-left: 5%; padding-right: 5%; padding-top: 3%">
-      <div style="border: 1px solid #000">
+    <div style="padding-left: 5%; padding-right: 5%; padding-top: 3%">
+     <div style="border: 1px solid #000">
         <div class="section" style="display: flex">
           <img
             style="height: 50px; width: 50px"
@@ -86,7 +86,7 @@ const GrasimAgencyStaff = ({
         "
       >
 
-      <tr>
+ <tr>
           <td  style="border: 1px solid black; padding: 8px">
             Name: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.name?.toLowerCase() || ""}</span
@@ -150,6 +150,7 @@ const GrasimAgencyStaff = ({
               >
           </td>
         </tr>
+
         <tr>
           <td
             colspan="4"
@@ -166,17 +167,17 @@ const GrasimAgencyStaff = ({
         </tr>
         <!-- This row has four columns -->
         <tr>
-          <td style="border: 1px solid black; padding: 8px">Diabetes:</td>
-          <td style="border: 1px solid black; padding: 8px">Hypertension:</td>
-          <td style="border: 1px solid black; padding: 8px">CAD:</td>
-          <td style="border: 1px solid black; padding: 8px">Other:</td>
+          <td style="border: 1px solid black; padding: 8px">Diabetes: --------</td>
+          <td style="border: 1px solid black; padding: 8px">Hypertension: --------</td>
+          <td style="border: 1px solid black; padding: 8px">CAD: --------</td>
+          <td style="border: 1px solid black; padding: 8px">Other: --------</td>
         </tr>
         <!-- Other rows have fewer columns, so colspan is used to keep alignment -->
         <tr>
-          <td style="border: 1px solid black; padding: 8px">Angioplasty:</td>
-          <td style="border: 1px solid black; padding: 8px">CABG:</td>
+          <td style="border: 1px solid black; padding: 8px">Angioplasty: ----------</td>
+          <td style="border: 1px solid black; padding: 8px">CABG: ----------</td>
           <td colspan="2" style="border: 1px solid black; padding: 8px">
-            Any other surgery:
+            Any other surgery: ----------
           </td>
         </tr>
         <tr>
@@ -343,7 +344,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Marks of Identification 1)
+            Marks of Identification 1) ----------
           </td>
         </tr>
         <tr>
@@ -356,7 +357,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) ----------
           </td>
         </tr>
         <tr>
@@ -426,7 +427,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Chest Expansion: cm
+            Chest Expansion: NA
           </td>
         </tr>
         <tr>
@@ -489,7 +490,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Heart Sounds:
+            Heart Sounds: ----------
           </td>
           <td
             colspan="2"
@@ -503,17 +504,7 @@ const GrasimAgencyStaff = ({
           >
             Murmur: NAD
           </td>
-           <td
-            style="
-              border-right: 1px solid black;
-              padding: 8px;
-              border-bottom: 1px solid #000;
-              background-color: #fff;
-              text-align: left;
-            "
-          >
-            SPO<sub>2</sub>: ${data?.spO2Percent || ""}%
-          </td>
+         
         </tr>
         <tr>
           <td
@@ -550,7 +541,7 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Resp.Rate:${data?.respRate || ""}
+            Resp.Rate: ----------
           </td>
           <td
             colspan="2"
@@ -985,10 +976,10 @@ const GrasimAgencyStaff = ({
 
         <tr>
           <td style="border: 1px solid black; padding: 8px">With Glass</td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
-          <td style="border: 1px solid black; padding: 8px"></td>
+          <td style="border: 1px solid black; padding: 8px">6/6</td>
+          <td style="border: 1px solid black; padding: 8px">6/6</td>
+          <td style="border: 1px solid black; padding: 8px">N/6</td>
+          <td style="border: 1px solid black; padding: 8px">N/6</td>
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Power of Glass</td>
@@ -1248,9 +1239,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Sugar F: ${
-              data?.cholestrolData?.["BLOOD_SUGAR_FASTING"] || ""
-            } mg/dl
+            B. Sugar F: ----------
           </td>
           <td
             colspan="2"
@@ -1261,7 +1250,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Blood Group: ${data?.cholestrolData?.["Blood Group"] || ""}
+            Blood Group: ----------
           </td>
           <td
             style="
@@ -1320,7 +1309,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Sugar PPBS:
+            B. Sugar PPBS: ----------
           </td>
           <td
             colspan="2"
@@ -1429,7 +1418,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Urea.:
+            B. Urea.: ----------
           </td>
           <td
             style="
@@ -1510,10 +1499,8 @@ const GrasimAgencyStaff = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Albumin: ${
-              data?.cholestrolData?.["Albumin"] || ""
-            }</span>
-            <span style="width: 50%">Sugar: </span>
+            <span style="width: 50%">Albumin: ----------</span>
+            <span style="width: 50%">Sugar: ----------</span>
           </td>
         </tr>
         <tr>
@@ -1525,7 +1512,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            SGOT: ${data?.cholestrolData?.["SGOT"] || ""} mg/dl
+            SGOT: ----------
           </td>
           <td
             colspan="4"
@@ -1612,7 +1599,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            X-Ray Chest Report:
+            X-Ray Chest Report: NA
           </td>
           <td
             colspan="3"
@@ -1623,7 +1610,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            ECG Report:NAD
+            ECG Report: NAD
           </td>
         </tr>
         <tr>
@@ -1648,7 +1635,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Audiometry Report:
+            Audiometry Report: ${data?.audiometryValue || ""}
           </td>
         </tr>
         <tr>
@@ -1757,7 +1744,9 @@ const GrasimAgencyStaff = ({
     </div>
   </body>
 </html>
+
     `;
+
     const pdfBlob = await html2pdf()
       .from(content)
       .output("blob")
@@ -1799,10 +1788,59 @@ const GrasimAgencyStaff = ({
       //   (item) => item.employmentType === "CONTRACTOR"
       // );
 
+      const audiometryEmployee = [
+        "150666",
+        "150665",
+        "150674",
+        "150717",
+        "1814690445",
+        "10926039",
+        "10929989",
+        "10926011",
+        "13515672",
+        "1816194334",
+        "13515673",
+        "10928825",
+        "10929539",
+        "1813600467",
+        "1815551588",
+        "1815551585",
+        "10927385",
+        "1815019685",
+        "1814103079",
+        "10929362",
+        "10902885",
+        "1813309127",
+        "1815266904",
+        "244103",
+        "293195",
+        "1815230843",
+        "1813017765",
+        "1815560125",
+        "342240",
+        "9913348",
+        "150670",
+        "141021",
+        "150670",
+        "10916113",
+        "342203",
+        "343182",
+        "343048",
+        "343049",
+        "343050",
+        "141010",
+      ];
       const filterEmpId = ["1815842448"];
-      const temp = result?.data?.filter((item) =>
-        filterEmpId.includes(item.empId)
-      );
+      const temp = result?.data
+        ?.filter((item) => filterEmpId.includes(item.empId))
+        .map((emp) => {
+          return {
+            ...emp,
+            audiometryValue: audiometryEmployee.includes(emp.empId)
+              ? "NAD"
+              : "NA",
+          };
+        });
 
       // .filter((item) => {
       //   const itemDate = dayjs(item.date).format("YYYY-MM-DD");
