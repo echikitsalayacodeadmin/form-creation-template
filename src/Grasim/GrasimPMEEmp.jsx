@@ -167,7 +167,7 @@ const GrasimPMEEmp = ({
           <td style="border: 1px solid black; padding: 8px">Angioplasty: ----------</td>
           <td style="border: 1px solid black; padding: 8px">CABG: ----------</td>
           <td colspan="2" style="border: 1px solid black; padding: 8px">
-            Any other surgery: ----------
+            Any other surgery: ${data?.anyOtherSurgery || "----------"} 
           </td>
         </tr>
         <tr>
@@ -1815,6 +1815,38 @@ const GrasimPMEEmp = ({
         "141010",
       ];
 
+      const tokensList = {
+        12: "high Abnormal ECG",
+        14: "Not Significant",
+        17: "Not Significant",
+        23: "Not Significant",
+        25: "Not Significant",
+        36: "Tachycardia",
+        37: "Anteroseptal Infarct",
+        38: "Not Significant",
+        39: "Not Significant",
+        40: "Not Significant",
+        73: "Inferior ST Abnormality",
+        97: "Inferior and Interior Infarct",
+        109: "Inferior and Interior Infarct",
+        114: "Inferior and T wave Abnormality",
+        121: "Lateral Wall ST Abnormality",
+        137: "AV Block in ECG",
+        150: "Fascicular Block in ECG",
+        159: "Incomplete Right Bundle Branch Block",
+        162: "Abnormal ECG",
+        173: "Abnormal T Wave in ECG",
+        191: "Left Bundle Branch Block",
+        217: "Inferior ST Abnormality",
+        236: "Inferior ST Abnormality",
+        247: "	Inferior Infarct",
+        256: "Right Bundle Branch Block",
+        317: "Not Significant",
+        324: "Left Anterior fascicular Block",
+        367: "Inferior Septal Infarct",
+        432: "Right Bundle Branch Block",
+      };
+
       const filterEmpId = ["342164"];
       const temp = result?.data
         ?.filter((item) => filterEmpId.includes(item.empId))
@@ -1824,6 +1856,7 @@ const GrasimPMEEmp = ({
             audiometryValue: audiometryEmployee.includes(emp.empId)
               ? "NAD"
               : "NA",
+            anyOtherSurgery: tokensList[emp.tokenNumber] || "",
           };
         });
 
