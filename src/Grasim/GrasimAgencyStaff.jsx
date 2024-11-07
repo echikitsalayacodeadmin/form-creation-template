@@ -6,6 +6,14 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
 import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
+import {
+  anyOtherSurgeryList,
+  audiometryEmployeeList,
+  diabetesList,
+  hyperTensionList,
+  listWithoutSign,
+} from "./GrasimConstants";
+import { uploadFile } from "../assets/services/PostApiCall";
 
 const GrasimAgencyStaff = ({
   corpId = "1d49173b-ab6d-44d2-9a68-1895af1f8ca2",
@@ -1742,7 +1750,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
               height: 100px;">
               ${
-                data.isSign
+                data?.isSign
                   ? `<img src=${KUNALSIGNBASE64} style="height:140px;"/>`
                   : ""
               }
@@ -1763,26 +1771,26 @@ const GrasimAgencyStaff = ({
         return data;
       });
 
-    const url = URL.createObjectURL(pdfBlob);
-    window.open(url, "_blank");
+    // const url1 = URL.createObjectURL(pdfBlob);
+    // window.open(url1, "_blank");
 
-    // const formData = new FormData();
-    // formData.append("file", pdfBlob, `${data?.empId}_consolidated.pdf`);
+    const formData = new FormData();
+    formData.append("file", pdfBlob, `${data?.empId}_consolidated.pdf`);
 
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-    // const result = await uploadFile(url, formData);
-    // if (result && result.data) {
-    //   enqueueSnackbar("Successfully Uploaded PDF!", {
-    //     variant: "success",
-    //   });
-    //   setUploadedCount((prevCount) => prevCount + 1);
-    //   // const url = URL.createObjectURL(pdfBlob);
-    //   // window.open(url, "_blank");
-    // } else {
-    //   enqueueSnackbar("An error Occurred!", {
-    //     variant: "error",
-    //   });
-    // }
+    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await uploadFile(url, formData);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
   };
 
   const fetchListOfEmployees = async () => {
@@ -1797,106 +1805,23 @@ const GrasimAgencyStaff = ({
       //   (item) => item.employmentType === "CONTRACTOR"
       // );
 
-      const audiometryEmployee = [
-        "150666",
-        "150665",
-        "150674",
-        "150717",
-        "1814690445",
-        "10926039",
-        "10929989",
-        "10926011",
-        "13515672",
-        "1816194334",
-        "13515673",
-        "10928825",
-        "10929539",
-        "1813600467",
-        "1815551588",
-        "1815551585",
-        "10927385",
-        "1815019685",
-        "1814103079",
-        "10929362",
-        "10902885",
-        "1813309127",
-        "1815266904",
-        "244103",
-        "293195",
-        "1815230843",
-        "1813017765",
-        "1815560125",
-        "342240",
-        "9913348",
-        "150670",
-        "141021",
-        "150670",
-        "10916113",
-        "342203",
-        "343182",
-        "343048",
-        "343049",
-        "343050",
-        "141010",
-      ];
-
-      const tokensList = {
-        12: "high Abnormal ECG",
-        14: "Not Significant",
-        17: "Not Significant",
-        23: "Not Significant",
-        25: "Not Significant",
-        36: "Tachycardia",
-        37: "Anteroseptal Infarct",
-        38: "Not Significant",
-        39: "Not Significant",
-        40: "Not Significant",
-        73: "Inferior ST Abnormality",
-        97: "Inferior and Interior Infarct",
-        109: "Inferior and Interior Infarct",
-        114: "Inferior and T wave Abnormality",
-        121: "Lateral Wall ST Abnormality",
-        137: "AV Block in ECG",
-        150: "Fascicular Block in ECG",
-        159: "Incomplete Right Bundle Branch Block",
-        162: "Abnormal ECG",
-        173: "Abnormal T Wave in ECG",
-        191: "Left Bundle Branch Block",
-        217: "Inferior ST Abnormality",
-        236: "Inferior ST Abnormality",
-        247: "	Inferior Infarct",
-        256: "Right Bundle Branch Block",
-        317: "Not Significant",
-        324: "Left Anterior fascicular Block",
-        367: "Inferior Septal Infarct",
-        432: "Right Bundle Branch Block",
-      };
-
       const filterEmpId = ["1815842448"];
       const temp = result?.data
-        ?.filter((item) => filterEmpId.includes(item.empId))
+        ?.filter(
+          (emp) => emp.vitalsCreatedDate === "2024-10-23" && emp.contractorName
+        )
         .map((emp) => {
           return {
             ...emp,
-            audiometryValue: audiometryEmployee.includes(emp.empId)
+            audiometryValue: audiometryEmployeeList.includes(emp.empId)
               ? "NAD"
               : "NA",
-            anyOtherSurgery: tokensList[emp.tokenNumber] || "",
+            anyOtherSurgery: anyOtherSurgeryList[emp.tokenNumber] || "",
+            diabetes: diabetesList.includes(emp.empId),
+            hyperTension: hyperTensionList.includes(emp.empId),
+            isSign: !listWithoutSign.includes(emp.empId),
           };
         });
-
-      // .filter((item) => {
-      //   const itemDate = dayjs(item.date).format("YYYY-MM-DD");
-      //   return (
-      //     // empId &&
-      //     // bloodReportExist &&
-      //     // audioReportExist &&
-      //     // pftReportExist &&
-      //     // bloodReportExist &&
-      //     itemDate >= dayjs(startDate).format("YYYY-MM-DD") &&
-      //     itemDate <= dayjs(endDate).format("YYYY-MM-DD")
-      //   );
-      // });
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -1914,7 +1839,7 @@ const GrasimAgencyStaff = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < totalEmployees; i++) {
       await generatePDF(list[i], i);
     }
   };
