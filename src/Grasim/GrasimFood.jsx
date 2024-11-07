@@ -5,6 +5,9 @@ import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
+import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
+import { foodHandlerList, listWithoutSign } from "./GrasimConstants";
+import { uploadFile } from "../assets/services/PostApiCall";
 
 const GrasimFood = ({
   corpId = "1d49173b-ab6d-44d2-9a68-1895af1f8ca2",
@@ -348,7 +351,7 @@ const GrasimFood = ({
           class="section"
           style="
             display: flex;
-            height: 100px;
+            height: 70px;
             font-size: 12px;
             font-weight: bold;
           "
@@ -362,12 +365,19 @@ const GrasimFood = ({
           class="section"
           style="display: flex; font-size: 12px; font-weight: bold"
         >
-          <div style="width: 60%; padding: 2px">Date : <span style="font-weight: normal""> ${
+          <div style="width: 30%; padding: 2px">Date : <span style="font-weight: normal""> ${
             data?.vitalsCreatedDate || ""
           }</span></div>
-          <div style="width: 40%">
+          <div style="width: 35%">
             <div style="padding: 2px">Signature & Seal</div>
             <div style="padding: 2px">Examining Doctor</div>
+          </div>
+           <div style="width: 35%">
+           ${
+             data?.isSign
+               ? `<img src=${KUNALSIGNBASE64} style="height:140px;"/>`
+               : ""
+           }
           </div>
         </div>
       </div>
@@ -384,26 +394,26 @@ const GrasimFood = ({
         return data;
       });
 
-    const url = URL.createObjectURL(pdfBlob);
-    window.open(url, "_blank");
+    // const url1 = URL.createObjectURL(pdfBlob);
+    // window.open(url1, "_blank");
 
-    // const formData = new FormData();
-    // formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
+    const formData = new FormData();
+    formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
 
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-    // const result = await uploadFile(url, formData);
-    // if (result && result.data) {
-    //   enqueueSnackbar("Successfully Uploaded PDF!", {
-    //     variant: "success",
-    //   });
-    //   setUploadedCount((prevCount) => prevCount + 1);
-    //   // const url = URL.createObjectURL(pdfBlob);
-    //   // window.open(url, "_blank");
-    // } else {
-    //   enqueueSnackbar("An error Occurred!", {
-    //     variant: "error",
-    //   });
-    // }
+    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await uploadFile(url, formData);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
   };
 
   const fetchListOfEmployees = async () => {
@@ -414,9 +424,12 @@ const GrasimFood = ({
       console.log("Fetched Data successfully");
 
       const filterEmpId = ["15252132"];
-      const temp = result?.data?.filter((item) =>
-        filterEmpId.includes(item.empId)
-      );
+      const temp = result?.data
+        ?.filter((item) => foodHandlerList.includes(item.empId))
+        .map((emp) => ({
+          ...emp,
+          isSign: !listWithoutSign.includes(emp.empId),
+        }));
       // ?.filter((item) =>
       //   filterEmpId.includes(item.empId)
       // );
@@ -449,7 +462,7 @@ const GrasimFood = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < totalEmployees; i++) {
       await generatePDF(list[i], i);
     }
   };

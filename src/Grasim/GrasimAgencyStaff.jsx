@@ -5,6 +5,7 @@ import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
+import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
 
 const GrasimAgencyStaff = ({
   corpId = "1d49173b-ab6d-44d2-9a68-1895af1f8ca2",
@@ -1710,33 +1711,41 @@ const GrasimAgencyStaff = ({
             ADIVCE
           </td>
         </tr>
+        
         <tr>
-          <td
-            colspan="1"
-            style="
-              border-left: 1px solid black;
+          <td  style="width:15%;border-left: 1px solid black;
               border-bottom: 1px solid black;
               padding: 8px;
               background-color: #fff;
-              font-weight: bold;
-            "
-          >
-            Date:
+              font-weight: bold;">Date:
           </td>
-          <td
-            colspan="6"
-            style="
-              border-right: 1px solid black;
+
+             <td style="width:15%;border-bottom: 1px solid black;
+              padding: 8px;
+              background-color: #fff;
+              font-weight: bold;">
+          </td>
+          <td style="width:35%;border-left: 1px solid black;
               border-bottom: 1px solid black;
               padding: 8px;
               background-color: #fff;
               font-weight: bold;
-              height: 100px;
-            "
-          >
+              height: 100px;">
             Signature & Seal: <br />
             Examining Doctor: <br />
             Registration Number:
+          </td>
+          <td style="width:35%;border-right: 1px solid black;
+              border-bottom: 1px solid black;
+              padding: 8px;
+              background-color: #fff;
+              font-weight: bold;
+              height: 100px;">
+              ${
+                data.isSign
+                  ? `<img src=${KUNALSIGNBASE64} style="height:140px;"/>`
+                  : ""
+              }
           </td>
         </tr>
       </table>

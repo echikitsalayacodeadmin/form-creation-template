@@ -6,6 +6,8 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
+import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
+import { listWithoutSign } from "./GrasimConstants";
 
 const GrasimForm32 = ({
   corpId = "1d49173b-ab6d-44d2-9a68-1895af1f8ca2",
@@ -375,7 +377,7 @@ const GrasimForm32 = ({
                 text-transform: capitalize;
               "
             >
-              ${"NA"}
+              "NA"
             </span>
           </p>
         </li>
@@ -388,23 +390,31 @@ const GrasimForm32 = ({
       <br/>
       <p style="display: flex; justify-content: space-between">
      
-        <span>
-       <br/>
-        ..................................</span>
-        <span>
- <br/>
-        .............................</span>
+      
+   
       </p>
-      <p style="display: flex; justify-content: space-between">
-        <span
-          >Signature of L.T.I. of<br />
-          Person examined</span
-        >
-        <span
-          >Signature of<br />
-          Certifying Surgeon</span
-        >
-      </p>
+      <div style="display: flex; justify-content: space-between">
+
+        <div><div style="height:120px;"> </div>
+        <span><br/>..................................</span>
+        <p>Signature of L.T.I. of<br />Person examined</p>
+        </div>
+
+      <div> 
+        <div style="height:120px;">
+         ${
+           data?.isSign
+             ? `<img src=${KUNALSIGNBASE64} style="height:120px;"/>`
+             : ""
+         } 
+         </div>
+        <span><br/>.............................</span>
+       <p>Signature of<br />Certifying Surgeon</p> 
+       </div>
+
+      </div>
+
+
     </div>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -659,23 +669,30 @@ const GrasimForm32 = ({
        <br/><br/><br/>
       <p style="display: flex; justify-content: space-between">
      
-        <span>
-       <br/>
-        ..................................</span>
-        <span>
-     <br/>
-        .............................</span>
+     
       </p>
-      <p style="display: flex; justify-content: space-between">
-        <span
-          >Signature of L.T.I. of<br />
-          Person examined</span
-        >
-        <span
-          >Signature of<br />
-          Certifying Surgeon</span
-        >
-      </p>
+      <div style="display: flex; justify-content: space-between">
+
+        <div><div style="height:120px;"> </div>
+        <span><br/>..................................</span>
+        <p>Signature of L.T.I. of<br />Person examined</p>
+        </div>
+
+      <div> 
+       <div>
+       <div style="height:120px;">
+         ${
+           data?.isSign
+             ? `<img src=${KUNALSIGNBASE64} style="height:120px;"/>`
+             : ""
+         } 
+         </div>
+  
+        <span><br/>.............................</span>
+       <p>Signature of<br />Certifying Surgeon</p> 
+       </div>
+
+      </div>
     </div>
       <p style="padding-top: 2pt; text-indent: 0pt; text-align: left"><br /></p>
       <p
@@ -721,8 +738,8 @@ const GrasimForm32 = ({
         return data;
       });
 
-    // const url = URL.createObjectURL(pdfBlob);
-    // window.open(url, "_blank");
+    // const url1 = URL.createObjectURL(pdfBlob);
+    // window.open(url1, "_blank");
 
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_${data?.name}.pdf`);
@@ -750,14 +767,17 @@ const GrasimForm32 = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const filterEmpId = ["15252132"];
+      // const filterEmpId = ["15252132"];
       // const temp = result?.data?.filter((item) =>
       //   filterEmpId.includes(item.empId)
       // );
 
-      const temp = result?.data?.filter(
-        (emp) => emp.vitalsCreatedDate === "2024-10-22"
-      );
+      const temp = result?.data
+        ?.filter((emp) => emp.vitalsCreatedDate === "2024-10-23")
+        .map((emp) => ({
+          ...emp,
+          isSign: !listWithoutSign.includes(emp.empId),
+        }));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -773,7 +793,7 @@ const GrasimForm32 = ({
   useEffect(() => {
     fetchListOfEmployees();
   }, []);
-
+  //totalEmployees
   const handleGeneratePDFs = async () => {
     for (let i = 0; i < totalEmployees; i++) {
       await generatePDF(list[i], i);
@@ -810,7 +830,7 @@ const GrasimForm32 = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.form32Url}>
+            <a href={item.form32Url} target="_blank">
               <div key={index}>{item.form32Url}</div>
             </a>
             <br />
