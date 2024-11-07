@@ -1627,8 +1627,8 @@ const GrasimPMEEmp = ({
               font-weight: bold;
             "
           >
-            PFT Report: <span style="width: 50%">FVC: </span>
-            <span style="width: 50%">FEV1/FVC</span>
+            PFT Report:
+            ${data?.cholestrolData?.["PFT"] || "----------"}
           </td>
           <td
             colspan="3"
@@ -1802,6 +1802,13 @@ const GrasimPMEEmp = ({
       console.log("Fetched Data successfully");
 
       const filterEmpId = ["141017"];
+
+      // ?.filter(
+      //   (emp) =>
+      //     emp.vitalsCreatedDate === "2024-10-23" &&
+      //     (emp.employmentType === "ONROLL" || !emp.contractorName)
+      // )
+      //.filter((emp) => filterEmpIdAny.includes(emp.empId))
       const filterEmpIdAny = ["004039"];
       const temp = result?.data
         ?.filter(
@@ -1809,6 +1816,7 @@ const GrasimPMEEmp = ({
             emp.vitalsCreatedDate === "2024-10-23" &&
             (emp.employmentType === "ONROLL" || !emp.contractorName)
         )
+
         .map((emp) => {
           return {
             ...emp,

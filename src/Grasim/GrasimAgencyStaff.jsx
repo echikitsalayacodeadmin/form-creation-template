@@ -1632,8 +1632,8 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            PFT Report: <span style="width: 50%">FVC: </span>
-            <span style="width: 50%">FEV1/FVC</span>
+            PFT Report:
+            ${data?.cholestrolData?.["PFT"] || "----------"}
           </td>
           <td
             colspan="3"
@@ -1808,7 +1808,7 @@ const GrasimAgencyStaff = ({
       const filterEmpId = ["1815842448"];
       const temp = result?.data
         ?.filter(
-          (emp) => emp.vitalsCreatedDate === "2024-10-23" && emp.contractorName
+          (emp) => emp.vitalsCreatedDate === "2024-10-22" && emp.contractorName
         )
         .map((emp) => {
           return {
