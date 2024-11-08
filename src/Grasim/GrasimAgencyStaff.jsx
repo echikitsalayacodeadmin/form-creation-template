@@ -302,11 +302,11 @@ const GrasimAgencyStaff = ({
             "
           >
             Smoking: <span>No${
-              false
+              !data?.smoking
                 ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
                 : "&nbsp;"
             }</span> <span>/&nbsp;&nbsp;Yes${
-      false
+      data?.smoking
         ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
         : "&nbsp;"
     }</span>
@@ -1633,8 +1633,14 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            PFT Report:
-            ${data?.cholestrolData?.["PFT"] || "----------"}
+              PFT Report: ${
+                data?.cholestrolData?.["PFT"] || "----------"
+              } <span style="width: 50%">FVC:${
+      data?.cholestrolData?.["FVC"] || "----------"
+    } </span>
+            <span style="width: 50%">FEV1/FVC: ${
+              data?.cholestrolData?.["FEV1/FVC"] || "----------"
+            }</span>
           </td>
           <td
             colspan="3"
@@ -1752,7 +1758,7 @@ const GrasimAgencyStaff = ({
               height: 100px;">
               ${
                 data?.isSign
-                  ? `<img src=${KUNALSIGNBASE64} style="height:140px;"/>`
+                  ? `<img src=${KUNALSIGNBASE64} style="height:250px;"/>`
                   : ""
               }
           </td>
@@ -1810,7 +1816,7 @@ const GrasimAgencyStaff = ({
       const temp = result?.data
         ?.filter(
           (emp) =>
-            emp.vitalsCreatedDate === "2024-10-22" &&
+            emp.vitalsCreatedDate === "2024-10-23" &&
             !foodHandlerList.includes(emp.empId) &&
             emp.contractorName
         )

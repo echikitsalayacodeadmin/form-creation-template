@@ -21,7 +21,7 @@ const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <GrasimPMEEmp />
+      <GrasimForm32 />
       {/* <GenericFormGenerator /> */}
     </div>
   );

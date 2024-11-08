@@ -346,12 +346,12 @@ const GrasimFood = ({
           <div style="padding: 2px">Others : <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.others || ""}</span></div>
         </div>
-        <br />
+      
         <div
           class="section"
           style="
             display: flex;
-            height: 70px;
+            height: 30px;
             font-size: 12px;
             font-weight: bold;
           "
@@ -375,7 +375,7 @@ const GrasimFood = ({
            <div style="width: 35%">
            ${
              data?.isSign
-               ? `<img src=${KUNALSIGNBASE64} style="height:140px;"/>`
+               ? `<img src=${KUNALSIGNBASE64} style="height:200px;"/>`
                : ""
            }
           </div>

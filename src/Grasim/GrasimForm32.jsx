@@ -395,16 +395,16 @@ const GrasimForm32 = ({
       </p>
       <div style="display: flex; justify-content: space-between">
 
-        <div><div style="height:120px;"> </div>
+        <div><div style="height:240px;"> </div>
         <span><br/>..................................</span>
         <p>Signature of L.T.I. of<br />Person examined</p>
         </div>
 
       <div> 
-        <div style="height:120px;">
+        <div style="height:240px;">
          ${
            data?.isSign
-             ? `<img src=${KUNALSIGNBASE64} style="height:120px;"/>`
+             ? `<img src=${KUNALSIGNBASE64} style="height:240px;"/>`
              : ""
          } 
          </div>
@@ -416,7 +416,7 @@ const GrasimForm32 = ({
 
 
     </div>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 <br/><br/><br/><br/><br/>
@@ -673,17 +673,17 @@ const GrasimForm32 = ({
       </p>
       <div style="display: flex; justify-content: space-between">
 
-        <div><div style="height:120px;"> </div>
+        <div><div style="height:240px;"> </div>
         <span><br/>..................................</span>
         <p>Signature of L.T.I. of<br />Person examined</p>
         </div>
 
       <div> 
        <div>
-       <div style="height:120px;">
+       <div style="height:240px;">
          ${
            data?.isSign
-             ? `<img src=${KUNALSIGNBASE64} style="height:120px;"/>`
+             ? `<img src=${KUNALSIGNBASE64} style="height:240px;"/>`
              : ""
          } 
          </div>
@@ -773,7 +773,7 @@ const GrasimForm32 = ({
       // );
 
       const temp = result?.data
-        ?.filter((emp) => emp.vitalsCreatedDate === "2024-10-23")
+        ?.filter((emp) => emp.vitalsCreatedDate === "2024-10-22")
         .map((emp) => ({
           ...emp,
           isSign: !listWithoutSign.includes(emp.empId),
