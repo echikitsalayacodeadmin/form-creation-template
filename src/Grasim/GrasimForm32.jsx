@@ -773,7 +773,7 @@ const GrasimForm32 = ({
       // );
 
       const temp = result?.data
-        ?.filter((emp) => emp.vitalsCreatedDate === "2024-10-22")
+        ?.filter((emp) => emp.vitalsCreatedDate === "2024-10-24")
         .map((emp) => ({
           ...emp,
           isSign: !listWithoutSign.includes(emp.empId),

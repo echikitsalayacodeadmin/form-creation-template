@@ -6,7 +6,11 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
 import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
-import { foodHandlerList, listWithoutSign } from "./GrasimConstants";
+import {
+  foodHandlerList,
+  FoodhandlerNA,
+  listWithoutSign,
+} from "./GrasimConstants";
 import { uploadFile } from "../assets/services/PostApiCall";
 
 const GrasimFood = ({
@@ -337,7 +341,9 @@ const GrasimFood = ({
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">Stool Exam : <span style="text-transform: capitalize; font-weight: 400;"
-                >NAD</span></div>
+                >${
+                  FoodhandlerNA.includes(data?.empId) ? "NA" : "NAD"
+                }</span></div>
         </div>
         <div
           class="section"

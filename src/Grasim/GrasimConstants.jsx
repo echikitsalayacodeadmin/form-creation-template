@@ -136,7 +136,6 @@ export const anyOtherSurgeryList = {
 };
 
 export const audiometryEmployeeList = [
-  "150666",
   "150665",
   "150674",
   "150717",
@@ -164,10 +163,8 @@ export const audiometryEmployeeList = [
   "1815230843",
   "1813017765",
   "1815560125",
-  "342240",
   "9913348",
   "150670",
-  "141021",
   "150670",
   "10916113",
   "342203",
@@ -176,4 +173,8 @@ export const audiometryEmployeeList = [
   "343049",
   "343050",
   "141010",
+  "141000",
+  "343171",
 ];
+
+export const FoodhandlerNA = ["G308534", "448918", "G405461", "BJ1810919342"];
