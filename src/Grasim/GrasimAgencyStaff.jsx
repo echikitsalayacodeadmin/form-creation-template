@@ -10,6 +10,7 @@ import {
   anyOtherSurgeryList,
   audiometryEmployeeList,
   diabetesList,
+  foodHandlerList,
   hyperTensionList,
   listWithoutSign,
 } from "./GrasimConstants";
@@ -1808,7 +1809,10 @@ const GrasimAgencyStaff = ({
       const filterEmpId = ["1815842448"];
       const temp = result?.data
         ?.filter(
-          (emp) => emp.vitalsCreatedDate === "2024-10-22" && emp.contractorName
+          (emp) =>
+            emp.vitalsCreatedDate === "2024-10-22" &&
+            !foodHandlerList.includes(item.empId) &&
+            emp.contractorName
         )
         .map((emp) => {
           return {

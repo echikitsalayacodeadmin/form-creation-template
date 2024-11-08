@@ -11,6 +11,7 @@ import {
   audiometryEmployeeList,
   diabetesList,
   employmentType,
+  foodHandlerList,
   hyperTensionList,
   listWithoutSign,
 } from "./GrasimConstants";
@@ -1814,6 +1815,7 @@ const GrasimPMEEmp = ({
         ?.filter(
           (emp) =>
             emp.vitalsCreatedDate === "2024-10-23" &&
+            !foodHandlerList.includes(item.empId) &&
             (emp.employmentType === "ONROLL" || !emp.contractorName)
         )
 
