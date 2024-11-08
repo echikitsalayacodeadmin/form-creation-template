@@ -1811,7 +1811,7 @@ const GrasimAgencyStaff = ({
         ?.filter(
           (emp) =>
             emp.vitalsCreatedDate === "2024-10-22" &&
-            !foodHandlerList.includes(item.empId) &&
+            !foodHandlerList.includes(emp.empId) &&
             emp.contractorName
         )
         .map((emp) => {
