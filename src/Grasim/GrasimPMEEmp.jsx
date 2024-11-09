@@ -14,6 +14,7 @@ import {
   foodHandlerList,
   hyperTensionList,
   listWithoutSign,
+  SmokingList,
 } from "./GrasimConstants";
 import { uploadFile } from "../assets/services/PostApiCall";
 
@@ -1811,35 +1812,40 @@ const GrasimPMEEmp = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const filterEmpId = ["141017"];
+      let temp = result?.data;
 
-      // ?.filter(
+      const filterEmpId = [
+        "G334396",
+        "410350",
+        "G9932913",
+        "342161",
+        "10926967",
+        "1813097765",
+      ];
+
+      temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
+      // temp = result?.data?.filter(
       //   (emp) =>
-      //     emp.vitalsCreatedDate === "2024-10-23" &&
-      //     (emp.employmentType === "ONROLL" || !emp.contractorName)
-      // )
-      //.filter((emp) => filterEmpIdAny.includes(emp.empId))
-      const filterEmpIdAny = ["004039"];
-      const temp = result?.data
-        ?.filter(
-          (emp) =>
-            emp.vitalsCreatedDate === "2024-10-24" &&
-            !foodHandlerList.includes(emp.empId) &&
-            (emp.employmentType === "ONROLL" || !emp.contractorName)
-        )
-
-        .map((emp) => {
-          return {
-            ...emp,
-            audiometryValue: audiometryEmployeeList.includes(emp.empId)
-              ? "NAD"
-              : "NA",
-            anyOtherSurgery: anyOtherSurgeryList[emp.tokenNumber] || "",
-            diabetes: diabetesList.includes(emp.empId),
-            hyperTension: hyperTensionList.includes(emp.empId),
-            isSign: !listWithoutSign.includes(emp.empId),
-          };
-        });
+      //     emp.vitalsCreatedDate === "2024-10-25" &&
+      //     !foodHandlerList.includes(emp.empId) &&
+      //     emp.contractorName
+      // );
+      temp = temp.map((emp) => {
+        return {
+          ...emp,
+          audiometryValue: audiometryEmployeeList.includes(emp.empId)
+            ? "NAD"
+            : "NA",
+          anyOtherSurgery: anyOtherSurgeryList[emp.tokenNumber] || "",
+          diabetes: diabetesList.includes(emp.empId),
+          hyperTension: hyperTensionList.includes(emp.empId),
+          isSign: !listWithoutSign.includes(emp.empId),
+          smoking:
+            SmokingList.includes(emp.empId) ||
+            (emp?.cholestrolData?.["PFT_SMOKER_INFO"] &&
+              emp?.cholestrolData?.["PFT_SMOKER_INFO"] === "Yes"),
+        };
+      });
 
       // filter(
       //   (emp) => emp.vitalsCreatedDate === "2024-10-22"

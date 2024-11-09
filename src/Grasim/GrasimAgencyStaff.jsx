@@ -13,6 +13,7 @@ import {
   foodHandlerList,
   hyperTensionList,
   listWithoutSign,
+  SmokingList,
 } from "./GrasimConstants";
 import { uploadFile } from "../assets/services/PostApiCall";
 
@@ -1806,32 +1807,41 @@ const GrasimAgencyStaff = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
+      let temp = result?.data;
 
-      // const filterEmpId = ["433952"];
-      // const temp = result?.data?.filter(
-      //   (item) => item.employmentType === "CONTRACTOR"
+      const filterEmpId = [
+        "G334396",
+        "410350",
+        "G9932913",
+        "342161",
+        "10926967",
+        "1813097765",
+      ];
+
+      temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
+      // temp = result?.data?.filter(
+      //   (emp) =>
+      //     emp.vitalsCreatedDate === "2024-10-25" &&
+      //     !foodHandlerList.includes(emp.empId) &&
+      //     emp.contractorName
       // );
 
-      const filterEmpId = ["1815842448"];
-      const temp = result?.data
-        ?.filter(
-          (emp) =>
-            emp.vitalsCreatedDate === "2024-10-24" &&
-            !foodHandlerList.includes(emp.empId) &&
-            emp.contractorName
-        )
-        .map((emp) => {
-          return {
-            ...emp,
-            audiometryValue: audiometryEmployeeList.includes(emp.empId)
-              ? "NAD"
-              : "NA",
-            anyOtherSurgery: anyOtherSurgeryList[emp.tokenNumber] || "",
-            diabetes: diabetesList.includes(emp.empId),
-            hyperTension: hyperTensionList.includes(emp.empId),
-            isSign: !listWithoutSign.includes(emp.empId),
-          };
-        });
+      temp = temp.map((emp) => {
+        return {
+          ...emp,
+          audiometryValue: audiometryEmployeeList.includes(emp.empId)
+            ? "NAD"
+            : "NA",
+          anyOtherSurgery: anyOtherSurgeryList[emp.tokenNumber] || "",
+          diabetes: diabetesList.includes(emp.empId),
+          hyperTension: hyperTensionList.includes(emp.empId),
+          isSign: !listWithoutSign.includes(emp.empId),
+          smoking:
+            SmokingList.includes(emp.empId) ||
+            (emp?.cholestrolData?.["PFT_SMOKER_INFO"] &&
+              emp?.cholestrolData?.["PFT_SMOKER_INFO"] === "Yes"),
+        };
+      });
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
