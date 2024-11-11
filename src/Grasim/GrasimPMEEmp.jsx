@@ -1784,8 +1784,8 @@ const GrasimPMEEmp = ({
         return data;
       });
 
-    // const url1 = URL.createObjectURL(pdfBlob);
-    // window.open(url1, "_blank");
+    const url1 = URL.createObjectURL(pdfBlob);
+    window.open(url1, "_blank");
 
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
@@ -1826,6 +1826,7 @@ const GrasimPMEEmp = ({
         // "141010",
         // "150666",
         //"150670",
+        "400600",
       ];
 
       temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
