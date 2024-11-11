@@ -9,6 +9,7 @@ import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
 import {
   foodHandlerList,
   FoodhandlerNA,
+  FoodhandlerNAD,
   listWithoutSign,
 } from "./GrasimConstants";
 import { uploadFile } from "../assets/services/PostApiCall";
@@ -342,7 +343,7 @@ const GrasimFood = ({
         >
           <div style="padding: 2px">Stool Exam : <span style="text-transform: capitalize; font-weight: 400;"
                 >${
-                  FoodhandlerNA.includes(data?.empId) ? "NA" : "NAD"
+                  FoodhandlerNAD.includes(data?.empId) ? "NAD" : "NA"
                 }</span></div>
         </div>
         <div

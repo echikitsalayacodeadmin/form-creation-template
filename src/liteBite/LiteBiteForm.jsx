@@ -8,11 +8,12 @@ import dayjs from "dayjs";
 import { uploadFile } from "../assets/services/PostApiCall";
 
 const LiteBiteForm = ({
-  corpId = "2ef9842f-552f-464e-831c-28ce3ada1715",
+  corpId = "dd491d3b-8a1b-493a-99cf-730fafa7c468", ///rebelcamp
+  //corpId = "2ef9842f-552f-464e-831c-28ce3ada1715",
   // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
   // campCycleId = ""
   campCycleId = "",
-  fileType = "PHYSICAL_FITNESS_FORM",
+  fileType = "CONSOLIDATED_REPORT",
   // fileType = "FITNESS_CERTIFICATE",
   startDate = dayjs("2024-10-22"),
   endDate = dayjs("2024-10-22"),
@@ -378,7 +379,7 @@ const LiteBiteForm = ({
                 >
                   Date of Health check-up:
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${data?.vitalsCreatedDate || ""}</span
+                    >8 Nov, 2024</span
                   >
                 </p>
               </td>
@@ -1723,7 +1724,7 @@ const LiteBiteForm = ({
     // window.open(url, "_blank");
 
     const formData = new FormData();
-    formData.append("file", pdfBlob, `${data.empId}_fitness_certificate.pdf`);
+    formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
     // formData.append("file", pdfBlob, `${data.empId}_physical_fitness_form.pdf`);
 
     const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
@@ -1749,7 +1750,22 @@ const LiteBiteForm = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const filterEmpIDs = ["LB29023", "LB28576", "Lb27186"];
+      const filterEmpIDs = [
+        "8706",
+        "58953",
+        "56589",
+        "65996",
+        "74866",
+        "23098",
+        "57821",
+        "73589",
+        "75570",
+        "58546",
+        "68133",
+        "70829",
+        "79754",
+        "71772",
+      ];
       const temp = result?.data.filter((item) =>
         filterEmpIDs.includes(item.empId)
       );
@@ -1805,9 +1821,9 @@ const LiteBiteForm = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.physicalFitnessFormUrl}>
+            <a href={item.consolidatedRUrl}>
               {/* <a href={item.fitnessCertificateUrl}> */}
-              <div key={index}>{item.physicalFitnessFormUrl}</div>
+              <div key={index}>{item.consolidatedRUrl}</div>
               {/* <div key={index}>{item.fitnessCertificateUrl}</div> */}
             </a>
             <br />

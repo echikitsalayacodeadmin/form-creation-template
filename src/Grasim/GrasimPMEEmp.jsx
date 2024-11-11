@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
 import {
   anyOtherSurgeryList,
+  AudiometryCommentList,
   audiometryEmployeeList,
   diabetesList,
   employmentType,
@@ -1815,12 +1816,16 @@ const GrasimPMEEmp = ({
       let temp = result?.data;
 
       const filterEmpId = [
-        "G334396",
-        "410350",
-        "G9932913",
-        "342161",
-        "10926967",
-        "1813097765",
+        // "G334396",
+        // "410350",
+        // "G9932913",
+        // "342161",
+        // "10926967",
+        // "1813097765",
+        // "343250",
+        // "141010",
+        // "150666",
+        //"150670",
       ];
 
       temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
@@ -1833,7 +1838,9 @@ const GrasimPMEEmp = ({
       temp = temp.map((emp) => {
         return {
           ...emp,
-          audiometryValue: audiometryEmployeeList.includes(emp.empId)
+          audiometryValue: AudiometryCommentList[emp.empId]
+            ? AudiometryCommentList[emp.empId]
+            : audiometryEmployeeList.includes(emp.empId)
             ? "NAD"
             : "NA",
           anyOtherSurgery: anyOtherSurgeryList[emp.tokenNumber] || "",

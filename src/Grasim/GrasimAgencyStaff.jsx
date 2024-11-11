@@ -1810,12 +1810,14 @@ const GrasimAgencyStaff = ({
       let temp = result?.data;
 
       const filterEmpId = [
-        "G334396",
-        "410350",
-        "G9932913",
-        "342161",
-        "10926967",
-        "1813097765",
+        // "G334396",
+        // "410350",
+        // "G9932913",
+        // "342161",
+        // "10926967",
+        // "1813097765",
+        "10929467",
+        "1814572316",
       ];
 
       temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
