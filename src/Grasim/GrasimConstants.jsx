@@ -321,6 +321,8 @@ export const SmokingList = [
   "1816194334",
   "238351",
   "400600",
+  "9925217",
+  "141033",
 ];
 
 export const AudiometryCommentList = {

@@ -1779,8 +1779,8 @@ const GrasimAgencyStaff = ({
         return data;
       });
 
-    // const url1 = URL.createObjectURL(pdfBlob);
-    // window.open(url1, "_blank");
+    const url1 = URL.createObjectURL(pdfBlob);
+    window.open(url1, "_blank");
 
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data?.empId}_consolidated.pdf`);
@@ -1816,8 +1816,9 @@ const GrasimAgencyStaff = ({
         // "342161",
         // "10926967",
         // "1813097765",
-        "10929467",
-        "1814572316",
+        // "10929467",
+        // "1814572316",
+        "9925217",
       ];
 
       temp = temp.filter((emp) => filterEmpId.includes(emp.empId));

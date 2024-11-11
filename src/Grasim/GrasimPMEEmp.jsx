@@ -1826,7 +1826,10 @@ const GrasimPMEEmp = ({
         // "141010",
         // "150666",
         //"150670",
-        "400600",
+        //"400600",
+        //"9925217",
+        // "141033",
+        "G334396",
       ];
 
       temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
