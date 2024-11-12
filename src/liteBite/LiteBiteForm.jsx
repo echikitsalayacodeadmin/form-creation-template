@@ -13,10 +13,12 @@ const LiteBiteForm = ({
   // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
   // campCycleId = ""
   campCycleId = "",
-  fileType = "CONSOLIDATED_REPORT",
-  // fileType = "FITNESS_CERTIFICATE",
+  //fileType = "CONSOLIDATED_REPORT",
+  fileType = "FITNESS_CERTIFICATE",
   startDate = dayjs("2024-10-22"),
   endDate = dayjs("2024-10-22"),
+  //corpName = "Lite Bite Foods Pvt. Ltd.",
+  corpName = "Rebel Foods",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -1597,11 +1599,9 @@ const LiteBiteForm = ({
             <span style=" text-transform: capitalize; text-decoration: underline"> ${
               data?.name.toLowerCase() || ""
             }</span>
-            employed with <b>M/S Lite Bite Foods Pvt. Ltd. </b>coming in direct
+            employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${
-                dayjs(data?.vitalsCreatedDate).format("DD/MM/YYYY") || ""
-              }&nbsp;
+              >&nbsp;&nbsp;&nbsp;${"8 Nov, 2024"}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -1714,7 +1714,7 @@ const LiteBiteForm = ({
         </div>
     `;
     const pdfBlob = await html2pdf()
-      .from(PHYSICAL_FITNESS_FORM)
+      .from(FITNESS_CERTIFICATE)
       .output("blob")
       .then((data) => {
         return data;
@@ -1821,11 +1821,17 @@ const LiteBiteForm = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.consolidatedRUrl}>
-              {/* <a href={item.fitnessCertificateUrl}> */}
-              <div key={index}>{item.consolidatedRUrl}</div>
-              {/* <div key={index}>{item.fitnessCertificateUrl}</div> */}
-            </a>
+
+            {fileType === "FITNESS_CERTIFICATE" ? (
+              <a href={item.fitnessCertificateUrl}>
+                <div key={index}>{item.fitnessCertificateUrl}</div>
+              </a>
+            ) : (
+              <a href={item.consolidatedRUrl}>
+                <div key={index}>{item.consolidatedRUrl}</div>
+              </a>
+            )}
+
             <br />
           </div>
         ))}
