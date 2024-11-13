@@ -7,7 +7,7 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
 import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
-import { listWithoutSign } from "./GrasimConstants";
+import { EMPLIST_CURRET_13, listWithoutSign } from "./GrasimConstants";
 
 const GrasimForm32 = ({
   corpId = "1d49173b-ab6d-44d2-9a68-1895af1f8ca2",
@@ -768,15 +768,17 @@ const GrasimForm32 = ({
       console.log("Fetched Data successfully");
 
       // const filterEmpId = ["15252132"];
-      // const temp = result?.data?.filter((item) =>
-      //   filterEmpId.includes(item.empId)
+      // const temp = result?.data?.filter((emp) =>
+      //   filterEmpId.includes(emp.empId)
       // );
 
+      // ?.filter((emp) => emp.vitalsCreatedDate === "2024-10-25")
+
       const temp = result?.data
-        ?.filter((emp) => emp.vitalsCreatedDate === "2024-10-25")
+        ?.filter((emp) => EMPLIST_CURRET_13.includes(emp.empId))
         .map((emp) => ({
           ...emp,
-          isSign: !listWithoutSign.includes(emp.empId),
+          isSign: true,
         }));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });

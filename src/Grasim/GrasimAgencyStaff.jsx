@@ -10,6 +10,7 @@ import {
   anyOtherSurgeryList,
   audiometryEmployeeList,
   diabetesList,
+  EMPLIST_CURRET_13,
   foodHandlerList,
   hyperTensionList,
   listWithoutSign,
@@ -1821,13 +1822,13 @@ const GrasimAgencyStaff = ({
         "9925217",
       ];
 
-      temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
-      // temp = result?.data?.filter(
-      //   (emp) =>
-      //     emp.vitalsCreatedDate === "2024-10-25" &&
-      //     !foodHandlerList.includes(emp.empId) &&
-      //     emp.contractorName
-      // );
+      //temp = temp.filter((emp) => filterEmpId.includes(emp.empId));
+      temp = result?.data?.filter(
+        (emp) =>
+          EMPLIST_CURRET_13.includes(emp.empId) &&
+          !foodHandlerList.includes(emp.empId) &&
+          emp.contractorName
+      );
 
       temp = temp.map((emp) => {
         return {
@@ -1838,7 +1839,7 @@ const GrasimAgencyStaff = ({
           anyOtherSurgery: anyOtherSurgeryList[emp.tokenNumber] || "",
           diabetes: diabetesList.includes(emp.empId),
           hyperTension: hyperTensionList.includes(emp.empId),
-          isSign: !listWithoutSign.includes(emp.empId),
+          isSign: true,
           smoking:
             SmokingList.includes(emp.empId) ||
             (emp?.cholestrolData?.["PFT_SMOKER_INFO"] &&

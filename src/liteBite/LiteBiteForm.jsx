@@ -13,12 +13,12 @@ const LiteBiteForm = ({
   // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
   // campCycleId = ""
   campCycleId = "",
-  //fileType = "CONSOLIDATED_REPORT",
-  fileType = "FITNESS_CERTIFICATE",
+  fileType = "CONSOLIDATED_REPORT",
+  //fileType = "FITNESS_CERTIFICATE",
   startDate = dayjs("2024-10-22"),
   endDate = dayjs("2024-10-22"),
   //corpName = "Lite Bite Foods Pvt. Ltd.",
-  corpName = "Rebel Foods",
+  corpName = "Rebel Foods Pvt. Ltd",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -1714,7 +1714,7 @@ const LiteBiteForm = ({
         </div>
     `;
     const pdfBlob = await html2pdf()
-      .from(FITNESS_CERTIFICATE)
+      .from(PHYSICAL_FITNESS_FORM)
       .output("blob")
       .then((data) => {
         return data;
@@ -1766,9 +1766,8 @@ const LiteBiteForm = ({
         "79754",
         "71772",
       ];
-      const temp = result?.data.filter((item) =>
-        filterEmpIDs.includes(item.empId)
-      );
+      const temp = result?.data;
+      //// .filter((item) => filterEmpIDs.includes(item.empId) );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;

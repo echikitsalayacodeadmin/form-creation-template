@@ -7,6 +7,7 @@ import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
 import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
 import {
+  EMPLIST_CURRET_13,
   foodHandlerList,
   FoodhandlerNA,
   FoodhandlerNAD,
@@ -432,10 +433,14 @@ const GrasimFood = ({
 
       const filterEmpId = ["15252132"];
       const temp = result?.data
-        ?.filter((item) => foodHandlerList.includes(item.empId))
+        ?.filter(
+          (emp) =>
+            EMPLIST_CURRET_13.includes(emp.empId) &&
+            foodHandlerList.includes(emp.empId)
+        )
         .map((emp) => ({
           ...emp,
-          isSign: !listWithoutSign.includes(emp.empId),
+          isSign: true,
         }));
       // ?.filter((item) =>
       //   filterEmpId.includes(item.empId)
