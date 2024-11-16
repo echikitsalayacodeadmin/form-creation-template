@@ -20,6 +20,7 @@ const RebelMERForm = ({
   endDate = dayjs("2024-10-22"),
   //corpName = "Lite Bite Foods Pvt. Ltd.",
   corpName = "Rebel Foods Pvt. Ltd",
+  campDate = "15 Nov, 2024",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -382,7 +383,7 @@ const RebelMERForm = ({
                 >
                   Date of Health check-up:
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >8 Nov, 2024</span
+                    >${campDate}</span
                   >
                 </p>
               </td>
