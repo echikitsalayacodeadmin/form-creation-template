@@ -1,0 +1,1518 @@
+import html2pdf from "html2pdf.js";
+import React, { useEffect, useState } from "react";
+import { getData } from "../assets/services/GetApiCall";
+import { useSnackbar } from "notistack";
+import { updateData } from "../assets/services/PatchApi";
+import { sortDataByName } from "../assets/utils";
+import dayjs from "dayjs";
+import { uploadFile } from "../assets/services/PostApiCall";
+import { EmployeeList } from "./RebelData";
+
+const RebelMERForm = ({
+  corpId = "dd491d3b-8a1b-493a-99cf-730fafa7c468", ///rebelcamp
+  //corpId = "2ef9842f-552f-464e-831c-28ce3ada1715",
+  // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
+  // campCycleId = ""
+  campCycleId = "",
+  fileType = "CONSOLIDATED_REPORT",
+  //fileType = "FITNESS_CERTIFICATE",
+  startDate = dayjs("2024-10-22"),
+  endDate = dayjs("2024-10-22"),
+  //corpName = "Lite Bite Foods Pvt. Ltd.",
+  corpName = "Rebel Foods Pvt. Ltd",
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const batchSize = 50;
+  const [list, setList] = useState([]);
+  const [totalEmployees, setTotalEmployees] = useState(0);
+  const [uploadedCount, setUploadedCount] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const generatePDF = async (data, index) => {
+    const PHYSICAL_FITNESS_FORM = `
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>a4d932fb-451d-4918-9ba4-5bc1b7a214d7</title>
+        <style type="text/css">
+          * {
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+          }
+          .s1 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13pt;
+          }
+          .s2 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 12pt;
+          }
+          .s3 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 12pt;
+          }
+          h1 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 15pt;
+          }
+          .s4 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 12pt;
+          }
+          .s6 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 12pt;
+          }
+          .s7 {
+            color: black;
+            font-family: "Times New Roman", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+          }
+          .s8 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 16pt;
+          }
+          p {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 12pt;
+            margin: 0pt;
+          }
+          .s10 {
+            color: black;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 10.5pt;
+          }
+          .s11 {
+            color: black;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 9pt;
+          }
+          h2 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14pt;
+          }
+          .h4 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 11pt;
+          }
+          .s12 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 10.5pt;
+          }
+          li {
+            display: block;
+          }
+          #l1 {
+            padding-left: 0pt;
+            counter-reset: c1 1;
+          }
+          #l1 > li > *:first-child:before {
+            counter-increment: c1;
+            content: counter(c1, decimal) ". ";
+            color: black;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+          }
+          #l1 > li:first-child > *:first-child:before {
+            counter-increment: c1 0;
+          }
+          table,
+          tbody {
+            vertical-align: top;
+            overflow: visible;
+          }
+        </style>
+      </head>
+      <body>
+        <div style="padding-left: 5%; padding-right: 5%; padding-top: 3%">
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 12px;
+              font-weight: bold;
+            "
+          >
+            <tr style="height: 30pt">
+              <td
+                style="
+                  width: 480pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                  background-color: #c0c0c0;
+                "
+                colspan="3"
+              >
+                <p
+                  class="s1"
+                  style="
+                    padding-top: 9pt;
+                    padding-left: 122pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  Health Check Up Form - MER
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 24pt">
+              <td
+                style="
+                  width: 480pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                  background-color: #bbbbbb;
+                "
+                colspan="3"
+              >
+                <p
+                  class="s2"
+                  style="
+                    padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  GENERAL INFORMATION
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 24pt">
+              <td
+                style="
+                  width: 44pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  Name
+                </p>
+              </td>
+              <td
+                style="
+                  width: 270pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"><span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.name?.toLowerCase() || ""}</span
+                  ></p>
+              </td>
+              <td
+                style="
+                  width: 166pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-top: 6pt;
+                    padding-left: 8pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  Employee ID:
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.empId || ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 24pt">
+              <td
+                style="
+                  width: 480pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="3"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  Age and Gender:
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.age ? data?.age + " " + "Years" : ""} ${
+      data?.gender?.toLowerCase() || ""
+    }</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 24pt">
+              <td
+                style="
+                  width: 480pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="3"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  Date of Health check-up:
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >8 Nov, 2024</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 22pt">
+              <td
+                style="
+                  width: 480pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="3"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-top: 3pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  Contact Number:
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.mobileNo || ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 19pt">
+              <td
+                style="
+                  width: 480pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="3"
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"><br /></p>
+              </td>
+            </tr>
+            <tr style="height: 19pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                  background-color: #bbbbbb;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s2"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Vaccine
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                  background-color: #bbbbbb;
+                "
+              >
+                <p
+                  class="s2"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Remark
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 23pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"><br /></p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"><br /></p>
+              </td>
+            </tr>
+            <tr style="height: 24pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p class="s3" style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  Typhoid (1 Dose) Bharat Biotech International Ltd
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p class="s3" style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  Batch Number: 54A22004A
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 24pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"><br /></p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-top: 3pt;
+                    padding-left: 1pt;
+                    text-indent: 0pt;
+                    text-align: left;
+                  "
+                >
+                  Date of Expiry: <span style="text-transform: capitalize; font-weight: 400"
+                    >${"May, 2025"}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 19pt">
+              <td
+                style="
+                  width: 480pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                  background-color: #d0cece;
+                "
+                colspan="3"
+              >
+                <p
+                  class="s2"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Vitals
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 17pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    line-height: 14pt;
+                    text-align: left;
+                  "
+                >
+                  Height
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.height ? data?.height + " " + "cm" : ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 18pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    line-height: 14pt;
+                    text-align: left;
+                  "
+                >
+                  Weight
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.weight ? data?.weight + " " + "kg" : ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 17pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    line-height: 14pt;
+                    text-align: left;
+                  "
+                >
+                  BMI
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.bmi ? data?.bmi : ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 17pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    line-height: 14pt;
+                    text-align: left;
+                  "
+                >
+                  Waist Hip Ratio
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${
+                      data?.waistGirth && data?.hipGirth
+                        ? (data?.waistGirth / data?.hipGirth).toFixed(2)
+                        : ""
+                    }</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 17pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    line-height: 14pt;
+                    text-align: left;
+                  "
+                >
+                  Blood Pressure
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.bp ? data?.bp + " " + "mmHg" : ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 18pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s3"
+                  style="
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    line-height: 14pt;
+                    text-align: left;
+                  "
+                >
+                  Heart Rate
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.pulseRate ? data?.pulseRate : ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 19pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+                colspan="2"
+              >
+                <p
+                  class="s3"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  SPO2
+                </p>
+              </td>
+              <td
+                style="
+                  width: 311pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${
+                      data?.spO2Percent ? data?.spO2Percent + " " + "%" : ""
+                    }</span
+                  >
+                </p>
+              </td>
+            </tr>
+          </table>
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 12px;
+              font-weight: bold;
+            "
+          >
+            <tr style="height: 20pt">
+              <td
+                style="
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                  background-color: #d0cece;
+                "
+                colspan="4"
+              >
+                <p
+                  class="s2"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Eye Vision
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 29pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Left Eye
+                </p>
+              </td>
+              <td
+                style="
+                  width: 145pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"></p>
+              </td>
+              <td
+                style="
+                  width: 166pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="padding-left: 1pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Right Eye
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 20pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${
+                      data?.nearLeftEyeSight ? data?.nearLeftEyeSight : ""
+                    }</span
+                  >
+                </p>
+              </td>
+              <td
+                style="
+                  width: 145pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Near Vision
+                </p>
+              </td>
+              <td
+                style="
+                  width: 166pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${
+                      data?.nearRightEyeSight ? data?.nearRightEyeSight : ""
+                    }</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 21pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.farLeftEyeSight ? data?.farLeftEyeSight : ""}</span
+                  >
+                </p>
+              </td>
+              <td
+                style="
+                  width: 145pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Distance Vision
+                </p>
+              </td>
+              <td
+                style="
+                  width: 166pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${
+                      data?.farRightEyeSight ? data?.farRightEyeSight : ""
+                    }</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 25pt">
+              <td
+                style="
+                  width: 169pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.colourVision ? data?.colourVision : ""}</span
+                  >
+                </p>
+              </td>
+              <td
+                style="
+                  width: 145pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Colour Vision-
+                </p>
+              </td>
+              <td
+                style="
+                  width: 166pt;
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p style="  padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;">
+                  <span style="text-transform: capitalize; font-weight: 400"
+                    >${data?.colourVision ? data?.colourVision : ""}</span
+                  >
+                </p>
+              </td>
+            </tr>
+          </table>
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 12px;
+              font-weight: bold;
+            "
+          >
+            <tr style="height: 25pt; width: 100%">
+              <td
+                style="
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                  background-color: #d0cece;
+                "
+              >
+                <p
+                  class="s2"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Skin Examination
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 25pt; width: 100%">
+              <td
+                style="
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s3"
+                  style="padding-left: 2pt;   padding-top: 4pt;
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    text-align: left;"
+                >
+                  Remark: NORMAL
+                </p>
+              </td>
+            </tr>
+            <tr style="height: 38pt; width: 100%">
+              <td
+                style="
+                  border-top-style: solid;
+                  border-top-width: 1pt;
+                  border-left-style: solid;
+                  border-left-width: 1pt;
+                  border-bottom-style: solid;
+                  border-bottom-width: 1pt;
+                  border-right-style: solid;
+                  border-right-width: 1pt;
+                "
+              >
+                <p
+                  class="s2"
+                  style="
+                    padding-left: 2pt;
+                    text-indent: 0pt;
+                    line-height: 15pt;
+                    text-align: left;
+                  "
+                >
+                  Doctor Consultation with Fitness certificate:
+                </p>
+              </td>
+            </tr>
+          </table>
+         </div>
+      </body>
+    </html>
+    
+    `;
+
+    const pdfBlob = await html2pdf()
+      .from(PHYSICAL_FITNESS_FORM)
+      .output("blob")
+      .then((data) => {
+        return data;
+      });
+
+    // const url = URL.createObjectURL(pdfBlob);
+    // window.open(url, "_blank");
+
+    const formData = new FormData();
+    formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
+    // formData.append("file", pdfBlob, `${data.empId}_physical_fitness_form.pdf`);
+
+    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await uploadFile(url, formData);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
+  };
+
+  const fetchListOfEmployees = async () => {
+    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await getData(url);
+    if (result && result.data) {
+      console.log("Fetched Data successfully");
+
+      const temp = result?.data.filter((item) =>
+        EmployeeList.includes(item.empId)
+      );
+
+      console.log({ list: temp.map((item) => item.empId).join(",") });
+      const length = temp.length;
+      console.log({ length });
+      setList(sortDataByName(temp));
+      setTotalEmployees(temp.length);
+      console.log({ empLisy: sortDataByName(temp) });
+    } else {
+      console.log("An error Occurred");
+    }
+  };
+
+  useEffect(() => {
+    fetchListOfEmployees();
+  }, []);
+
+  const handleGeneratePDFs = async () => {
+    for (let i = 0; i < list.length; i++) {
+      await generatePDF(list[i], i);
+    }
+  };
+  const handleDeletePDF = async () => {
+    for (let i = 0; i < list.length; i++) {
+      await deleteFiles(list[i]);
+    }
+  };
+
+  const deleteFiles = async (data) => {
+    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const result = await updateData(url);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
+        <button onClick={handleDeletePDF}>Delete Files</button>
+        <div>Total Employees: {totalEmployees}</div> <br />
+        <div>Uploaded Files: {uploadedCount}</div> <br />
+        {list.map((item, index) => (
+          <div key={index} style={{ display: "flex" }}>
+            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+
+            {fileType === "FITNESS_CERTIFICATE" ? (
+              <a href={item.fitnessCertificateUrl}>
+                <div key={index}>{item.fitnessCertificateUrl}</div>
+              </a>
+            ) : (
+              <a href={item.consolidatedRUrl}>
+                <div key={index}>{item.consolidatedRUrl}</div>
+              </a>
+            )}
+
+            <br />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default RebelMERForm;
