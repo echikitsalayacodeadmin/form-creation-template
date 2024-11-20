@@ -303,23 +303,8 @@ const RebelFitnessCertificate = ({
                 Skin Examination
               </p>
             </li>
+         
             <li data-list-text="4.">
-              <p
-                class="s12"
-                style="padding-left: 26pt; text-indent: -21pt; text-align: left"
-              >
-                Sputum AFB
-              </p>
-            </li>
-            <li data-list-text="5.">
-              <p
-                class="s12"
-                style="padding-left: 26pt; text-indent: -21pt; text-align: left"
-              >
-                Hemoglobin &amp; ESR
-              </p>
-            </li>
-            <li data-list-text="6.">
               <p
                 class="s12"
                 style="padding-left: 26pt; text-indent: -21pt; text-align: left"
@@ -328,7 +313,7 @@ const RebelFitnessCertificate = ({
                 group of diseases
               </p>
             </li>
-            <li data-list-text="7.">
+            <li data-list-text="5.">
               <p
                 class="s12"
                 style="padding-left: 26pt; text-indent: -21pt; text-align: left"
