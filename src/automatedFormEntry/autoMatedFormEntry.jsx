@@ -43,8 +43,67 @@ const AutoMatedFormEntry = ({
             ...empData.data,
             mobile: isNaN(empData.data.mobile) ? 0 : empData.data.mobile,
             vaccines: [
-              // Default vaccines data
-              // ...
+              {
+                id: 0,
+                name: "HEPATITIS",
+                vaccineSummaryUrl: "",
+                dosages: [
+                  {
+                    id: 0,
+                    dosageNum: 0,
+                    isCompleted: false,
+                    dosageUrl: "",
+                    dosageName: "dose1",
+                    date: "",
+                  },
+                  {
+                    id: 1,
+                    dosageNum: 1,
+                    isCompleted: false,
+                    dosageUrl: "",
+                    dosageName: "dose2",
+                    date: "",
+                  },
+                  {
+                    id: 2,
+                    dosageNum: 2,
+                    isCompleted: false,
+                    dosageUrl: "",
+                    dosageName: "dose3",
+                    date: "",
+                  },
+                ],
+              },
+              {
+                id: 1,
+                name: "TYPHOID",
+                vaccineSummaryUrl: "",
+                dosages: [
+                  {
+                    id: 0,
+                    dosageNum: 0,
+                    isCompleted: false,
+                    dosageUrl: "",
+                    dosageName: "dose1",
+                    date: "",
+                  },
+                ],
+              },
+              {
+                id: 2,
+                name: "TETANUS",
+                vaccineSummaryUrl: "",
+                dosages: [
+                  {
+                    id: 0,
+                    dosageNum: 0,
+                    isCompleted: false,
+                    dosageUrl: "",
+                    dosageName: "dose1",
+                    date: "",
+                  },
+                ],
+              },
             ],
           };
 
