@@ -5,10 +5,10 @@ import { BASE_URL } from "../assets/constant";
 import { useSnackbar } from "notistack";
 
 const employeeDetails = [
-  { empId: "055", weight: "90", height: "180", bp: "120/90" },
-  { empId: "P1", weight: "88", height: "170", bp: "130/90" },
-  { empId: "abcdef", weight: "66", height: "166", bp: "110/90" },
-  { empId: "HLO58", weight: "69", height: "177", bp: "130/90" },
+  { empId: "055", weight: "9999", height: "180", bp: "120/90" },
+  { empId: "P1", weight: "9999", height: "170", bp: "130/90" },
+  { empId: "abcdef", weight: "9999", height: "166", bp: "110/90" },
+  { empId: "HLO58", weight: "9999", height: "177", bp: "130/90" },
 ];
 
 const AutoMatedFormEntry = ({
