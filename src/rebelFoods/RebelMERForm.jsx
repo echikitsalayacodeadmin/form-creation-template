@@ -20,7 +20,7 @@ const RebelMERForm = ({
   endDate = dayjs("2024-10-22"),
   //corpName = "Lite Bite Foods Pvt. Ltd.",
   corpName = "Rebel Foods Pvt. Ltd",
-  campDate = "15 Nov, 2024",
+  campDate = "30 Nov, 2024",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -569,7 +569,7 @@ const RebelMERForm = ({
                     padding-left: 2pt;
                     text-indent: 0pt;
                     text-align: left;">
-                  Batch Number: 54A22004A
+                  Batch Number: 54B23005A
                 </p>
               </td>
             </tr>
@@ -616,7 +616,7 @@ const RebelMERForm = ({
                   "
                 >
                   Date of Expiry: <span style="text-transform: capitalize; font-weight: 400"
-                    >${"May, 2025"}</span
+                    >${"Feb, 2026"}</span
                   >
                 </p>
               </td>

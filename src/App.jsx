@@ -16,12 +16,15 @@ import GrasimAgencyStaff from "./Grasim/GrasimAgencyStaff";
 import GrasimPMEEmp from "./Grasim/GrasimPMEEmp";
 import LiteBiteForm from "./liteBite/LiteBiteForm";
 import AutoMatedFormEntry from "./automatedFormEntry/autoMatedFormEntry";
+import Form21 from "./form21/form21";
+import RebelFitnessCertificate from "./rebelFoods/RebelFitnessCertificate";
+import RebelMERForm from "./rebelFoods/RebelMERForm";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <AutoMatedFormEntry />
+      <RebelMERForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );
