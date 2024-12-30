@@ -20,7 +20,7 @@ const RebelMERForm = ({
   endDate = dayjs("2024-10-22"),
   //corpName = "Lite Bite Foods Pvt. Ltd.",
   corpName = "Rebel Foods Pvt. Ltd",
-  campDate = "30 Nov, 2024",
+  campDate = "28 Dec, 2024",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -1442,9 +1442,12 @@ const RebelMERForm = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data.filter((item) =>
-        EmployeeList.includes(item.empId)
+      const temp = result?.data.filter(
+        (item) => item.vitalsCreatedDate === "2024-12-30"
       );
+      // filter((item) =>
+      //   EmployeeList.includes(item.empId)
+      // );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;

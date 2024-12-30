@@ -24,7 +24,7 @@ const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <UnichemAnnexure />
+      <RebelMERForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );
