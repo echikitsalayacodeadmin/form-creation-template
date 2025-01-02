@@ -376,9 +376,10 @@ const nelayHospital = ["1211040", "1211046", "1211044", "1211047"];
 const sageLabs = ["1211020", "1210643", "1211019", "1210238", "1210830"];
 
 const BloodPdf = ({
-  corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
-  // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
+  // corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
+  corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
   fileType = "BLOODTEST",
+  campCycleId = "138858",
   stoolContentPdf = "https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/org/872cd841-9f7a-432d-b8e9-422b780bca10/138858/BLOODTEST/77a1be28-8d9d-4369-81d0-71da156fe9a4/stoolContentNelayHospital.pdf",
   // stoolContentPdf = "https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/org/872cd841-9f7a-432d-b8e9-422b780bca10/138858/BLOODTEST/77a1be28-8d9d-4369-81d0-71da156fe9a4/stoolcontent.pdf",
 }) => {
@@ -389,6 +390,92 @@ const BloodPdf = ({
   const { enqueueSnackbar } = useSnackbar();
 
   // Add a page to the PDF for a single employee
+  // const addPageToPdf = async (employee) => {
+  //   if (!employee.bloodTestUrl) {
+  //     console.error(`Missing blood test URL for employee ${employee.empId}`);
+  //     return;
+  //   }
+
+  //   try {
+  //     // Load the main PDF and stool content PDF
+  //     const mainPdfBytes = await fetch(employee.bloodTestUrl).then((res) =>
+  //       res.arrayBuffer()
+  //     );
+  //     const stoolPdfBytes = await fetch(stoolContentPdf).then((res) =>
+  //       res.arrayBuffer()
+  //     );
+
+  //     const mainPdfDoc = await PDFDocument.load(mainPdfBytes);
+  //     const stoolPdfDoc = await PDFDocument.load(stoolPdfBytes);
+
+  //     const mainFirstPage = mainPdfDoc.getPage(0);
+  //     const { width, height } = mainFirstPage.getSize();
+
+  //     const [embeddedMainPage] = await mainPdfDoc.embedPages([mainFirstPage]);
+
+  //     const newPage = mainPdfDoc.addPage([width, height]);
+  //     newPage.drawPage(embeddedMainPage, {
+  //       x: 0,
+  //       y: 0,
+  //       width: width,
+  //       height: height,
+  //     });
+
+  //     newPage.drawRectangle({
+  //       x: 0,
+  //       y: -80,
+  //       width: width,
+  //       height: height - 130,
+  //       color: rgb(1, 1, 1),
+  //     });
+
+  //     const stoolFirstPage = stoolPdfDoc.getPage(0);
+
+  //     const cropY = 230; // Crop 230 points from the top
+  //     const stoolContentHeight = height - cropY; // Adjust the content height
+
+  //     stoolFirstPage.setMediaBox(0, cropY, width, stoolContentHeight);
+
+  //     const [embeddedStoolPage] = await mainPdfDoc.embedPages([stoolFirstPage]);
+
+  //     newPage.drawPage(embeddedStoolPage, {
+  //       x: 0,
+  //       y: 0, // Position below the header
+  //       width: width,
+  //       height: stoolContentHeight,
+  //     });
+
+  //     const pdfBytes = await mainPdfDoc.save();
+  //     const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+
+  //     const urlPDF = URL.createObjectURL(pdfBlob);
+
+  //     window.open(urlPDF, "_blank");
+
+  //     const formData = new FormData();
+  //     formData.append(
+  //       "file",
+  //       pdfBlob,
+  //       `${employee?.bloodTestUrl?.split("/").pop() || "Report"}.pdf`
+  //     );
+  //     const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
+  //     const result = await uploadFile(url, formData);
+  //     if (result && result.data) {
+  //       enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
+  //       setUploadedCount((prevCount) => prevCount + 1);
+  //       // setCurrentIndex((prevIndex) => prevIndex + 1);
+  //     } else {
+  //       enqueueSnackbar("An error occurred while uploading PDF!", {
+  //         variant: "error",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error processing employee ${employee.empId}:`, error);
+  //     enqueueSnackbar(`An error occurred while processing ${employee.empId}`, {
+  //       variant: "error",
+  //     });
+  //   }
+  // };
   const addPageToPdf = async (employee) => {
     if (!employee.bloodTestUrl) {
       console.error(`Missing blood test URL for employee ${employee.empId}`);
@@ -396,93 +483,82 @@ const BloodPdf = ({
     }
 
     try {
-      // Load the main PDF and stool content PDF
+      // Load the main PDF
       const mainPdfBytes = await fetch(employee.bloodTestUrl).then((res) =>
         res.arrayBuffer()
       );
-      const stoolPdfBytes = await fetch(stoolContentPdf).then((res) =>
-        res.arrayBuffer()
-      );
-
       const mainPdfDoc = await PDFDocument.load(mainPdfBytes);
-      const stoolPdfDoc = await PDFDocument.load(stoolPdfBytes);
 
-      const mainFirstPage = mainPdfDoc.getPage(0);
-      const { width, height } = mainFirstPage.getSize();
+      // Add a new page to the PDF
+      const newPage = mainPdfDoc.addPage([595, 842]); // A4 dimensions: 595x842
+      const { width, height } = newPage.getSize();
 
-      const [embeddedMainPage] = await mainPdfDoc.embedPages([mainFirstPage]);
+      // Define table properties
+      const rows = 10; // Number of rows
+      const cols = 5; // Number of columns
+      const cellWidth = width / cols;
+      const cellHeight = 20;
+      const startX = 30; // Starting X coordinate
+      const startY = height - 100; // Starting Y coordinate
 
-      const newPage = mainPdfDoc.addPage([width, height]);
-      newPage.drawPage(embeddedMainPage, {
-        x: 0,
-        y: 0,
-        width: width,
-        height: height,
-      });
+      // Draw table grid
+      for (let i = 0; i <= rows; i++) {
+        const y = startY - i * cellHeight;
+        newPage.drawLine({
+          start: { x: startX, y },
+          end: { x: startX + cols * cellWidth, y },
+          thickness: 0.5,
+          color: rgb(0, 0, 0),
+        });
+      }
 
-      newPage.drawRectangle({
-        x: 0,
-        y: -80,
-        width: width,
-        height: height - 130,
-        color: rgb(1, 1, 1),
-      });
+      for (let j = 0; j <= cols; j++) {
+        const x = startX + j * cellWidth;
+        newPage.drawLine({
+          start: { x, y: startY },
+          end: { x, y: startY - rows * cellHeight },
+          thickness: 0.5,
+          color: rgb(0, 0, 0),
+        });
+      }
 
-      const stoolFirstPage = stoolPdfDoc.getPage(0);
+      // Insert data into the table
+      const data = [
+        ["Emp ID", "Name", "Result"],
+        [employee.empId, "John Doe", "Normal"],
+        ["1210101", "Jane Smith", "Abnormal"],
+        ["1210203", "Alice Johnson", "Normal"],
+      ];
 
-      const cropY = 230; // Crop 230 points from the top
-      const stoolContentHeight = height - cropY; // Adjust the content height
-
-      stoolFirstPage.setMediaBox(0, cropY, width, stoolContentHeight);
-
-      const [embeddedStoolPage] = await mainPdfDoc.embedPages([stoolFirstPage]);
-
-      newPage.drawPage(embeddedStoolPage, {
-        x: 0,
-        y: 0, // Position below the header
-        width: width,
-        height: stoolContentHeight,
-      });
+      const fontSize = 7;
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+          const text = data[i][j];
+          const x = startX + j * cellWidth + 2; // Add padding
+          const y = startY - i * cellHeight - 2; // Adjust for text baseline
+          newPage.drawText(text, { x, y, size: fontSize, color: rgb(0, 0, 0) });
+        }
+      }
 
       const pdfBytes = await mainPdfDoc.save();
       const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
 
-      // const url = URL.createObjectURL(pdfBlob);
-
-      // window.open(url, "_blank");
-
-      // const formData = new FormData();
-      // formData.append(
-      //   "file",
-      //   pdfBlob,
-      //   `${employee?.bloodTestUrl?.split("/").pop() || "Report"}.pdf`
-      // );
-      // const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
-      // const result = await uploadFile(url, formData);
-      // if (result && result.data) {
-      //   enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
-      //   setUploadedCount((prevCount) => prevCount + 1);
-      // } else {
-      //   enqueueSnackbar("An error occurred while uploading PDF!", {
-      //     variant: "error",
-      //   });
-      // }
+      // Debugging: Open the PDF in a new tab
+      const url = URL.createObjectURL(pdfBlob);
+      window.open(url, "_blank");
     } catch (error) {
       console.error(`Error processing employee ${employee.empId}:`, error);
-      enqueueSnackbar(`An error occurred while processing ${employee.empId}`, {
-        variant: "error",
-      });
     }
   };
 
   // Fetch the list of employees
   const fetchListOfEmployees = async () => {
     try {
-      const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
+      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
         const temp = result.data.filter(
-          (item) => ids?.includes(item.empId) && item.bloodTestUrl === null
+          (item) => ["WZ408", "8"].includes(item.empId) && item.bloodTestUrl
         );
         setList(sortDataByName(temp));
         setTotalEmployees(temp.length);

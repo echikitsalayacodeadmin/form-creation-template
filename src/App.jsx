@@ -19,12 +19,13 @@ import AutoMatedFormEntry from "./automatedFormEntry/autoMatedFormEntry";
 import Form21 from "./form21/form21";
 import RebelFitnessCertificate from "./rebelFoods/RebelFitnessCertificate";
 import RebelMERForm from "./rebelFoods/RebelMERForm";
+import BloodPdf from "./blood/bloodPdf";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <RebelFitnessCertificate />
+      <BloodPdf />
       {/* <GenericFormGenerator /> */}
     </div>
   );
