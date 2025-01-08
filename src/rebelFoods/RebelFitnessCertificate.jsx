@@ -21,7 +21,7 @@ const RebelFitnessCertificate = ({
   endDate = dayjs("2024-10-22"),
   //corpName = "Lite Bite Foods Pvt. Ltd.",
   corpName = "Rebel Foods Pvt. Ltd",
-  campDate = "29 Dec, 2024",
+  campDate = "04 Jan, 2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -364,11 +364,12 @@ const RebelFitnessCertificate = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => item.vitalsCreatedDate === "2024-12-29"
+        (item) =>
+          item.vitalsCreatedDate === "2025-01-07" ||
+          item.vitalsCreatedDate === "2025-01-08"
+        // &&
+        //   item.vitalsCreatedDate === "2025-01-08"
       );
-      // .filter((item) =>
-      //   EmployeeList.includes(item.empId)
-      // );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
