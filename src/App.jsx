@@ -20,12 +20,13 @@ import Form21 from "./form21/form21";
 import RebelFitnessCertificate from "./rebelFoods/RebelFitnessCertificate";
 import RebelMERForm from "./rebelFoods/RebelMERForm";
 import BloodPdf from "./blood/bloodPdf";
+import DaawatBlood from "./daawatblood/daawatBlood";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <RebelFitnessCertificate />
+      <DaawatBlood />
       {/* <GenericFormGenerator /> */}
     </div>
   );
