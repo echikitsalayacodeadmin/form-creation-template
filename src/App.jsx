@@ -21,12 +21,13 @@ import RebelFitnessCertificate from "./rebelFoods/RebelFitnessCertificate";
 import RebelMERForm from "./rebelFoods/RebelMERForm";
 import BloodPdf from "./blood/bloodPdf";
 import DaawatBlood from "./daawatblood/daawatBlood";
+import ShrijiPolymerBlood from "./shrijiPolymerBlood/shrijiPolymerBlood";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <DaawatBlood />
+      <ShrijiPolymerBlood />
       {/* <GenericFormGenerator /> */}
     </div>
   );

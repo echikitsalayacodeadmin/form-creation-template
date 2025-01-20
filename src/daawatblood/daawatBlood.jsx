@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { useSnackbar } from "notistack";
-import { sortDataByName } from "../assets/utils";
+import { downloadCsv, sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { getData } from "../assets/services/GetApiCall";
+import { updateData } from "../assets/services/PatchApi";
+import { daawatOldCamp } from "./bloodOldCamp";
 
 const DaawatBlood = ({
   //   corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
   // campCycleId = "252188",
   corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
-  campCycleId = "237641",
+  campCycleId = "237640",
   fileType = "BLOODTEST",
 }) => {
   const [list, setList] = useState([]);
@@ -32,6 +34,12 @@ const DaawatBlood = ({
       );
 
       const mainPdfDoc = await PDFDocument.load(mainPdfBytes);
+
+      // // Remove the last page
+      // const pageCount = mainPdfDoc.getPageCount();
+      // if (pageCount > 1) {
+      //   mainPdfDoc.removePage(pageCount - 1); // Remove the last page
+      // }
 
       const mainFirstPage = mainPdfDoc.getPage(0);
       const { width, height } = mainFirstPage.getSize();
@@ -63,7 +71,7 @@ const DaawatBlood = ({
         color: rgb(0, 0, 0), // Text color (black)
         // font: boldFont,
       });
-      newPage.drawText("Non Reactive", {
+      newPage.drawText(`${employee.HBSAG || "Non-Reactive"}`, {
         x: 250, // Adjust x to your desired position
         y: height - 230, // Adjust y to position the text over the rectangle (you can fine-tune this)
         size: 9, // Font size
@@ -135,7 +143,7 @@ const DaawatBlood = ({
 
       const urlPDF = URL.createObjectURL(pdfBlob);
 
-      window.open(urlPDF, "_blank");
+      // window.open(urlPDF, "_blank");
 
       const formData = new FormData();
       formData.append(
@@ -166,15 +174,70 @@ const DaawatBlood = ({
   const fetchListOfEmployees = async () => {
     try {
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      // const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25&campCycleId=237640`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result.data.filter(
-          (item) => item.vitalsCreatedDate === "2024-12-31"
-        );
+        const temp = result.data.map((item) => ({
+          empId: item.empId,
+          name: item.name,
+          "S.CREATININE": item?.cholestrolData?.["S.CREATININE"],
+          GFR: item?.cholestrolData?.GFR,
+          age: item.age,
+          gender: item.gender,
+        }));
+
+        downloadCsv(temp);
         // .filter(
-        //   (item) => ["1210992"].includes(item.empId) && item.bloodTestUrl
-        //   //   8
+        //   (item) => item.vitalsCreatedDate === "2025-01-03" && item.bloodTestUrl
         // );
+
+        // .filter(
+        //   (item) =>
+        //     [
+        //       // "711206",
+        //       // "711230",
+        //       // "1210862",
+        //       // "1210161",
+        //       // "CS0800",
+        //       // "CS10784",
+        //       // "Dk19",
+        //       // "711225",
+        //       // "Dmahi02",
+        //       // "CS007",
+        //       // "CS10662",
+        //       // "Br68",
+        //       // "KC0004",
+        //       // "KC0008",
+        //       // "7111216",
+        //       // "Br39",
+        //       // "23043",
+        //       // "Kc00010",
+        //       // "AQ001",
+        //       // "AQ5343",
+        //       // "711031",
+        //       // "CS10663",
+        //       // "1211052",
+        //       // "DR93",
+        //       // "Dr83",
+        //       // "685990",
+        //       // "711033",
+        //       // "711272",
+        //       // "1210180",
+        //       // "896132",
+        //       // "1211003",
+        //       // "1210401",
+        //       // "1210717",
+        //       // "711133",
+        //       // "1210996",
+        //       // "1210161",
+        //       "976909",
+        //     ].includes(item.empId) && item.bloodTestUrl
+        // )
+        // .map((item) => ({
+        //   ...item,
+        //   HBSAG: daawatOldCamp.find((oldCamp) => oldCamp.empId === item.empId)
+        //     ?.cholestrolData?.["HBsAg"],
+        // }));
         setList(sortDataByName(temp));
         setTotalEmployees(temp.length);
       } else {
@@ -198,15 +261,37 @@ const DaawatBlood = ({
     }
   };
 
+  const handleDeletePDF = async () => {
+    for (let i = 0; i < list.length; i++) {
+      await deleteFiles(list[i]);
+    }
+  };
+
+  const deleteFiles = async (data) => {
+    const url = `https://apibackend.uno.care/api/org/employee/delete/file?empId=${data?.empId}&toDeletefiletype=${fileType}&corpId=${corpId}`;
+    const result = await updateData(url);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Deleted PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
+  };
   return (
     <div>
       <button onClick={processNextEmployee}>Process Employees</button>
+      <button onClick={handleDeletePDF}>Delete files</button>
       <div>Total Employees: {totalEmployees}</div> <br />
       <div>Uploaded Files: {uploadedCount}</div> <br />
       {list.map((item, index) => (
         <div key={index} style={{ display: "flex" }}>
           <div>
-            {item.empId} {item.name}
+            {item.empId} <br /> {item.name} <br />
+            {`HBsAg": ${item?.HBSAG}`}
           </div>
           <a href={item.bloodTestUrl}>
             <div>{item.bloodTestUrl}</div>
