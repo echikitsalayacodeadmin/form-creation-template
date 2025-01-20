@@ -4,10 +4,12 @@ import { useSnackbar } from "notistack";
 import { downloadCsv, sortDataByName } from "../assets/utils";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
+import { oldBloodGroup } from "./bloodOldCamp";
+import { uploadFile } from "../assets/services/PostApiCall";
 
 const ShrijiPolymerBlood = ({
-  corpId = "fff042b1-8fd3-48aa-aa8a-e7c97949a9d5",
-  campCycleId = "246259",
+  corpId = "b2f115cc-8951-4236-b995-318088b8c232",
+  campCycleId = "194476",
   fileType = "BLOODTEST",
   bloodGroupFile = "https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/corpAllReports/fff042b1-8fd3-48aa-aa8a-e7c97949a9d5/BLOODTEST/20241220092404/Ms_SHAYRI_DAWAR_SP71_19_12_2024_04_25_56_PM.pdf",
 }) => {
@@ -89,7 +91,7 @@ const ShrijiPolymerBlood = ({
         color: rgb(1, 1, 1),
       });
 
-      newPage.drawText(`${employee.HBSAG || `"O" Rh Positive`}`, {
+      newPage.drawText(`${employee.formattedBloodGroup || `"O" Rh Positive`}`, {
         x: 250, // Adjust x to your desired position
         y: height - 232, // Adjust y to position the text over the rectangle (you can fine-tune this)
         size: 9, // Font size
@@ -118,24 +120,24 @@ const ShrijiPolymerBlood = ({
 
       const urlPDF = URL.createObjectURL(pdfBlob);
 
-      window.open(urlPDF, "_blank");
+      // window.open(urlPDF, "_blank");
 
-      // const formData = new FormData();
-      // formData.append(
-      //   "file",
-      //   pdfBlob,
-      //   `${employee?.bloodTestUrl?.split("/").pop() || "Report"}.pdf`
-      // );
-      // const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
-      // const result = await uploadFile(url, formData);
-      // if (result && result.data) {
-      //   enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
-      //   setUploadedCount((prevCount) => prevCount + 1);
-      // } else {
-      //   enqueueSnackbar("An error occurred while uploading PDF!", {
-      //     variant: "error",
-      //   });
-      // }
+      const formData = new FormData();
+      formData.append(
+        "file",
+        pdfBlob,
+        `${employee?.bloodTestUrl?.split("/").pop() || "Report"}.pdf`
+      );
+      const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
+      if (result && result.data) {
+        enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
+        setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+        enqueueSnackbar("An error occurred while uploading PDF!", {
+          variant: "error",
+        });
+      }
     } catch (error) {
       console.error(`Error processing employee ${employee.empId}:`, error);
       enqueueSnackbar(`An error occurred while processing ${employee.empId}`, {
@@ -151,7 +153,26 @@ const ShrijiPolymerBlood = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result.data;
+        let temp = oldBloodGroup.map((employee) => {
+          const bloodGroupFile =
+            result?.data.find((employee2) => employee2.empId === employee.empId)
+              ?.bloodTestUrl || null;
+          let formattedBloodGroup = null;
+          let rhValue = null;
+          const bg = employee.bloodGroup;
+          const group = bg.slice(0, -1); // Extract A, B, AB, or O
+          const rh = bg.endsWith("+") ? "Positive" : "Negative"; // Determine Rh value
+          formattedBloodGroup = `"${group}" ${rh}`;
+          rhValue = rh;
+
+          return {
+            ...employee,
+            formattedBloodGroup: formattedBloodGroup, // e.g., `"A" Positive`
+            bloodTestUrl: bloodGroupFile,
+          };
+        });
+
+        console.log({ em: temp.length });
         setList(sortDataByName(temp));
         setTotalEmployees(temp.length);
       } else {
@@ -205,10 +226,10 @@ const ShrijiPolymerBlood = ({
         <div key={index} style={{ display: "flex" }}>
           <div>
             {item.empId} <br /> {item.name} <br />
-            {`HBsAg": ${item?.HBSAG}`}
+            {`BLOOD GROUP": ${item?.formattedBloodGroup}`}
           </div>
           <a href={item.bloodTestUrl}>
-            <div>{item.bloodTestUrl}</div>
+            <div>{item.bloodTestUrl || "No Blood Report File"}</div>
           </a>
           <br />
         </div>
