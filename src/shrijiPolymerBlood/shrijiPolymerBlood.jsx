@@ -6,6 +6,7 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { oldBloodGroup } from "./bloodOldCamp";
 import { uploadFile } from "../assets/services/PostApiCall";
+import { data3 } from "../iscon/isconBalaji";
 
 const ShrijiPolymerBlood = ({
   corpId = "b2f115cc-8951-4236-b995-318088b8c232",
@@ -216,6 +217,9 @@ const ShrijiPolymerBlood = ({
       });
     }
   };
+
+  console.log({ data3 });
+
   return (
     <div>
       <button onClick={processNextEmployee}>Process Employees</button>
