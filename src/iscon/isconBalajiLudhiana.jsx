@@ -7,6 +7,7 @@ import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
+import { data3 } from "./isconBalaji";
 
 const IsconBalajiLudhiana = ({
   corpId = "9f2ccdd9-a5d2-426f-a196-1595c09353c0",
@@ -395,6 +396,8 @@ const IsconBalajiLudhiana = ({
       });
     }
   };
+
+  console.log({ data3 });
 
   return (
     <div>

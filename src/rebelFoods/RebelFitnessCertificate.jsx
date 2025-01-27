@@ -4,24 +4,16 @@ import { getData } from "../assets/services/GetApiCall";
 import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
-import dayjs from "dayjs";
 import { uploadFile } from "../assets/services/PostApiCall";
-import { EmployeeList } from "./RebelData";
 import { LogoImage, LogoImageFSSAI } from "./assets";
 
 const RebelFitnessCertificate = ({
   corpId = "dd491d3b-8a1b-493a-99cf-730fafa7c468", ///rebelcamp
-  //corpId = "2ef9842f-552f-464e-831c-28ce3ada1715",
-  // corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
-  // campCycleId = ""
-  campCycleId = "",
-  ///fileType = "CONSOLIDATED_REPORT",
+  campCycleId = "246327",
   fileType = "FITNESS_CERTIFICATE",
-  startDate = dayjs("2024-10-22"),
-  endDate = dayjs("2024-10-22"),
-  //corpName = "Lite Bite Foods Pvt. Ltd.",
   corpName = "Rebel Foods Pvt. Ltd",
   campDate = "04 Jan, 2025",
+  year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -189,9 +181,7 @@ const RebelFitnessCertificate = ({
           </h1>
     
           <p class="s4" style="text-indent: 0pt; text-align: center">
-            (FOR THE YEAR<u>&nbsp; </u>2024<u>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u
-            >)
+            (FOR THE YEAR ${year})
           </p>
           <p style="  padding-top: 4pt;
                     padding-left: 2pt;
@@ -363,13 +353,33 @@ const RebelFitnessCertificate = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data.filter(
-        (item) =>
-          item.vitalsCreatedDate === "2025-01-07" ||
-          item.vitalsCreatedDate === "2025-01-08"
-        // &&
-        //   item.vitalsCreatedDate === "2025-01-08"
-      );
+      const empIDS = [
+        "20867",
+        "49941",
+        "50884",
+        "60416",
+        "69913",
+        "62006",
+        "55633",
+        "69507",
+        "76923",
+        "77783",
+        "77695",
+        "80364",
+        "81760",
+        "33560",
+        "50698",
+        "54643",
+        "29236",
+        "81241",
+        "7594",
+        "65296",
+        "20187",
+        "82052",
+        "RF01",
+      ];
+
+      const temp = result?.data.filter((item) => empIDS.includes(item.empId));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
