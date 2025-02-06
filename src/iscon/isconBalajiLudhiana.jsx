@@ -354,7 +354,9 @@ const IsconBalajiLudhiana = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data;
+      const temp = result?.data.filter((item) =>
+        ["IBF00438", "IBF00444", "TDS/BALAJI/028"].includes(item.empId)
+      );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;

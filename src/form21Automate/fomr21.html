@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Register Table</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+      }
+      .container {
+        text-align: center;
+        margin: 10px 0;
+      }
+      .tableContainer {
+        display: flex;
+        justify-content: "center";
+        align-items: center;
+        transform: scale(0.8);
+        transform-origin: top left;
+      }
+      table {
+        border-collapse: collapse;
+        font-size: 12px;
+        text-align: center;
+        display: inline-block;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 5px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .bold-text {
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p class="bold-text">Form Number 21</p>
+      <p class="bold-text">Prescribed under Rule (19) Health Register</p>
+      <p class="bold-text">
+        In respect of person employed in occupation declared to be dangerous
+        operations under section 87
+      </p>
+      <p class="bold-text">Name of certifying surgeon: Dr Kunal Sharma</p>
+      <div class="tableContainer">
+        <table>
+          <thead>
+            <tr>
+              <th>Sr No.</th>
+              <th>Emp ID</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Occupation</th>
+              <th>Date of Joining</th>
+              <th>Date of Leaving/Transfer</th>
+              <th>Reason for Leaving/Transfer</th>
+              <th>Section</th>
+              <th>Medical Date</th>
+              <th>Fitness</th>
+              <th>Doctor Signature</th>
+              <th>Certifying Surgeon Signature</th>
+            </tr>
+          </thead>
+          <tbody>
+            {form21Data.map((item, index) => (
+            <tr>
+              <td>{index + 1}</td>
+              <td>{item.empId}</td>
+              <td>{item.name}</td>
+              <td>{item.gender}</td>
+              <td>{item.age}</td>
+              <td>{item.occupation}</td>
+              <td>{item.dateOfJoining}</td>
+              <td>{item.dateOfLeavingOrTransfer}</td>
+              <td>{item.reasonsForLeavingOrTransfer}</td>
+              <td>{item.section}</td>
+              <td>{item.medicalDate}</td>
+              <td>{item.fitness}</td>
+              <td>{item.doctorSignature}</td>
+              <td>{item.certifyingSurgeonSignature}</td>
+            </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

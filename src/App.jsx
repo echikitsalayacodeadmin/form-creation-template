@@ -23,12 +23,15 @@ import BloodPdf from "./blood/bloodPdf";
 import DaawatBlood from "./daawatblood/daawatBlood";
 import ShrijiPolymerBlood from "./shrijiPolymerBlood/shrijiPolymerBlood";
 import IsconBalajiLudhiana from "./iscon/isconBalajiLudhiana";
+import Form21Automate from "./form21Automate/form21Automate";
+import CorpsForm21Tracker from "./form21Automate/corpsForm21Tracker";
+import "./App.css";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <RebelMERForm />
+      <CorpsForm21Tracker />
       {/* <GenericFormGenerator /> */}
     </div>
   );
