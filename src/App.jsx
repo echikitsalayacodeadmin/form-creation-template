@@ -26,12 +26,14 @@ import IsconBalajiLudhiana from "./iscon/isconBalajiLudhiana";
 import Form21Automate from "./form21Automate/form21Automate";
 import CorpsForm21Tracker from "./form21Automate/corpsForm21Tracker";
 import "./App.css";
+import IsconBalajiGujarat from "./iscon/isconBalajiGujarat";
+import LapHealthCertificateForm from "./lapHealthCertificateForm/lapHealthCertificateForm";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <CorpsForm21Tracker />
+      <RebelMERForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );
