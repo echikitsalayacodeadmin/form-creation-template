@@ -2044,16 +2044,7 @@ const RebelMERForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter((item) =>
-        [
-          "78290",
-          "77547",
-          "80695",
-          "82866",
-          "82980",
-          "79906",
-          "82603",
-          "82316",
-        ].includes(item.empId)
+        ["79906"].includes(item.empId)
       );
 
       console.log({

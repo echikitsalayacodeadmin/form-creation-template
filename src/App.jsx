@@ -28,12 +28,13 @@ import CorpsForm21Tracker from "./form21Automate/corpsForm21Tracker";
 import "./App.css";
 import IsconBalajiGujarat from "./iscon/isconBalajiGujarat";
 import LapHealthCertificateForm from "./lapHealthCertificateForm/lapHealthCertificateForm";
+import AcgFoodHandler from "./acg/acgFoodHandler";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <RebelMERForm />
+      <AcgFoodHandler />
       {/* <GenericFormGenerator /> */}
     </div>
   );

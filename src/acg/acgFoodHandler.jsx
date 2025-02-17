@@ -6,14 +6,15 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
+import dayjs from "dayjs";
 
-const RebelFitnessCertificate = ({
-  corpId = "dd491d3b-8a1b-493a-99cf-730fafa7c468", ///rebelcamp
-  campCycleId = "246327",
-  fileType = "FITNESS_CERTIFICATE",
-  corpName = "Rebel Foods Pvt. Ltd",
-  campDate = "14 Feb, 2025",
-  year = "2025",
+const AcgFoodHandler = ({
+  corpId = "c6027796-37d6-4bfc-a9ab-c2c69187cdd7", ///acg
+  campCycleId = "194485",
+  fileType = "FITNESS_CERTIFICATE_FOOD",
+  corpName = "ACG - Associated Capsules",
+  campDate = "1 Oct, 2024",
+  year = "2024",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -181,7 +182,7 @@ const RebelFitnessCertificate = ({
           </h1>
     
           <p class="s4" style="text-indent: 0pt; text-align: center">
-            (FOR THE YEAR ${year})
+            (FOR THE YEAR ${dayjs(data?.vitalsCreatedDate).format("YYYY")})
           </p>
           <p style="  padding-top: 4pt;
                     padding-left: 2pt;
@@ -219,7 +220,9 @@ const RebelFitnessCertificate = ({
             }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
+              >&nbsp;&nbsp;&nbsp;${dayjs(data?.vitalsCreatedDate).format(
+                "DD MMM YYYY"
+              )}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -353,7 +356,23 @@ const RebelFitnessCertificate = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = ["79906"];
+      const empIDS = [
+        // "C7",
+        // "C8",
+        // "C9",
+        // "C10",
+        // "C11",
+        // "C12",
+        "C6",
+        "IND02338",
+        "IND02526",
+        "IND01752",
+        "IND01",
+        "IND01953",
+        "11113384",
+        "1964",
+        "AC76107",
+      ];
 
       const temp = result?.data.filter((item) => empIDS.includes(item.empId));
 
@@ -409,15 +428,9 @@ const RebelFitnessCertificate = ({
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            {fileType === "FITNESS_CERTIFICATE" ? (
-              <a href={item.fitnessCertificateUrl}>
-                <div key={index}>{item.fitnessCertificateUrl}</div>
-              </a>
-            ) : (
-              <a href={item.consolidatedRUrl}>
-                <div key={index}>{item.consolidatedRUrl}</div>
-              </a>
-            )}
+            <a href={item.medicalFitnessFoodUrl}>
+              <div key={index}>{item.medicalFitnessFoodUrl}</div>
+            </a>
 
             <br />
           </div>
@@ -427,4 +440,4 @@ const RebelFitnessCertificate = ({
   );
 };
 
-export default RebelFitnessCertificate;
+export default AcgFoodHandler;
