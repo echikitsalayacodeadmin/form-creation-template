@@ -29,12 +29,14 @@ import "./App.css";
 import IsconBalajiGujarat from "./iscon/isconBalajiGujarat";
 import LapHealthCertificateForm from "./lapHealthCertificateForm/lapHealthCertificateForm";
 import AcgFoodHandler from "./acg/acgFoodHandler";
+import ArcelorMittalFoodHandler from "./arcelorMittalNiponSteel/arcelorMittalFoodHandler";
+import SanohFoodHandler from "./sanohFoodhandler/sanohFoodHandler";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <AcgFoodHandler />
+      <SanohFoodHandler />
       {/* <GenericFormGenerator /> */}
     </div>
   );

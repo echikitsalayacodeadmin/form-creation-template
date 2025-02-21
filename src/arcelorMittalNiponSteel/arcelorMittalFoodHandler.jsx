@@ -6,15 +6,14 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
-import dayjs from "dayjs";
 
-const AcgFoodHandler = ({
-  corpId = "c6027796-37d6-4bfc-a9ab-c2c69187cdd7", ///acg
-  campCycleId = "194485",
+const ArcelorMittalFoodHandler = ({
+  corpId = "0d2ef92b-5527-4170-88b4-a3a72c7f1071",
+  campCycleId = "246264",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "ACG - Associated Capsules",
-  campDate = "1 Oct, 2024",
-  year = "2024",
+  corpName = "ArcelorMittal Nippon Steel India Limited",
+  campDate = "18th Feb, 2025",
+  year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -182,7 +181,7 @@ const AcgFoodHandler = ({
           </h1>
     
           <p class="s4" style="text-indent: 0pt; text-align: center">
-            (FOR THE YEAR ${dayjs(data?.vitalsCreatedDate).format("YYYY")})
+            (FOR THE YEAR ${year})
           </p>
           <p style="  padding-top: 4pt;
                     padding-left: 2pt;
@@ -220,9 +219,7 @@ const AcgFoodHandler = ({
             }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${dayjs(data?.vitalsCreatedDate).format(
-                "DD MMM YYYY"
-              )}&nbsp;
+              >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -356,23 +353,7 @@ const AcgFoodHandler = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = [
-        // "C7",
-        // "C8",
-        // "C9",
-        // "C10",
-        // "C11",
-        // "C12",
-        "C6",
-        "IND02338",
-        "IND02526",
-        "IND01752",
-        "IND01",
-        "IND01953",
-        "11113384",
-        "1964",
-        "AC76107",
-      ];
+      const empIDS = ["A-033"];
 
       const temp = result?.data.filter((item) => empIDS.includes(item.empId));
 
@@ -440,4 +421,4 @@ const AcgFoodHandler = ({
   );
 };
 
-export default AcgFoodHandler;
+export default ArcelorMittalFoodHandler;
