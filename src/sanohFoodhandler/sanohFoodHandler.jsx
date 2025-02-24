@@ -353,7 +353,7 @@ const SanohFoodHandler = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = ["1102", "1105", "1106", "1120"];
+      const empIDS = ["1105"];
 
       const temp = result?.data.filter((item) => empIDS.includes(item.empId));
 
