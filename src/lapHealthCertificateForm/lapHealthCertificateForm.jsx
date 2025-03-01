@@ -19,7 +19,8 @@ const LapHealthCertificateForm = ({
   //   corpId = "96b53daa-d5ca-4d96-952b-3d15d5cdf649",
   //   campCycleId = "253639",
   //   corpName = "Lapp India Vadodara",
-  fileType = "ANNEXURE",
+  // fileType = "CONSOLIDATED_REPORT",
+  fileType = "ANNEXURE", // Lapp India Pune
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -3818,8 +3819,8 @@ const LapHealthCertificateForm = ({
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.annexureUrl}>
-              <div key={index}>{item.annexureUrl}</div>
+            <a href={item.consolidatedRUrl}>
+              <div key={index}>{item.consolidatedRUrl}</div>
             </a>
 
             <br />
