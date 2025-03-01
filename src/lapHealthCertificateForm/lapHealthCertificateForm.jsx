@@ -7,13 +7,19 @@ import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 
 const LapHealthCertificateForm = ({
-  corpId = "5359f5e7-825f-4aa9-b649-0efa013945bc",
-  campCycleId = "253638",
-  corpName = "Lapp India Dharuhera",
+  corpId = "afb32577-5157-4321-87cc-a980ea256e7f",
+  campCycleId = "253637",
+  corpName = "Lapp India Pune",
+  // corpId = "64eac2de-b039-4526-bffb-9e0e5e17c771",
+  // campCycleId = "252431",
+  // corpName = "Lapp India Bangalore",
+  // corpId = "5359f5e7-825f-4aa9-b649-0efa013945bc",
+  // campCycleId = "253638",
+  // corpName = "Lapp India Dharuhera",
   //   corpId = "96b53daa-d5ca-4d96-952b-3d15d5cdf649",
   //   campCycleId = "253639",
   //   corpName = "Lapp India Vadodara",
-  fileType = "CONSOLIDATED_REPORT",
+  fileType = "ANNEXURE",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -3812,8 +3818,8 @@ const LapHealthCertificateForm = ({
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.consolidatedRUrl}>
-              <div key={index}>{item.consolidatedRUrl}</div>
+            <a href={item.annexureUrl}>
+              <div key={index}>{item.annexureUrl}</div>
             </a>
 
             <br />

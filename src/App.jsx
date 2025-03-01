@@ -36,7 +36,7 @@ const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <SanohFoodHandler />
+      <LapHealthCertificateForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );
