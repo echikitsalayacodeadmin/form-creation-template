@@ -31,12 +31,18 @@ import LapHealthCertificateForm from "./lapHealthCertificateForm/lapHealthCertif
 import AcgFoodHandler from "./acg/acgFoodHandler";
 import ArcelorMittalFoodHandler from "./arcelorMittalNiponSteel/arcelorMittalFoodHandler";
 import SanohFoodHandler from "./sanohFoodhandler/sanohFoodHandler";
+import IskonBalajiUjjainFssaiForm from "./iscon/iskonBalajiUjjainFssaiForm";
+import ZestPharma from "./zestPharma/zestPharma";
+import ZestPharmaPhysicalFitnessForm from "./zestPharma/zestPharmaPhysicalFitnessForm";
+import SuzlonForm from "./suzlon/suzlonForm";
+import SuzlonFormNew from "./suzlon/suzlonFormNew";
+import SunpharmaDahejBloodReport from "./sunPharmaDahej/sunpharmaDahejBloodReport";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <LapHealthCertificateForm />
+      <SunpharmaDahejBloodReport />
       {/* <GenericFormGenerator /> */}
     </div>
   );

@@ -463,7 +463,7 @@ const BloodPdf = ({
       if (result && result.data) {
         enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
         setUploadedCount((prevCount) => prevCount + 1);
-        // setCurrentIndex((prevIndex) => prevIndex + 1);
+        setCurrentIndex((prevIndex) => prevIndex + 1);
       } else {
         enqueueSnackbar("An error occurred while uploading PDF!", {
           variant: "error",
@@ -503,7 +503,6 @@ const BloodPdf = ({
   const processNextEmployee = async () => {
     if (currentIndex < list.length) {
       await addPageToPdf(list[currentIndex]);
-      setCurrentIndex((prevIndex) => prevIndex + 1);
     } else {
       enqueueSnackbar("All employees processed!", { variant: "success" });
     }

@@ -8,12 +8,12 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
 
-const RebelFitnessCertificate = ({
-  corpId = "dd491d3b-8a1b-493a-99cf-730fafa7c468", ///rebelcamp
-  campCycleId = "246327",
-  fileType = "FITNESS_CERTIFICATE",
-  corpName = "Rebel Foods Pvt. Ltd",
-  campDate = "22 March 2025",
+const IskonBalajiUjjainFssaiForm = ({
+  corpId = "eb7c471c-2e64-4bd6-82ed-5f56f63afeb7",
+  campCycleId = "273227",
+  fileType = "FITNESS_CERTIFICATE_FOOD",
+  corpName = "Iscon Balaji Foods Pvt ltd",
+  campDate = "27th Feb, 2025",
   year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -24,7 +24,7 @@ const RebelFitnessCertificate = ({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const generatePDF = async (data, index) => {
-    const FITNESS_CERTIFICATE = `
+    const FoodCertificate = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
@@ -318,7 +318,7 @@ const RebelFitnessCertificate = ({
         </div>
     `;
     const pdfBlob = await html2pdf()
-      .from(FITNESS_CERTIFICATE)
+      .from(FoodCertificate)
       .output("blob")
       .then((data) => {
         return data;
@@ -329,7 +329,7 @@ const RebelFitnessCertificate = ({
 
     const formData = new FormData();
     //formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
-    formData.append("file", pdfBlob, `${data.empId}_physical_fitness_form.pdf`);
+    formData.append("file", pdfBlob, `${data.empId}_food_certificate_form.pdf`);
 
     const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
@@ -354,9 +354,9 @@ const RebelFitnessCertificate = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = ["83625", "82985", "83598", "83305"];
-
-      const temp = result?.data.filter((item) => empIDS.includes(item.empId));
+      const temp = result?.data.filter(
+        (item) => item.vitalsCreatedDate === "2025-02-27"
+      );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -410,15 +410,9 @@ const RebelFitnessCertificate = ({
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            {fileType === "FITNESS_CERTIFICATE" ? (
-              <a href={item.fitnessCertificateUrl}>
-                <div key={index}>{item.fitnessCertificateUrl}</div>
-              </a>
-            ) : (
-              <a href={item.consolidatedRUrl}>
-                <div key={index}>{item.consolidatedRUrl}</div>
-              </a>
-            )}
+            <a href={item.medicalFitnessFoodUrl}>
+              <div key={index}>{item.medicalFitnessFoodUrl}</div>
+            </a>
 
             <br />
           </div>
@@ -427,5 +421,4 @@ const RebelFitnessCertificate = ({
     </div>
   );
 };
-
-export default RebelFitnessCertificate;
+export default IskonBalajiUjjainFssaiForm;

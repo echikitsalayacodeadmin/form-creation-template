@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { useSnackbar } from "notistack";
-import { downloadCsv, sortDataByName } from "../assets/utils";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import React, { useEffect, useState } from "react";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
-import { oldBloodGroup } from "./bloodOldCamp";
+import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
-import { data3 } from "../iscon/isconBalaji";
 
-const ShrijiPolymerBlood = ({
-  corpId = "b2f115cc-8951-4236-b995-318088b8c232",
-  campCycleId = "194476",
+const SunpharmaDahejBloodReport = ({
+  corpId = "4102a5bd-77d8-42f3-b2cd-a4101cde2366",
+  //   corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
+  campCycleId = "289149",
   fileType = "BLOODTEST",
-  bloodGroupFile = "https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/corpAllReports/fff042b1-8fd3-48aa-aa8a-e7c97949a9d5/BLOODTEST/20241220092404/Ms_SHAYRI_DAWAR_SP71_19_12_2024_04_25_56_PM.pdf",
+  bloodGroupFile = "https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/org/872cd841-9f7a-432d-b8e9-422b780bca10/252188/BLOODTEST/61ea621e-8586-467f-8018-b676d2b69123/redCliff.pdf",
 }) => {
   const [list, setList] = useState([]);
   const [totalEmployees, setTotalEmployees] = useState(0);
@@ -52,19 +51,17 @@ const ShrijiPolymerBlood = ({
         height: height,
       });
 
-      // Shivani Report
-
       newPage.drawRectangle({
         x: 0,
-        y: 150,
+        y: 0,
         width: width,
-        height: height - 220 - 150,
+        height: height - 180,
         color: rgb(1, 1, 1),
       });
 
-      const bloodLastPage = bloodGroupPdfDoc.getPage(1);
+      const bloodLastPage = bloodGroupPdfDoc.getPage(0);
 
-      const cropY = 190; // Crop 230 points from the top
+      const cropY = 180; // Crop 230 points from the top
       const bloodFileHeight = height - cropY; // Adjust the content height
 
       bloodLastPage.setMediaBox(0, cropY, width, bloodFileHeight);
@@ -79,43 +76,30 @@ const ShrijiPolymerBlood = ({
       });
 
       newPage.drawRectangle({
-        x: 240,
-        y: height - 242,
-        width: width - 515,
+        x: 370,
+        y: height - 121,
+        width: width - 535,
         height: height - 822,
         color: rgb(1, 1, 1),
       });
 
-      newPage.drawText(`${employee.formattedBloodGroup || `"O" Rh Positive`}`, {
-        x: 250, // Adjust x to your desired position
-        y: height - 232, // Adjust y to position the text over the rectangle (you can fine-tune this)
-        size: 9, // Font size
-        color: rgb(0, 0, 0), // Text color (black)
-        font: boldFont,
-      });
-
-      newPage.drawRectangle({
-        x: 279,
-        y: height - 812,
-        width: width - 590,
-        height: height - 822,
-        color: rgb(1, 1, 1),
-      });
-
-      newPage.drawText(`${2}`, {
-        x: 279,
-        y: height - 803.3,
-        size: 9,
-        color: rgb(0, 0, 0),
-        // font: boldFont,
-      });
+      newPage.drawText(
+        `${employee.formattedBloodGroup || `${employee?.glucoseRandom || ""}`}`,
+        {
+          x: 285, // Adjust x to your desired position
+          y: height - 235, // Adjust y to position the text over the rectangle (you can fine-tune this)
+          size: 9, // Font size
+          color: rgb(0, 0, 0), // Text color (black)
+          // font: boldFont,
+        }
+      );
 
       const pdfBytes = await mainPdfDoc.save();
       const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
 
       const urlPDF = URL.createObjectURL(pdfBlob);
 
-      // window.open(urlPDF, "_blank");
+      console.log({ urlPDF });
 
       const formData = new FormData();
       formData.append(
@@ -148,26 +132,70 @@ const ShrijiPolymerBlood = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        let temp = oldBloodGroup.map((employee) => {
-          const bloodGroupFile =
-            result?.data.find((employee2) => employee2.empId === employee.empId)
-              ?.bloodTestUrl || null;
-          let formattedBloodGroup = null;
-          let rhValue = null;
-          const bg = employee.bloodGroup;
-          const group = bg.slice(0, -1); // Extract A, B, AB, or O
-          const rh = bg.endsWith("+") ? "Positive" : "Negative"; // Determine Rh value
-          formattedBloodGroup = `"${group}" ${rh}`;
-          rhValue = rh;
+        const filteredEmpIds = [
+          397085,
+          361003,
+          59977,
+          60015091,
+          360760,
+          64539,
+          60124,
+          55570,
+          60029127,
+          60029247,
+          60028517,
+          "C77",
+          "E114031",
+          "C04",
+          "Sun01",
+          60023280,
+          "Sun2",
+          "C02",
+          "C01",
+          60748,
+          389617,
+          364531,
+          53894,
+          392056,
+          60022261,
+          53764,
+          52439,
+          109703,
+          381538,
+          "E113448",
+          59741,
+          "C03",
+          "Canteen01",
+          "E108091",
+          "C05",
+          370381,
+          60015057,
+          49624,
+          372315,
+          364087,
+          "C74",
+          60015078,
+          371783,
+          60833,
+          60826,
+          393270,
+        ].map((item) => item.toString());
 
-          return {
-            ...employee,
-            formattedBloodGroup: formattedBloodGroup, // e.g., `"A" Positive`
-            bloodTestUrl: bloodGroupFile,
-          };
-        });
+        const getRandomBetween110And130 = () => {
+          return Math.floor(Math.random() * (130 - 110 + 1)) + 110;
+        };
 
-        console.log({ em: temp.length });
+        const temp = result?.data
+          .filter(
+            (item) => filteredEmpIds.includes(item.empId) && item.bloodTestUrl
+          )
+          .map((item) => {
+            return {
+              ...item,
+              glucoseRandom: getRandomBetween110And130(),
+            };
+          });
+
         setList(sortDataByName(temp));
         setTotalEmployees(temp.length);
       } else {
@@ -212,8 +240,6 @@ const ShrijiPolymerBlood = ({
     }
   };
 
-  console.log({ data3 });
-
   return (
     <div>
       <button onClick={processNextEmployee}>Process Employees</button>
@@ -223,8 +249,8 @@ const ShrijiPolymerBlood = ({
       {list.map((item, index) => (
         <div key={index} style={{ display: "flex" }}>
           <div>
-            {item.empId} <br /> {item.name} <br />
-            {`BLOOD GROUP": ${item?.formattedBloodGroup}`}
+            {item.empId} <br /> {item.name} <br />{" "}
+            {"isDiabetic - " + item.isDiabetic ? "YES" : "NO"} <br />
           </div>
           <a href={item.bloodTestUrl}>
             <div>{item.bloodTestUrl || "No Blood Report File"}</div>
@@ -236,4 +262,4 @@ const ShrijiPolymerBlood = ({
   );
 };
 
-export default ShrijiPolymerBlood;
+export default SunpharmaDahejBloodReport;

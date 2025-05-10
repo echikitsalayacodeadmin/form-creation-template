@@ -530,7 +530,7 @@ const RebelMERForm = ({
   campCycleId = "246327",
   fileType = "CONSOLIDATED_REPORT",
   corpName = "Rebel Foods Pvt. Ltd",
-  campDate = "14 Feb, 2025",
+  campDate = "22 March 2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -1059,7 +1059,7 @@ const RebelMERForm = ({
                     padding-left: 2pt;
                     text-indent: 0pt;
                     text-align: left;">
-                  Typhoid (1 Dose) Bharat Biotech International Ltd
+                  Bio Typh (Bio-Med Private Limited)
                 </p>
               </td>
               <td
@@ -1079,7 +1079,7 @@ const RebelMERForm = ({
                     padding-left: 2pt;
                     text-indent: 0pt;
                     text-align: left;">
-                  Batch Number: 54B24003A
+                  Batch Number: T021024
                 </p>
               </td>
             </tr>
@@ -1126,7 +1126,7 @@ const RebelMERForm = ({
                   "
                 >
                   Date of Expiry: <span style="text-transform: capitalize; font-weight: 400"
-                    >${"May, 2027"}</span
+                    >${"March, 2027"}</span
                   >
                 </p>
               </td>
@@ -1203,14 +1203,7 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.height ? data?.height + " " + "cm" : ""
-                      // updatedDataArray
-                      //   .find((item) => item?.empId === data?.empId)
-                      //   ?.height.toString() +
-                      // " " +
-                      // "cm"
-                    }</span
+                    >${data?.height ? data?.height + " " + "cm" : ""}</span
                   >
                 </p>
               </td>
@@ -1260,14 +1253,7 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.weight ? data?.weight + " " + "kg" : ""
-                      // updatedDataArray
-                      //   .find((item) => item?.empId === data?.empId)
-                      //   ?.weight.toString() +
-                      // " " +
-                      // "kg"
-                    }</span
+                    >${data?.weight ? data?.weight + " " + "kg" : ""}</span
                   >
                 </p>
               </td>
@@ -1317,12 +1303,7 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.bmi ? data?.bmi : ""
-                      // updatedDataArray
-                      // .find((item) => item?.empId === data?.empId)
-                      // ?.bmi.toString()
-                    }</span
+                    >${data?.bmi ? data?.bmi : ""}</span
                   >
                 </p>
               </td>
@@ -1376,14 +1357,6 @@ const RebelMERForm = ({
                       data?.waistGirth && data?.hipGirth
                         ? (data?.waistGirth / data?.hipGirth).toFixed(2)
                         : ""
-                      // (
-                      //   updatedDataArray.find(
-                      //     (item) => item.empId === data?.empId
-                      //   )?.waist /
-                      //   updatedDataArray.find(
-                      //     (item) => item.empId === data?.empId
-                      //   )?.hip
-                      // ).toFixed(2) || ""
                     }</span
                   >
                 </p>
@@ -1434,14 +1407,7 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.bp ? data?.bp + " " + "mmHg" : ""
-                      // updatedDataArray
-                      //   .find((item) => item?.empId === data?.empId)
-                      //   ?.bp.toString() +
-                      // " " +
-                      // "mmHg"
-                    }</span
+                    >${data?.bp ? data?.bp + " " + "mmHg" : ""}</span
                   >
                 </p>
               </td>
@@ -1491,12 +1457,7 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.pulseRate ? data?.pulseRate : ""
-                      // updatedDataArray
-                      // .find((item) => item.empId === data?.empId)
-                      // ?.heartRate.toString()
-                    }</span
+                    >${data?.pulseRate ? data?.pulseRate : ""}</span
                   >
                 </p>
               </td>
@@ -1546,9 +1507,6 @@ const RebelMERForm = ({
                   <span style="text-transform: capitalize; font-weight: 400"
                     >${
                       data?.spO2Percent ? data?.spO2Percent + " " + "%" : ""
-                      // updatedDataArray
-                      //   .find((item) => item.empId === data?.empId)
-                      //   ?.spo2Percent.toString()
                     }</span
                   >
                 </p>
@@ -1674,14 +1632,6 @@ const RebelMERForm = ({
                   <span style="text-transform: capitalize; font-weight: 400"
                     >${
                       data?.nearLeftEyeSight ? data?.nearLeftEyeSight : ""
-                      // updatedDataArray.find(
-                      //   (item) => item.empId === data?.empId
-                      // )?.nearLeftEyeSight
-                      //   ? updatedDataArray.find(
-                      //       (item) => item.empId === data?.empId
-                      //     )?.nearLeftEyeSight
-                      //   :
-                      // "N/6"
                     }</span
                   >
                 </p>
@@ -1729,14 +1679,6 @@ const RebelMERForm = ({
                   <span style="text-transform: capitalize; font-weight: 400"
                     >${
                       data?.nearRightEyeSight ? data?.nearRightEyeSight : ""
-                      // // updatedDataArray.find(
-                      // //   (item) => item.empId === data?.empId
-                      // // )?.nearRightEyeSight
-                      // //   ? updatedDataArray.find(
-                      // //       (item) => item.empId === data?.empId
-                      // //     )?.nearRightEyeSight
-                      // //   :
-                      // "N/6"
                     }</span
                   >
                 </p>
@@ -1761,17 +1703,7 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.farLeftEyeSight ? data?.farLeftEyeSight : ""
-                      // // updatedDataArray.find(
-                      // //   (item) => item.empId === data?.empId
-                      // // )?.farLeftEyeSight
-                      // //   ? updatedDataArray.find(
-                      // //       (item) => item.empId === data?.empId
-                      // //     )?.farLeftEyeSight
-                      // //   :
-                      // "6/6"
-                    }</span
+                    >${data?.farLeftEyeSight ? data?.farLeftEyeSight : ""}</span
                   >
                 </p>
               </td>
@@ -1818,14 +1750,6 @@ const RebelMERForm = ({
                   <span style="text-transform: capitalize; font-weight: 400"
                     >${
                       data?.farRightEyeSight ? data?.farRightEyeSight : ""
-                      // // updatedDataArray.find(
-                      // //   (item) => item.empId === data?.empId
-                      // // )?.farRightEyeSight
-                      // //   ? updatedDataArray.find(
-                      // //       (item) => item.empId === data?.empId
-                      // //     )?.farRightEyeSight
-                      // //   :
-                      // "6/6"
                     }</span
                   >
                 </p>
@@ -1905,12 +1829,7 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.colourVision ? data?.colourVision : "NORMAL"
-                      // updatedDataArray
-                      // .find((item) => item.empId === data?.empId)
-                      // ?.colourVision.toString()
-                    }</span
+                    >${data?.colourVision ? data?.colourVision : "NORMAL"}</span
                   >
                 </p>
               </td>
@@ -2043,13 +1962,10 @@ const RebelMERForm = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data.filter((item) =>
-        ["79906"].includes(item.empId)
-      );
+      const empIDS = ["83625", "82985", "83598", "83305"];
 
-      console.log({
-        list: updatedDataArray.map((item) => item.empId).join(","),
-      });
+      const temp = result?.data.filter((item) => empIDS.includes(item.empId));
+
       const length = temp.length;
       console.log({ length });
       setList(sortDataByName(temp));

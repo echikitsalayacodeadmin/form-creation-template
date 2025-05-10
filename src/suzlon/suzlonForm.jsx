@@ -1495,8 +1495,8 @@ const SuzlonForm = () => {
     formData.append("file", pdfBlob, `${data.empId}_Annexture_report.pdf`);
     // const url2 = URL.createObjectURL(pdfBlob);
     // window.open(url2, "_blank");
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=`;
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
+    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=252188`;
+    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
 
     const result = await uploadFile(url, formData);
     if (result && result.data) {
@@ -1515,8 +1515,8 @@ const SuzlonForm = () => {
 
   const fetchListOfEmployees = async () => {
     // Fetch employees from the API starting from the currentIndex
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=`;
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
+    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=252188`;
+    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -1565,13 +1565,13 @@ const SuzlonForm = () => {
       <div>
         <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
         <button onClick={handleDeletePDF}>Delete Files</button>
-        <text>Total Employees: {totalEmployees}</text> <br />
-        <text>Uploaded Files: {uploadedCount}</text> <br />
+        <span>Total Employees: {totalEmployees}</span> <br />
+        <span>Uploaded Files: {uploadedCount}</span> <br />
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <text key={index}>{item.name}</text>
+            <span key={index}>{item.name}</span>
             <a href={item.consolidatedReportUrl}>
-              <text key={index}>{item.consolidatedReportUrl}</text>
+              <span key={index}>{item.consolidatedReportUrl}</span>
             </a>
             <br />
           </div>
