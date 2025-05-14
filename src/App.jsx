@@ -37,12 +37,15 @@ import ZestPharmaPhysicalFitnessForm from "./zestPharma/zestPharmaPhysicalFitnes
 import SuzlonForm from "./suzlon/suzlonForm";
 import SuzlonFormNew from "./suzlon/suzlonFormNew";
 import SunpharmaDahejBloodReport from "./sunPharmaDahej/sunpharmaDahejBloodReport";
+import SunpharmaForm32New from "./sunPharmaDahej/sunPharmaForm32New";
+import FSSAISunPharma from "./sunPharmaDahej/FSSAISunPharma";
+import SunpharmaForm7 from "./sunPharmaDahej/sunPharmaForm7";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <SunpharmaDahejBloodReport />
+      <SunpharmaForm32New />
       {/* <GenericFormGenerator /> */}
     </div>
   );

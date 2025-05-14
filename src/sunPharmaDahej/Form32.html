@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form No. 32 - Health Register</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+      }
+      .container {
+        background-color: #ffffff;
+        padding-inline: 20px;
+        border-radius: 10px;
+        max-width: 900px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      p {
+        text-align: center;
+        color: #555555;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+      }
+      td {
+        border: 1px solid #cccccc;
+        padding-block: 8px;
+        padding-inline: 10px;
+        font-size: 14px;
+      }
+      .header {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .note {
+        color: #777777;
+        font-size: 14px;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>FORM NO. 32</h1>
+      <p>(Prescribed under Rule 68-T and 102)</p>
+      <h2 style="text-align: center">Health Register</h2>
+      <table>
+        <tr class="header">
+          <td style="width: 50%">
+            Serial Number in the Register of adult Workers
+          </td>
+          <td>${data?.empId || ""}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Name of Worker</td>
+          <td style="text-transform: capitalize">${data?.name || ""}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Sex</td>
+          <td style="text-transform: capitalize">
+            ${ data?.gender?.toLowerCase() || "" }
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Date of birth</td>
+          <td>${data?.dateOfBirth || ""}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Department Works</td>
+          <td>${data?.department || ""}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Name of Hazardous process</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Dangerous process/operation</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Nature of job or occupation</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">
+            Raw materials, products or By-products likely to be exposed
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Date of posting</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Date of leaving/transfer to or transfer</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Reasons for Discharge/leaving or transfer</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center; font-weight: bold">
+            Medical examination Results therefore
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Date</td>
+          <td>${data?.vitalsCreatedDate||""}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">
+            Signs and symptoms observed during examination
+          </td>
+          <td>NAD</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Nature of tests</td>
+          <td>Annual Health Checkup</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Result Fit/Unfit</td>
+          <td>Fit</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center; font-weight: bold">
+            If declared unfit for work
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 50%">
+            Period of temporary Withdrawal from that work
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Reasons for such withdrawal</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Date of declaring him Unfit for that work</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">Date of issuing fitness Certificate</td>
+          <td>${data?.vitalsCreatedDate||""}</td>
+        </tr>
+        <tr style="height: 150px">
+          <td style="width: 50%">
+            Signature with date of the factory Medical Officer/ the Certifying
+            Surgeon.
+          </td>
+          <td>
+            ${ true ? `<img src="${KUNALSIGNBASE64}" style="height: 250px" />` :
+            "" }
+          </td>
+        </tr>
+      </table>
+      <div style="font-size: 14px">
+        Note: <br />1. Separate page should be maintained for individual
+        worker.<br />2. Fresh entry should be made for each examination.
+      </div>
+    </div>
+  </body>
+</html>
