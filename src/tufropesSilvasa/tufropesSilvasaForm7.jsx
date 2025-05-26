@@ -5,11 +5,11 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import { rohitSolankiAsset } from "../tufropesSilvasa/assets";
+import { rohitSolankiAsset } from "./assets";
 
-const SunpharmaForm7 = ({
-  corpId = "4102a5bd-77d8-42f3-b2cd-a4101cde2366",
-  campCycleId = "289149",
+const TufropesSilvasaForm7 = ({
+  corpId = "ad1c5998-9842-4e14-95da-b35248ddb6b0",
+  campCycleId = "293709",
   fileType = "ANNEXURE",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -226,25 +226,7 @@ ${fitForDrivingCheckboxes}
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = [
-        "78378",
-        "65159",
-        "80936",
-        "382693",
-        "64583",
-        "378641",
-        "95625",
-        "393131",
-        "95145",
-        "64097",
-        "64116",
-        "9414",
-        "85631",
-        "8066",
-        "48276",
-      ];
-
-      const temp = result?.data.filter((item) => empIDS.includes(item.empId));
+      const temp = result?.data.filter((item) => item.vitalsCreatedDate);
 
       const length = temp.length;
       console.log({ length });
@@ -308,4 +290,4 @@ ${fitForDrivingCheckboxes}
   );
 };
 
-export default SunpharmaForm7;
+export default TufropesSilvasaForm7;

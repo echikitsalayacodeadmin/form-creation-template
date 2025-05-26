@@ -1,18 +1,19 @@
 import html2pdf from "html2pdf.js";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getData } from "../assets/services/GetApiCall";
+import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
-import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import { LogoImage } from "../tufropesSilvasa/assets";
+import { uploadFile } from "../assets/services/PostApiCall";
+import { LogoImage, LogoImageFSSAI } from "./assets";
+import dayjs from "dayjs";
 
-const FSSAISunPharma = ({
-  corpId = "4102a5bd-77d8-42f3-b2cd-a4101cde2366",
-  campCycleId = "289149",
+const RichFoodFssai = ({
+  corpId = "47f6ab07-4fc2-45f8-83e0-38c88504861a",
+  campCycleId = "296129",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "Sun Pharmaceutical Industries Ltd",
-  campDate = "15th Feb, 2025",
+  corpName = "RPSPL PRIVATE LIMITED",
+  campDate = "27th Feb, 2025",
   year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -23,7 +24,7 @@ const FSSAISunPharma = ({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const generatePDF = async (data, index) => {
-    const FITNESS_CERTIFICATE = `
+    const FoodCertificate = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
@@ -317,7 +318,7 @@ const FSSAISunPharma = ({
         </div>
     `;
     const pdfBlob = await html2pdf()
-      .from(FITNESS_CERTIFICATE)
+      .from(FoodCertificate)
       .output("blob")
       .then((data) => {
         return data;
@@ -353,17 +354,9 @@ const FSSAISunPharma = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = [
-        "C69",
-        "C70",
-        "C66",
-        "C67",
-        "Canteen01",
-        "C68",
-        "60029712",
-      ];
-
-      const temp = result?.data.filter((item) => empIDS.includes(item.empId));
+      const temp = result?.data.filter(
+        (item) => item.vitalsCreatedDate === "2025-05-19"
+      );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -428,5 +421,4 @@ const FSSAISunPharma = ({
     </div>
   );
 };
-
-export default FSSAISunPharma;
+export default RichFoodFssai;

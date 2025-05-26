@@ -40,12 +40,15 @@ import SunpharmaDahejBloodReport from "./sunPharmaDahej/sunpharmaDahejBloodRepor
 import SunpharmaForm32New from "./sunPharmaDahej/sunPharmaForm32New";
 import FSSAISunPharma from "./sunPharmaDahej/FSSAISunPharma";
 import SunpharmaForm7 from "./sunPharmaDahej/sunPharmaForm7";
+import RichFoodFssai from "./Rich Food (RSPL)/richFoodFssai";
+import TufropesSilvasaForm7 from "./tufropesSilvasa/tufropesSilvasaForm7";
+import TufropesSilvasaForm32New from "./tufropesSilvasa/tufropesSilvasaForm32New";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <SunpharmaForm32New />
+      <TufropesSilvasaForm32New />
       {/* <GenericFormGenerator /> */}
     </div>
   );
