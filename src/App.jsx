@@ -43,12 +43,13 @@ import SunpharmaForm7 from "./sunPharmaDahej/sunPharmaForm7";
 import RichFoodFssai from "./Rich Food (RSPL)/richFoodFssai";
 import TufropesSilvasaForm7 from "./tufropesSilvasa/tufropesSilvasaForm7";
 import TufropesSilvasaForm32New from "./tufropesSilvasa/tufropesSilvasaForm32New";
+import IsconBalajiFMT from "./isconBalajiFMT/IsconBalajiFMT";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <TufropesSilvasaForm32New />
+      <IsconBalajiFMT />
       {/* <GenericFormGenerator /> */}
     </div>
   );
