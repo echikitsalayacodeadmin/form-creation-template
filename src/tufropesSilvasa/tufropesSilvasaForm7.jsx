@@ -123,7 +123,9 @@ const TufropesSilvasaForm7 = ({
 
         <tr>
           <th style="width: 25%">Date of Examination</th>
-          <th colspan="3">${data?.vitalsCreatedDate || ""}</th>
+          <th colspan="3">${
+            data?.cholestrolData?.["BLOOD_SAMPLE_REPORTED_DATE"] || ""
+          }</th>
         </tr>
       </table>
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Document,
   Page,
@@ -9,10 +9,113 @@ import {
   Image,
   BlobProvider,
 } from "@react-pdf/renderer";
+import dr_kunal_stamp_sign from "../assets/images/dr_kunal_stamp_sign.png";
 import { Button } from "@mui/material";
 import IsconBalajiLogo from "./IsconBalajiLogo.png";
+import { useSnackbar } from "notistack";
+import { getData } from "../assets/services/GetApiCall";
+import { updateData } from "../assets/services/PatchApi";
+import { pdf } from "@react-pdf/renderer";
+import { sortDataByName } from "../assets/utils";
+import { uploadFile } from "../assets/services/PostApiCall";
 
-const IsconBalajiFMT = () => {
+const IsconBalajiFMT = ({
+  corpId = "49208ee2-38cd-470b-93c1-b450e26ea7b4",
+  campCycleId = "299923",
+  fileType = "ANNEXURE",
+  YEAR = "2025",
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const batchSize = 50;
+  const [list, setList] = useState([]);
+  const [totalEmployees, setTotalEmployees] = useState(0);
+  const [uploadedCount, setUploadedCount] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const generatePDF = async (data, index) => {
+    try {
+      console.log({ data });
+      // Create a blob from the PDF
+      const pdfBlob = await pdf(
+        <MedicalCardPDF employeeData={data} YEAR={YEAR} />
+      ).toBlob();
+
+      const formData = new FormData();
+      formData.append("file", pdfBlob, `${data?.empId}_FMT_REPORT.pdf`);
+
+      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
+
+      if (result && result.data) {
+        enqueueSnackbar("Successfully Uploaded PDF!", {
+          variant: "success",
+        });
+        setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+        enqueueSnackbar("An error Occurred!", {
+          variant: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Error generating/uploading PDF:", error);
+      enqueueSnackbar("Error generating/uploading PDF", {
+        variant: "error",
+      });
+    }
+  };
+
+  const fetchListOfEmployees = async () => {
+    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await getData(url);
+    if (result && result.data) {
+      console.log("Fetched Data successfully");
+
+      const temp = result?.data.filter(
+        (item) =>
+          item.vitalsCreatedDate === "2025-05-28" ||
+          item.vitalsCreatedDate === "2025-05-29"
+      );
+
+      const length = temp.length;
+      console.log({ length });
+      setList(sortDataByName(temp));
+      setTotalEmployees(temp.length);
+      console.log({ empLisy: sortDataByName(temp) });
+    } else {
+      console.log("An error Occurred");
+    }
+  };
+
+  useEffect(() => {
+    fetchListOfEmployees();
+  }, []);
+
+  const handleGeneratePDFs = async () => {
+    for (let i = 0; i < 1; i++) {
+      await generatePDF(list[i], i);
+    }
+  };
+  const handleDeletePDF = async () => {
+    for (let i = 0; i < list.length; i++) {
+      await deleteFiles(list[i]);
+    }
+  };
+
+  const deleteFiles = async (data) => {
+    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const result = await updateData(url);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
+  };
   return (
     <Fragment>
       <BlobProvider document={<MedicalCardPDF />}>
@@ -25,6 +128,23 @@ const IsconBalajiFMT = () => {
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
         <MedicalCardPDF />
       </PDFViewer>
+      <div>
+        <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
+        <button onClick={handleDeletePDF}>Delete Files</button>
+        <div>Total Employees: {totalEmployees}</div> <br />
+        <div>Uploaded Files: {uploadedCount}</div> <br />
+        {list.map((item, index) => (
+          <div key={index} style={{ display: "flex" }}>
+            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+
+            <a href={item.annexureUrl}>
+              <div key={index}>{item.annexureUrl}</div>
+            </a>
+
+            <br />
+          </div>
+        ))}
+      </div>
     </Fragment>
   );
 };
@@ -223,7 +343,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const MedicalCardPDF = () => (
+const MedicalCardPDF = ({ employeeData, YEAR }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={{ borderWidth: 1, borderColor: "black", padding: 5 }}>
@@ -321,51 +441,82 @@ const MedicalCardPDF = () => (
                   Name of the Employee
                 </Text>
                 <Text>:</Text>
-                <View style={styles.line} />
+                <View style={styles.line}>
+                  <Text style={[styles.label, { marginLeft: 5, marginTop: 5 }]}>
+                    {employeeData?.name || ""}
+                  </Text>
+                </View>
               </View>
               <View style={[styles.row]}>
                 <Text style={[styles.label, { marginTop: 5 }]}>Department</Text>
                 <Text>:</Text>
-                <View style={styles.line} />
+                <View style={styles.line}>
+                  <Text style={[styles.label, { marginLeft: 5, marginTop: 5 }]}>
+                    {employeeData?.department || ""}
+                  </Text>
+                </View>
               </View>
               <View style={styles.row}>
                 <Text style={[styles.label, { marginTop: 5 }]}>
                   Date of Birth
                 </Text>
                 <Text>:</Text>
-                <View style={styles.line} />
+                <View style={styles.line}>
+                  <Text style={[styles.label, { marginLeft: 5, marginTop: 5 }]}>
+                    {employeeData?.dateOfBirth || ""}
+                  </Text>
+                </View>
               </View>
               <View style={styles.row}>
                 <Text style={[styles.label, { marginTop: 5 }]}>
                   Date OF Joining
                 </Text>
                 <Text>:</Text>
-                <View style={styles.line} />
+                <View style={styles.line}>
+                  <Text
+                    style={[styles.label, { marginLeft: 5, marginTop: 5 }]}
+                  ></Text>
+                </View>
               </View>
               <View style={styles.row}>
                 <Text style={[styles.label, { marginTop: 5 }]}>
                   Marital Status
                 </Text>
                 <Text>:</Text>
-                <View style={styles.line} />
+                <View style={styles.line}>
+                  <Text style={[styles.label, { marginLeft: 5, marginTop: 5 }]}>
+                    {employeeData?.maritalStatus || ""}
+                  </Text>
+                </View>
               </View>
               <View style={styles.row}>
                 <Text style={[styles.label, { marginTop: 5 }]}>
                   Date of Examination
                 </Text>
                 <Text>:</Text>
-                <View style={styles.line} />
+                <View style={styles.line}>
+                  <Text style={[styles.label, { marginLeft: 5, marginTop: 5 }]}>
+                    {employeeData?.vitalsCreatedDate || ""}
+                  </Text>
+                </View>
               </View>
               <View style={styles.row}>
                 <Text style={[styles.label, { marginTop: 5 }]}>
                   Next Date of Examination
                 </Text>
                 <Text>:</Text>
-                <View style={styles.line} />
+                <View style={styles.line}>
+                  <Text
+                    style={[styles.label, { marginLeft: 5, marginTop: 5 }]}
+                  ></Text>
+                </View>
               </View>
             </View>
             <View style={styles.photoBox}>
-              <Text style={{ fontSize: 10, color: "#666666" }}>Photo</Text>
+              {/* <Image
+                src={employeeData?.imageUrl}
+                style={{ width: 100, height: 120 }}
+              /> */}
             </View>
           </View>
 
@@ -376,43 +527,40 @@ const MedicalCardPDF = () => (
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Age</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
-                  <Text
-                    style={[styles.headerText2, { textAlign: "center" }]}
-                  ></Text>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
+                  <Text style={[styles.headerText2]}>
+                    {employeeData?.age || ""}
+                  </Text>
                 </View>
               </View>
               <View style={styles.sexContainer2}>
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Sex</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
-                  <View style={styles.sexOption2}>
-                    <Text style={styles.valueText2}>Male</Text>
-                  </View>
-                  <View style={styles.sexOptionLast2}>
-                    <Text style={styles.valueText2}>Female</Text>
-                  </View>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
+                  <Text style={[styles.headerText2]}>
+                    {employeeData?.gender || ""}
+                  </Text>
                 </View>
               </View>
               <View style={styles.sexContainer2}>
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Height</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
-                  <Text
-                    style={[styles.headerText2, { textAlign: "center" }]}
-                  ></Text>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
+                  <Text style={[styles.headerText2, { textAlign: "center" }]}>
+                    {employeeData?.height || ""}
+                  </Text>
                 </View>
               </View>
               <View style={[styles.sexContainer2, { borderRight: 0 }]}>
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Weight</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
-                  <Text
-                    style={[styles.headerText2, { textAlign: "center" }]}
-                  ></Text>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
+                  <Text style={[styles.headerText2, { textAlign: "center" }]}>
+                    {employeeData?.weight || ""}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -425,37 +573,37 @@ const MedicalCardPDF = () => (
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Blood Pressure</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
-                  <Text
-                    style={[styles.headerText2, { textAlign: "center" }]}
-                  ></Text>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
+                  <Text style={[styles.headerText2, { textAlign: "center" }]}>
+                    {employeeData?.bp || ""}
+                  </Text>
                 </View>
               </View>
               <View style={[styles.sexContainer2]}>
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Pulse</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
-                  <Text
-                    style={[styles.headerText2, { textAlign: "center" }]}
-                  ></Text>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
+                  <Text style={[styles.headerText2, { textAlign: "center" }]}>
+                    {employeeData?.pulseRate || ""}
+                  </Text>
                 </View>
               </View>
               <View style={[styles.sexContainer2]}>
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Blood Group</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
-                  <Text
-                    style={[styles.headerText2, { textAlign: "center" }]}
-                  ></Text>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
+                  <Text style={[styles.headerText2, { textAlign: "center" }]}>
+                    {employeeData?.bloodGroup || ""}
+                  </Text>
                 </View>
               </View>
               <View style={[styles.sexContainer2, { borderRight: 0 }]}>
                 <View style={styles.sexHeader2}>
                   <Text style={styles.headerText2}>Identification Mark</Text>
                 </View>
-                <View style={styles.sexOptionsRow2}>
+                <View style={([styles.sexHeader2], { borderBottom: 0 })}>
                   <Text
                     style={[styles.headerText2, { textAlign: "center" }]}
                   ></Text>
@@ -492,7 +640,7 @@ const MedicalCardPDF = () => (
                 <Text style={styles.headerText2}></Text>
               </View>
               <View style={styles.urineCellLast2}>
-                <Text style={styles.headerText2}></Text>
+                <Text style={styles.headerText2}>NAD</Text>
               </View>
             </View>
             {[
@@ -536,11 +684,11 @@ const MedicalCardPDF = () => (
                   <>
                     <View style={styles.urineCell2}>
                       <Text style={[styles.valueText2, { textAlign: "left" }]}>
-                        URINE:
+                        URINE: NA
                       </Text>
                     </View>
                     <View style={styles.urineCellLast2}>
-                      <Text style={styles.valueText2}></Text>
+                      <Text style={styles.valueText2}>NAD</Text>
                     </View>
                   </>
                 ) : (
@@ -549,7 +697,7 @@ const MedicalCardPDF = () => (
                       <Text style={styles.valueText2}></Text>
                     </View>
                     <View style={styles.urineCellLast2}>
-                      <Text style={styles.valueText2}></Text>
+                      <Text style={styles.valueText2}>NAD</Text>
                     </View>
                   </>
                 )}
@@ -668,9 +816,16 @@ const MedicalCardPDF = () => (
               <View
                 style={[
                   styles.tableCell,
-                  { flex: 1, borderRightWidth: 0, height: 60 },
+                  {
+                    flex: 1,
+                    borderRightWidth: 0,
+                    height: 60,
+                    justifyContent: "center",
+                  },
                 ]}
-              ></View>
+              >
+                <Text style={{ fontSize: 10, marginLeft: 5 }}>NAD</Text>
+              </View>
             </View>
             <View style={styles.tableRow}>
               <View
@@ -684,9 +839,16 @@ const MedicalCardPDF = () => (
               <View
                 style={[
                   styles.tableCell,
-                  { flex: 1, borderRightWidth: 0, height: 60 },
+                  {
+                    flex: 1,
+                    borderRightWidth: 0,
+                    height: 60,
+                    justifyContent: "center",
+                  },
                 ]}
-              ></View>
+              >
+                <Text style={{ fontSize: 10, marginLeft: 5 }}></Text>
+              </View>
             </View>
             <View style={styles.tableRow}>
               <View
@@ -700,9 +862,18 @@ const MedicalCardPDF = () => (
               <View
                 style={[
                   styles.tableCell,
-                  { flex: 1, borderRightWidth: 0, height: 60 },
+                  {
+                    flex: 1,
+                    borderRightWidth: 0,
+                    height: 60,
+                    justifyContent: "center",
+                  },
                 ]}
-              ></View>
+              >
+                <Text style={{ fontSize: 10, marginLeft: 5 }}>
+                  {employeeData?.visionRemark || ""}
+                </Text>
+              </View>
             </View>
             <View style={styles.tableRow}>
               <View
@@ -716,9 +887,22 @@ const MedicalCardPDF = () => (
               <View
                 style={[
                   styles.tableCell,
-                  { flex: 1, borderRightWidth: 0, height: 60 },
+                  {
+                    flex: 1,
+                    borderRightWidth: 0,
+                    height: 60,
+                    justifyContent: "center",
+                  },
                 ]}
-              ></View>
+              >
+                <Text style={{ fontSize: 10, marginLeft: 5 }}>
+                  {employeeData?.specsRequired === true
+                    ? "Yes"
+                    : employeeData?.specsRequired === false
+                    ? "No"
+                    : ""}
+                </Text>
+              </View>
             </View>
             <View style={[styles.tableRow, { borderBottomWidth: 0 }]}>
               <View
@@ -744,7 +928,11 @@ const MedicalCardPDF = () => (
                     borderBottomWidth: 0,
                   },
                 ]}
-              ></View>
+              >
+                <Text style={{ fontSize: 10, marginLeft: 5 }}>
+                  {employeeData?.conclusion || ""}
+                </Text>
+              </View>
             </View>
           </View>
 
@@ -758,7 +946,9 @@ const MedicalCardPDF = () => (
               height: 20,
               marginBottom: 10,
             }}
-          ></View>
+          >
+            <Text style={{ fontSize: 10, marginLeft: 5 }}>FIT</Text>
+          </View>
           <View
             style={{
               borderBottomWidth: 1,
@@ -766,7 +956,9 @@ const MedicalCardPDF = () => (
               height: 20,
               marginBottom: 30,
             }}
-          ></View>
+          >
+            <Text style={{ fontSize: 10, marginLeft: 5 }}></Text>
+          </View>
 
           {/* Table for Doctor's information */}
           <View style={[styles.table, { marginTop: 40 }]}>
@@ -784,7 +976,11 @@ const MedicalCardPDF = () => (
                   styles.tableCell,
                   { flex: 1, borderRightWidth: 1, borderColor: "#000000" },
                 ]}
-              ></View>
+              >
+                <Text style={{ fontSize: 10, marginLeft: 5 }}>
+                  Dr Kunal Sharma
+                </Text>
+              </View>
               <View
                 style={[
                   styles.tableCell,
@@ -817,7 +1013,12 @@ const MedicalCardPDF = () => (
                     borderBottomWidth: 0,
                   },
                 ]}
-              ></View>
+              >
+                <Image
+                  src={dr_kunal_stamp_sign}
+                  style={{ height: 60, width: 80 }}
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -826,7 +1027,6 @@ const MedicalCardPDF = () => (
 
     {/* Page 3 */}
     <Page size="A4" style={styles.page}>
-      {/* Header (same as Page 1) */}
       <View
         style={{
           borderWidth: 1,
@@ -925,7 +1125,7 @@ const MedicalCardPDF = () => (
           </Text>
 
           <Text style={{ textAlign: "center", marginBottom: 20, fontSize: 12 }}>
-            For The Year: ______________________
+            For The Year: {YEAR}
           </Text>
 
           <Text style={{ textAlign: "center", marginBottom: 20, fontSize: 10 }}>
@@ -933,10 +1133,20 @@ const MedicalCardPDF = () => (
           </Text>
 
           <Text style={{ fontSize: 10, marginBottom: 20, lineHeight: 1.5 }}>
-            It is certify that Mr / Ms / Mrs ______________________ employed
-            with Ms Iscon Balaji Foods Private Limited coming in direct contact
-            with food items has been carefully examined by me on:
-            ______________________
+            It is certify that{" "}
+            {employeeData?.gender?.toLowerCase() === "male"
+              ? "Mr"
+              : employeeData?.gender?.toLowerCase() === "female"
+              ? "Ms"
+              : "Mr / Ms / Mrs"}{" "}
+            <Text style={{ textDecoration: "underline" }}>
+              {employeeData?.name || ""}
+            </Text>{" "}
+            employed with Ms Iscon Balaji Foods Private Limited coming in direct
+            contact with food items has been carefully examined by me on:{" "}
+            <Text style={{ textDecoration: "underline" }}>
+              {employeeData?.vitalsCreatedDate || ""}.
+            </Text>
           </Text>
 
           <Text style={{ fontSize: 10, marginBottom: 40, lineHeight: 1.5 }}>
@@ -948,9 +1158,14 @@ const MedicalCardPDF = () => (
           <Text style={{ fontSize: 10, marginBottom: 5 }}>
             Name & Signature with Seal of
           </Text>
-          <Text style={{ fontSize: 10, marginBottom: 30 }}>
+          <Text style={{ fontSize: 10, marginBottom: 10 }}>
             Registered Medical Practitioner / Civil Surgeon.
           </Text>
+
+          <Image
+            src={dr_kunal_stamp_sign}
+            style={{ height: 60, width: 80, marginBottom: 30 }}
+          />
 
           <Text style={{ fontSize: 10, fontWeight: "bold", marginBottom: 10 }}>
             # Medical Examination to be conducted

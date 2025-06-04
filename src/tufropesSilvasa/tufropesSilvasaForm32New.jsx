@@ -140,7 +140,7 @@ const TufropesSilvasaForm32New = ({
         </tr>
         <tr>
           <td style="width: 50%">Date</td>
-          <td>${data?.vitalsCreatedDate || ""}</td>
+          <td>${data?.cholestrolData?.["BLOOD_SAMPLE_REPORTED_DATE"] || ""}</td>
         </tr>
         <tr>
           <td style="width: 50%">
@@ -154,7 +154,7 @@ const TufropesSilvasaForm32New = ({
         </tr>
         <tr>
           <td style="width: 50%">Result Fit/Unfit</td>
-          <td>Fit</td>
+          <td>${data?.cholestrolData?.["FitStatus"] || ""}</td>
         </tr>
         <tr>
           <td colspan="2" style="text-align: center; font-weight: bold">
@@ -177,7 +177,7 @@ const TufropesSilvasaForm32New = ({
         </tr>
         <tr>
           <td style="width: 50%">Date of issuing fitness Certificate</td>
-          <td>${data?.vitalsCreatedDate || ""}</td>
+          <td>${data?.cholestrolData?.["BLOOD_SAMPLE_REPORTED_DATE"] || ""}</td>
         </tr>
         <tr style="height: 120px">
           <td style="width: 50%">
