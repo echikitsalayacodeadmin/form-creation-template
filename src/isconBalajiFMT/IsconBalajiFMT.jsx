@@ -71,11 +71,7 @@ const IsconBalajiFMT = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data.filter(
-        (item) =>
-          item.vitalsCreatedDate === "2025-05-28" ||
-          item.vitalsCreatedDate === "2025-05-29"
-      );
+      const temp = result?.data.filter((item) => item.empId === "HK2309");
 
       const length = temp.length;
       console.log({ length });
@@ -92,7 +88,7 @@ const IsconBalajiFMT = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };
@@ -513,10 +509,12 @@ const MedicalCardPDF = ({ employeeData, YEAR }) => (
               </View>
             </View>
             <View style={styles.photoBox}>
-              {/* <Image
-                src={employeeData?.imageUrl}
-                style={{ width: 100, height: 120 }}
-              /> */}
+              {employeeData?.imageUrl && (
+                <Image
+                  src={employeeData?.imageUrl}
+                  style={{ width: 100, height: 120 }}
+                />
+              )}
             </View>
           </View>
 
@@ -640,7 +638,7 @@ const MedicalCardPDF = ({ employeeData, YEAR }) => (
                 <Text style={styles.headerText2}></Text>
               </View>
               <View style={styles.urineCellLast2}>
-                <Text style={styles.headerText2}>NAD</Text>
+                <Text style={styles.headerText2}></Text>
               </View>
             </View>
             {[
@@ -896,11 +894,7 @@ const MedicalCardPDF = ({ employeeData, YEAR }) => (
                 ]}
               >
                 <Text style={{ fontSize: 10, marginLeft: 5 }}>
-                  {employeeData?.specsRequired === true
-                    ? "Yes"
-                    : employeeData?.specsRequired === false
-                    ? "No"
-                    : ""}
+                  {employeeData?.specsRequired === true ? "Yes" : "No"}
                 </Text>
               </View>
             </View>

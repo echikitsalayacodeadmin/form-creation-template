@@ -44,12 +44,17 @@ import RichFoodFssai from "./Rich Food (RSPL)/richFoodFssai";
 import TufropesSilvasaForm7 from "./tufropesSilvasa/tufropesSilvasaForm7";
 import TufropesSilvasaForm32New from "./tufropesSilvasa/tufropesSilvasaForm32New";
 import IsconBalajiFMT from "./isconBalajiFMT/IsconBalajiFMT";
+import SunPharmaBangalore from "./sunPharmaBanglore/sunPharmaBangalore";
+import Form23IsconBalajiKanjari from "./isconBalajiKanjari/Form23IsconBalajiKanjari";
+import Formm7IsconBalajiKanjari from "./isconBalajiKanjari/Formm7IsconBalajiKanjari";
+import Form35Generic from "./form35Generic/Form35Generic";
+import Form32Generic from "./form35Generic/Form32Generic";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <IsconBalajiFMT />
+      <Form32Generic />
       {/* <GenericFormGenerator /> */}
     </div>
   );
