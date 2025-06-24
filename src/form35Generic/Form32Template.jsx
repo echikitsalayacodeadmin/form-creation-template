@@ -144,6 +144,8 @@ const Form32Template = ({
   data,
   company = "BRIDGESTONE INDIA PRIVATE LIMITED",
   date = "12th June 2025",
+  fit = "After examining & above result of above stated executive, I hereby confirm that he is FIT to work.",
+  medicalConsultationAdvised = "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.",
 }) => {
   // Default data for preview/demo
 
@@ -650,8 +652,7 @@ const Form32Template = ({
                 styles.cellNoRight,
               ]}
             >
-              After examining & above result of above stated executive, I hereby
-              confirm that he is advised medical consultation.
+              {medicalConsultationAdvised}
             </Text>
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
