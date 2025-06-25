@@ -13,6 +13,8 @@ import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 import uncareheader from "../assets/images/uncareheader.png";
 import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
+import dr_kunal_stamp_sign from "../assets/images/dr_kunal_stamp_sign.png";
+import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
 
 // Register fonts
 Font.register({
@@ -144,9 +146,22 @@ const Form32Template = ({
   data,
   company = "BRIDGESTONE INDIA PRIVATE LIMITED",
   date = "12th June 2025",
-  fit = "After examining & above result of above stated executive, I hereby confirm that he is FIT to work.",
-  medicalConsultationAdvised = "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.",
+  fitText,
+  signature = "dr_kunal_stamp_sign.png", // default signature
 }) => {
+  // Function to get the correct signature image
+  const getSignatureImage = () => {
+    switch (signature) {
+      case "Dr_Jaydip_Saxena.png":
+        return Dr_Jaydip_Saxena;
+      case "KUNALSIGNBASE64":
+        return KUNALSIGNBASE64;
+      case "dr_kunal_stamp_sign.png":
+      default:
+        return dr_kunal_stamp_sign;
+    }
+  };
+
   // Default data for preview/demo
 
   return (
@@ -202,7 +217,7 @@ const Form32Template = ({
                 },
               ]}
             >
-              {company}
+              PHYSICAL FITNESS CERTIFICATE
             </Text>
             <Text
               style={[styles.cell, styles.cellNoRight, { width: 0 }]}
@@ -214,31 +229,7 @@ const Form32Template = ({
               style={[styles.cell, styles.cellNoRight, { width: 0 }]}
             ></Text>
           </View>
-          {/* Personal Detail */}
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellSection,
-                {
-                  width: "100%",
-                  borderRight: 0,
-                  fontFamily: "Times-Roman-Bold",
-                },
-              ]}
-            >
-              Personal Detail
-            </Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-          </View>
+          {/* Employee Details */}
           <View style={styles.tableRow}>
             <Text
               style={[
@@ -247,7 +238,7 @@ const Form32Template = ({
                 { width: "25%", fontFamily: "Times-Roman-Bold" },
               ]}
             >
-              Employee Name
+              Name:
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
               {data?.name || ""}
@@ -259,11 +250,37 @@ const Form32Template = ({
                 { width: "25%", fontFamily: "Times-Roman-Bold" },
               ]}
             >
-              Age
+              Employee ID:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
+              {data?.empId || ""}
+            </Text>
+          </View>
+          <View style={styles.tableRow}>
+            <Text
+              style={[
+                styles.cell,
+                styles.cellLabel,
+                { width: "25%", fontFamily: "Times-Roman-Bold" },
+              ]}
+            >
+              Age:
+            </Text>
+            <Text style={[styles.cell, { width: "25%" }]}>
               {data?.age || ""}
             </Text>
+            <Text
+              style={[
+                styles.cell,
+                styles.cellLabel,
+                { width: "25%", fontFamily: "Times-Roman-Bold" },
+              ]}
+            >
+              Gender:
+            </Text>
+            <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
+              {data?.gender || ""}
+            </Text>
           </View>
           <View style={styles.tableRow}>
             <Text
@@ -273,50 +290,11 @@ const Form32Template = ({
                 { width: "25%", fontFamily: "Times-Roman-Bold" },
               ]}
             >
-              Designation
+              Department:
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.designation || ""}
-            </Text>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "25%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              Department
-            </Text>
-            <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
               {data?.department || ""}
             </Text>
-          </View>
-          {/* Physical Details */}
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellSection,
-                {
-                  width: "100%",
-                  borderRight: 0,
-                  fontFamily: "Times-Roman-Bold",
-                },
-              ]}
-            >
-              Physical Details
-            </Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-          </View>
-          <View style={styles.tableRow}>
             <Text
               style={[
                 styles.cell,
@@ -324,139 +302,11 @@ const Form32Template = ({
                 { width: "25%", fontFamily: "Times-Roman-Bold" },
               ]}
             >
-              Blood Pressure:
-            </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.bp || ""}
-            </Text>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "25%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              RBS:
+              Designation:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              {data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""}
+              {data?.designation || ""}
             </Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "25%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              Weight:
-            </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.weight || ""}
-            </Text>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "25%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              Height:
-            </Text>
-            <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              {data?.height || ""}
-            </Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "50%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              Additional : Smoking/Alcohol/Tabacco/Other :
-            </Text>
-            <Text style={[styles.cell, { width: "50%" }, styles.cellNoRight]}>
-              {"No"}
-            </Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
-          </View>
-          {/* Important Medical History */}
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellSection,
-                {
-                  width: "100%",
-                  borderRight: 0,
-                  fontFamily: "Times-Roman-Bold",
-                },
-              ]}
-            >
-              Important Medical History
-            </Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-            <Text
-              style={[styles.cell, styles.cellNoRight, { width: 0 }]}
-            ></Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "50%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              Self
-            </Text>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "50%", fontFamily: "Times-Roman-Bold" },
-                styles.cellNoRight,
-              ]}
-            >
-              Family
-            </Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "48.5%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              HBP/DM/BA/Arthritis/PTB Epilepsy/Renal Disease
-            </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>None</Text>
-            <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              None
-            </Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
           </View>
           <View style={styles.tableRow}>
             <Text
@@ -652,7 +502,7 @@ const Form32Template = ({
                 styles.cellNoRight,
               ]}
             >
-              {medicalConsultationAdvised}
+              {fitText}
             </Text>
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
@@ -667,7 +517,10 @@ const Form32Template = ({
         </View>
         {/* Signature */}
         <View style={styles.signatureBlock}>
-          <Image style={{ height: 100, width: 160 }} src={Dr_Jaydip_Saxena} />
+          <Image
+            style={{ height: 100, width: 160 }}
+            src={getSignatureImage()}
+          />
         </View>
       </Page>
     </Document>

@@ -10,6 +10,7 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { Grid } from "@mui/material";
 import { RadioGroup, FormControlLabel, Radio, FormLabel } from "@mui/material";
+import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
 
 const Form32Generic = () => {
   const _storedData = (() => {
@@ -46,6 +47,7 @@ const Form32Generic = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [empIdFilter, setEmpIdFilter] = useState("");
+  const [signature, setSignature] = useState("Dr_Jaydip_Saxena.png"); // default signature
 
   const generatePDF = async (data, index) => {
     try {
@@ -56,7 +58,7 @@ const Form32Generic = () => {
           ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
           : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.";
       const pdfBlob = await pdf(
-        <Form32Template data={data} fitText={fitText} />
+        <Form32Template data={data} fitText={fitText} signature={signature} />
       ).toBlob();
 
       const formData = new FormData();
@@ -281,6 +283,31 @@ const Form32Generic = () => {
             fullWidth
           />
         </Grid>
+        <Grid item xs={12} md={4}>
+          <FormLabel component="legend">Signature</FormLabel>
+          <RadioGroup
+            row
+            value={signature}
+            onChange={(e) => setSignature(e.target.value)}
+            name="signature-group"
+          >
+            <FormControlLabel
+              value="dr_kunal_stamp_sign.png"
+              control={<Radio />}
+              label="Dr Kunal"
+            />
+            <FormControlLabel
+              value="Dr_Jaydip_Saxena.png"
+              control={<Radio />}
+              label="Dr Jaydip"
+            />
+            <FormControlLabel
+              value="KUNALSIGNBASE64"
+              control={<Radio />}
+              label="Kunal Base64"
+            />
+          </RadioGroup>
+        </Grid>
       </Grid>
       <div>
         <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
@@ -323,6 +350,7 @@ const Form32Generic = () => {
               ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
               : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
           }
+          signature={signature}
         />
       </PDFViewer>
     </Fragment>
