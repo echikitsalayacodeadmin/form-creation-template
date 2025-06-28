@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Payslip Template</title>
+    <style>
+      body {
+        font-family: Helvetica, sans-serif;
+        font-size: 11px;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+        color: #2d3748;
+      }
+      .page {
+        width: 794px;
+        margin: auto;
+        padding: 20px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .uno-logo {
+        width: 150px;
+      }
+      .payslip-month {
+        border-left: 3px solid #0045ba;
+        padding-left: 10px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: normal;
+      }
+      .container {
+        display: flex;
+        margin-top: 10px;
+      }
+      .left-col {
+        width: 150px;
+        padding: 0 0 0 24px;
+      }
+      .emp-label {
+        color: #828282;
+        margin-bottom: 2px;
+        margin-top: 8px;
+      }
+      .emp-value {
+        font-weight: bold;
+        color: #2d3748;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+      .join-label {
+        margin-top: 16px;
+        color: #222;
+      }
+      .join-value {
+        font-weight: bold;
+        color: #222;
+        font-size: 12px;
+        margin-bottom: 2px;
+      }
+      .right-col {
+        flex: 1;
+        padding: 0 32px 0 20px;
+      }
+      .salary-details-label {
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 8px;
+      }
+      .salary-details-row {
+        display: flex;
+        margin-top: 8px;
+        margin-bottom: 18px;
+      }
+      .salary-detail-box {
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 5px;
+        margin-right: 16px;
+        box-shadow: 0 2px 2px #eee;
+      }
+      .salary-detail-label {
+        font-size: 9px;
+        color: #0045ba;
+        margin-bottom: 2px;
+        font-weight: bold;
+      }
+      .salary-detail-value {
+        font-weight: bold;
+        font-size: 15px;
+        color: #0045ba;
+      }
+      .particulars-row {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        padding-left: 20px;
+      }
+      .particulars-label {
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+      }
+      .table th,
+      .table td {
+        padding: 8px;
+        font-size: 12px;
+        text-align: left;
+        border-bottom: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+      }
+      .table th:last-child,
+      .table td:last-child {
+        border-right: none;
+      }
+      .table-header {
+        background: #0045ba;
+        color: #fff;
+      }
+      .table-row-alt {
+        background: #dee9fa;
+      }
+      .deduction-header {
+        background: #fc7143;
+        color: #2d3748;
+      }
+      .addition-header {
+        background: #70e000;
+        color: #2d3748;
+      }
+      .net-payable-row {
+        background: #ffe8ae;
+        color: #2d3748;
+        font-weight: bold;
+      }
+      .in-hand-row {
+        background: #ffb703;
+        color: #2d3748;
+        font-weight: bold;
+      }
+      .in-hand-note {
+        font-size: 11px;
+        margin-top: 10px;
+        color: #2d3748;
+      }
+      .in-hand-note b {
+        color: #222;
+      }
+      .watermark {
+        position: absolute;
+        left: 0;
+        bottom: 200px;
+        width: 113px;
+        height: 250px;
+      }
+      .footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <img src="path_to_unoLogo" alt="UNO Logo" class="uno-logo" />
+        <div class="payslip-month">Payslip: <b>&nbsp;May 2025</b></div>
+      </div>
+
+      <div class="container">
+        <div class="left-col">
+          <div class="emp-label">Employee ID</div>
+          <div class="emp-value">EMP12345</div>
+          <div class="emp-label">Employee Name</div>
+          <div class="emp-value">John Doe</div>
+          <div class="emp-label">Employee Team</div>
+          <div class="emp-value">Product</div>
+          <div class="emp-label">UAN</div>
+          <div class="emp-value">100200300400</div>
+          <div class="emp-label">Account Number</div>
+          <div class="emp-value">XXXXXXXXXXXXXX</div>
+          <div class="emp-label">IFSC Code</div>
+          <div class="emp-value">HDFC0001234</div>
+          <div class="join-label">Date of Joining</div>
+          <div class="join-value">01 Jan 2022</div>
+        </div>
+
+        <div class="right-col">
+          <div class="salary-details-label">Salary Details</div>
+          <div class="salary-details-row">
+            <div class="salary-detail-box">
+              <div class="salary-detail-label">Actual Payable Days</div>
+              <div class="salary-detail-value">26</div>
+            </div>
+            <div class="salary-detail-box">
+              <div class="salary-detail-label">Total Working Days</div>
+              <div class="salary-detail-value">30</div>
+            </div>
+            <div class="salary-detail-box">
+              <div class="salary-detail-label">Loss of Pay Days</div>
+              <div class="salary-detail-value">2</div>
+            </div>
+            <div class="salary-detail-box">
+              <div class="salary-detail-label">Days Payable</div>
+              <div class="salary-detail-value">28</div>
+            </div>
+          </div>
+
+          <div class="particulars-row">
+            <div class="particulars-label">Salary Particulars</div>
+          </div>
+
+          <table class="table">
+            <thead class="table-header">
+              <tr>
+                <th>Earnings</th>
+                <th style="text-align: center">Offered</th>
+                <th style="text-align: center">Earned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Basic Pay</td>
+                <td style="text-align: center">20,000</td>
+                <td style="text-align: center">18,667</td>
+              </tr>
+              <tr class="table-row-alt">
+                <td>HRA</td>
+                <td style="text-align: center">5,000</td>
+                <td style="text-align: center">4,667</td>
+              </tr>
+            </tbody>
+
+            <thead class="deduction-header">
+              <tr>
+                <th>Deductions</th>
+                <th style="text-align: center">Offered</th>
+                <th style="text-align: center">Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PF</td>
+                <td style="text-align: center">1,800</td>
+                <td style="text-align: center">1,800</td>
+              </tr>
+              <tr class="table-row-alt">
+                <td>ESIC</td>
+                <td style="text-align: center">150</td>
+                <td style="text-align: center">200</td>
+              </tr>
+              <tr style="background: #fed2c3">
+                <td>Total Deductions (B)</td>
+                <td style="text-align: center">1,950</td>
+                <td style="text-align: center">2,000</td>
+              </tr>
+            </tbody>
+
+            <thead class="addition-header">
+              <tr>
+                <th>Additions</th>
+                <th style="text-align: center">Offered</th>
+                <th style="text-align: center">Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Incentives</td>
+                <td style="text-align: center">500</td>
+                <td style="text-align: center">600</td>
+              </tr>
+            </tbody>
+
+            <thead class="net-payable-row">
+              <tr>
+                <th>Net Payable</th>
+                <th style="text-align: center">Offered</th>
+                <th style="text-align: center">Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="in-hand-row">
+                <td>In-Hand (A-B+C)</td>
+                <td style="text-align: center">23,550</td>
+                <td style="text-align: center">23,934</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="in-hand-note">
+            <span style="color: #2d3748; font-weight: bold">*</span>
+            <b> In-Hand</b> = Total Payable - Total Deductions
+          </div>
+        </div>
+      </div>
+
+      <img src="path_to_watermarkLogo" class="watermark" alt="Watermark" />
+      <img src="path_to_footer" class="footer" alt="Footer" />
+    </div>
+  </body>
+</html>

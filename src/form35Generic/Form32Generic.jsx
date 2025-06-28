@@ -30,6 +30,7 @@ const Form32Generic = () => {
     setStartDate(_storedData?.startDate || "");
     setEndDate(_storedData?.endDate || "");
     setEmpIdFilter(_storedData?.empIdFilter || "");
+    setSignature(_storedData?.signature || "dr_kunal_stamp_sign");
   }, []);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -47,7 +48,7 @@ const Form32Generic = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [empIdFilter, setEmpIdFilter] = useState("");
-  const [signature, setSignature] = useState("Dr_Jaydip_Saxena.png"); // default signature
+  const [signature, setSignature] = useState("dr_kunal_stamp_sign.png"); // default signature
 
   const generatePDF = async (data, index) => {
     try {
@@ -195,6 +196,7 @@ const Form32Generic = () => {
       endDate,
       fitStatus,
       empIdFilter,
+      signature,
     };
     localStorage.setItem("SAVED_FORM32_FILTERS", JSON.stringify(savedFilter));
   }, [
@@ -205,6 +207,7 @@ const Form32Generic = () => {
     endDate,
     fitStatus,
     empIdFilter,
+    signature,
   ]);
 
   return (
@@ -300,11 +303,6 @@ const Form32Generic = () => {
               value="Dr_Jaydip_Saxena.png"
               control={<Radio />}
               label="Dr Jaydip"
-            />
-            <FormControlLabel
-              value="KUNALSIGNBASE64"
-              control={<Radio />}
-              label="Kunal Base64"
             />
           </RadioGroup>
         </Grid>
