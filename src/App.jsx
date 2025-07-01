@@ -49,12 +49,13 @@ import Form23IsconBalajiKanjari from "./isconBalajiKanjari/Form23IsconBalajiKanj
 import Formm7IsconBalajiKanjari from "./isconBalajiKanjari/Formm7IsconBalajiKanjari";
 import Form35Generic from "./form35Generic/Form35Generic";
 import Form32Generic from "./form35Generic/Form32Generic";
+import MaharashtraFactRuleMain from "./MaharashtraFactRule/MaharashtraFactRuleMain";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <Form32Generic />
+      <MaharashtraFactRuleMain />
       {/* <GenericFormGenerator /> */}
     </div>
   );
