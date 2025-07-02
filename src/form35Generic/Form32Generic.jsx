@@ -44,11 +44,11 @@ const Form32Generic = () => {
   const [corpId, setCorpId] = useState("b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537");
   const [campCycleId, setCampCycleId] = useState("303877");
   const [fileType, setFileType] = useState("PHYSICAL_FITNESS_FORM");
-  const [fitStatus, setFitStatus] = useState("fit"); // 'fit' or 'unfit'
+  const [fitStatus, setFitStatus] = useState("fit");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [empIdFilter, setEmpIdFilter] = useState("");
-  const [signature, setSignature] = useState("dr_kunal_stamp_sign.png"); // default signature
+  const [signature, setSignature] = useState("dr_kunal_stamp_sign.png");
 
   const generatePDF = async (data, index) => {
     try {
