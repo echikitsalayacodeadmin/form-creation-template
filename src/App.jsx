@@ -55,7 +55,7 @@ const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <Form32Generic />
+      <MaharashtraFactRuleMain />
       {/* <GenericFormGenerator /> */}
     </div>
   );
