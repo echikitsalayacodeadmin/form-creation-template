@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { pdf } from "@react-pdf/renderer";
+import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { useSnackbar } from "notistack";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 
@@ -31,14 +31,14 @@ const MaharashtraFactRuleMain = () => {
   })();
 
   useEffect(() => {
-    setCorpId(_storedData?.corpId || "1f084b0a-0423-47ec-a812-345500977336");
-    setCampCycleId(_storedData?.campCycleId || "305870");
-    setFileType(_storedData?.fileType || "ANNEXURE");
+    setCorpId(_storedData?.corpId || "");
+    setCampCycleId(_storedData?.campCycleId || "");
+    setFileType(_storedData?.fileType || "");
     setFitStatus(_storedData?.fitStatus || "fit");
     setStartDate(_storedData?.startDate || "");
     setEndDate(_storedData?.endDate || "");
     setEmpIdFilter(_storedData?.empIdFilter || "");
-    setSignature(_storedData?.signature || "dr_kunal_stamp_sign");
+    setSignature(_storedData?.signature || "");
   }, []);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -49,14 +49,14 @@ const MaharashtraFactRuleMain = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // New state for user inputs
-  const [corpId, setCorpId] = useState("1f084b0a-0423-47ec-a812-345500977336");
-  const [campCycleId, setCampCycleId] = useState("305870");
-  const [fileType, setFileType] = useState("ANNEXURE");
+  const [corpId, setCorpId] = useState("");
+  const [campCycleId, setCampCycleId] = useState("");
+  const [fileType, setFileType] = useState("");
   const [fitStatus, setFitStatus] = useState("fit"); // 'fit' or 'unfit'
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [empIdFilter, setEmpIdFilter] = useState("");
-  const [signature, setSignature] = useState("dr_kunal_stamp_sign.png"); // default signature
+  const [signature, setSignature] = useState(""); // default signature
 
   const generatePDF = async (data, index) => {
     try {
@@ -70,7 +70,7 @@ const MaharashtraFactRuleMain = () => {
       ).toBlob();
 
       const formData = new FormData();
-      formData.append("file", pdfBlob, `${data?.empId}_FORM24.pdf`);
+      formData.append("file", pdfBlob, `${data?.empId}_FORM7.pdf`);
 
       const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
@@ -94,21 +94,23 @@ const MaharashtraFactRuleMain = () => {
   };
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const result = await getData(url);
-    if (result && result.data) {
-      console.log("Fetched Data successfully");
+    if (corpId && campCycleId) {
+      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await getData(url);
+      if (result && result.data) {
+        console.log("Fetched Data successfully");
 
-      const temp = result?.data;
+        const temp = result?.data;
 
-      const length = temp.length;
-      console.log({ length });
-      const sorted = sortDataByName(temp);
-      setList(sorted);
+        const length = temp.length;
+        console.log({ length });
+        const sorted = sortDataByName(temp);
+        setList(sorted);
 
-      console.log({ empLisy: sorted });
-    } else {
-      console.log("An error Occurred");
+        console.log({ empLisy: sorted });
+      } else {
+        console.log("An error Occurred");
+      }
     }
   };
 
@@ -249,8 +251,12 @@ const MaharashtraFactRuleMain = () => {
             onChange={(e) => setFitStatus(e.target.value)}
             name="fit-status-group"
           >
-            <FormControlLabel value="fit" control={<Radio />} label="Fit" />
-            <FormControlLabel value="unfit" control={<Radio />} label="Unfit" />
+            <FormControlLabel value="Fit" control={<Radio />} label="Fit" />
+            <FormControlLabel
+              value="Medical Consultation Advised"
+              control={<Radio />}
+              label="Medical Consultation Advised"
+            />
           </RadioGroup>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -300,6 +306,10 @@ const MaharashtraFactRuleMain = () => {
           </div>
         ))}
       </div>
+
+      <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
+        <MaharashtraFactRule />
+      </PDFViewer>
     </Fragment>
   );
 };

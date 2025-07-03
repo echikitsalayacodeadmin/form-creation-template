@@ -23,8 +23,8 @@ const Form32Generic = () => {
   })();
 
   useEffect(() => {
-    setCorpId(_storedData?.corpId || "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537");
-    setCampCycleId(_storedData?.campCycleId || "303877");
+    setCorpId(_storedData?.corpId || "");
+    setCampCycleId(_storedData?.campCycleId || "");
     setFileType(_storedData?.fileType || "PHYSICAL_FITNESS_FORM");
     setFitStatus(_storedData?.fitStatus || "fit");
     setStartDate(_storedData?.startDate || "");
@@ -41,8 +41,8 @@ const Form32Generic = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // New state for user inputs
-  const [corpId, setCorpId] = useState("b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537");
-  const [campCycleId, setCampCycleId] = useState("303877");
+  const [corpId, setCorpId] = useState("");
+  const [campCycleId, setCampCycleId] = useState("");
   const [fileType, setFileType] = useState("PHYSICAL_FITNESS_FORM");
   const [fitStatus, setFitStatus] = useState("fit");
   const [startDate, setStartDate] = useState("");

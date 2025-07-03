@@ -185,7 +185,7 @@ const Dots = ({ count }) => (
 );
 
 const MaharashtraFactRule = ({
-  certifyingSurgeonName = "",
+  certifyingSurgeonName = "Dr Jaydip Saxsena",
   data = {},
   fitStatus = "",
   vitalsCreatedDate = "",
@@ -224,7 +224,7 @@ const MaharashtraFactRule = ({
     {
       id: 12,
       label: "Results of Medical Examination",
-      value: fitStatus === "fit" ? "FIT" : "UNFIT",
+      value: fitStatus === "Fit" ? "Fit" : "Medical Consultation Advised",
     },
     {
       id: 13,
@@ -246,9 +246,7 @@ const MaharashtraFactRule = ({
     {
       id: 16,
       label: "Signature with date of Certifying Surgeon",
-      value: (
-        <Image src={getSignatureImage()} style={{ height: 60, width: 80 }} />
-      ),
+      value: <Image src={Dr_Jaydip_Saxena} style={{ height: 60, width: 80 }} />,
     },
   ];
 
@@ -363,7 +361,7 @@ const MaharashtraFactRule = ({
                     ]}
                   >
                     <Image
-                      src={dr_kunal_stamp_sign}
+                      src={Dr_Jaydip_Saxena}
                       style={{ height: 50, width: 80 }}
                     />
                   </View>
