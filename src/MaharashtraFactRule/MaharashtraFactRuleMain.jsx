@@ -9,6 +9,7 @@ import {
   Grid,
   Radio,
   RadioGroup,
+  Typography,
 } from "@mui/material";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
@@ -188,6 +189,130 @@ const MaharashtraFactRuleMain = () => {
     signature,
   ]);
 
+  const [bloodData, setBloodData] = useState([]);
+  const [excludedTestKeys, setExcludedTestKeys] = useState("");
+  const getTestDetails = async () => {
+    const url = `https://apibackend.uno.care/api/org/testsconfig`;
+    const result = await getData(url);
+    if (result.error) {
+      console.log(result.error);
+    } else {
+      const temp = result.data.map((item, index) => ({
+        id: index,
+        ...item,
+        editRow: "editRow",
+      }));
+      setBloodData(temp);
+    }
+  };
+
+  useEffect(() => {
+    getTestDetails();
+  }, []);
+
+  const errorEmployeeList = useMemo(() => {
+    const tempData = list.filter(
+      (emp) =>
+        emp.vitalsErrorData && Object.keys(emp.vitalsErrorData)?.length > 0
+    );
+
+    return tempData?.map((val) => ({
+      ...val,
+      vitalsErrorDataList: Object.entries(val?.vitalsErrorData),
+    }));
+  }, [list]);
+
+  const transformedData = useMemo(() => {
+    const stringValuesUrine =
+      bloodData.find((test) => test.testKey === "URINE.GLUCOSE")
+        ?.stringTestKeyValues || [];
+    const stringValuesHbsag =
+      bloodData.find((test) => test.testKey === "HbsAg")?.stringTestKeyValues
+        ?.UNHEALTHY_VALUES || [];
+    const urineGlucoseEmployees = errorEmployeeList
+      .filter(
+        (item) =>
+          stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
+            item.cholestrolData?.["URINE.GLUCOSE"]
+          ]
+      )
+      .map((item) => ({
+        empId: item.empId,
+        name: item.name,
+        age: item.age,
+        gender: item.gender,
+        vitalsCreatedDate: item.vitalsCreatedDate,
+        token: item.tokenNumber, // Assuming you'll fill this in later
+        vitalsDataError: `URINE.GLUCOSE : ${item.cholestrolData?.["URINE.GLUCOSE"]}`, // Displaying each key separately
+        acceptableRange: "",
+        vitalsDataReading: item.cholestrolData?.["URINE.GLUCOSE"],
+        testKey: key,
+      }));
+
+    const hbsagEmployees = errorEmployeeList
+      .filter((item) =>
+        stringValuesHbsag?.["UNHEALTHY_VALUES"]?.includes(
+          item.cholestrolData?.["HbsAg"]
+        )
+      )
+      .map((item) => ({
+        empId: item.empId,
+        name: item.name,
+        age: item.age,
+        gender: item.gender,
+        vitalsCreatedDate: item.vitalsCreatedDate,
+        token: item.tokenNumber, // Assuming you'll fill this in later
+        vitalsDataError: `HbsAg : ${item.cholestrolData?.["HbsAg"]}`, // Displaying each key separately
+        acceptableRange: "",
+        vitalsDataReading: employee.vitalsErrorData[key],
+        testKey: key,
+      }));
+
+    const transformed = errorEmployeeList.flatMap((employee) => {
+      const keys = Object.keys(employee.vitalsErrorData);
+      return keys.map((key) => {
+        const range = bloodData.find((range) => range.testKey === key);
+        const acceptableRange = range
+          ? `${range.acceptableRangeMin} - ${range.acceptableRangeMax}`
+          : "Not available";
+        return {
+          empId: employee.empId,
+          name: employee.name,
+          vitalsDataError: `${key} : ${employee.vitalsErrorData[key]}`, // Displaying each key separately
+          acceptableRange,
+          vitalsDataReading: employee.vitalsErrorData[key],
+          testKey: key,
+          testKeyType: range?.orgEmployeeFileType,
+        };
+      });
+    });
+
+    let tempData = [...transformed, ...urineGlucoseEmployees, ...hbsagEmployees]
+      .filter(
+        (item) =>
+          ![
+            "height",
+            "weight",
+            // "bp",
+            // "lowBp",
+            // "highBp",
+            "IS_HEIGHT_MATCH_PFT_VITALS",
+            "IS_WEIGHT_MATCH_PFT_VITALS",
+          ]?.includes(item.testKey)
+      )
+      .reduce((acc, item) => {
+        if (!acc[item.testKey]) {
+          acc[item.testKey] = [];
+        }
+        acc[item.testKey].push(item);
+        return acc;
+      }, {});
+
+    return Object.entries(tempData).filter(
+      ([key, value]) => !excludedTestKeys.split(",").includes(key)
+    );
+  }, [errorEmployeeList, bloodData, excludedTestKeys]);
+
   return (
     <Fragment>
       {/* User Inputs */}
@@ -288,6 +413,19 @@ const MaharashtraFactRuleMain = () => {
             />
           </RadioGroup>
         </Grid>
+        <Grid item xs={12} md={12} sx={{ maxWidth: 800, flexWrap: "wrap" }}>
+          <Typography>UNFIT EMPIDS -</Typography>
+          <TextField
+            multiline
+            fullWidth
+            minRows={8}
+            value={transformedData
+              .flatMap(([_, records]) => records)
+              .map((item, index) => ({ ...item, id: index }))
+              .map((item) => item.empId)
+              .join(",")}
+          />
+        </Grid>
       </Grid>
       <div>
         <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
@@ -298,8 +436,8 @@ const MaharashtraFactRuleMain = () => {
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.annexureUrl}>
-              <div key={index}>{item.annexureUrl}</div>
+            <a href={item.form32Url}>
+              <div key={index}>{item.form32Url}</div>
             </a>
 
             <br />
