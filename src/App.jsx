@@ -50,12 +50,13 @@ import Formm7IsconBalajiKanjari from "./isconBalajiKanjari/Formm7IsconBalajiKanj
 import Form35Generic from "./form35Generic/Form35Generic";
 import Form32Generic from "./form35Generic/Form32Generic";
 import MaharashtraFactRuleMain from "./MaharashtraFactRule/MaharashtraFactRuleMain";
+import SonicBiochemFoodHandler from "./sonicBiochem/SonicBiochemFoodHandler";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <MaharashtraFactRuleMain />
+      <SonicBiochemFoodHandler />
       {/* <GenericFormGenerator /> */}
     </div>
   );
