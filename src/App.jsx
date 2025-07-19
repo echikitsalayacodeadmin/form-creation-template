@@ -56,7 +56,7 @@ const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <SonicBiochemFoodHandler />
+      <Form32Generic />
       {/* <GenericFormGenerator /> */}
     </div>
   );
