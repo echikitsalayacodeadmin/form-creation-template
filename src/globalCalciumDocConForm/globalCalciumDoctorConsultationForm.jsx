@@ -26,7 +26,7 @@ const GlobalCalciumDoctorConsultationForm = ({
       ).toBlob();
 
       const formData = new FormData();
-      formData.append("file", pdfBlob, `${data?.empId}_FORM7.pdf`);
+      formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
 
       const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
@@ -55,7 +55,7 @@ const GlobalCalciumDoctorConsultationForm = ({
       const result = await getData(url);
       if (result && result.data) {
         const temp = result?.data?.filter(
-          (item) => item.vitalsCreatedDate === "2025-07-17"
+          (item) => item.vitalsCreatedDate === "2025-07-16"
         );
         const length = temp.length;
         const sorted = sortDataByName(temp);
@@ -120,31 +120,7 @@ const GlobalCalciumDoctorConsultationForm = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <GlobalCalciumDoctorConsultationFormTemplate
-          data={{
-            employeeName: "Ayush Daharia",
-            age: "28",
-            gender: "Male",
-            employeeId: "GC12345",
-            department: "R&D",
-            diabetes: "No",
-            hypertension: "Yes",
-            hypertensionDuration: "2 years",
-            seizureDisorder: "Yes",
-            firstEpisode: "2021",
-            lastEpisode: "2023",
-            foodHabit: "Veg",
-            alcoholYesNo: "No",
-            smokingYesNo: "Yes",
-            smokingDuration: "5 yrs",
-            smokingType: "Cigarette",
-            smokingFrequency: "Daily",
-            smokingQuantity: "10",
-            pastMedicalHistory: "None",
-            familyHistory: "Diabetes in father",
-            menstrualHistory: "",
-          }}
-        />
+        <GlobalCalciumDoctorConsultationFormTemplate data={{}} />
       </PDFViewer>
     </Fragment>
   );
