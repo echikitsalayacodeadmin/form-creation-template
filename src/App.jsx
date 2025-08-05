@@ -51,12 +51,19 @@ import Form35Generic from "./form35Generic/Form35Generic";
 import Form32Generic from "./form35Generic/Form32Generic";
 import MaharashtraFactRuleMain from "./MaharashtraFactRule/MaharashtraFactRuleMain";
 import SonicBiochemFoodHandler from "./sonicBiochem/SonicBiochemFoodHandler";
+import HealthFormX from "./corpOnboarding/HealthFormX";
+import Form11AccidentBook from "./corpOnboarding/Form11AccidentBook";
+import DaawatFoodFssai from "./daawatblood/daawatFoodFssai";
+import Form13 from "./corpOnboarding/Form13";
+import Form14 from "./corpOnboarding/Form14";
+import Form16 from "./corpOnboarding/Form16";
+import GlobalCalciumDoctorConsultationForm from "./globalCalciumDocConForm/globalCalciumDoctorConsultationForm";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <Form32Generic />
+      <GlobalCalciumDoctorConsultationForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );

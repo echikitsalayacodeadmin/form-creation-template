@@ -277,7 +277,6 @@ const MaharashtraFactRule = ({
           }}
         >
           <View>
-            {/* Surgeon (a) */}
             <View style={styles.surgeonRow}>
               <Text style={styles.surgeonLabel}>(a) Mr.</Text>
               <View
