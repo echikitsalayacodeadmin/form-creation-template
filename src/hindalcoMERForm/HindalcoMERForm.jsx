@@ -203,7 +203,7 @@ const HindalcoMERForm = ({
                 data?.pulseRate ? data?.pulseRate + " bpm" : ""
               }</td>
               <td colspan="2" class="label">Blood Pressure:</td>
-              <td colspan="2">${data?.bp ? data?.bp + " mm Of hg" : ""}</td>
+              <td colspan="2">${data?.bp ? data?.bp + " mm/hg" : ""}</td>
               <td colspan="2" class="label">Resp Rate:</td>
               <td colspan="2">${
                 data?.respRate ? data?.respRate + " / min" : ""
@@ -307,7 +307,7 @@ const HindalcoMERForm = ({
                 data?.colourVision === "Both"
                   ? "BOTH EYES (L + R)"
                   : data?.colourVision === "NAD"
-                  ? "Easily identified basic colours by candidate"
+                  ? "Candidate identified basic colours easily"
                   : data?.colourVision || "Within Normal Limits"
               }</td>
             </tr>
@@ -642,10 +642,7 @@ const HindalcoMERForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) =>
-          item.employmentType === "ONROLL" &&
-          item.gender === "MALE" &&
-          item.colourVision === "NAD"
+        (item) => item.employmentType === "ONROLL"
         // item.vitalsCreatedDate &&
         // item.employment === "ONROLL" &&
         // !item.empId.startsWith("PEM")
