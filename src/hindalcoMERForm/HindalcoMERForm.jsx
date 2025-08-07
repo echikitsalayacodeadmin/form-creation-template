@@ -6,6 +6,7 @@ import { sortDataByName } from "../assets/utils";
 import { getData } from "../assets/services/GetApiCall";
 import html2pdf from "html2pdf.js";
 import { BASE_URL } from "../assets/constant";
+import dayjs from "dayjs";
 
 const HindalcoMERForm = ({
   corpId = "c4c64ef9-91e8-4242-8390-b188afe101ff",
@@ -24,7 +25,7 @@ const HindalcoMERForm = ({
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
-        <title>Pre Employment Medical Examination Record</title>
+        <title>Annual Medical Examination Record</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -101,8 +102,8 @@ const HindalcoMERForm = ({
           >
             <div class="form-title">HINDALCO INDUSTRIES LIMITED</div>
             <div class="form-subtitle">
-              PERSONAL MOBILITY - CHAKAN PUNE<br />PRE EMPLOYMENT MEDICAL
-              EXAMINATION RECORD<br />CONTRACT WORKERS
+              PERSONAL MOBILITY - CHAKAN PUNE<br />ANNUAL MEDICAL
+              EXAMINATION RECORD<br />
             </div>
           </div>
           <table>
@@ -115,16 +116,18 @@ const HindalcoMERForm = ({
               <td>${data?.gender || ""}</td>
             </tr>
             <tr>
-              <td class="label">Name of Contractor:</td>
-              <td>${data?.contractorName || ""}</td>
+              <td class="label">Emp ID :</td>
+              <td>${data?.empId}</td>
               <td class="label">Date of Examination :</td>
-              <td>${data?.vitalsCreatedDate || ""}</td>
+              <td>${
+                dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY") || ""
+              }</td>
               <td class="label">Date of Joining:</td>
-              <td>${data?.datOfJoining || ""}</td>
+              <td>${data?.dateOfJoining || ""}</td>
             </tr>
             <tr>
               <td class="label">CLMS Code:</td>
-              <td>${data?.cfmsCode || ""}</td>
+              <td>${data?.cfmsCode || "Not applicable"}</td>
               <td class="label">Dept:</td>
               <td>${data?.department || ""}</td>
               <td class="label">Mobile No:</td>
@@ -197,7 +200,7 @@ const HindalcoMERForm = ({
             <tr>
               <td colspan="2" class="label">Pulse:</td>
               <td colspan="2">${
-                data?.pulseRate ? data?.pulseRate + " / min" : ""
+                data?.pulseRate ? data?.pulseRate + " bpm" : ""
               }</td>
               <td colspan="2" class="label">Blood Pressure:</td>
               <td colspan="2">${data?.bp ? data?.bp + " mm Of hg" : ""}</td>
@@ -301,7 +304,11 @@ const HindalcoMERForm = ({
             <tr>
               <td colspan="2" class="label">Colour Vision</td>
               <td colspan="4">${
-                data?.colourVision || "Within Normal Limits"
+                data?.colourVision === "Both"
+                  ? "BOTH EYES (L + R)"
+                  : data?.colourVision === "NAD"
+                  ? "Easily identified basic colours by candidate"
+                  : data?.colourVision || "Within Normal Limits"
               }</td>
             </tr>
             <tr>
@@ -350,7 +357,8 @@ const HindalcoMERForm = ({
             <tr>
               <td class="label">Tongue</td>
               <td>${
-                data?.pemMedicalFormData?.ent_tongue || "No Ulcer Found"
+                data?.pemMedicalFormData?.ent_tongue ||
+                "No ulcer found at the time of examination"
               }</td>
               <td class="label">Tonsils:</td>
               <td>${
@@ -360,7 +368,8 @@ const HindalcoMERForm = ({
             <tr>
               <td class="label">Any Disease</td>
               <td colspan="3">${
-                data?.pemMedicalFormData?.ent_disease || ""
+                data?.pemMedicalFormData?.ent_disease ||
+                "Not revealed at the time of examination"
               }</td>
             </tr>
           </table>
@@ -406,7 +415,7 @@ const HindalcoMERForm = ({
               </td>
               <td class="label">Lungs:</td>
               <td>${
-                data?.pemMedicalFormData?.respiratory_lungs || "B/LAE +"
+                data?.pemMedicalFormData?.respiratory_lungs || "B/L AE +"
               }</td>
             </tr>
             <tr>
@@ -562,33 +571,21 @@ const HindalcoMERForm = ({
             <tr>
               <td class="label">Menstrual History:</td>
               <td colspan="2">
-                ${
-                  data?.pemMedicalFormData?.female_menstrual_history ||
-                  "Not Applicable"
-                }
+                ${data?.pemMedicalFormData?.female_menstrual_history || ""}
               </td>
               <td class="label">Obstetric History:</td>
               <td colspan="3">
-                ${
-                  data?.pemMedicalFormData?.female_obstetric_history ||
-                  "Not Applicable"
-                }
+                ${data?.pemMedicalFormData?.female_obstetric_history || ""}
               </td>
             </tr>
             <tr>
               <td class="label">Breast Exam:</td>
               <td colspan="2">
-                ${
-                  data?.pemMedicalFormData?.female_breast_exam ||
-                  "Not Applicable"
-                }
+                ${data?.pemMedicalFormData?.female_breast_exam || ""}
               </td>
               <td class="label">Pelvic Exam:</td>
               <td colspan="3">
-                ${
-                  data?.pemMedicalFormData?.female_pelvic_exam ||
-                  "Not Applicable"
-                }
+                ${data?.pemMedicalFormData?.female_pelvic_exam || ""}
               </td>
             </tr>
           </table>
@@ -645,7 +642,13 @@ const HindalcoMERForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => item.vitalsCreatedDate && !item.empId.startsWith("PEM")
+        (item) =>
+          item.employmentType === "ONROLL" &&
+          item.gender === "MALE" &&
+          item.colourVision === "NAD"
+        // item.vitalsCreatedDate &&
+        // item.employment === "ONROLL" &&
+        // !item.empId.startsWith("PEM")
       );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
@@ -664,7 +667,7 @@ const HindalcoMERForm = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < 1; i++) {
       await generatePDF(list[i], i);
     }
   };

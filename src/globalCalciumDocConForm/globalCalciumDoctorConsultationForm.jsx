@@ -55,7 +55,9 @@ const GlobalCalciumDoctorConsultationForm = ({
       const result = await getData(url);
       if (result && result.data) {
         const temp = result?.data?.filter(
-          (item) => item.vitalsCreatedDate === "2025-07-16"
+          (item) =>
+            item.vitalsCreatedDate === "2025-07-24" ||
+            item.vitalsCreatedDate === "2025-07-25"
         );
         const length = temp.length;
         const sorted = sortDataByName(temp);

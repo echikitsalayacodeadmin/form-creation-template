@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+          <td colspan="2" class="label">Name :</td>
+          <td>${data?.name || ""}</td>
+          <td class="label">Age:</td>
+          <td>${data?.age || ""}</td>
+          <td class="label">Gender:</td>
+          <td>${data?.gender || ""}</td>
+        </tr>
+        <tr>
+          <td colSpan=" class="label">Date of Examination :</td>
+          <td>${data?.vitalsCreatedDate || ""}</td>
+          <td class="label">Date of Joining:</td>
+          <td>${data?.datOfJoining || ""}</td>
+        </tr>
+        <tr>
+          <td class="label">CLMS Code:</td>
+          <td>${data?.cfmsCode || ""}</td>
+          <td class="label">Dept:</td>
+          <td>${data?.department || ""}</td>
+          <td class="label">Mobile No:</td>
+          <td>${data?.mobileNo || ""}</td>
+        </tr>
+        <tr>
+          <td class="label">Identification Mark:</td>
+          <td>${data?.identificationMark || ""}</td>
+          <td class="label">Occupation:</td>
+          <td colspan="3">${data?.designation || ""}</td>
+        </tr>
+      </table>
+</body>
+</html>

@@ -125,9 +125,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <Text style={styles.label}>If Yes Duration:</Text>
           <DottedField
             value={
-              data?.doctorConsultationFormData?.[
-                `${condition.property}Duration`
-              ] || ""
+              data?.doctorConsultationFormData?.[`${condition.property}`] || ""
             }
             width={100}
           />
