@@ -1,16 +1,15 @@
+import CertificateOfFitnessTemplate from "./CertificateOfFitnessTemplate";
 import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { useSnackbar } from "notistack";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import GlobalCalciumDoctorConsultationFormTemplate from "./GlobalCalciumDoctorConsultationFormTemplate";
 
-const GlobalCalciumDoctorConsultationForm = ({
-  corpId = "053026e4-0900-493e-b2da-3849981a16f5",
-  campCycleId = "316872",
+const CertificateOfFitness = ({
+  corpId = "abb39117-12ff-4cf5-b57e-5272c8ea3818",
+  campCycleId = "319679",
   fileType = "CONSOLIDATED_REPORT",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,7 +21,7 @@ const GlobalCalciumDoctorConsultationForm = ({
   const generatePDF = async (data, index) => {
     try {
       const pdfBlob = await pdf(
-        <GlobalCalciumDoctorConsultationFormTemplate data={data} />
+        <CertificateOfFitnessTemplate data={data} />
       ).toBlob();
 
       const formData = new FormData();
@@ -54,7 +53,7 @@ const GlobalCalciumDoctorConsultationForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter((item) => item.empId === "2835");
+        const temp = result?.data.filter((item) => item.empId === "SBE0274");
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -72,7 +71,7 @@ const GlobalCalciumDoctorConsultationForm = ({
   }, [corpId, campCycleId]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < 1; i++) {
       await generatePDF(list[i], i);
     }
   };
@@ -118,10 +117,10 @@ const GlobalCalciumDoctorConsultationForm = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <GlobalCalciumDoctorConsultationFormTemplate data={{}} />
+        <CertificateOfFitnessTemplate data={list[0]} />
       </PDFViewer>
     </Fragment>
   );
 };
 
-export default GlobalCalciumDoctorConsultationForm;
+export default CertificateOfFitness;

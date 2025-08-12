@@ -59,12 +59,13 @@ import Form14 from "./corpOnboarding/Form14";
 import Form16 from "./corpOnboarding/Form16";
 import GlobalCalciumDoctorConsultationForm from "./globalCalciumDocConForm/globalCalciumDoctorConsultationForm";
 import HindalcoMERForm from "./hindalcoMERForm/HindalcoMERForm";
+import CertificateOfFitness from "./certificateOfFitness/CertificateOfFitness";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <HindalcoMERForm />
+      <CertificateOfFitness />
       {/* <GenericFormGenerator /> */}
     </div>
   );
