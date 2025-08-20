@@ -60,12 +60,14 @@ import Form16 from "./corpOnboarding/Form16";
 import GlobalCalciumDoctorConsultationForm from "./globalCalciumDocConForm/globalCalciumDoctorConsultationForm";
 import HindalcoMERForm from "./hindalcoMERForm/HindalcoMERForm";
 import CertificateOfFitness from "./certificateOfFitness/CertificateOfFitness";
+import HindalcoMERFormContractor from "./hindalcoMERForm/HindalcoMERFormContractor";
+import FlattingJSONWIthCustomColumns from "./flatingJsonWithCustomColumns/FlattingJSONWIthCustomColumns";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <CertificateOfFitness />
+      <FlattingJSONWIthCustomColumns />
       {/* <GenericFormGenerator /> */}
     </div>
   );
