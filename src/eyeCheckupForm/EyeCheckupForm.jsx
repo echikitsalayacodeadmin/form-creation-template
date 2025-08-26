@@ -6,11 +6,11 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import GlobalCalciumDoctorConsultationFormTemplate from "./GlobalCalciumDoctorConsultationFormTemplate";
+import EyeCheckupFormTemplate from "./EyeCheckupFormTemplate";
 
-const GlobalCalciumDoctorConsultationForm = ({
-  corpId = "053026e4-0900-493e-b2da-3849981a16f5",
-  campCycleId = "316872",
+const EyeCheckupForm = ({
+  corpId = "65f1f848-1355-4e3b-bfe0-df818d2a4395",
+  campCycleId = "324297",
   fileType = "CONSOLIDATED_REPORT",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -25,29 +25,29 @@ const GlobalCalciumDoctorConsultationForm = ({
     console.log({ data });
     try {
       const pdfBlob = await pdf(
-        <GlobalCalciumDoctorConsultationFormTemplate data={data} />
+        <EyeCheckupFormTemplate data={data} fitStatus={"fit"} />
       ).toBlob();
 
-      const formData = new FormData();
-      formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
+      // const formData = new FormData();
+      // formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-      const result = await uploadFile(url, formData);
+      // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      // const result = await uploadFile(url, formData);
 
-      if (result && result.data) {
-        enqueueSnackbar("Successfully Uploaded PDF!", {
-          variant: "success",
-        });
-        setUploadedCount((prevCount) => prevCount + 1);
-      } else {
-        enqueueSnackbar("An error Occurred!", {
-          variant: "error",
-        });
-        setErrorEmpCount((prevCount) => prevCount + 1);
-        setErrorEmpIDs((prev) => [...prev, data?.empId]);
-      }
-      // const url = URL.createObjectURL(pdfBlob);
-      // window.open(url, "_blank");
+      // if (result && result.data) {
+      //   enqueueSnackbar("Successfully Uploaded PDF!", {
+      //     variant: "success",
+      //   });
+      //   setUploadedCount((prevCount) => prevCount + 1);
+      // } else {
+      //   enqueueSnackbar("An error Occurred!", {
+      //     variant: "error",
+      //   });
+      //   setErrorEmpCount((prevCount) => prevCount + 1);
+      //   setErrorEmpIDs((prev) => [...prev, data?.empId]);
+      // }
+      const url = URL.createObjectURL(pdfBlob);
+      window.open(url, "_blank");
     } catch (error) {
       console.error("Error generating/uploading PDF:", error);
       enqueueSnackbar("Error generating/uploading PDF", {
@@ -81,7 +81,7 @@ const GlobalCalciumDoctorConsultationForm = ({
   }, [corpId, campCycleId]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < 1; i++) {
       await generatePDF(list[i], i);
     }
   };
@@ -118,7 +118,7 @@ const GlobalCalciumDoctorConsultationForm = ({
           Error EmpID: {errorEmpIDs?.map((item) => item).join(",")}
         </div>{" "}
         <br />
-        {list.map((item, index) => (
+        {/* {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
@@ -128,14 +128,14 @@ const GlobalCalciumDoctorConsultationForm = ({
 
             <br />
           </div>
-        ))}
+        ))} */}
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <GlobalCalciumDoctorConsultationFormTemplate data={{}} />
+        <EyeCheckupFormTemplate data={{}} />
       </PDFViewer>
     </Fragment>
   );
 };
 
-export default GlobalCalciumDoctorConsultationForm;
+export default EyeCheckupForm;

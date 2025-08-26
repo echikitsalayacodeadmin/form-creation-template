@@ -6,16 +6,30 @@ import {
   Document,
   StyleSheet,
   Image,
+  Font,
 } from "@react-pdf/renderer";
 import dr_kunal_stamp_sign from "../../src/assets/images/dr_kunal_stamp_sign.png";
+import uncareheader from "../../src/assets/images/uncareheader.png";
+
+import TimeRoman from "../assets/fonts/Times-Roman.ttf";
+import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+
+Font.register({
+  family: "Times-Roman-Normal",
+  src: TimeRoman,
+});
+
+Font.register({
+  family: "Times-Roman-Bold",
+  src: TimeRomanBold,
+});
 
 // Common Styles
 const styles = StyleSheet.create({
   page: {
     fontSize: 11,
-    fontFamily: "Times-Roman",
+    fontFamily: "Times-Roman-Normal",
     lineHeight: 1.4,
-    marginTop: 30,
   },
   section: {
     marginBottom: 10,
@@ -73,15 +87,34 @@ const DottedField = ({ value, width = 100 }) => (
 const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
   <Document>
     <Page size="A4" style={styles.page} orientation="portrait">
+      <Image
+        src={uncareheader}
+        style={{
+          width: "100%",
+          height: 70,
+          marginBottom: 5,
+        }}
+      />
       <Text
         style={[
           styles.label,
-          { marginBottom: 30, marginHorizontal: 20, textAlign: "center" },
+          {
+            marginBottom: 0,
+            marginHorizontal: 20,
+            textAlign: "center",
+            fontFamily: "Times-Roman-Bold",
+          },
         ]}
       >
         Medical Examination Fitness Certificate
       </Text>
-
+      <View
+        style={{
+          borderBottom: "1pt solid #000",
+          marginTop: 10,
+          marginBottom: 5,
+        }}
+      />
       <View style={styles.section}>
         <View style={styles.row}>
           <Text style={styles.label}>Name of the Employee:</Text>
@@ -102,9 +135,25 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         </Text>
       </View>
 
-      <View style={{ borderBottom: "1pt solid #000", marginVertical: 10 }} />
+      <View
+        style={{
+          borderBottom: "1pt solid #000",
+          marginTop: 0,
+          marginBottom: 10,
+        }}
+      />
 
-      <Text style={[styles.label, { marginBottom: 30, marginHorizontal: 20 }]}>
+      <Text
+        style={[
+          styles.label,
+          {
+            marginBottom: 10,
+            marginHorizontal: 20,
+            textDecoration: "underline",
+            fontFamily: "Times-Roman-Bold",
+          },
+        ]}
+      >
         Present Health Complaints if any:
       </Text>
 
@@ -136,12 +185,17 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
 
       {/* Medications */}
       <View style={styles.section}>
-        <Text style={styles.bold}>Current Medications (If any):</Text>
+        <Text
+          style={[
+            styles.bold,
+            { textDecoration: "underline", fontFamily: "Times-Roman-Bold" },
+          ]}
+        >
+          Current Medications (If any):
+        </Text>
         <View
           style={{
             padding: 8,
-            minHeight: 30,
-            marginTop: 4,
           }}
         >
           <Text>
@@ -151,14 +205,36 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         </View>
       </View>
 
-      <View style={{ borderBottom: "1pt solid #000", marginVertical: 10 }} />
+      <View
+        style={{
+          borderBottom: "1pt solid #000",
+          marginBottom: 10,
+          marginTop: 0,
+        }}
+      />
 
       {/* Personal Habits */}
       <View style={styles.section}>
-        <Text style={styles.bold}>Personal Habit: </Text>
+        <Text
+          style={[
+            styles.bold,
+            { textDecoration: "underline", fontFamily: "Times-Roman-Bold" },
+          ]}
+        >
+          Personal Habit:{" "}
+        </Text>
         <View style={styles.row}>
           <Text style={styles.label}>Food Habit:</Text>
-          <DottedField value={data?.habitFoodNonVegYesNo} width={80} />
+          <DottedField
+            value={
+              data?.doctorConsultationFormData?.habitFoodNonVegYesNo === "Yes"
+                ? "Non Veg"
+                : "No"
+                ? "Veg"
+                : ""
+            }
+            width={80}
+          />
         </View>
 
         {/* Habit Table */}
@@ -256,12 +332,60 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           </Text>
         </View>
       </View>
+      <View style={[{ marginTop: 30, marginHorizontal: 20 }]}>
+        <View
+          style={{
+            borderWidth: 0.5,
+            borderColor: "#000000",
+            marginBottom: 10,
+          }}
+        />
+        <Text style={styles.label}>
+          Disclaimer: The findings are based on the medical tests and
+          examinations conducted on the date specified and are subject to
+          clinical correlation. This report is intended for occupational health
+          monitoring purposes only and should not be disclosed to unauthorized
+          persons.
+        </Text>
+      </View>
     </Page>
     {/* Second Page: General Examination, Systemic Examination, Final Impression */}
     <Page size="A4" style={styles.page}>
       {/* General Examination */}
+      <Image
+        src={uncareheader}
+        style={{
+          width: "100%",
+          height: 70,
+          marginBottom: 10,
+        }}
+      />
+      <Text
+        style={[
+          styles.label,
+          {
+            marginBottom: 0,
+            marginHorizontal: 20,
+            textAlign: "center",
+            fontFamily: "Times-Roman-Bold",
+          },
+        ]}
+      >
+        Medical Examination Fitness Certificate
+      </Text>
+      <View style={{ borderBottom: "1pt solid #000", marginVertical: 10 }} />
       <View style={[styles.section]}>
-        <Text style={[styles.bold, { textAlign: "center", marginBottom: 6 }]}>
+        <Text
+          style={[
+            styles.bold,
+            {
+              textAlign: "left",
+              textDecoration: "underline",
+              marginBottom: 6,
+              fontFamily: "Times-Roman-Bold",
+            },
+          ]}
+        >
           General Examination
         </Text>
         <View style={styles.row}>
@@ -294,7 +418,11 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         <Text
           style={[
             styles.bold,
-            { textDecoration: "underline", marginBottom: 4 },
+            {
+              textDecoration: "underline",
+              marginBottom: 4,
+              fontFamily: "Times-Roman-Bold",
+            },
           ]}
         >
           Inspection:
@@ -351,7 +479,17 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
       <View style={{ borderBottom: "1pt solid #000", marginVertical: 10 }} />
       {/* Systemic Examination */}
       <View style={[styles.section]}>
-        <Text style={[styles.bold, { textAlign: "center", marginBottom: 6 }]}>
+        <Text
+          style={[
+            styles.bold,
+            {
+              textAlign: "left",
+              textDecoration: "underline",
+              marginBottom: 6,
+              fontFamily: "Times-Roman-Bold",
+            },
+          ]}
+        >
           Systemic Examination
         </Text>
         <View style={styles.row}>
@@ -416,12 +554,15 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         <Text
           style={[
             styles.bold,
-            { textDecoration: "underline", marginBottom: 4 },
+            {
+              textDecoration: "underline",
+              marginBottom: 4,
+              fontFamily: "Times-Roman-Bold",
+            },
           ]}
         >
           Final Impression:
         </Text>
-
         <View
           style={{
             flexDirection: "row",
@@ -436,15 +577,29 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <Text style={styles.bold}>GLOBAL CALCIUM PVT LTD ,</Text>
           <Text>has been carefully examined by me on</Text>
           <DottedField width={120} value={data?.vitalsCreatedDate} />
-          <Text>, based on Medical Report & Physical</Text>
-          <Text>examination conducted,</Text>
-          <Text>He is found free from any</Text>
-          <Text>diseases and He is to work in the above-mentioned</Text>
+          <Text>, based on Medical Report & Physical examination </Text>
+          <Text>
+            conducted,{" "}
+            {data?.gender === "MALE"
+              ? "He"
+              : data?.gender === "FEMALE"
+              ? "She"
+              : "He/she"}{" "}
+            is found free from any
+          </Text>
+          <Text>
+            diseases and{" "}
+            {data?.gender === "MALE"
+              ? "he"
+              : data?.gender === "FEMALE"
+              ? "she"
+              : "he/she"}{" "}
+            is
+          </Text>
           <Text style={styles.bold}>Medically Fit</Text>
-          <Text>establishment.</Text>
+          <Text>to work in the above mentioned establishment.</Text>
         </View>
-
-        <View style={styles.row}>
+        <View style={[styles.row, { marginTop: 20 }]}>
           <Text style={styles.label}>Place: Hosur</Text>
         </View>
         <View style={[styles.row]}>
@@ -464,6 +619,22 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
               right: 100,
             }}
           />
+        </View>{" "}
+        <View style={[{ marginTop: 30 }]}>
+          <View
+            style={{
+              borderWidth: 0.5,
+              borderColor: "#000000",
+              marginBottom: 10,
+            }}
+          />
+          <Text style={styles.label}>
+            Disclaimer: The findings are based on the medical tests and
+            examinations conducted on the date specified and are subject to
+            clinical correlation. This report is intended for occupational
+            health monitoring purposes only and should not be disclosed to
+            unauthorized persons.
+          </Text>
         </View>
       </View>
     </Page>

@@ -62,12 +62,14 @@ import HindalcoMERForm from "./hindalcoMERForm/HindalcoMERForm";
 import CertificateOfFitness from "./certificateOfFitness/CertificateOfFitness";
 import HindalcoMERFormContractor from "./hindalcoMERForm/HindalcoMERFormContractor";
 import FlattingJSONWIthCustomColumns from "./flatingJsonWithCustomColumns/FlattingJSONWIthCustomColumns";
+import EyeCheckupForm from "./eyeCheckupForm/EyeCheckupForm";
+import VisionReportByOP from "./visionReportyOp/VisionReportByOP";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <FlattingJSONWIthCustomColumns />
+      <VisionReportByOP />
       {/* <GenericFormGenerator /> */}
     </div>
   );
