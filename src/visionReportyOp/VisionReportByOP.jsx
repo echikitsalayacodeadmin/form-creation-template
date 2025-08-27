@@ -1,11 +1,3 @@
-// import React from "react";
-
-// const VisionReportByOP = () => {
-//   return <div></div>;
-// };
-
-// export default VisionReportByOP;
-
 import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { useSnackbar } from "notistack";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
@@ -17,9 +9,9 @@ import { sortDataByName } from "../assets/utils";
 import VisionReportByOPTemplate from "./VisionReportByOPTemplate";
 
 const VisionReportByOP = ({
-  corpId = "65f1f848-1355-4e3b-bfe0-df818d2a4395",
-  campCycleId = "324297",
-  fileType = "CONSOLIDATED_REPORT",
+  corpId = "053026e4-0900-493e-b2da-3849981a16f5",
+  campCycleId = "316872",
+  fileType = "FORM_35",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -36,26 +28,26 @@ const VisionReportByOP = ({
         <VisionReportByOPTemplate data={data} fitStatus={"fit"} />
       ).toBlob();
 
-      // const formData = new FormData();
-      // formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
+      const formData = new FormData();
+      formData.append("file", pdfBlob, `${data?.empId}_FORM_35.pdf`);
 
-      // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-      // const result = await uploadFile(url, formData);
+      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
 
-      // if (result && result.data) {
-      //   enqueueSnackbar("Successfully Uploaded PDF!", {
-      //     variant: "success",
-      //   });
-      //   setUploadedCount((prevCount) => prevCount + 1);
-      // } else {
-      //   enqueueSnackbar("An error Occurred!", {
-      //     variant: "error",
-      //   });
-      //   setErrorEmpCount((prevCount) => prevCount + 1);
-      //   setErrorEmpIDs((prev) => [...prev, data?.empId]);
-      // }
-      const url = URL.createObjectURL(pdfBlob);
-      window.open(url, "_blank");
+      if (result && result.data) {
+        enqueueSnackbar("Successfully Uploaded PDF!", {
+          variant: "success",
+        });
+        setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+        enqueueSnackbar("An error Occurred!", {
+          variant: "error",
+        });
+        setErrorEmpCount((prevCount) => prevCount + 1);
+        setErrorEmpIDs((prev) => [...prev, data?.empId]);
+      }
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
     } catch (error) {
       console.error("Error generating/uploading PDF:", error);
       enqueueSnackbar("Error generating/uploading PDF", {
@@ -89,7 +81,7 @@ const VisionReportByOP = ({
   }, [corpId, campCycleId]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };
@@ -126,17 +118,17 @@ const VisionReportByOP = ({
           Error EmpID: {errorEmpIDs?.map((item) => item).join(",")}
         </div>{" "}
         <br />
-        {/* {list.map((item, index) => (
+        {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.consolidatedRUrl}>
-              <div key={index}>{item.consolidatedRUrl}</div>
+            <a href={item.form35Url}>
+              <div key={index}>{item.form35Url}</div>
             </a>
 
             <br />
           </div>
-        ))} */}
+        ))}
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>

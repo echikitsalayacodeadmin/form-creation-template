@@ -11,7 +11,7 @@ import EyeCheckupFormTemplate from "./EyeCheckupFormTemplate";
 const EyeCheckupForm = ({
   corpId = "65f1f848-1355-4e3b-bfe0-df818d2a4395",
   campCycleId = "324297",
-  fileType = "CONSOLIDATED_REPORT",
+  fileType = "FORM_35",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -28,26 +28,26 @@ const EyeCheckupForm = ({
         <EyeCheckupFormTemplate data={data} fitStatus={"fit"} />
       ).toBlob();
 
-      // const formData = new FormData();
-      // formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
+      const formData = new FormData();
+      formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
 
-      // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-      // const result = await uploadFile(url, formData);
+      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
 
-      // if (result && result.data) {
-      //   enqueueSnackbar("Successfully Uploaded PDF!", {
-      //     variant: "success",
-      //   });
-      //   setUploadedCount((prevCount) => prevCount + 1);
-      // } else {
-      //   enqueueSnackbar("An error Occurred!", {
-      //     variant: "error",
-      //   });
-      //   setErrorEmpCount((prevCount) => prevCount + 1);
-      //   setErrorEmpIDs((prev) => [...prev, data?.empId]);
-      // }
-      const url = URL.createObjectURL(pdfBlob);
-      window.open(url, "_blank");
+      if (result && result.data) {
+        enqueueSnackbar("Successfully Uploaded PDF!", {
+          variant: "success",
+        });
+        setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+        enqueueSnackbar("An error Occurred!", {
+          variant: "error",
+        });
+        setErrorEmpCount((prevCount) => prevCount + 1);
+        setErrorEmpIDs((prev) => [...prev, data?.empId]);
+      }
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
     } catch (error) {
       console.error("Error generating/uploading PDF:", error);
       enqueueSnackbar("Error generating/uploading PDF", {
@@ -63,7 +63,9 @@ const EyeCheckupForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
+        const temp = result?.data?.filter(
+          (item) => item.vitalsCreatedDate === "2025-08-08"
+        );
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -81,7 +83,7 @@ const EyeCheckupForm = ({
   }, [corpId, campCycleId]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };

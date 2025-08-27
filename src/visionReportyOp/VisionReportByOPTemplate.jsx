@@ -1,45 +1,3 @@
-// import React from "react";
-// import {
-//   Page,
-//   Text,
-//   View,
-//   Document,
-//   StyleSheet,
-//   Font,
-//   Image,
-// } from "@react-pdf/renderer";
-
-// import TimeRoman from "../assets/fonts/Times-Roman.ttf";
-// import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
-// import dr_kunal_stamp_sign from "../../src/assets/images/dr_kunal_stamp_sign.png";
-// import dr_rohit_solanki_stamp_sign from "../../src/assets/images/dr_rohit_solanki_stamp_sign.png";
-
-// Font.register({ family: "Times-Roman-Normal", src: TimeRoman });
-// Font.register({ family: "Times-Roman-Bold", src: TimeRomanBold });
-
-// const styles = StyleSheet.create({
-//   page: {
-//     fontSize: 11,
-//     fontFamily: "Times-Roman-Normal",
-//     lineHeight: 1.4,
-//     padding: 0,
-//   },
-// });
-
-// const DottedField = ({ width = 160, value }) => (
-//   <View style={[styles.dotted, { minWidth: width }]}>
-//     <Text>{value || " "}</Text>
-//   </View>
-// );
-
-// const VisionReportByOPTemplate = ({ data, fitStatus }) => (
-//   <Document>
-//     <Page size="A4" orientation="portrait" style={styles.page}></Page>
-//   </Document>
-// );
-
-// export default VisionReportByOPTemplate;
-
 import React from "react";
 import {
   Page,
@@ -48,8 +6,9 @@ import {
   Document,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
-
+import dr_rohit_solanki_stamp_sign from "../../src/assets/images/dr_rohit_solanki_stamp_sign.png";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 
@@ -129,20 +88,20 @@ const VisionReportByOPTemplate = ({ data }) => (
       {/* Basic Details */}
       <View style={styles.labelRow}>
         <Text style={styles.label}>Name:</Text>
-        <DottedField width={180} />
+        <DottedField width={180} value={data?.name} />
       </View>
       <View style={styles.labelRow}>
         <Text style={styles.label}>Age:</Text>
-        <DottedField width={180} />
+        <DottedField width={180} value={data?.age} />
         <Text style={{ marginLeft: 6 }}>yrs.</Text>
       </View>
       <View style={styles.labelRow}>
         <Text style={styles.label}>Gender:</Text>
-        <DottedField width={180} />
+        <DottedField width={180} value={data?.gender} />
       </View>
       <View style={styles.labelRow}>
         <Text style={styles.label}>Date of Examination:</Text>
-        <DottedField width={180} />
+        <DottedField width={180} value={data?.vitalsCreatedDate} />
       </View>
       <View style={styles.labelRow}>
         <Text style={styles.label}>
@@ -153,51 +112,106 @@ const VisionReportByOPTemplate = ({ data }) => (
 
       {/* Visual Acuity Table */}
       <View style={styles.table}>
-        <View style={[styles.tableRow, styles.tableHeader]}>
-          <Text style={[styles.tableCol, { flex: 2 }]}> </Text>
-          <Text style={[styles.tableCol, { flex: 2 }]}>
-            Unaided Vision {"\n"} (without Eyeglass)
-          </Text>
-          <Text style={[styles.tableCol, { flex: 2 }]}>
-            Aided Vision {"\n"} (with Eyeglass)
-          </Text>
-          <Text style={styles.tableCol}>Colour Vision</Text>
-          <Text style={[styles.tableCol, { flex: 2 }]}>
-            Cataract/ Ptosis/ {"\n"} Squint/ Keratoconus/ {"\n"} Pterygium etc.
+        {/* Row 1: Main Title across all columns */}
+        <View style={styles.tableRow}>
+          <Text
+            style={[
+              styles.tableCol,
+              { flex: 9, textAlign: "center", fontFamily: "Times-Roman-Bold" },
+            ]}
+          >
+            VISUAL ACUITY
           </Text>
         </View>
 
-        {/* Sub header row */}
+        {/* Row 2: Group Headers */}
+        <View style={styles.tableRow}>
+          <Text
+            style={[styles.tableCol, { flex: 2, paddingHorizontal: 1.5 }]}
+          ></Text>
+
+          <Text style={[styles.tableCol, { flex: 2 }]}>
+            Unaided Vision{"\n"}(without Eyeglass)
+          </Text>
+          <Text style={[styles.tableCol, { flex: 2 }]}>
+            Aided Vision{"\n"}(with Eyeglass)
+          </Text>
+          <Text style={[styles.tableCol, { flex: 1 }]}>Colour Vision</Text>
+          <Text style={[styles.tableCol, { flex: 2 }]}>
+            Cataract/ Ptosis/{"\n"}Squint/ Keratoconus/{"\n"}Pterygium etc.
+          </Text>
+        </View>
+
         <View style={styles.tableRow}>
           <Text style={[styles.tableCol, { flex: 2 }]}></Text>
           <Text style={styles.tableCol}>Distance Vision</Text>
           <Text style={styles.tableCol}>Near Vision</Text>
           <Text style={styles.tableCol}>Distance Vision</Text>
           <Text style={styles.tableCol}>Near Vision</Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
+          <Text style={[styles.tableCol, { flex: 1 }]}></Text>
+          <Text style={[styles.tableCol, { flex: 2 }]}></Text>
         </View>
 
         {/* Right Eye */}
         <View style={styles.tableRow}>
           <Text style={[styles.tableCol, { flex: 2 }]}>Right Eye</Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
+          <Text style={styles.tableCol}>{data?.farRightEyeSight || ""}</Text>
+          <Text style={styles.tableCol}>{data?.nearRightEyeSight || ""}</Text>
+          <Text style={styles.tableCol}>
+            {data?.farRightEyeSightWithGlasses || ""}
+          </Text>
+          <Text style={styles.tableCol}>
+            {data?.nearRightEyeSightWithGlasses || ""}
+          </Text>
+          <Text style={[styles.tableCol, { flex: 1 }]}>
+            {data?.colourBlindness?.toLowerCase() === "nad" ||
+            data?.colourBlindness === null
+              ? "Normal"
+              : data?.eyeTestVM?.colourBlindness
+                  ?.toLowerCase()
+                  ?.includes("r") ||
+                data?.eyeTestVM?.colourBlindness
+                  ?.toLowerCase()
+                  ?.includes("right")
+              ? "Abnormal"
+              : ""}
+          </Text>
+          <Text style={[styles.tableCol, { flex: 2 }]}>
+            {/* {`${data?.eyeTestVM?.cataract || ""}`}
+            {`${data?.eyeTestVM?.ptosis || ""}`}
+            {`${data?.eyeTestVM?.squintCheck || ""}`} */}
+          </Text>
         </View>
 
         {/* Left Eye */}
         <View style={styles.tableRow}>
           <Text style={[styles.tableCol, { flex: 2 }]}>Left Eye</Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
+          <Text style={styles.tableCol}>{data?.farLeftEyeSight || ""}</Text>
+          <Text style={styles.tableCol}>{data?.nearLeftEyeSight || ""}</Text>
+          <Text style={styles.tableCol}>
+            {data?.farLeftEyeSightWithGlasses || ""}
+          </Text>
+          <Text style={styles.tableCol}>
+            {data?.nearLeftEyeSightWithGlasses || ""}
+          </Text>
+          <Text style={[styles.tableCol, { flex: 1 }]}>
+            {data?.colourBlindness?.toLowerCase() === "nad" ||
+            data?.colourBlindness === null
+              ? "Normal"
+              : data?.eyeTestVM?.colourBlindness
+                  ?.toLowerCase()
+                  ?.includes("l") ||
+                data?.eyeTestVM?.colourBlindness
+                  ?.toLowerCase()
+                  ?.includes("left")
+              ? "Abnormal"
+              : ""}
+          </Text>
+          <Text style={[styles.tableCol, { flex: 2 }]}>
+            {/* {`${data?.eyeTestVM?.cataract || ""}`}
+            {`${data?.eyeTestVM?.ptosis || ""}`}
+            {`${data?.eyeTestVM?.squintCheck || ""}`} */}
+          </Text>
         </View>
       </View>
 
@@ -239,7 +253,18 @@ const VisionReportByOPTemplate = ({ data }) => (
       {/* Signature */}
       <View style={styles.signature}>
         <Text></Text>
-        <Text>Signature with Seal of {"\n"}Optometrist</Text>
+        <View>
+          <Text>Signature with Seal of {"\n"}Optometrist</Text>
+          <Image
+            src={dr_rohit_solanki_stamp_sign}
+            style={{
+              width: 90,
+              height: 56,
+              alignSelf: "center",
+              marginTop: 6,
+            }}
+          />
+        </View>
       </View>
     </Page>
   </Document>
