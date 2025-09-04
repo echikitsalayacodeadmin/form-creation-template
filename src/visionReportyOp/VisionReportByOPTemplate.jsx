@@ -87,6 +87,10 @@ const VisionReportByOPTemplate = ({ data }) => (
 
       {/* Basic Details */}
       <View style={styles.labelRow}>
+        <Text style={styles.label}>Employee ID:</Text>
+        <DottedField width={180} value={data?.empId} />
+      </View>
+      <View style={styles.labelRow}>
         <Text style={styles.label}>Name:</Text>
         <DottedField width={180} value={data?.name} />
       </View>
@@ -107,7 +111,7 @@ const VisionReportByOPTemplate = ({ data }) => (
         <Text style={styles.label}>
           Past Medical History related to Vision:
         </Text>
-        <DottedField width={180} />
+        <DottedField width={180} value={"Nil"} />
       </View>
 
       {/* Visual Acuity Table */}
@@ -119,7 +123,12 @@ const VisionReportByOPTemplate = ({ data }) => (
           <Text
             style={[
               styles.tableCol,
-              { flex: 9, textAlign: "center", fontFamily: "Times-Roman-Bold" },
+              {
+                flex: 9,
+                textAlign: "center",
+                fontFamily: "Times-Roman-Bold",
+                borderRight: 0,
+              },
             ]}
           >
             VISUAL ACUITY
@@ -202,21 +211,18 @@ const VisionReportByOPTemplate = ({ data }) => (
           <Text
             style={[
               styles.tableCol,
-              { flex: 1, textAlign: "center", justifyContent: "center" },
+              {
+                flex: 3,
+                textAlign: "center",
+                justifyContent: "center",
+                borderRight: 0,
+              },
             ]}
           >
-            Colour{"\n"}Vision
+            Colour Vision
           </Text>
 
           {/* Other conditions (spans 2 rows) */}
-          <Text
-            style={[
-              styles.tableCol,
-              { flex: 2, textAlign: "center", justifyContent: "center" },
-            ]}
-          >
-            Cataract/ Ptosis/{"\n"}Squint/ Keratoconus/{"\n"}Pterygium etc.
-          </Text>
         </View>
 
         {/* Right Eye */}
@@ -227,39 +233,32 @@ const VisionReportByOPTemplate = ({ data }) => (
           {/* Unaided Vision (2 sub-cells) */}
           <View style={{ flex: 2, flexDirection: "row" }}>
             <Text style={[styles.tableCol, { flex: 1 }]}>
-              {data?.farRightEyeSight || ""}
+              {data?.farRightEyeSight || "-"}
             </Text>
             <Text style={[styles.tableCol, { flex: 1 }]}>
-              {data?.nearRightEyeSight || ""}
+              {data?.nearRightEyeSight || "-"}
             </Text>
           </View>
 
           {/* Aided Vision (2 sub-cells) */}
           <View style={{ flex: 2, flexDirection: "row" }}>
             <Text style={[styles.tableCol, { flex: 1 }]}>
-              {data?.farRightEyeSightWithGlasses || ""}
+              {data?.farRightEyeSightWithGlasses || "-"}
             </Text>
             <Text style={[styles.tableCol, { flex: 1 }]}>
-              {data?.nearRightEyeSightWithGlasses || ""}
+              {data?.nearRightEyeSightWithGlasses || "-"}
             </Text>
           </View>
 
           {/* Colour Vision */}
-          <Text style={[styles.tableCol, { flex: 1 }]}>
+          <Text style={[styles.tableCol, { flex: 3, borderRight: 0 }]}>
             {data?.colourVision?.toLowerCase() === "nad"
               ? "Abnormal"
               : data?.colourVision?.toLowerCase()?.includes("r") ||
                 data?.colourVision?.toLowerCase()?.includes("right") ||
                 data?.colourVision?.toLowerCase()?.includes("both")
               ? "Normal"
-              : ""}
-          </Text>
-
-          {/* Other conditions */}
-          <Text style={[styles.tableCol, { flex: 2 }]}>
-            {/* {`${data?.eyeTestVM?.cataract || ""}`}
-      {`${data?.eyeTestVM?.ptosis || ""}`}
-      {`${data?.eyeTestVM?.squintCheck || ""}`} */}
+              : "-"}
           </Text>
         </View>
 
@@ -273,45 +272,43 @@ const VisionReportByOPTemplate = ({ data }) => (
           {/* Unaided Vision (2 sub-cells) */}
           <View style={{ flex: 2, flexDirection: "row" }}>
             <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
-              {data?.farLeftEyeSight || ""}
+              {data?.farLeftEyeSight || "-"}
             </Text>
             <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
-              {data?.nearLeftEyeSight || ""}
+              {data?.nearLeftEyeSight || "-"}
             </Text>
           </View>
 
           {/* Aided Vision (2 sub-cells) */}
           <View style={{ flex: 2, flexDirection: "row" }}>
             <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
-              {data?.farLeftEyeSightWithGlasses || ""}
+              {data?.farLeftEyeSightWithGlasses || "-"}
             </Text>
             <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
-              {data?.nearLeftEyeSightWithGlasses || ""}
+              {data?.nearLeftEyeSightWithGlasses || "-"}
             </Text>
           </View>
 
           {/* Colour Vision */}
-          <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+          <Text
+            style={[
+              styles.tableCol,
+              { flex: 3, borderBottom: 0, borderRight: 0 },
+            ]}
+          >
             {data?.colourVision?.toLowerCase() === "nad"
               ? "Abnormal"
               : data?.colourVision?.toLowerCase()?.includes("l") ||
                 data?.colourVision?.toLowerCase()?.includes("left") ||
                 data?.colourVision?.toLowerCase()?.includes("both")
               ? "Normal"
-              : ""}
-          </Text>
-
-          {/* Other conditions */}
-          <Text style={[styles.tableCol, { flex: 2, borderBottom: 0 }]}>
-            {/* {`${data?.eyeTestVM?.cataract || ""}`}
-      {`${data?.eyeTestVM?.ptosis || ""}`}
-      {`${data?.eyeTestVM?.squintCheck || ""}`} */}
+              : "-"}
           </Text>
         </View>
       </View>
 
       {/* Prescription Table */}
-      <Text style={styles.sectionTitle}>
+      {/* <Text style={styles.sectionTitle}>
         PRESCRIPTION FOR EYEGLASS – ONLY IF GLASS PRESCRIBED
       </Text>
       <View style={styles.table}>
@@ -320,7 +317,7 @@ const VisionReportByOPTemplate = ({ data }) => (
           <Text style={styles.tableCol}>SPH</Text>
           <Text style={styles.tableCol}>CYL</Text>
           <Text style={styles.tableCol}>AXIS</Text>
-          <Text style={styles.tableCol}>ADD</Text>
+          <Text style={[styles.tableCol, { borderRight: 0 }]}>ADD</Text>
         </View>
 
         <View style={styles.tableRow}>
@@ -328,7 +325,7 @@ const VisionReportByOPTemplate = ({ data }) => (
           <Text style={styles.tableCol}></Text>
           <Text style={styles.tableCol}></Text>
           <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
+          <Text style={[styles.tableCol, { borderRight: 0 }]}></Text>
         </View>
 
         <View style={styles.tableRow}>
@@ -336,13 +333,18 @@ const VisionReportByOPTemplate = ({ data }) => (
           <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
           <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
           <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
-          <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
+          <Text
+            style={[styles.tableCol, { borderBottom: 0, borderRight: 0 }]}
+          ></Text>
         </View>
-      </View>
+      </View> */}
 
       {/* Impression */}
-      <View style={{ marginTop: 20 }}>
-        <Text style={styles.sectionTitle}>Impression:</Text>
+      <View style={{ marginTop: 20, flexDirection: "row", gap: 10 }}>
+        <Text style={styles.sectionTitle}>Impression: </Text>
+        <Text style={[{ marginTop: 12, marginBottom: 6 }]}>
+          Fit for employment
+        </Text>
       </View>
 
       {/* Signature */}
