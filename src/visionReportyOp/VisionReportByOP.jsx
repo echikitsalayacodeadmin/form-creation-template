@@ -63,7 +63,8 @@ const VisionReportByOP = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
+        const temp = result?.data;
+
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -120,7 +121,9 @@ const VisionReportByOP = ({
         <br />
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+            <div
+              key={index}
+            >{`${index}- ${item.empId} ${item.name} ${item?.colourVision}`}</div>
 
             <a href={item.form35Url}>
               <div key={index}>{item.form35Url}</div>

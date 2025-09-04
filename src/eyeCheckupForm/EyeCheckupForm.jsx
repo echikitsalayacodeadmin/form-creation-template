@@ -63,9 +63,7 @@ const EyeCheckupForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter(
-          (item) => item.vitalsCreatedDate === "2025-08-08"
-        );
+        const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -120,17 +118,17 @@ const EyeCheckupForm = ({
           Error EmpID: {errorEmpIDs?.map((item) => item).join(",")}
         </div>{" "}
         <br />
-        {/* {list.map((item, index) => (
+        {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.consolidatedRUrl}>
-              <div key={index}>{item.consolidatedRUrl}</div>
+            <a href={item.form35Url}>
+              <div key={index}>{item.form35Url}</div>
             </a>
 
             <br />
           </div>
-        ))} */}
+        ))}
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>

@@ -111,6 +111,8 @@ const VisionReportByOPTemplate = ({ data }) => (
       </View>
 
       {/* Visual Acuity Table */}
+      {/* Visual Acuity Table */}
+      {/* Visual Acuity Table */}
       <View style={styles.table}>
         {/* Row 1: Main Title across all columns */}
         <View style={styles.tableRow}>
@@ -124,93 +126,186 @@ const VisionReportByOPTemplate = ({ data }) => (
           </Text>
         </View>
 
-        {/* Row 2: Group Headers */}
+        {/* Row 2 + Row 3 merged with nested layout */}
         <View style={styles.tableRow}>
+          {/* First empty column (spans 2 rows) */}
           <Text
-            style={[styles.tableCol, { flex: 2, paddingHorizontal: 1.5 }]}
+            style={[
+              styles.tableCol,
+              { flex: 2, textAlign: "center", justifyContent: "center" },
+            ]}
           ></Text>
 
-          <Text style={[styles.tableCol, { flex: 2 }]}>
-            Unaided Vision{"\n"}(without Eyeglass)
+          {/* Unaided Vision (with subheaders) */}
+          <View
+            style={[
+              styles.tableCol,
+              { flex: 2, flexDirection: "column", padding: 0 },
+            ]}
+          >
+            <Text
+              style={{
+                borderBottom: "1px solid #000",
+                padding: 4,
+                textAlign: "center",
+              }}
+            >
+              Unaided Vision{"\n"}(without Eyeglass)
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+                Distance{"\n"}Vision
+              </Text>
+              <Text
+                style={[
+                  styles.tableCol,
+                  { flex: 1, borderBottom: 0, borderRight: 0 },
+                ]}
+              >
+                Near{"\n"}Vision
+              </Text>
+            </View>
+          </View>
+
+          {/* Aided Vision (with subheaders) */}
+          <View
+            style={[
+              styles.tableCol,
+              { flex: 2, flexDirection: "column", padding: 0 },
+            ]}
+          >
+            <Text
+              style={{
+                borderBottom: "1px solid #000",
+                padding: 4,
+                textAlign: "center",
+              }}
+            >
+              Aided Vision{"\n"}(with Eyeglass)
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+                Distance{"\n"}Vision
+              </Text>
+              <Text
+                style={[
+                  styles.tableCol,
+                  { flex: 1, borderBottom: 0, borderRight: 0 },
+                ]}
+              >
+                Near{"\n"}Vision
+              </Text>
+            </View>
+          </View>
+
+          {/* Colour Vision (spans 2 rows) */}
+          <Text
+            style={[
+              styles.tableCol,
+              { flex: 1, textAlign: "center", justifyContent: "center" },
+            ]}
+          >
+            Colour{"\n"}Vision
           </Text>
-          <Text style={[styles.tableCol, { flex: 2 }]}>
-            Aided Vision{"\n"}(with Eyeglass)
-          </Text>
-          <Text style={[styles.tableCol, { flex: 1 }]}>Colour Vision</Text>
-          <Text style={[styles.tableCol, { flex: 2 }]}>
+
+          {/* Other conditions (spans 2 rows) */}
+          <Text
+            style={[
+              styles.tableCol,
+              { flex: 2, textAlign: "center", justifyContent: "center" },
+            ]}
+          >
             Cataract/ Ptosis/{"\n"}Squint/ Keratoconus/{"\n"}Pterygium etc.
           </Text>
         </View>
 
-        <View style={styles.tableRow}>
-          <Text style={[styles.tableCol, { flex: 2 }]}></Text>
-          <Text style={styles.tableCol}>Distance Vision</Text>
-          <Text style={styles.tableCol}>Near Vision</Text>
-          <Text style={styles.tableCol}>Distance Vision</Text>
-          <Text style={styles.tableCol}>Near Vision</Text>
-          <Text style={[styles.tableCol, { flex: 1 }]}></Text>
-          <Text style={[styles.tableCol, { flex: 2 }]}></Text>
-        </View>
-
         {/* Right Eye */}
         <View style={styles.tableRow}>
+          {/* First column */}
           <Text style={[styles.tableCol, { flex: 2 }]}>Right Eye</Text>
-          <Text style={styles.tableCol}>{data?.farRightEyeSight || ""}</Text>
-          <Text style={styles.tableCol}>{data?.nearRightEyeSight || ""}</Text>
-          <Text style={styles.tableCol}>
-            {data?.farRightEyeSightWithGlasses || ""}
-          </Text>
-          <Text style={styles.tableCol}>
-            {data?.nearRightEyeSightWithGlasses || ""}
-          </Text>
+
+          {/* Unaided Vision (2 sub-cells) */}
+          <View style={{ flex: 2, flexDirection: "row" }}>
+            <Text style={[styles.tableCol, { flex: 1 }]}>
+              {data?.farRightEyeSight || ""}
+            </Text>
+            <Text style={[styles.tableCol, { flex: 1 }]}>
+              {data?.nearRightEyeSight || ""}
+            </Text>
+          </View>
+
+          {/* Aided Vision (2 sub-cells) */}
+          <View style={{ flex: 2, flexDirection: "row" }}>
+            <Text style={[styles.tableCol, { flex: 1 }]}>
+              {data?.farRightEyeSightWithGlasses || ""}
+            </Text>
+            <Text style={[styles.tableCol, { flex: 1 }]}>
+              {data?.nearRightEyeSightWithGlasses || ""}
+            </Text>
+          </View>
+
+          {/* Colour Vision */}
           <Text style={[styles.tableCol, { flex: 1 }]}>
-            {data?.colourBlindness?.toLowerCase() === "nad" ||
-            data?.colourBlindness === null
-              ? "Normal"
-              : data?.eyeTestVM?.colourBlindness
-                  ?.toLowerCase()
-                  ?.includes("r") ||
-                data?.eyeTestVM?.colourBlindness
-                  ?.toLowerCase()
-                  ?.includes("right")
+            {data?.colourVision?.toLowerCase() === "nad"
               ? "Abnormal"
+              : data?.colourVision?.toLowerCase()?.includes("r") ||
+                data?.colourVision?.toLowerCase()?.includes("right") ||
+                data?.colourVision?.toLowerCase()?.includes("both")
+              ? "Normal"
               : ""}
           </Text>
+
+          {/* Other conditions */}
           <Text style={[styles.tableCol, { flex: 2 }]}>
             {/* {`${data?.eyeTestVM?.cataract || ""}`}
-            {`${data?.eyeTestVM?.ptosis || ""}`}
-            {`${data?.eyeTestVM?.squintCheck || ""}`} */}
+      {`${data?.eyeTestVM?.ptosis || ""}`}
+      {`${data?.eyeTestVM?.squintCheck || ""}`} */}
           </Text>
         </View>
 
         {/* Left Eye */}
         <View style={styles.tableRow}>
-          <Text style={[styles.tableCol, { flex: 2 }]}>Left Eye</Text>
-          <Text style={styles.tableCol}>{data?.farLeftEyeSight || ""}</Text>
-          <Text style={styles.tableCol}>{data?.nearLeftEyeSight || ""}</Text>
-          <Text style={styles.tableCol}>
-            {data?.farLeftEyeSightWithGlasses || ""}
+          {/* First column */}
+          <Text style={[styles.tableCol, { flex: 2, borderBottom: 0 }]}>
+            Left Eye
           </Text>
-          <Text style={styles.tableCol}>
-            {data?.nearLeftEyeSightWithGlasses || ""}
-          </Text>
-          <Text style={[styles.tableCol, { flex: 1 }]}>
-            {data?.colourBlindness?.toLowerCase() === "nad" ||
-            data?.colourBlindness === null
-              ? "Normal"
-              : data?.eyeTestVM?.colourBlindness
-                  ?.toLowerCase()
-                  ?.includes("l") ||
-                data?.eyeTestVM?.colourBlindness
-                  ?.toLowerCase()
-                  ?.includes("left")
+
+          {/* Unaided Vision (2 sub-cells) */}
+          <View style={{ flex: 2, flexDirection: "row" }}>
+            <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+              {data?.farLeftEyeSight || ""}
+            </Text>
+            <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+              {data?.nearLeftEyeSight || ""}
+            </Text>
+          </View>
+
+          {/* Aided Vision (2 sub-cells) */}
+          <View style={{ flex: 2, flexDirection: "row" }}>
+            <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+              {data?.farLeftEyeSightWithGlasses || ""}
+            </Text>
+            <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+              {data?.nearLeftEyeSightWithGlasses || ""}
+            </Text>
+          </View>
+
+          {/* Colour Vision */}
+          <Text style={[styles.tableCol, { flex: 1, borderBottom: 0 }]}>
+            {data?.colourVision?.toLowerCase() === "nad"
               ? "Abnormal"
+              : data?.colourVision?.toLowerCase()?.includes("l") ||
+                data?.colourVision?.toLowerCase()?.includes("left") ||
+                data?.colourVision?.toLowerCase()?.includes("both")
+              ? "Normal"
               : ""}
           </Text>
-          <Text style={[styles.tableCol, { flex: 2 }]}>
+
+          {/* Other conditions */}
+          <Text style={[styles.tableCol, { flex: 2, borderBottom: 0 }]}>
             {/* {`${data?.eyeTestVM?.cataract || ""}`}
-            {`${data?.eyeTestVM?.ptosis || ""}`}
-            {`${data?.eyeTestVM?.squintCheck || ""}`} */}
+      {`${data?.eyeTestVM?.ptosis || ""}`}
+      {`${data?.eyeTestVM?.squintCheck || ""}`} */}
           </Text>
         </View>
       </View>
@@ -237,11 +332,11 @@ const VisionReportByOPTemplate = ({ data }) => (
         </View>
 
         <View style={styles.tableRow}>
-          <Text style={styles.tableCol}>LEFT EYE</Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
-          <Text style={styles.tableCol}></Text>
+          <Text style={[styles.tableCol, { borderBottom: 0 }]}>LEFT EYE</Text>
+          <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
+          <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
+          <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
+          <Text style={[styles.tableCol, { borderBottom: 0 }]}></Text>
         </View>
       </View>
 

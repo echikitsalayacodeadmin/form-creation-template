@@ -68,6 +68,9 @@ import macaleod from "../../src/assets/images/macaleod.png";
 // import companyLogo from "../assets/images/macleods_logo.png";
 import dr_kunal_stamp_sign from "../../src/assets/images/dr_kunal_stamp_sign.png";
 import dr_rohit_solanki_stamp_sign from "../../src/assets/images/dr_rohit_solanki_stamp_sign.png";
+import rohitSign from "../../src/assets/images/rohitSign.png";
+import rohitSeal from "../../src/assets/images/rohitSeal.png";
+import dayjs from "dayjs";
 
 Font.register({ family: "Times-Roman-Normal", src: TimeRoman });
 Font.register({ family: "Times-Roman-Bold", src: TimeRomanBold });
@@ -112,7 +115,8 @@ const styles = StyleSheet.create({
 
   // Dotted underline (only for DECLARATION area)
   dotted: {
-    borderBottom: "1pt dotted #000",
+    textDecoration: "underline",
+    textDecorationStyle: "dotted",
     minWidth: 100,
     height: 12,
     marginLeft: 6,
@@ -128,12 +132,12 @@ const styles = StyleSheet.create({
 });
 
 const DottedField = ({ width = 160, value }) => (
-  <View style={[styles.dotted, { minWidth: width }]}>
-    <Text>{value || " "}</Text>
-  </View>
+  <Text style={[styles.dotted, { minWidth: width, color: "#000000" }]}>
+    {value || " "}
+  </Text>
 );
 
-const EyeCheckupFormTemplate = ({ data, fitStatus }) => (
+const EyeCheckupFormTemplate = ({ data, fitStatus = "fit" }) => (
   <Document>
     <Page size="A4" orientation="portrait" style={styles.page}>
       <View style={styles.frame}>
@@ -207,7 +211,9 @@ const EyeCheckupFormTemplate = ({ data, fitStatus }) => (
               <Text>Date :</Text>
             </View>
             <View style={styles.colNB}>
-              <Text>{data?.vitalsCreatedDate || ""}</Text>
+              <Text>
+                {dayjs(data?.vitalsCreatedDate).format("DD/MM/YYYY") || ""}
+              </Text>
             </View>
           </View>
           <View style={styles.row}>
@@ -220,22 +226,22 @@ const EyeCheckupFormTemplate = ({ data, fitStatus }) => (
             <View style={styles.col}>
               <Text>Gender :</Text>
             </View>
-            <View style={styles.colNB}>
-              <Text>{data?.gender || ""}</Text>
+            <View style={[styles.colNB, { textTransform: "capitalize" }]}>
+              <Text>{data?.gender?.toLowerCase() || ""}</Text>
             </View>
           </View>
           <View style={styles.row}>
             <View style={styles.col}>
               <Text>Department :</Text>
             </View>
-            <View style={styles.col}>
-              <Text>{data?.department || ""}</Text>
+            <View style={[styles.col, { textTransform: "capitalize" }]}>
+              <Text>{data?.department?.toLowerCase() || ""}</Text>
             </View>
             <View style={styles.col}>
               <Text>Section / Area :</Text>
             </View>
-            <View style={styles.colNB}>
-              <Text>{data?.designation || ""}</Text>
+            <View style={[styles.colNB, { textTransform: "capitalize" }]}>
+              <Text>{data?.designation?.toLowerCase() || ""}</Text>
             </View>
           </View>
 
@@ -283,7 +289,10 @@ const EyeCheckupFormTemplate = ({ data, fitStatus }) => (
 
           <View style={[styles.row, { height: 72 }]}>
             <View style={styles.colNB}>
-              <Text>Colour Vision ( ISHIHARA’S CHART ) :</Text>
+              <Text>
+                Colour Vision ( ISHIHARA’S CHART ) :{" "}
+                {data?.colourVision || "NAD"}
+              </Text>
             </View>
           </View>
         </View>
@@ -316,33 +325,51 @@ const EyeCheckupFormTemplate = ({ data, fitStatus }) => (
               >
                 <Text>
                   After examining{" "}
-                  {data?.gender === "MALE"
+                  {data?.gender?.toLowerCase() === "male"
                     ? "Mr."
-                    : data?.gender === "FEMALE"
+                    : data?.gender?.toLowerCase() === "female"
                     ? "Ms."
-                    : ""}
+                    : "Mr./Ms"}{" "}
+                  <Text
+                    style={[styles.dotted, { minWidth: 130, color: "#000000" }]}
+                  >
+                    {data?.name || ""}{" "}
+                  </Text>
+                  <Text style={{ marginLeft: 6 }}>
+                    I hereby certify that{" "}
+                    {data?.gender?.toLowerCase() === "male"
+                      ? "he"
+                      : data?.gender?.toLowerCase() === "female"
+                      ? "she"
+                      : "he/she"}{" "}
+                    is{" "}
+                    <Text
+                      style={[
+                        styles.dotted,
+                        { minWidth: 130, color: "#000000" },
+                      ]}
+                    >
+                      {fitStatus || "fit"}{" "}
+                    </Text>
+                  </Text>
+                  <Text>for Job.</Text>
                 </Text>
-                <DottedField width={220} value={data?.name} />
               </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ marginLeft: 6 }}>
-                  I hereby certify that{" "}
-                  {data?.gender === "MALE"
-                    ? "he"
-                    : data?.gender === "FEMALE"
-                    ? "she"
-                    : ""}{" "}
-                  is {fitStatus || "fit"} for
-                </Text>
-              </View>
-              <Text>Job.</Text>
             </View>
           </View>
 
           {/* Signature boxes */}
           <View style={[styles.row, { height: 72 }]}>
             <View style={styles.col}>
-              <View style={{ height: 46 }} />
+              <Image
+                src={rohitSign}
+                style={{
+                  width: 90,
+                  height: 46,
+                  alignSelf: "center",
+                  marginTop: 6,
+                }}
+              />
               <Text style={[styles.center, styles.bold]}>
                 Certified By Doctor{"\n"}
                 <Text style={styles.small}>(Signature and Date)</Text>
@@ -362,7 +389,7 @@ const EyeCheckupFormTemplate = ({ data, fitStatus }) => (
             <View style={styles.colNB}>
               <Text>Seal of certified doctor :</Text>
               <Image
-                src={dr_rohit_solanki_stamp_sign}
+                src={rohitSeal}
                 style={{
                   width: 90,
                   height: 56,
