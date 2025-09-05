@@ -234,14 +234,14 @@ const EyeCheckupFormTemplate = ({ data, fitStatus = "fit" }) => (
             <View style={styles.col}>
               <Text>Department :</Text>
             </View>
-            <View style={[styles.col, { textTransform: "capitalize" }]}>
-              <Text>{data?.department?.toLowerCase() || ""}</Text>
+            <View style={[styles.col]}>
+              <Text>{data?.department?.toUpperCase() || ""}</Text>
             </View>
             <View style={styles.col}>
               <Text>Section / Area :</Text>
             </View>
-            <View style={[styles.colNB, { textTransform: "capitalize" }]}>
-              <Text>{data?.designation?.toLowerCase() || ""}</Text>
+            <View style={[styles.colNB]}>
+              <Text>{data?.designation?.toUpperCase() || ""}</Text>
             </View>
           </View>
 
