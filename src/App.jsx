@@ -64,12 +64,13 @@ import HindalcoMERFormContractor from "./hindalcoMERForm/HindalcoMERFormContract
 import FlattingJSONWIthCustomColumns from "./flatingJsonWithCustomColumns/FlattingJSONWIthCustomColumns";
 import EyeCheckupForm from "./eyeCheckupForm/EyeCheckupForm";
 import VisionReportByOP from "./visionReportyOp/VisionReportByOP";
+import BirlaOpusForm39 from "./birlaOpus/BirlaOpusForm39";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <UnichemAnnexure />
+      <BirlaOpusForm39 />
       {/* <GenericFormGenerator /> */}
     </div>
   );

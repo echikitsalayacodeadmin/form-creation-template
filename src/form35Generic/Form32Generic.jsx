@@ -59,7 +59,12 @@ const Form32Generic = () => {
           ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
           : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.";
       const pdfBlob = await pdf(
-        <Form32Template data={data} fitText={fitText} signature={signature} />
+        <Form32Template
+          data={data}
+          fitText={fitText}
+          signature={signature}
+          company="ACG Capsules Pithampur"
+        />
       ).toBlob();
 
       const formData = new FormData();
