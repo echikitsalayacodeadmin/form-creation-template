@@ -433,6 +433,7 @@ import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import rohitSign from "../../src/assets/images/rohitSign.png";
 import rohitSeal from "../../src/assets/images/rohitSeal.png";
+import dayjs from "dayjs";
 
 Font.register({ family: "Times-Roman-Normal", src: TimeRoman });
 Font.register({ family: "Times-Roman-Bold", src: TimeRomanBold });
@@ -686,7 +687,11 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
             ]}
           >
             <Text style={styles.tableCell}>
-              {data?.vitalsCreatedDate || ""}
+              {data?.vitalsCreatedDate
+                ? dayjs(data?.vitalsCreatedDate, "YYYY-MM-DD").format(
+                    "DD/MM/YY"
+                  )
+                : ""}
             </Text>
           </View>
         </View>
@@ -792,8 +797,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
             <Text style={styles.tableCell}>Right Eye With Glasses :</Text>
           </View>
           <View style={[styles.tableCol, { width: "25%" }]}>
-            <Text>Far (R): {data?.farRightEyeSightWithGlasses || "No"}</Text>
-            <Text>Near (R): {data?.nearRightEyeSightWithGlasses || "No"}</Text>
+            <Text>Far (R): {data?.farRightEyeSightWithGlasses || "6/6"}</Text>
+            <Text>Near (R): {data?.nearRightEyeSightWithGlasses || "N/6"}</Text>
           </View>
           <View
             style={[styles.tableCol, { width: "25%" }, styles.tableColHeader]}
@@ -803,8 +808,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
           <View
             style={[styles.tableCol, { width: "25%", borderRightWidth: 0 }]}
           >
-            <Text>Far (R): {data?.farRightEyeSight || ""}</Text>
-            <Text>Near (R): {data?.nearRightEyeSight || ""}</Text>
+            <Text>Far (R): {data?.farRightEyeSight || "6/6"}</Text>
+            <Text>Near (R): {data?.nearRightEyeSight || "N/6"}</Text>
           </View>
         </View>
         <View style={[styles.tableRow, { borderBottomWidth: 0 }]}>
@@ -820,8 +825,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
           <View
             style={[styles.tableCol, { width: "25%", borderBottomWidth: 0 }]}
           >
-            <Text>Far (L): {data?.farLeftEyeSightWithGlasses || "No"}</Text>
-            <Text>Near (L): {data?.nearLeftEyeSightWithGlasses || "No"}</Text>
+            <Text>Far (L): {data?.farLeftEyeSightWithGlasses || "6/6"}</Text>
+            <Text>Near (L): {data?.nearLeftEyeSightWithGlasses || "N/6"}</Text>
           </View>
           <View
             style={[
@@ -838,8 +843,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
               { width: "25%", borderRightWidth: 0, borderBottomWidth: 0 },
             ]}
           >
-            <Text>Far (L): {data?.farLeftEyeSight || "No"}</Text>
-            <Text>Near (L): {data?.nearLeftEyeSight || "No"}</Text>
+            <Text>Far (L): {data?.farLeftEyeSight || "6/6"}</Text>
+            <Text>Near (L): {data?.nearLeftEyeSight || "N/6"}</Text>
           </View>
         </View>
       </View>
@@ -933,50 +938,25 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
           <View
             style={[
               styles.tableCol,
-              { width: "65%", borderRightWidth: 0, borderBottomWidth: 0 },
+              {
+                width: "65%",
+                borderRightWidth: 0,
+                borderBottomWidth: 0,
+              },
             ]}
           >
-            {/* Name line */}
-            <Text style={styles.tableCell}>
+            <Text
+              style={[
+                styles.tableCell,
+                { flexDirection: "row", flexWrap: "wrap" },
+              ]}
+            >
               After examining Mr. / Mrs. / Ms{" "}
-              <Text
-                style={[styles.dotted, { minWidth: 130, color: "#000000" }]}
-              >
+              <Text style={{ textDecoration: "underline" }}>
                 {data?.name || ""}
-              </Text>
-            </Text>
-
-            {/* Fit/Unfit line */}
-            <Text style={[styles.tableCell, { marginTop: 10 }]}>
-              I hereby certify that he / she is{" "}
-              <Text
-                style={[
-                  styles.dotted,
-                  {
-                    color: "#000000",
-                    textDecoration: unfit ? "line-through" : "none",
-                  },
-                ]}
-              >
-                fit
               </Text>{" "}
-              /{" "}
-              <Text
-                style={[
-                  styles.dotted,
-                  {
-                    color: "#000000",
-                    textDecoration: !unfit ? "line-through" : "none",
-                  },
-                ]}
-              >
-                unfit
-              </Text>{" "}
-              for
+              I hereby certify that he / she is fit / unfit for Job.
             </Text>
-
-            {/* Job line */}
-            <Text style={[styles.tableCell, { marginTop: 10 }]}>Job.</Text>
           </View>
         </View>
       </View>

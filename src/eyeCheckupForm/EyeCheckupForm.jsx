@@ -63,7 +63,7 @@ const EyeCheckupForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
+        const temp = result?.data?.filter((item) => item.empId === "H035761");
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
