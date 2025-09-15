@@ -160,7 +160,12 @@ const UnichemAnnexure = ({
   </div>
   <div style="width: 20%;">
    <p>Date:- ${
-     data?.cholestrolData?.["SAMPLE_REPORTED_DATE"]?.split("  ")[0] || ""
+     data?.cholestrolData?.["SAMPLE_REPORTED_DATE"]
+       ? dayjs(
+           data.cholestrolData["SAMPLE_REPORTED_DATE"].split("  ")[0],
+           "DD-MMM-YYYY"
+         ).format("DD/MM/YY")
+       : ""
    }</p>
     <p style="margin-left:40px; margin-top:-10px">.................</p>
   </div>
@@ -1661,10 +1666,20 @@ const UnichemAnnexure = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
+
       const temp = result?.data.filter(
         (item) =>
+          item.vitalsCreatedDate === "2025-09-01" ||
+          item.vitalsCreatedDate === "2025-09-02" ||
           item.vitalsCreatedDate === "2025-09-03" ||
-          item.vitalsCreatedDate === "2025-09-04"
+          item.vitalsCreatedDate === "2025-09-04" ||
+          item.vitalsCreatedDate === "2025-09-05" ||
+          item.vitalsCreatedDate === "2025-09-06" ||
+          item.vitalsCreatedDate === "2025-09-07" ||
+          item.vitalsCreatedDate === "2025-09-08" ||
+          item.vitalsCreatedDate === "2025-09-09" ||
+          item.vitalsCreatedDate === "2025-09-10" ||
+          item.vitalsCreatedDate === "2025-09-11"
       );
 
       // const filterEmpId = [

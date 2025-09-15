@@ -65,12 +65,13 @@ import FlattingJSONWIthCustomColumns from "./flatingJsonWithCustomColumns/Flatti
 import EyeCheckupForm from "./eyeCheckupForm/EyeCheckupForm";
 import VisionReportByOP from "./visionReportyOp/VisionReportByOP";
 import BirlaOpusForm39 from "./birlaOpus/BirlaOpusForm39";
+import BirlaOpusMERForm from "./birlaOpus/BirlaOpusMERForm";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <BirlaOpusForm39 />
+      <BirlaOpusMERForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );
