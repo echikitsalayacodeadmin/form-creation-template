@@ -31,23 +31,23 @@ const EyeCheckupForm = ({
       const formData = new FormData();
       formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
 
-      // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-      // const result = await uploadFile(url, formData);
+      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
 
-      // if (result && result.data) {
-      //   enqueueSnackbar("Successfully Uploaded PDF!", {
-      //     variant: "success",
-      //   });
-      //   setUploadedCount((prevCount) => prevCount + 1);
-      // } else {
-      //   enqueueSnackbar("An error Occurred!", {
-      //     variant: "error",
-      //   });
-      //   setErrorEmpCount((prevCount) => prevCount + 1);
-      //   setErrorEmpIDs((prev) => [...prev, data?.empId]);
-      // }
-      const url = URL.createObjectURL(pdfBlob);
-      window.open(url, "_blank");
+      if (result && result.data) {
+        enqueueSnackbar("Successfully Uploaded PDF!", {
+          variant: "success",
+        });
+        setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+        enqueueSnackbar("An error Occurred!", {
+          variant: "error",
+        });
+        setErrorEmpCount((prevCount) => prevCount + 1);
+        setErrorEmpIDs((prev) => [...prev, data?.empId]);
+      }
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
     } catch (error) {
       console.error("Error generating/uploading PDF:", error);
       enqueueSnackbar("Error generating/uploading PDF", {
@@ -63,7 +63,27 @@ const EyeCheckupForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter((item) => item.empId === "H035761");
+        const temp = result?.data?.filter(
+          (item) =>
+            item.vitalsCreatedDate === "2025-08-08" ||
+            item.vitalsCreatedDate === "2025-08-09" ||
+            item.vitalsCreatedDate === "2025-08-10" ||
+            item.vitalsCreatedDate === "2025-08-11" ||
+            item.vitalsCreatedDate === "2025-08-12" ||
+            item.vitalsCreatedDate === "2025-08-13" ||
+            item.vitalsCreatedDate === "2025-08-14" ||
+            item.vitalsCreatedDate === "2025-08-15" ||
+            item.vitalsCreatedDate === "2025-08-16" ||
+            item.vitalsCreatedDate === "2025-08-17" ||
+            item.vitalsCreatedDate === "2025-08-18" ||
+            item.vitalsCreatedDate === "2025-08-19" ||
+            item.vitalsCreatedDate === "2025-08-20" ||
+            item.vitalsCreatedDate === "2025-08-21" ||
+            item.vitalsCreatedDate === "2025-08-22" ||
+            item.vitalsCreatedDate === "2025-08-23" ||
+            item.vitalsCreatedDate === "2025-08-24" ||
+            item.vitalsCreatedDate === "2025-08-25"
+        );
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -81,7 +101,7 @@ const EyeCheckupForm = ({
   }, [corpId, campCycleId]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };

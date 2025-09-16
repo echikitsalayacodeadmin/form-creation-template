@@ -797,8 +797,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
             <Text style={styles.tableCell}>Right Eye With Glasses :</Text>
           </View>
           <View style={[styles.tableCol, { width: "25%" }]}>
-            <Text>Far (R): {data?.farRightEyeSightWithGlasses || "6/6"}</Text>
-            <Text>Near (R): {data?.nearRightEyeSightWithGlasses || "N/6"}</Text>
+            <Text>Far (R): {data?.farRightEyeSightWithGlasses || ""}</Text>
+            <Text>Near (R): {data?.nearRightEyeSightWithGlasses || ""}</Text>
           </View>
           <View
             style={[styles.tableCol, { width: "25%" }, styles.tableColHeader]}
@@ -808,8 +808,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
           <View
             style={[styles.tableCol, { width: "25%", borderRightWidth: 0 }]}
           >
-            <Text>Far (R): {data?.farRightEyeSight || "6/6"}</Text>
-            <Text>Near (R): {data?.nearRightEyeSight || "N/6"}</Text>
+            <Text>Far (R): {data?.farRightEyeSight || ""}</Text>
+            <Text>Near (R): {data?.nearRightEyeSight || ""}</Text>
           </View>
         </View>
         <View style={[styles.tableRow, { borderBottomWidth: 0 }]}>
@@ -825,8 +825,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
           <View
             style={[styles.tableCol, { width: "25%", borderBottomWidth: 0 }]}
           >
-            <Text>Far (L): {data?.farLeftEyeSightWithGlasses || "6/6"}</Text>
-            <Text>Near (L): {data?.nearLeftEyeSightWithGlasses || "N/6"}</Text>
+            <Text>Far (L): {data?.farLeftEyeSightWithGlasses || ""}</Text>
+            <Text>Near (L): {data?.nearLeftEyeSightWithGlasses || ""}</Text>
           </View>
           <View
             style={[
@@ -843,8 +843,8 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
               { width: "25%", borderRightWidth: 0, borderBottomWidth: 0 },
             ]}
           >
-            <Text>Far (L): {data?.farLeftEyeSight || "6/6"}</Text>
-            <Text>Near (L): {data?.nearLeftEyeSight || "N/6"}</Text>
+            <Text>Far (L): {data?.farLeftEyeSight || ""}</Text>
+            <Text>Near (L): {data?.nearLeftEyeSight || ""}</Text>
           </View>
         </View>
       </View>
