@@ -1667,20 +1667,7 @@ const UnichemAnnexure = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data.filter(
-        (item) =>
-          item.vitalsCreatedDate === "2025-09-01" ||
-          item.vitalsCreatedDate === "2025-09-02" ||
-          item.vitalsCreatedDate === "2025-09-03" ||
-          item.vitalsCreatedDate === "2025-09-04" ||
-          item.vitalsCreatedDate === "2025-09-05" ||
-          item.vitalsCreatedDate === "2025-09-06" ||
-          item.vitalsCreatedDate === "2025-09-07" ||
-          item.vitalsCreatedDate === "2025-09-08" ||
-          item.vitalsCreatedDate === "2025-09-09" ||
-          item.vitalsCreatedDate === "2025-09-10" ||
-          item.vitalsCreatedDate === "2025-09-11"
-      );
+      const temp = result?.data.filter((item) => item.empId === "905538");
 
       // const filterEmpId = [
       //   "102192",

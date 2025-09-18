@@ -63,27 +63,21 @@ const EyeCheckupForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter(
-          (item) =>
-            item.vitalsCreatedDate === "2025-08-08" ||
-            item.vitalsCreatedDate === "2025-08-09" ||
-            item.vitalsCreatedDate === "2025-08-10" ||
-            item.vitalsCreatedDate === "2025-08-11" ||
-            item.vitalsCreatedDate === "2025-08-12" ||
-            item.vitalsCreatedDate === "2025-08-13" ||
-            item.vitalsCreatedDate === "2025-08-14" ||
-            item.vitalsCreatedDate === "2025-08-15" ||
-            item.vitalsCreatedDate === "2025-08-16" ||
-            item.vitalsCreatedDate === "2025-08-17" ||
-            item.vitalsCreatedDate === "2025-08-18" ||
-            item.vitalsCreatedDate === "2025-08-19" ||
-            item.vitalsCreatedDate === "2025-08-20" ||
-            item.vitalsCreatedDate === "2025-08-21" ||
-            item.vitalsCreatedDate === "2025-08-22" ||
-            item.vitalsCreatedDate === "2025-08-23" ||
-            item.vitalsCreatedDate === "2025-08-24" ||
-            item.vitalsCreatedDate === "2025-08-25"
-        );
+        const emps = [
+          "H032396",
+          "H022427",
+          "H015013",
+          "H034942",
+          "H030841",
+          "H035759",
+          "H034125",
+          "H035085",
+          "H035426",
+          "H023046",
+          "H035437",
+          "H035901",
+        ];
+        const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
