@@ -77,7 +77,7 @@ const EyeCheckupForm = ({
           "H035437",
           "H035901",
         ];
-        const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
+        const temp = result?.data?.filter((item) => emps.includes(item.empId));
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
