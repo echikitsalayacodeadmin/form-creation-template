@@ -22,7 +22,7 @@ Font.register({ family: "Times-Roman-Bold", src: TimeRomanBold });
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Times-Roman-Normal",
-    fontSize: 12,
+    fontSize: 11,
     padding: 20,
     backgroundColor: "#ffffff",
   },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   addressInfo: {
-    fontSize: 12,
+    fontSize: 11,
     textAlign: "center",
     marginBottom: 3,
   },
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   tableCell: {
-    fontSize: 12,
+    fontSize: 11,
     textAlign: "left",
   },
   formSection: {
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   noteSection: {
     marginTop: 10,
-    fontSize: 12,
+    fontSize: 11,
 
     paddingTop: 5,
   },
@@ -135,14 +135,17 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
             Macleods Pharmaceuticals Limited
           </Text>
           <Text
-            style={[styles.addressInfo, { fontFamily: "Times-Roman-Bold" }]}
+            style={[
+              styles.addressInfo,
+              {
+                fontFamily: "Times-Roman-Bold",
+                textAlign: "center",
+                paddingHorizontal: 10,
+                fontSize: 10,
+              },
+            ]}
           >
-            Plot No. M50 to M54A, Indore SEZ, Phase-II, Dist-Dhar, Pithampur,
-            Madhya Pradesh, 454774
-          </Text>
-          <Text
-            style={[styles.addressInfo, { fontFamily: "Times-Roman-Bold" }]}
-          >
+            Plot No. M-50 to M-54-A, Indore Special Economic Zone, Phase-II,
             District: Dhar, Pithampur, MP - 454774
           </Text>
         </View>
@@ -163,16 +166,13 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
               Format Title:
             </Text>
           </View>
-          <View style={[styles.tableCol, { width: "50%" }]}>
-            <Text style={styles.tableCell}>
+          <View
+            style={[styles.tableCol, { width: "75%", borderRightWidth: 0 }]}
+          >
+            <Text style={[styles.tableCell]}>
               Eye testing (sight / vision testing) for optical / visual
               inspectors Format
             </Text>
-          </View>
-          <View
-            style={[styles.tableCol, { width: "25%", borderRightWidth: 0 }]}
-          >
-            <Text style={styles.tableCell}></Text>
           </View>
         </View>
         <View style={styles.tableRow}>
@@ -364,6 +364,7 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
             textAlign: "left",
             paddingHorizontal: 5,
             fontFamily: "Times-Roman-Bold",
+            fontSize: 12,
           },
         ]}
       >
@@ -374,7 +375,9 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
           <View
             style={[styles.tableCol, { width: "25%" }, styles.tableColHeader]}
           >
-            <Text style={styles.tableCell}>Right Eye With Glasses :</Text>
+            <Text style={[styles.tableCell, { fontSize: 11 }]}>
+              Right Eye With Glasses:
+            </Text>
           </View>
           <View style={[styles.tableCol, { width: "25%" }]}>
             <Text>Far (R): {data?.farRightEyeSightWithGlasses || ""}</Text>
@@ -383,7 +386,9 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
           <View
             style={[styles.tableCol, { width: "25%" }, styles.tableColHeader]}
           >
-            <Text style={styles.tableCell}>Right Eye Without Glasses :</Text>
+            <Text style={[styles.tableCell, { fontSize: 11 }]}>
+              Right Eye Without Glasses:
+            </Text>
           </View>
           <View
             style={[styles.tableCol, { width: "25%", borderRightWidth: 0 }]}
@@ -400,7 +405,9 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
               styles.tableColHeader,
             ]}
           >
-            <Text style={styles.tableCell}>Left Eye With Glasses :</Text>
+            <Text style={[styles.tableCell, { fontSize: 11 }]}>
+              Left Eye With Glasses:
+            </Text>
           </View>
           <View
             style={[styles.tableCol, { width: "25%", borderBottomWidth: 0 }]}
@@ -415,7 +422,9 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
               styles.tableColHeader,
             ]}
           >
-            <Text style={styles.tableCell}>Left Eye Without Glasses :</Text>
+            <Text style={[styles.tableCell, { fontSize: 11 }]}>
+              Left Eye Without Glasses:
+            </Text>
           </View>
           <View
             style={[
@@ -646,17 +655,17 @@ const EyeCheckupFormTemplate = ({ data, unfit }) => (
       <View style={styles.noteSection}>
         <Text
           style={{
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: "bold",
             fontFamily: "Times-Roman-Bold",
           }}
         >
           Note:
         </Text>
-        <Text style={{ fontSize: 12, marginTop: 2 }}>
+        <Text style={{ fontSize: 11, marginTop: 2 }}>
           * NAD denotes for : No Abnormality Detected.
         </Text>
-        <Text style={{ fontSize: 12, marginTop: 2 }}>
+        <Text style={{ fontSize: 11, marginTop: 2 }}>
           ** NA denotes for : Not Applicable.
         </Text>
       </View>
