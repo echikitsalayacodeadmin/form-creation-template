@@ -8,8 +8,8 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 
 const CertificateOfFitness = ({
-  corpId = "abb39117-12ff-4cf5-b57e-5272c8ea3818",
-  campCycleId = "319679",
+  corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
+  campCycleId = "338668",
   fileType = "CONSOLIDATED_REPORT",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -53,7 +53,20 @@ const CertificateOfFitness = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data.filter((item) => item.empId === "SBE0274");
+        const emps = [
+          "BP01",
+          "BP02",
+          "BP03",
+          "BP04",
+          "BP05",
+          "BP06",
+          "BP07",
+          "BP08",
+          "BP09",
+          "BP10",
+          "A230",
+        ];
+        const temp = result?.data.filter((item) => emps.includes(item?.empId));
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -71,7 +84,7 @@ const CertificateOfFitness = ({
   }, [corpId, campCycleId]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };

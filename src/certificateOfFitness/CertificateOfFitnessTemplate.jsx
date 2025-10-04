@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import dr_kunal_stamp_sign from "../../src/assets/images/dr_kunal_stamp_sign.png";
+import Dr_Jaydip_Saxena from "../../src/assets/images/Dr_Jaydip_Saxena.png";
 
 const styles = StyleSheet.create({
   page: {
@@ -156,7 +156,7 @@ const CertificateOfFitnessTemplate = ({ data }) => {
                   textDecorationStyle: "solid",
                 }}
               >
-                {"Panipat"}
+                {"Rohtak"}
               </Text>{" "}
               who is desirous of being employed as{" "}
               <Text
@@ -174,7 +174,7 @@ const CertificateOfFitnessTemplate = ({ data }) => {
                   textDecorationStyle: "solid",
                 }}
               >
-                {data?.department || "_____________"}
+                {"Uno care"}
               </Text>{" "}
               and that his age, nearly as can be ascertained from my examination
               is{" "}
@@ -193,7 +193,7 @@ const CertificateOfFitnessTemplate = ({ data }) => {
                   textDecorationStyle: "solid",
                 }}
               >
-                Grasim Industries Limited Birla Paints Division
+                Asian Paints Ltd
               </Text>
             </Text>
           </View>
@@ -211,13 +211,13 @@ const CertificateOfFitnessTemplate = ({ data }) => {
 
         <View style={[styles.signatureRow, { marginBottom: 10 }]}>
           <View style={{ width: "45%" }}>
-            {/* <Image
-              src={dr_kunal_stamp_sign}
+            <Image
+              src={Dr_Jaydip_Saxena}
               style={{
                 height: 60,
                 width: 80,
               }}
-            /> */}
+            />
           </View>
           <View style={{ width: "45%" }}>
             <Text></Text>
@@ -237,19 +237,30 @@ const CertificateOfFitnessTemplate = ({ data }) => {
 
         <View style={styles.table}>
           <View style={styles.tableRow}>
-            <Text style={styles.tableCell}>
-              I certify that I examined the person mentioned above on{" "}
-              {data?.vitalsCreatedDate || ""}
-            </Text>
-            <Text style={styles.tableCell}>
-              I extend this certificate until {data?.extendUntil || " "}
-            </Text>
-            <Text style={styles.tableCell}>
-              Signature of Certifying Surgeon
-            </Text>
-            <Text style={styles.tableCell}>
-              Note of symptom {data?.symptom || " "}
-            </Text>
+            <View style={styles.tableCell}>
+              <Text>
+                I certify that I examined the person mentioned above on{" "}
+                {data?.vitalsCreatedDate || ""}
+              </Text>
+            </View>
+            <View style={styles.tableCell}>
+              <Text>
+                I extend this certificate until {data?.extendUntil || " "}
+              </Text>{" "}
+            </View>
+            <View style={styles.tableCell}>
+              <Image
+                src={Dr_Jaydip_Saxena}
+                style={{
+                  height: 60,
+                  width: 80,
+                }}
+              />
+              <Text>Signature of Certifying Surgeon</Text>
+            </View>
+            <View style={styles.tableCell}>
+              <Text>Note of symptom {data?.symptom || " "}</Text>
+            </View>
           </View>
         </View>
       </Page>

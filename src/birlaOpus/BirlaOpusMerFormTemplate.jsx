@@ -672,17 +672,17 @@ const BirlaOpusMerFormTemplate = ({ data = {} }) => {
               <Text
                 style={[styles.bulletPoint, { fontFamily: "Times-Roman-Bold" }]}
               >
-                • Respiratory System: {data?.respiratorySystem || "Normal"}
+                • Respiratory System: NA
               </Text>
               <Text
                 style={[styles.bulletPoint, { fontFamily: "Times-Roman-Bold" }]}
               >
-                • Nose / Throat : {data?.noseThroat || "Normal"}
+                • Nose / Throat : NA
               </Text>
               <Text
                 style={[styles.bulletPoint, { fontFamily: "Times-Roman-Bold" }]}
               >
-                • On Auscultation : {data?.auscultation || "Normal"}
+                • On Auscultation : NA
               </Text>
             </View>
           </View>
@@ -711,12 +711,12 @@ const BirlaOpusMerFormTemplate = ({ data = {} }) => {
               <Text
                 style={[styles.bulletPoint, { fontFamily: "Times-Roman-Bold" }]}
               >
-                • Hear Sound : {data?.heartSound || "Normal"}
+                • Hear Sound : NA
               </Text>
               <Text
                 style={[styles.bulletPoint, { fontFamily: "Times-Roman-Bold" }]}
               >
-                • Murmurs : {data?.murmurs || "Normal"}
+                • Murmurs : NA
               </Text>
             </View>
           </View>
@@ -745,12 +745,12 @@ const BirlaOpusMerFormTemplate = ({ data = {} }) => {
               <Text
                 style={[styles.bulletPoint, { fontFamily: "Times-Roman-Bold" }]}
               >
-                • CNR (Central nervous System): {data?.cns || "Normal"}
+                • CNR (Central nervous System): NA
               </Text>
               <Text
                 style={[styles.bulletPoint, { fontFamily: "Times-Roman-Bold" }]}
               >
-                • Peripheral System : {data?.peripheralSystem || "Normal"}
+                • Peripheral System : NA
               </Text>
             </View>
           </View>
@@ -780,7 +780,7 @@ const BirlaOpusMerFormTemplate = ({ data = {} }) => {
                 },
               ]}
             >
-              <Text>{data?.skin || "No Abnormalities Detected"}</Text>
+              <Text>NA</Text>
             </View>
           </View>
         </View>

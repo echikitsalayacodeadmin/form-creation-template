@@ -66,12 +66,14 @@ import EyeCheckupForm from "./eyeCheckupForm/EyeCheckupForm";
 import VisionReportByOP from "./visionReportyOp/VisionReportByOP";
 import BirlaOpusForm39 from "./birlaOpus/BirlaOpusForm39";
 import BirlaOpusMERForm from "./birlaOpus/BirlaOpusMERForm";
+import PraveelMasaleForm from "./praveenMasale/PraveelMasaleForm";
+import AnikMilkBhopalFSSAI from "./anikMilkBhopal/AnikMilkBhopalFSSAI";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <EyeCheckupForm />
+      <PraveelMasaleForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );
