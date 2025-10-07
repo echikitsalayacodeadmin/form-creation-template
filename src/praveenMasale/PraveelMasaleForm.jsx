@@ -53,7 +53,9 @@ const PraveelMasaleForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data.filter((item) => item?.vitalsCreatedDate);
+        const temp = result?.data.filter(
+          (item) => item?.vitalsCreatedDate === "2025-09-24"
+        );
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -71,7 +73,7 @@ const PraveelMasaleForm = ({
   }, [corpId, campCycleId]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };

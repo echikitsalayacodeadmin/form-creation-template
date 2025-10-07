@@ -1667,10 +1667,7 @@ const UnichemAnnexure = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const emps = [
-        600184, 600918, 601131, 601135, 601197, 900377, 900847, 905510, 905574,
-        907017, 907302, 907627, 907638, 908059,
-      ].map((item) => item.toString());
+      const emps = [905510].map((item) => item.toString());
 
       const temp = result?.data.filter((item) => emps.includes(item.empId));
 
