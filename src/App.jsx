@@ -69,12 +69,13 @@ import BirlaOpusMERForm from "./birlaOpus/BirlaOpusMERForm";
 import PraveelMasaleForm from "./praveenMasale/PraveelMasaleForm";
 import AnikMilkBhopalFSSAI from "./anikMilkBhopal/AnikMilkBhopalFSSAI";
 import CertificateOfMedicalFitnessDummyCorp from "./certificateOfMedicalFitness/CertificateOfMedicalFitnessDummyCorp";
+import DaburMedicalForm from "./daburForms2025/DaburMedicalForm";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <UnichemAnnexure />
+      <DaburMedicalForm />
       {/* <GenericFormGenerator /> */}
     </div>
   );

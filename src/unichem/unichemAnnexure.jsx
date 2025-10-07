@@ -160,12 +160,13 @@ const UnichemAnnexure = ({
   </div>
   <div style="width: 20%;">
    <p>Date:- ${
-     data?.cholestrolData?.["SAMPLE_REPORTED_DATE"]
-       ? dayjs(
-           data.cholestrolData["SAMPLE_REPORTED_DATE"].split("  ")[0],
-           "DD-MMM-YYYY"
-         ).format("DD/MM/YY")
-       : ""
+     //  data?.cholestrolData?.["SAMPLE_REPORTED_DATE"]
+     //    ? dayjs(
+     //        data.cholestrolData["SAMPLE_REPORTED_DATE"].split("  ")[0],
+     //        "DD-MMM-YYYY"
+     //      ).format("DD/MM/YY")
+     //    : ""
+     "09/09/2025"
    }</p>
     <p style="margin-left:40px; margin-top:-10px">.................</p>
   </div>
@@ -1667,7 +1668,7 @@ const UnichemAnnexure = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const emps = [905510].map((item) => item.toString());
+      const emps = [907302].map((item) => item.toString());
 
       const temp = result?.data.filter((item) => emps.includes(item.empId));
 
