@@ -53,9 +53,16 @@ const PraveelMasaleForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data.filter(
-          (item) => item?.vitalsCreatedDate === "2025-09-24"
-        );
+        const emps = [
+          "RE5139",
+          "P1815",
+          "5015",
+          "RK0056",
+          "V1131",
+          "SK1",
+          "ADYA2",
+        ];
+        const temp = result?.data.filter((item) => emps.includes(item?.empId));
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -107,7 +114,9 @@ const PraveelMasaleForm = ({
         <div>Uploaded Files: {uploadedCount}</div> <br />
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+            <div
+              key={index}
+            >{`${index}- ${item.empId} ${item.name} ${item?.visionRemark}`}</div>
 
             <a href={item.consolidatedRUrl}>
               <div key={index}>{item.consolidatedRUrl}</div>
