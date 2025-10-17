@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
-import { LogoImage, LogoImageFSSAI } from "./assets";
+import { JaydipSaxsenaBase64, LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
 
 const EffotelFssai = ({
@@ -233,7 +233,7 @@ const EffotelFssai = ({
           <br />
           <br />
           
-          <img src=${LogoImageFSSAI} 
+          <img src=${JaydipSaxsenaBase64} 
           style="height:200px;"
           />
           <br />
