@@ -62,30 +62,9 @@ const BirlaOpusForm39 = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const p = [
-          "4006",
-          "4017",
-          "4083",
-          "4067",
-          "4140",
-          "4016",
-          "4127",
-          "4081",
-          "4115",
-          "4009",
-          "5148",
-          "4114",
-          "4084",
-          "4158",
-          "5063",
-          "4133",
-          "4162",
-          "4167",
-          "4146",
-          "4181",
-          "4182",
-          "4109",
-        ];
+        const p = [4006, 4017, 4081, 4115, 4016, 4140, 4127, 4084, 4109].map(
+          (itm) => itm.toString()
+        );
         const temp = result?.data.filter((item) => p.includes(item.empId));
 
         const existingEmpIds = result?.data.map((item) => item.empId);
@@ -154,7 +133,7 @@ const BirlaOpusForm39 = ({
           <div key={index} style={{ display: "flex" }}>
             <div
               key={index}
-            >{`${index}- ${item.empId} ${item.name} ${item?.colourVision}`}</div>
+            >{`${index}- ${item.empId} ${item.name} ${item?.department}`}</div>
 
             <a href={item.consolidatedRUrl}>
               <div key={index}>{item.consolidatedRUrl}</div>

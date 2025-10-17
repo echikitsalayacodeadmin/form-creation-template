@@ -53,15 +53,7 @@ const PraveelMasaleForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const emps = [
-          "RE5139",
-          "P1815",
-          "5015",
-          "RK0056",
-          "V1131",
-          "SK1",
-          "ADYA2",
-        ];
+        const emps = ["V1131"];
         const temp = result?.data.filter((item) => emps.includes(item?.empId));
         const length = temp.length;
         const sorted = sortDataByName(temp);

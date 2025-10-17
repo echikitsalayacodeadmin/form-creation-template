@@ -34,23 +34,23 @@ const BirlaOpusMERForm = ({
         `${data?.empId}_MEDICAL_EXAMINATION_REPORT.pdf`
       );
 
-      // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-      // const result = await uploadFile(url, formData);
+      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
 
-      // if (result && result.data) {
-      //   enqueueSnackbar("Successfully Uploaded PDF!", {
-      //     variant: "success",
-      //   });
-      //   setUploadedCount((prevCount) => prevCount + 1);
-      // } else {
-      //   enqueueSnackbar("An error Occurred!", {
-      //     variant: "error",
-      //   });
-      //   setErrorEmpCount((prevCount) => prevCount + 1);
-      //   setErrorEmpIDs((prev) => [...prev, data?.empId]);
-      // }
-      const url = URL.createObjectURL(pdfBlob);
-      window.open(url, "_blank");
+      if (result && result.data) {
+        enqueueSnackbar("Successfully Uploaded PDF!", {
+          variant: "success",
+        });
+        setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+        enqueueSnackbar("An error Occurred!", {
+          variant: "error",
+        });
+        setErrorEmpCount((prevCount) => prevCount + 1);
+        setErrorEmpIDs((prev) => [...prev, data?.empId]);
+      }
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
     } catch (error) {
       console.error("Error generating/uploading PDF:", error);
       enqueueSnackbar("Error generating/uploading PDF", {
@@ -66,14 +66,13 @@ const BirlaOpusMERForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
+        const empIds = ["408972"];
+        const temp = result.data.filter((item) => empIds.includes(item.empId));
         // const temp = result.data.filter(
-        //   (item) => item.vitalsCreatedDate === "2025-09-29"
+        //   (item) =>
+        //     item.vitalsCreatedDate === "2025-09-29" &&
+        //     item.imageUrl?.endsWith("image.jpg")
         // );
-        const temp = result.data.filter(
-          (item) =>
-            item.vitalsCreatedDate === "2025-09-29" &&
-            item.imageUrl?.endsWith("image.jpg")
-        );
 
         // const temp = result.data.filter((item) => emps?.includes(item?.empId));
         const length = temp.length;

@@ -8,10 +8,14 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
-import dr_kunal_stamp_sign from "../assets/images/dr_kunal_stamp_sign.png";
+
+import nabanitaSeal from "../assets/images/nabanitaSeal.png";
+import nabanitaSign from "../assets/images/nabanitaSign.png";
+import nabanitaSealSign from "../assets/images/nabanitaSealSign.png";
 import daburLogo from "../assets/images/daburLogo.png";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+import dayjs from "dayjs";
 
 Font.register({ family: "Times-Roman-Normal", src: TimeRoman });
 Font.register({ family: "Times-Roman-Bold", src: TimeRomanBold });
@@ -178,13 +182,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   bottomSpace: {
-    minHeight: 20,
+    height: 50,
     borderBottom: "1px solid #000",
     marginBottom: 5,
   },
   sealSection: {
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 0,
+    flexDirection: "row",
+    justifyContent: "center",
   },
   sealLabel: {
     fontSize: 11,
@@ -240,7 +246,7 @@ const DaburMedicalTemplate = ({ data }) => (
       <Text style={styles.paragraph}>
         It is certified that Shri/Smt./Miss{" "}
         <Text style={[styles.underline]}>
-          {data?.employeeName ||
+          {data?.name ||
             "                                                                                                                                 "}
         </Text>{" "}
         S/o, D/o, W/o{" "}
@@ -251,7 +257,7 @@ const DaburMedicalTemplate = ({ data }) => (
         employed with M/s Dabur India Limited,{" "}
         <Text style={[styles.underline]}>
           {data?.unit ||
-            "                                                               "}
+            "            Tezpur                                           "}
         </Text>{" "}
         Unit, coming in direct contact with food items has been carefully
         examined* by me on date{" "}
@@ -271,7 +277,7 @@ const DaburMedicalTemplate = ({ data }) => (
       <View style={styles.signatureSection}>
         <View style={[styles.signatureBox, { marginTop: 80 }]}>
           <Text style={[styles.signatureLabel]}>
-            Date: <Text style={styles.underline}></Text>
+            Date: <Text style={styles.underline}>{"25th Sept 2025"}</Text>
           </Text>
 
           <Text style={styles.signatureLabel}>
@@ -280,7 +286,7 @@ const DaburMedicalTemplate = ({ data }) => (
         </View>
 
         <View style={styles.signatureBox}>
-          <Image src={dr_kunal_stamp_sign} style={{ height: 80, width: 120 }} />
+          <Image src={nabanitaSealSign} style={{ height: 80, width: 120 }} />
           <Text style={styles.signatureLabel}>
             Name and Signature with Seal of Registered Medical Practitioner /
             Civil Surgeon
@@ -330,7 +336,7 @@ const DaburMedicalTemplate = ({ data }) => (
       <View style={styles.table}>
         <View style={[styles.tableRow, { borderTop: "1px solid #000" }]}>
           <Text style={styles.tableCellHeader}>Name</Text>
-          <Text style={styles.tableCellLast}>{data?.employeeName || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.name || ""}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Father's Name</Text>
@@ -342,48 +348,52 @@ const DaburMedicalTemplate = ({ data }) => (
       <View style={styles.table}>
         <View style={[styles.tableRow, { borderTop: "1px solid #000" }]}>
           <Text style={styles.tableCellHeader}>Height</Text>
-          <Text style={styles.tableCellLast}>{data?.height || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.height + " cm" || ""}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Weight</Text>
-          <Text style={styles.tableCellLast}>{data?.weight || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.weight + " kg" || ""}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Chest (unexpanded)</Text>
           <Text style={styles.tableCellLast}>
-            {data?.chestUnexpanded || ""}
+            {data?.chestInspiration || "NA"}
           </Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Chest (expanded)</Text>
-          <Text style={styles.tableCellLast}>{data?.chestExpanded || ""}</Text>
+          <Text style={styles.tableCellLast}>
+            {data?.chestExpiration || "NA"}
+          </Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Abdomen</Text>
-          <Text style={styles.tableCellLast}>{data?.abdomen || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.abdomen || "NA"}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>General Physique</Text>
           <Text style={styles.tableCellLast}>
-            {data?.generalPhysique || ""}
+            {data?.generalPhysique || "NAD"}
           </Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Blood Pressure</Text>
-          <Text style={styles.tableCellLast}>{data?.bloodPressure || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.bp + " mmHg" || ""}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Heart Rate</Text>
-          <Text style={styles.tableCellLast}>{data?.heartRate || ""}</Text>
+          <Text style={styles.tableCellLast}>
+            {data?.pulseRate + " bpm" || ""}
+          </Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Lungs</Text>
-          <Text style={styles.tableCellLast}>{data?.lungs || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.lungs || "NAD"}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Physical Fitness</Text>
           <Text style={styles.tableCellLast}>
-            {data?.physicalFitness || ""}
+            {data?.physicalFitness || "NAD"}
           </Text>
         </View>
         <View style={styles.tableRow}>
@@ -391,7 +401,7 @@ const DaburMedicalTemplate = ({ data }) => (
             Any visible physical abnormality or disability
           </Text>
           <Text style={styles.tableCellLast}>
-            {data?.physicalAbnormality || ""}
+            {data?.physicalAbnormality || "NAD"}
           </Text>
         </View>
       </View>
@@ -400,11 +410,11 @@ const DaburMedicalTemplate = ({ data }) => (
       <View style={styles.table}>
         <View style={[styles.tableRow, { borderTop: "1px solid #000" }]}>
           <Text style={styles.tableCellHeader}>Eyesight</Text>
-          <Text style={styles.tableCellLast}>{data?.eyesight || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.visionRemark || ""}</Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Color Blindness</Text>
-          <Text style={styles.tableCellLast}>{data?.colorBlindness || ""}</Text>
+          <Text style={styles.tableCellLast}>{"Normal"}</Text>
         </View>
       </View>
 
@@ -415,7 +425,7 @@ const DaburMedicalTemplate = ({ data }) => (
             Any signs of infectious or communicable disease
           </Text>
           <Text style={styles.tableCellLast}>
-            {data?.infectiousDisease || ""}
+            {data?.infectiousDisease || "NA"}
           </Text>
         </View>
         <View style={styles.tableRow}>
@@ -423,7 +433,7 @@ const DaburMedicalTemplate = ({ data }) => (
             Any test required to confirm in case a person is suspected to be
             suffering from the above disease on clinical examination.
           </Text>
-          <Text style={styles.tableCellLast}>{data?.testRequired || ""}</Text>
+          <Text style={styles.tableCellLast}>{data?.testRequired || "NA"}</Text>
         </View>
       </View>
 
@@ -433,7 +443,9 @@ const DaburMedicalTemplate = ({ data }) => (
       <View style={styles.table}>
         <View style={[styles.tableRow, { borderTop: "1px solid #000" }]}>
           <Text style={styles.tableCellHeader}>Typhoid</Text>
-          <Text style={styles.tableCellLast}>{data?.typhoid || ""}</Text>
+          <Text style={styles.tableCellLast}>
+            {"Typebar Batch no: B25003S Expiry : 05/28"}
+          </Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Hepatitis A</Text>
@@ -441,7 +453,9 @@ const DaburMedicalTemplate = ({ data }) => (
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>Hepatitis B</Text>
-          <Text style={styles.tableCellLast}>{data?.hepatitisB || ""}</Text>
+          <Text style={styles.tableCellLast}>
+            {"Hep B Batch no. : 501124A Expiry : 12/27"}
+          </Text>
         </View>
         <View style={styles.tableRow}>
           <Text style={styles.tableCellHeader}>
@@ -454,13 +468,13 @@ const DaburMedicalTemplate = ({ data }) => (
       <View style={styles.bottomSignature}>
         <View style={styles.bottomSignatureItem}>
           <Text style={styles.bottomLabel}>Place:</Text>
-          <View style={styles.bottomSpace}>
+          <View style={[styles.bottomSpace, { height: 10 }]}>
             <Text>{data?.place || ""}</Text>
           </View>
         </View>
         <View style={styles.bottomSignatureItem}>
           <Text style={styles.bottomLabel}>Name:</Text>
-          <View style={styles.bottomSpace}>
+          <View style={[styles.bottomSpace, { height: 10 }]}>
             <Text>{data?.doctorName || ""}</Text>
           </View>
         </View>
@@ -469,22 +483,22 @@ const DaburMedicalTemplate = ({ data }) => (
       <View style={styles.bottomSignature}>
         <View style={styles.bottomSignatureItem}>
           <Text style={styles.bottomLabel}>Date:</Text>
-          <View style={styles.bottomSpace}>
-            <Text>{data?.examinationDate || ""}</Text>
+          <View style={[styles.bottomSpace]}>
+            <Text>{dayjs().format("DD MMM YYYY")}</Text>
           </View>
         </View>
         <View style={styles.bottomSignatureItem}>
           <Text style={styles.bottomLabel}>Signature:</Text>
           <View style={styles.bottomSpace}>
-            <Text>{data?.doctorSignature || ""}</Text>
+            <Image src={nabanitaSign} style={{ height: 50, width: 80 }} />
           </View>
         </View>
       </View>
 
       <View style={styles.sealSection}>
-        <Text style={styles.sealLabel}>Seal with Registration No.:</Text>
-        <View style={styles.sealSpace}>
-          <Text>{data?.registrationNo || ""}</Text>
+        <View>
+          <Text style={styles.sealLabel}>Seal with Registration No.:</Text>
+          <Image src={nabanitaSeal} style={{ height: 80, width: 120 }} />
         </View>
       </View>
     </Page>

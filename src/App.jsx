@@ -70,12 +70,14 @@ import PraveelMasaleForm from "./praveenMasale/PraveelMasaleForm";
 import AnikMilkBhopalFSSAI from "./anikMilkBhopal/AnikMilkBhopalFSSAI";
 import CertificateOfMedicalFitnessDummyCorp from "./certificateOfMedicalFitness/CertificateOfMedicalFitnessDummyCorp";
 import DaburMedicalForm from "./daburForms2025/DaburMedicalForm";
+import IndoreCompositeFood from "./IndoreCopositeFoodCertificate/IndoreCompositeFood";
+import EffotelFssai from "./effotelFassai/effotelFssai";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <PraveelMasaleForm />
+      <EffotelFssai />
       {/* <GenericFormGenerator /> */}
     </div>
   );

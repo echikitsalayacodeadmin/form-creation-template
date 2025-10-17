@@ -8,9 +8,9 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 
 const DaburMedicalForm = ({
-  corpId = "e9d2386b-1cd9-438d-98d8-9c16dce8e6e4",
-  campCycleId = "339720",
-  fileType = "CONSOLIDATED_REPORT",
+  corpId = "75fa8ae5-540d-479b-be7b-00334dfe7fd4",
+  campCycleId = "344258",
+  fileType = "ANNEXURE",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -38,6 +38,8 @@ const DaburMedicalForm = ({
           variant: "error",
         });
       }
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
     } catch (error) {
       console.error("Error generating/uploading PDF:", error);
       enqueueSnackbar("Error generating/uploading PDF", {
@@ -51,9 +53,7 @@ const DaburMedicalForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data.filter(
-          (item) => item?.vitalsCreatedDate === "2025-09-24"
-        );
+        const temp = result?.data.filter((item) => item?.empId === "913555");
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -103,17 +103,17 @@ const DaburMedicalForm = ({
         <button onClick={handleDeletePDF}>Delete Files</button>
         <div>Total Employees: {totalEmployees}</div> <br />
         <div>Uploaded Files: {uploadedCount}</div> <br />
-        {/* {list.map((item, index) => (
+        {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.consolidatedRUrl}>
-              <div key={index}>{item.consolidatedRUrl}</div>
+            <a href={item.annexureUrl}>
+              <div key={index}>{item.annexureUrl}</div>
             </a>
 
             <br />
           </div>
-        ))} */}
+        ))}
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>

@@ -8,11 +8,11 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
 
-const RichFoodFssai = ({
-  corpId = "47f6ab07-4fc2-45f8-83e0-38c88504861a",
-  campCycleId = "340296",
+const EffotelFssai = ({
+  corpId = "15f6b1de-093f-4490-9e11-8d06904404f8",
+  campCycleId = "347490",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "RPSPL PRIVATE LIMITED",
+  corpName = "Effotel by Sayaji ( Indore )",
   campDate = "26th Sept, 2025",
   year = "2025",
 }) => {
@@ -355,7 +355,7 @@ const RichFoodFssai = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => item.vitalsCreatedDate === "2025-09-26"
+        (item) => item.vitalsCreatedDate === "2025-10-13"
       );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
@@ -421,4 +421,4 @@ const RichFoodFssai = ({
     </div>
   );
 };
-export default RichFoodFssai;
+export default EffotelFssai;

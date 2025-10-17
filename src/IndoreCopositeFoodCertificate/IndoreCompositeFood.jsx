@@ -8,9 +8,9 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
 
-const RichFoodFssai = ({
-  corpId = "47f6ab07-4fc2-45f8-83e0-38c88504861a",
-  campCycleId = "340296",
+const IndoreCompositeFood = ({
+  corpId = "c59a2fbc-bc3d-453c-aae4-313581793890",
+  campCycleId = "297398",
   fileType = "FITNESS_CERTIFICATE_FOOD",
   corpName = "RPSPL PRIVATE LIMITED",
   campDate = "26th Sept, 2025",
@@ -353,10 +353,8 @@ const RichFoodFssai = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-
-      const temp = result?.data.filter(
-        (item) => item.vitalsCreatedDate === "2025-09-26"
-      );
+      const empIds = ["CMF11632", "CMF11596", "CMF11591", "CMF11595"];
+      const temp = result?.data.filter((item) => empIds.includes(item.empId));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -421,4 +419,4 @@ const RichFoodFssai = ({
     </div>
   );
 };
-export default RichFoodFssai;
+export default IndoreCompositeFood;

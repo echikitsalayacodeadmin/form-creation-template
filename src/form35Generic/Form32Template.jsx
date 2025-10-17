@@ -8,7 +8,7 @@ import {
   Font,
   Image,
 } from "@react-pdf/renderer";
-
+import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 import uncareheader from "../assets/images/uncareheader.png";
@@ -143,16 +143,18 @@ const styles = StyleSheet.create({
 
 const Form32Template = ({
   data,
-  company = "BRIDGESTONE INDIA PRIVATE LIMITED",
+  company = "Atlas Copco (India) Private Limited",
   date = "12th June 2025",
   fitText,
-  signature = "dr_kunal_stamp_sign.png", // default signature
+  signature = "prashantDeshmukh", // default signature
 }) => {
   // Function to get the correct signature image
   const getSignatureImage = () => {
     switch (signature) {
       case "Dr_Jaydip_Saxena.png":
         return Dr_Jaydip_Saxena;
+      case "prashantDeshmukh.png":
+        return prashantDeshmukh;
       case "dr_kunal_stamp_sign.png":
       default:
         return dr_kunal_stamp_sign;
@@ -162,12 +164,26 @@ const Form32Template = ({
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header with logo and address */}
-        <View style={styles.headerRow}>
+        {/* <View style={styles.headerRow}>
           <Image style={styles.logo} src={uncareheader} />
         </View>
         <Text style={styles.regOffice}>
           Regd. Office: 253, Shri Krishna Avenue, Phase-1, Limbodi Khandwa Road,
           Indore-452001
+        </Text> */}
+        <Text
+          style={[
+            styles.dateRow,
+            {
+              width: "100%",
+              borderRight: 0,
+              fontFamily: "Times-Roman-Bold",
+              textAlign: "center",
+              fontSize: 14,
+            },
+          ]}
+        >
+          Physical Fitness Form
         </Text>
         <View style={styles.dateRow}>
           <Text>Date: {data?.vitalsCreatedDate || ""}</Text>
