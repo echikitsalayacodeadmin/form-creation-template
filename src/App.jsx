@@ -72,12 +72,18 @@ import CertificateOfMedicalFitnessDummyCorp from "./certificateOfMedicalFitness/
 import DaburMedicalForm from "./daburForms2025/DaburMedicalForm";
 import IndoreCompositeFood from "./IndoreCopositeFoodCertificate/IndoreCompositeFood";
 import EffotelFssai from "./effotelFassai/effotelFssai";
+import UploadDataOPD from "./bulkUploadOhc/UploadDataOPD";
+import StridesPhysicalFitnessFormMain from "./stridesPhysicalFitnessForm/StridesPhysicalFitnessFormMain";
+import StridesXrayFormMain from "./stridesPhysicalFitnessForm/StridesXrayFormMain";
+import StridesPFTFormMain from "./stridesPhysicalFitnessForm/StridesPFTFormMain";
+import XrayFilmMain from "./TKILXrayFilm/XrayFilmMain";
+import FoodCertificateIndoreMarriot from "./indoreMariiot/FoodCertificateIndoreMarriot";
 
 const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <UnichemAnnexure />
+      <FoodCertificateIndoreMarriot />
       {/* <GenericFormGenerator /> */}
     </div>
   );

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UNO.care Health Camp Summary</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: Poppins, sans-serif;
+      background-color: #f5f7fa;
+    "
+  >
+    <table
+      align="center"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="600"
+      style="
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <!-- Header -->
+      <tr>
+        <td style="background: #eaf3ff; text-align: center">
+          <img
+            src="https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/org/872cd841-9f7a-432d-b8e9-422b780bca10/338668/BLOODTEST/8ef62c5f-fa45-4791-895d-a051d937038c/WhatsApp Image 2025-11-04 at 7.35.54 PM (1).jpeg"
+            alt="UNO.care Logo"
+            width="100%"
+            style="vertical-align: middle; margin-right: 10px"
+          />
+        </td>
+      </tr>
+
+      <!-- Banner -->
+      <tr>
+        <td
+          style="
+            background: #ffffff;
+            text-align: center;
+            color: #4564ce;
+            font-size: 24px;
+            padding: 20px 10px;
+            font-weight: bold;
+          "
+        >
+          Today’s Health Camp is Completed, Here’s the Summary!
+        </td>
+      </tr>
+
+      <!-- Illustration -->
+      <tr>
+        <td style="text-align: center">
+          <img
+            src="https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/org/872cd841-9f7a-432d-b8e9-422b780bca10/338668/BLOODTEST/8ef62c5f-fa45-4791-895d-a051d937038c/WhatsApp Image 2025-11-04 at 7.35.54 PM.jpeg"
+            width="100%"
+            alt="Doctor and Patient Illustration"
+            style="display: block; margin: auto"
+          />
+        </td>
+      </tr>
+
+      <!-- Summary Header -->
+      <tr>
+        <td style="text-align: center; padding: 15px">
+          <h2 style="color: #4564ce; margin: 0">Health Checkup Summary</h2>
+          <p
+            style="
+              font-size: 16px;
+              color: #000000;
+              margin-top: 6px;
+              text-align: justify;
+            "
+          >
+            Today’s health camp went great! We covered employees from most
+            departments. Here’s a quick summary of the camp.
+          </p>
+        </td>
+      </tr>
+
+      <!-- Stats -->
+      <tr>
+        <td style="text-align: center; padding: 20px">
+          <table
+            align="center"
+            cellpadding="15"
+            cellspacing="0"
+            style="text-align: center; font-size: 16px; margin-top: -40px"
+          >
+            <tr>
+              <!-- Total Employees -->
+              <td>
+                <strong style="font-size: 14px; color: #1e3a8a"
+                  >Total Employees</strong
+                ><br />
+                <table
+                  width="160"
+                  height="60"
+                  border="0"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    border: 2px solid #1e3a8a;
+                    border-radius: 8px;
+                    color: #1e3a8a;
+                    text-align: center;
+                  "
+                >
+                  <tr>
+                    <td
+                      style="
+                        font-size: 22px;
+                        text-align: center;
+                        vertical-align: middle;
+                        color: #1e3a8a;
+                        font-weight: 600;
+                      "
+                    >
+                      {{totalEmployees}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <!-- Employees Covered -->
+              <td>
+                <strong style="font-size: 14px; color: #22c55e"
+                  >Employees Covered</strong
+                ><br />
+                <table
+                  width="160"
+                  height="60"
+                  border="0"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    border: 2px solid #22c55e;
+                    border-radius: 8px;
+                    color: #22c55e;
+                    text-align: center;
+                  "
+                >
+                  <tr>
+                    <td
+                      style="
+                        font-size: 22px;
+                        text-align: center;
+                        vertical-align: middle;
+                        color: #22c55e;
+                        font-weight: 600;
+                      "
+                    >
+                      {{employeesCovered}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <!-- Employees Left -->
+              <td>
+                <strong style="font-size: 14px; color: #ef4444"
+                  >Employees Left</strong
+                ><br />
+                <table
+                  width="160"
+                  height="60"
+                  border="0"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    border: 2px solid #ef4444;
+                    border-radius: 8px;
+                    color: #ef4444;
+                    text-align: center;
+                  "
+                >
+                  <tr>
+                    <td
+                      style="
+                        font-size: 22px;
+                        text-align: center;
+                        vertical-align: middle;
+                        color: #ef4444;
+                        font-weight: 600;
+                      "
+                    >
+                      {{employeesLeft}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td style="text-align: center">
+          <img
+            src="https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/org/872cd841-9f7a-432d-b8e9-422b780bca10/338668/BLOODTEST/8ef62c5f-fa45-4791-895d-a051d937038c/WhatsApp Image 2025-11-04 at 7.35.54 PM (2).jpeg"
+            width="100%"
+            alt="Doctor and Patient Illustration"
+            style="display: block; margin: auto"
+          />
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -8,8 +8,10 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 
 const PraveelMasaleForm = ({
-  corpId = "e9d2386b-1cd9-438d-98d8-9c16dce8e6e4",
-  campCycleId = "339720",
+  // corpId = "e9d2386b-1cd9-438d-98d8-9c16dce8e6e4", //unit 1
+  // campCycleId = "339720", // unit 1
+  corpId = "eb17683c-0759-4e49-851e-43a24301a6eb", // unit 2 pune
+  campCycleId = "347481", // unit 2 pune
   fileType = "CONSOLIDATED_REPORT",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -53,7 +55,33 @@ const PraveelMasaleForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const emps = ["V1131"];
+        const emps = [
+          "DE0102",
+          "SB1177",
+          "SB1094",
+          "SB1039",
+          "SB1039",
+          "P3202",
+          "SB1025",
+          // "P3082",
+          // "P3198",
+          // "SS004",
+          // "P3191",
+          // "P3187",
+          // "P3032",
+          // "HE0159",
+          // "P3049",
+          // "P3020",
+          // "RB866",
+          // "SB1161",
+          // "P3033",
+          // "P1288",
+          // "P3256",
+          // "P3077",
+        ];
+        // const temp = result?.data.filter(
+        //   (item) => item.vitalsCreatedDate === "2025-10-12"
+        // );
         const temp = result?.data.filter((item) => emps.includes(item?.empId));
         const length = temp.length;
         const sorted = sortDataByName(temp);

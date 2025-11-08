@@ -240,3 +240,19 @@ export const stringToObject = (str) => {
     return acc;
   }, {});
 };
+
+// cleanData.js
+export const cleanArrayData = (arr) => {
+  if (!Array.isArray(arr)) return [];
+
+  return arr.map((item) => {
+    if (!item || typeof item !== "object") return item;
+    const cleaned = {};
+    Object.entries(item).forEach(([key, value]) => {
+      if (value !== "" && value !== null && value !== undefined) {
+        cleaned[key] = value;
+      }
+    });
+    return cleaned;
+  });
+};

@@ -5,11 +5,12 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
+// import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
+import { JAY_DIP_SIGNBASE64 } from "../assets/images/base64Images";
 
 const SunpharmaForm32New = ({
   corpId = "4102a5bd-77d8-42f3-b2cd-a4101cde2366",
-  campCycleId = "289149",
+  campCycleId = "349428",
   fileType = "PHYSICAL_FITNESS_CERTIFICATE",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -154,7 +155,7 @@ const SunpharmaForm32New = ({
         </tr>
         <tr>
           <td style="width: 50%">Result Fit/Unfit</td>
-          <td>Fit</td>
+          <td>Unfit</td>
         </tr>
         <tr>
           <td colspan="2" style="text-align: center; font-weight: bold">
@@ -187,7 +188,7 @@ const SunpharmaForm32New = ({
           <td>
             ${
               true
-                ? `<img src="${KUNALSIGNBASE64}" style="height: 100px" />`
+                ? `<img src="${JAY_DIP_SIGNBASE64}" style="height: 100px" />`
                 : ""
             }
           </td>
@@ -240,28 +241,74 @@ const SunpharmaForm32New = ({
       console.log("Fetched Data successfully");
 
       const empIDS = [
-        "78378",
-        "65159",
-        "367942",
-        "80936",
-        "382693",
-        "64583",
-        "378641",
-        "52141",
-        "95625",
-        "393131",
-        "95145",
-        "64097",
-        "64116",
-        "9414",
+        "395978",
+        "Oct-17",
+        "60023631",
+        "85037",
+        "365176",
+        "51841",
+        "393230",
         "85631",
-        "8066",
-        "48276",
-        "393270",
-        "381538",
+        "389693",
+        "Oct-16",
+        "60015624",
+        "60016579",
+        "52472",
+        "Oct-18",
+        "Oct-15",
+        "60015602",
+        "364421",
+        "60031163",
+        "82239",
+        "56791",
+        "ENP3",
+        "53894",
+        "49854",
+        "60032266",
+        "60031950",
+        "60029758",
+        "60022261",
+        "56796",
+        "60015111",
+        "Oct-27",
+        "372364",
+        "63193",
+        "55316",
+        "400655",
+        "52439",
+        "60031334",
+        "60031644",
+        "60025241",
+        "8435",
+        "Oct-25",
+        "60021182",
+        "Oct-20",
+        "Oct-22",
+        "60025457",
+        "Oct-26",
+        "60033003",
+        "GC3",
+        "60032317",
+        "60022402",
+        "Oct-05",
+        "372226",
+        "397791",
+        "60015496",
+        "53834",
+        "Oct-28",
+        "371783",
+        "397644",
+        "64116",
+        "388951",
       ];
 
-      const temp = result?.data.filter((item) => empIDS.includes(item.empId));
+      const temp = result?.data.filter(
+        (item) =>
+          (item.vitalsCreatedDate === "2025-10-29" ||
+            item.vitalsCreatedDate === "2025-10-30" ||
+            item.vitalsCreatedDate === "2025-10-31") &&
+          empIDS.includes(item.empId)
+      );
 
       const length = temp.length;
       console.log({ length });
