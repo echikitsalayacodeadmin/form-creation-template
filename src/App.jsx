@@ -83,7 +83,7 @@ const App = () => {
   return (
     <div>
       {/* <VacinationCertificate /> */}
-      <FoodCertificateIndoreMarriot />
+      <UploadDataOPD />
       {/* <GenericFormGenerator /> */}
     </div>
   );

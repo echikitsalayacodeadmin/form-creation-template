@@ -355,12 +355,12 @@ const FoodCertificateIndoreMarriot = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = [];
+      const empIDS = ["E01192", "E01712", "E01882"];
 
-      const temp = result?.data.filter(
-        (item) => item.vitalsCreatedDate === "2025-11-03"
-      );
-      //   const temp = result?.data.filter((item) => empIDS.includes(item.empId));
+      // const temp = result?.data.filter(
+      //   (item) => item.vitalsCreatedDate === "2025-11-03"
+      // );
+      const temp = result?.data.filter((item) => empIDS.includes(item.empId));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
