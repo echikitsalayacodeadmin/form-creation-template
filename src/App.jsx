@@ -78,13 +78,18 @@ import StridesXrayFormMain from "./stridesPhysicalFitnessForm/StridesXrayFormMai
 import StridesPFTFormMain from "./stridesPhysicalFitnessForm/StridesPFTFormMain";
 import XrayFilmMain from "./TKILXrayFilm/XrayFilmMain";
 import FoodCertificateIndoreMarriot from "./indoreMariiot/FoodCertificateIndoreMarriot";
+import PftPdfModifier from "./tkil/pftPdfModifier";
+import EcgPdfModifier from "./tkil/ecgPdfModifier";
+import { SnackbarProvider } from "notistack";
 
 const App = () => {
   return (
     <div>
-      {/* <VacinationCertificate /> */}
-      <UploadDataOPD />
-      {/* <GenericFormGenerator /> */}
+      <SnackbarProvider maxSnack={3}>
+        {/* <VacinationCertificate /> */}
+        <PftPdfModifier />
+        {/* <GenericFormGenerator /> */}
+      </SnackbarProvider>
     </div>
   );
 };
