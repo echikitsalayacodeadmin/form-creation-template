@@ -46,6 +46,18 @@ async function mergeHeaderAndXraySinglePage(headerPdfBytes, pftPdfBytes) {
       font: courier,
       color: rgb(0, 0, 0),
     });
+
+    const rectWidth = 500;
+    const rectHeight = 15;
+
+    // Draw a centered black rectangle near the bottom (y = height - 50)
+    page.drawRectangle({
+      x: (width - rectWidth) / 2, // centers the rectangle horizontally
+      y: height - 50, // adjust vertically as needed
+      width: rectWidth,
+      height: rectHeight,
+      color: rgb(1, 1, 1),
+    });
   }
 
   // --- STEP 2: Merge header + edited PFT (same page) ---
@@ -132,8 +144,8 @@ const StridesPFTFormMain = ({
         `${data?.pftUrl?.split("/").pop() || "Report"}.pdf`
       );
 
-      //   const url = URL.createObjectURL(mergedBlob);
-      //   window.open(url, "_blank");
+      // const url = URL.createObjectURL(mergedBlob);
+      // window.open(url, "_blank");
 
       const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);

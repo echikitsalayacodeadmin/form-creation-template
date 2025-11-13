@@ -209,6 +209,7 @@ const StridesPhysicalFitnessForm = ({
                   width: "100%",
                   borderRight: 0,
                   fontFamily: "Times-Roman-Bold",
+                  textDecoration: "underline",
                 },
               ]}
             >
@@ -336,7 +337,7 @@ const StridesPhysicalFitnessForm = ({
               Fathers Name
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.dateOfJoining || ""}
+              {data?.fathersName || ""}
             </Text>
             <Text
               style={[
@@ -359,10 +360,10 @@ const StridesPhysicalFitnessForm = ({
                 { width: "25%", fontFamily: "Times-Roman-Bold" },
               ]}
             >
-              Designation
+              Date Of Joining
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.designation || "NA"}
+              {data?.dateOfJoining || ""}
             </Text>
             <Text
               style={[
@@ -370,12 +371,10 @@ const StridesPhysicalFitnessForm = ({
                 styles.cellLabel,
                 { width: "25%", fontFamily: "Times-Roman-Bold" },
               ]}
-            >
-              Date Of Joining
-            </Text>
-            <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              {data?.dateOfJoining || ""}
-            </Text>
+            ></Text>
+            <Text
+              style={[styles.cell, { width: "25%" }, styles.cellNoRight]}
+            ></Text>
           </View>
 
           {/* Physical Details */}

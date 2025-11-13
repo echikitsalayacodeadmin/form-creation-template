@@ -7,10 +7,11 @@ import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
+import { JAY_DIP_SIGNBASE64 } from "../assets/images/base64Images";
 
 const RichFoodFssai = ({
   corpId = "47f6ab07-4fc2-45f8-83e0-38c88504861a",
-  campCycleId = "340296",
+  campCycleId = "353014",
   fileType = "FITNESS_CERTIFICATE_FOOD",
   corpName = "RPSPL PRIVATE LIMITED",
   campDate = "26th Sept, 2025",
@@ -233,7 +234,7 @@ const RichFoodFssai = ({
           <br />
           <br />
           
-          <img src=${LogoImageFSSAI} 
+          <img src=${JAY_DIP_SIGNBASE64} 
           style="height:200px;"
           />
           <br />
@@ -354,9 +355,111 @@ const RichFoodFssai = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data.filter(
-        (item) => item.vitalsCreatedDate === "2025-09-26"
-      );
+      const codes = [
+        "EC10045",
+        "RRF75",
+        "RRF22",
+        "RRF13",
+        "RRF27",
+        "RRF73",
+        "RRF10",
+        "RRF85",
+        "RRF62",
+        "RRF71",
+        "RRF19",
+        "RRF47",
+        "RRF98",
+        "RRF78",
+        "RRF87",
+        "RRF101",
+        "RRF36",
+        "RF4",
+        "RRF102",
+        "RRF86",
+        "RRF38",
+        "RRF50",
+        "RRF76",
+        "Sec32",
+        "RRF11",
+        "RRF81",
+        "RRF37",
+        "RRF69",
+        "RRF95",
+        "RRF28",
+        "RF5",
+        "RRF29",
+        "RRF35",
+        "Sec1",
+        "RF2",
+        "RRF67",
+        "RRF70",
+        "RRF56",
+        "EC10111",
+        "RRF65",
+        "RRF45",
+        "RRF26",
+        "RRF83",
+        "RRF24",
+        "EC10106",
+        "Sec7",
+        "RRF52",
+        "EC10019",
+        "RRF93",
+        "RRF14",
+        "RRF100",
+        "RRF16",
+        "RRF41",
+        "RRF80",
+        "RRF40",
+        "RRF59",
+        "RRF46",
+        "RRF90",
+        "RF3",
+        "RRF31",
+        "RRF39",
+        "RRF63",
+        "RRF72",
+        "RF9",
+        "RRF44",
+        "Sec61",
+        "RRF64",
+        "RRF68",
+        "RRF33",
+        "RRF77",
+        "RRF20",
+        "RRF84",
+        "RRF57",
+        "RRF92",
+        "EC10009",
+        "RRF88",
+        "RRF12",
+        "RRF48",
+        "EC10112",
+        "RRF79",
+        "RRF21",
+        "RRF30",
+        "RRF74",
+        "RRF91",
+        "RRF89",
+        "Sec34",
+        "RRF23",
+        "RRF49",
+        "RRF103",
+        "RRF66",
+        "EC10104",
+        "RRF25",
+        "RF6",
+        "RRF58",
+        "RRF97",
+        "RRF18",
+        "Sec60",
+        "RF8",
+        "RRF42",
+        "RRF94",
+        "RRF43",
+      ];
+
+      const temp = result?.data.filter((item) => codes.includes(item.empId));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;

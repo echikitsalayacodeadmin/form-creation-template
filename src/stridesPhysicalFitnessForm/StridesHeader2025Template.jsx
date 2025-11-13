@@ -6,8 +6,22 @@ import {
   Text,
   View,
   StyleSheet,
+  Font,
 } from "@react-pdf/renderer";
 import uncareheader from "../assets/images/uncareheader.png";
+import TimeRoman from "../assets/fonts/Times-Roman.ttf";
+import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+
+// Register fonts
+Font.register({
+  family: "Times-Roman-Normal",
+  src: TimeRoman,
+});
+
+Font.register({
+  family: "Times-Roman-Bold",
+  src: TimeRomanBold,
+});
 
 // Example component
 const StridesHeader2025Template = ({ data }) => {
@@ -53,6 +67,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
     fontWeight: "bold",
+    textDecoration: "underline",
+    fontFamily: "Times-Roman-Bold",
   },
   imageContainer: {
     padding: 20,
