@@ -82,13 +82,14 @@ import PftPdfModifier from "./tkil/pftPdfModifier";
 import EcgPdfModifier from "./tkil/ecgPdfModifier";
 import { SnackbarProvider } from "notistack";
 import StridesBlood from "./stridesPhysicalFitnessForm/StridesBlood";
+import Theobroma from "./Theobroma/TheobromaFssai";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <StridesPhysicalFitnessFormMain />
+        <Theobroma />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>
