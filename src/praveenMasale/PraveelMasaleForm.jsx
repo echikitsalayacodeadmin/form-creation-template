@@ -55,34 +55,43 @@ const PraveelMasaleForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const emps = [
-          "DE0102",
-          "SB1177",
-          "SB1094",
-          "SB1039",
-          "SB1039",
-          "P3202",
-          "SB1025",
-          // "P3082",
-          // "P3198",
-          // "SS004",
-          // "P3191",
-          // "P3187",
-          // "P3032",
-          // "HE0159",
-          // "P3049",
-          // "P3020",
-          // "RB866",
-          // "SB1161",
-          // "P3033",
-          // "P1288",
-          // "P3256",
-          // "P3077",
-        ];
-        // const temp = result?.data.filter(
-        //   (item) => item.vitalsCreatedDate === "2025-10-12"
-        // );
-        const temp = result?.data.filter((item) => emps.includes(item?.empId));
+        // const emps = [
+        //   "DE0102",
+        //   "SB1177",
+        //   "SB1094",
+        //   "SB1039",
+        //   "SB1039",
+        //   "P3202",
+        //   "SB1025",
+        //   // "P3082",
+        //   // "P3198",
+        //   // "SS004",
+        //   // "P3191",
+        //   // "P3187",
+        //   // "P3032",
+        //   // "HE0159",
+        //   // "P3049",
+        //   // "P3020",
+        //   // "RB866",
+        //   // "SB1161",
+        //   // "P3033",
+        //   // "P1288",
+        //   // "P3256",
+        //   // "P3077",
+        // ];
+        const temp = result?.data
+          .filter((item) => item.empId === "Jy00081")
+          .map((item) => ({
+            ...item,
+            visionWithGlasses:
+              item?.farRightEyeSightWithGlasses &&
+              item?.farLeftEyeSightWithGlasses &&
+              item?.farRightEyeSightWithGlasses &&
+              item?.nearLeftEyeSightWithGlasses
+                ? `FAR (R-${item?.farRightEyeSightWithGlasses} L-${item?.farLeftEyeSightWithGlasses}) NEAR (R-${item?.nearRightEyeSightWithGlasses} L-${item?.nearLeftEyeSightWithGlasses})`
+                : "",
+          }));
+        // const temp = result?.data.filter((item) => emps.includes(item?.empId));
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);

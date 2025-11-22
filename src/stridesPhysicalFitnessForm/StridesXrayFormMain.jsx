@@ -165,7 +165,9 @@ const StridesXrayFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data;
+      const temp = result?.data.filter(
+        (item) => item.empId !== "SH472" && item.xrayUrl
+      );
 
       const length = temp.length;
       console.log({ length });
@@ -201,7 +203,7 @@ const StridesXrayFormMain = ({
   }, [list, startDate, endDate, empIdFilter]);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < filteredList.length; i++) {
       await generatePDF(filteredList[i], i);
     }
   };

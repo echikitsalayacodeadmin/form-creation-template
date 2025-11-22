@@ -355,7 +355,7 @@ const FoodCertificateIndoreMarriot = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = ["E01192", "E01712", "E01882"];
+      const empIDS = ["1860"];
 
       // const temp = result?.data.filter(
       //   (item) => item.vitalsCreatedDate === "2025-11-03"
@@ -412,10 +412,12 @@ const FoodCertificateIndoreMarriot = ({
         <div>Uploaded Files: {uploadedCount}</div> <br />
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+            <div
+              key={index}
+            >{`${index}- ${item.empId} ${item.name} ${item?.vitalsCreatedDate}`}</div>
 
             <a href={item.medicalFitnessFoodUrl}>
-              <div key={index}>{item.medicalFitnessFoodUrl}</div>
+              <div key={index}>{item.medicalFitnessFoodUrl} </div>
             </a>
 
             <br />

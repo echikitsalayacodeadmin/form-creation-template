@@ -204,302 +204,356 @@ const PraveenMasaleFormTemplate = ({
       <View
         style={{
           border: "1px solid #000000",
-          paddingHorizontal: 20,
-          paddingTop: 15,
-          paddingBottom: 0,
         }}
       >
-        <Text style={[styles.header, { fontFamily: "Times-Roman-Bold" }]}>
-          FM/HRD/01/11B
-        </Text>
-
-        <Text style={styles.title}>PRAVIN MASALEWALE</Text>
-        <Text style={[styles.subtitle, { fontFamily: "Times-Roman-Bold" }]}>
-          MEDICAL EXAMINER'S CONFIDENTIAL REPORT
-        </Text>
-
         <View
-          style={[
-            styles.dateSection,
-            { flexDirection: "row", gap: 5, justifyContent: "flex-end" },
-          ]}
+          style={{
+            width: "100%",
+            borderBottom: "1px solid black",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "2px",
+          }}
         >
-          <Text style={{ fontFamily: "Times-Roman-Bold" }}> Date:-</Text>
-          <Text style={{ textDecoration: "underline" }}>
-            {dayjs(data?.vitalsCreatedDate).format("DD/MM/YYYY") || ""}
-          </Text>
-        </View>
+          <View
+            style={{
+              flexDirection: "row",
+              borderBottom: "1px solid black",
+            }}
+          >
+            <Text
+              style={{
+                width: "70%",
+                borderRight: "1px solid black",
+                textAlign: "center",
+                fontFamily: "Times-Roman",
+                fontSize: 10,
+                paddingTop: "2px",
+              }}
+            >
+              MEDICAL EXAMINER’S CONFIDENTIAL REPORT
+            </Text>
 
-        <View style={styles.fieldRow}>
-          <Text style={[styles.fieldLabel, { fontFamily: "Times-Roman-Bold" }]}>
-            1. Full name of the Life to be Examined:
-          </Text>
-          <View style={styles.fieldLine}>
-            <Text>{data?.name || ""}</Text>
+            <Text
+              style={{
+                width: "30%",
+                fontFamily: "Times-Roman",
+                fontSize: 10,
+                paddingTop: "2px",
+                paddingLeft: "10px",
+              }}
+            >
+              Rec. No. - REC/HRD/11
+            </Text>
           </View>
-        </View>
 
-        <View style={styles.fieldRow}>
-          <Text style={[styles.fieldLabel]}>Address:</Text>
-          <View style={styles.fieldLine}>
-            <Text>
-              {data?.address ||
-                "Plot No 44, One Suhana, Hadapsar, Pune - 411013, Maharashtra, India"}
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                width: "70%",
+                borderRight: "1px solid black",
+                textAlign: "center",
+                fontFamily: "Times-Roman",
+              }}
+            ></Text>
+            <Text
+              style={{
+                width: "30%",
+                fontFamily: "Times-Roman",
+                fontSize: 10,
+                paddingTop: "2px",
+                paddingLeft: "10px",
+              }}
+            >
+              Rev./Date - 01/01.01.2025
             </Text>
           </View>
         </View>
 
-        <View style={styles.multiFieldRow}>
-          <Text style={styles.fieldLabel}>Age:</Text>
-          <View style={styles.shortField}>
-            <Text>{data?.age || ""}</Text>
-          </View>
-          <Text style={styles.fieldLabel}>DOB:</Text>
-          <View style={styles.mediumField}>
-            <Text>{data?.dateOfBirth || ""}</Text>
-          </View>
-          <Text style={styles.fieldLabel}>Blood Group:</Text>
-          <View style={styles.shortField}>
-            <Text>{data?.bloodGroup || ""}</Text>
-          </View>
-        </View>
-
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Identification Mark if any:</Text>
-          <View style={styles.fieldLine}>
-            <Text>{data?.identification || "No"}</Text>
-          </View>
-        </View>
-
-        <Text
-          style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+        <View
+          style={{
+            paddingHorizontal: 20,
+            paddingTop: 15,
+            paddingBottom: 0,
+          }}
         >
-          2. Measurement & Weight:
-        </Text>
-
-        <View style={styles.multiFieldRow}>
-          <Text style={styles.fieldLabel}>Height (cm):</Text>
-          <View style={styles.shortField}>
-            <Text>{data?.height || ""}</Text>
+          <View
+            style={[
+              styles.dateSection,
+              { flexDirection: "row", gap: 5, justifyContent: "flex-end" },
+            ]}
+          >
+            <Text style={{ fontFamily: "Times-Roman-Bold" }}> Date:-</Text>
+            <Text style={{ textDecoration: "underline" }}>
+              {dayjs(data?.vitalsCreatedDate).format("DD/MM/YYYY") || ""}
+            </Text>
           </View>
-          <Text style={styles.fieldLabel}>Weight (kgs):</Text>
-          <View style={styles.shortField}>
-            <Text>{data?.weight || ""}</Text>
-          </View>
-          <Text style={styles.fieldLabel}>BMI</Text>
-          <View style={styles.shortField}>
-            <Text>{data?.bmi || ""}</Text>
-          </View>
-        </View>
-
-        <Text
-          style={[
-            styles.sectionNumber,
-            { marginBottom: 2 },
-            { fontFamily: "Times-Roman-Bold" },
-          ]}
-        >
-          3. CVS:
-        </Text>
-
-        <View style={styles.cvsSection}>
-          <Text style={{ fontFamily: "Times-Roman-Bold" }}>{"A)"}</Text>
-          <View style={styles.cvsSubSection}>
-            <Text style={styles.cvsLabel}>Pulse</Text>
-            <View style={styles.longField}>
-              <Text>{data?.pulseRate || ""}</Text>
+          <View style={styles.fieldRow}>
+            <Text
+              style={[styles.fieldLabel, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              1. Full name of the Life to be Examined:
+            </Text>
+            <View style={styles.fieldLine}>
+              <Text>{data?.name || ""}</Text>
             </View>
           </View>
-          <View style={styles.cvsSubSection}>
-            <Text style={styles.cvsLabel}>B.P. (mm of Hg.)</Text>
-            <View style={styles.longField}>
-              <Text>{data?.bp || ""}</Text>
+          <View style={styles.fieldRow}>
+            <Text style={[styles.fieldLabel]}>Address:</Text>
+            <View style={styles.fieldLine}>
+              <Text>
+                {data?.address ||
+                  "Plot No 44, One Suhana, Hadapsar, Pune - 411013, Maharashtra, India"}
+              </Text>
             </View>
           </View>
-          <View style={styles.cvsSubSection}>
-            <Text style={styles.cvsLabel}>Heart Sounds</Text>
-            <View style={styles.longField}>
-              <Text>NAD</Text>
+          <View style={styles.multiFieldRow}>
+            <Text style={styles.fieldLabel}>Age:</Text>
+            <View style={styles.shortField}>
+              <Text>{data?.age || ""}</Text>
+            </View>
+            <Text style={styles.fieldLabel}>DOB:</Text>
+            <View style={styles.mediumField}>
+              <Text>{data?.dateOfBirth || ""}</Text>
+            </View>
+            <Text style={styles.fieldLabel}>Blood Group:</Text>
+            <View style={styles.shortField}>
+              <Text>{data?.bloodGroup || ""}</Text>
             </View>
           </View>
-          <View style={styles.cvsSubSection}>
-            <Text style={styles.cvsLabel}>Murmur</Text>
-            <View style={styles.longField}>
-              <Text>NAD</Text>
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Identification Mark if any:</Text>
+            <View style={styles.fieldLine}>
+              <Text>{data?.identification || "No"}</Text>
             </View>
           </View>
-
-          <Text style={{ marginTop: 5, fontFamily: "Times-Roman-Bold" }}>
-            {"B)"}
+          <Text
+            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+          >
+            2. Measurement & Weight:
           </Text>
-          <View style={styles.cvsSubSection}>
-            <Text style={styles.cvsLabel}>RS</Text>
-            <View style={styles.longField}>
-              <Text>NAD</Text>
+          <View style={styles.multiFieldRow}>
+            <Text style={styles.fieldLabel}>Height (cm):</Text>
+            <View style={styles.shortField}>
+              <Text>{data?.height || ""}</Text>
+            </View>
+            <Text style={styles.fieldLabel}>Weight (kgs):</Text>
+            <View style={styles.shortField}>
+              <Text>{data?.weight || ""}</Text>
+            </View>
+            <Text style={styles.fieldLabel}>BMI</Text>
+            <View style={styles.shortField}>
+              <Text>{data?.bmi || ""}</Text>
             </View>
           </View>
-        </View>
-
-        <Text
-          style={[
-            styles.sectionNumber,
-            { marginBottom: 4, fontFamily: "Times-Roman-Bold" },
-          ]}
-        >
-          4. Skin:
-        </Text>
-        <View style={styles.cvsSubSection}>
-          <Text style={styles.cvsLabel}>Skin / Hair</Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
-        <View style={styles.cvsSubSection}>
-          <Text style={styles.cvsLabel}>Nail</Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
-        <View style={styles.cvsSubSection}>
-          <Text style={styles.cvsLabel}>Hernial Sites</Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
-        <View style={styles.cvsSubSection}>
-          <Text style={styles.cvsLabel}>Lymph Nodes</Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
-
-        <Text
-          style={[
-            styles.sectionNumber,
-            { marginBottom: 0 },
-            { fontFamily: "Times-Roman-Bold" },
-          ]}
-        >
-          5. P/A:
-        </Text>
-        <View style={styles.cvsSubSection}>
-          <Text style={styles.cvsLabel}>Liver</Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
-        <View style={styles.cvsSubSection}>
-          <Text style={styles.cvsLabel}>Spleen</Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
-        <View style={styles.cvsSubSection}>
-          <Text style={styles.cvsLabel}>Mass</Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
-
-        <View style={styles.fieldRow}>
           <Text
             style={[
               styles.sectionNumber,
-              { marginTop: 8, marginBottom: 0, fontFamily: "Times-Roman-Bold" },
+              { marginBottom: 2 },
+              { fontFamily: "Times-Roman-Bold" },
             ]}
           >
-            6. CNS: Stroke / Paralysis / Weakness:
+            3. CVS:
           </Text>
-          <View style={styles.longField}>
-            <Text>NAD</Text>
-          </View>
-        </View>
+          <View style={styles.cvsSection}>
+            <Text style={{ fontFamily: "Times-Roman-Bold" }}>{"A)"}</Text>
+            <View style={styles.cvsSubSection}>
+              <Text style={styles.cvsLabel}>Pulse</Text>
+              <View style={styles.longField}>
+                <Text>{data?.pulseRate || ""}</Text>
+              </View>
+            </View>
+            <View style={styles.cvsSubSection}>
+              <Text style={styles.cvsLabel}>B.P. (mm of Hg.)</Text>
+              <View style={styles.longField}>
+                <Text>{data?.bp || ""}</Text>
+              </View>
+            </View>
+            <View style={styles.cvsSubSection}>
+              <Text style={styles.cvsLabel}>Heart Sounds</Text>
+              <View style={styles.longField}>
+                <Text>NAD</Text>
+              </View>
+            </View>
+            <View style={styles.cvsSubSection}>
+              <Text style={styles.cvsLabel}>Murmur</Text>
+              <View style={styles.longField}>
+                <Text>NAD</Text>
+              </View>
+            </View>
 
-        <View style={[styles.fieldRow, { marginBottom: 0 }]}>
-          <Text
-            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
-          >
-            7. Ear-Nose-Thorat (ENT):
-          </Text>
-          <View style={[styles.longField, { marginTop: -5 }]}>
-            <Text>NAD</Text>
+            <Text style={{ marginTop: 5, fontFamily: "Times-Roman-Bold" }}>
+              {"B)"}
+            </Text>
+            <View style={styles.cvsSubSection}>
+              <Text style={styles.cvsLabel}>RS</Text>
+              <View style={styles.longField}>
+                <Text>NAD</Text>
+              </View>
+            </View>
           </View>
-        </View>
-
-        <View style={[styles.fieldRow, { marginBottom: 0 }]}>
           <Text
-            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            style={[
+              styles.sectionNumber,
+              { marginBottom: 4, fontFamily: "Times-Roman-Bold" },
+            ]}
           >
-            8. Teeth & Tongue & Gum's:
+            4. Skin:
           </Text>
-          <View style={[styles.longField, { marginTop: -5 }]}>
-            <Text>NAD</Text>
+          <View style={styles.cvsSubSection}>
+            <Text style={styles.cvsLabel}>Skin / Hair</Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
           </View>
-        </View>
-
-        <View style={[styles.fieldRow, { marginBottom: 0 }]}>
-          <Text
-            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
-          >
-            9. Eyes & Vison -Near – Distant – Colour – Squint:
-          </Text>
-          <View style={[styles.longField, { marginTop: -5 }]}>
-            <Text>{data?.visionRemark || ""}</Text>
+          <View style={styles.cvsSubSection}>
+            <Text style={styles.cvsLabel}>Nail</Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
           </View>
-        </View>
-
-        <View style={[styles.fieldRow, { marginBottom: 0 }]}>
-          <Text
-            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
-          >
-            10. Deformity & Disability:
-          </Text>
-          <View style={[styles.longField, { marginTop: -5 }]}>
-            <Text>NO</Text>
+          <View style={styles.cvsSubSection}>
+            <Text style={styles.cvsLabel}>Hernial Sites</Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
           </View>
-        </View>
-
-        <View style={[styles.fieldRow, { marginBottom: 0 }]}>
-          <Text
-            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
-          >
-            11. Habits:
-          </Text>
-          <View style={[styles.longField, { marginTop: -5 }]}></View>
-        </View>
-
-        <View style={[styles.fieldRow, { marginBottom: 0 }]}>
-          <Text
-            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
-          >
-            12. Any other Positive Findings:
-          </Text>
-          <View style={[styles.longField, { marginTop: -5 }]}>
-            <Text>NO</Text>
+          <View style={styles.cvsSubSection}>
+            <Text style={styles.cvsLabel}>Lymph Nodes</Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
           </View>
-        </View>
-
-        <View style={styles.multiFieldRow}>
           <Text
-            style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            style={[
+              styles.sectionNumber,
+              { marginBottom: 0 },
+              { fontFamily: "Times-Roman-Bold" },
+            ]}
           >
-            13. Vaccine
+            5. P/A:
           </Text>
-          <Text style={[styles.fieldLabel, { fontFamily: "Times-Roman-Bold" }]}>
-            1) T.T injection
-          </Text>
-          <View style={styles.mediumField}>
-            <Text style={{ fontSize: 10 }}>Batch No: KN24048</Text>
-            <Text style={{ fontSize: 10 }}>MFG Date: 08/2024</Text>
-            <Text style={{ fontSize: 10 }}>EXP Date: 07/2027</Text>
+          <View style={styles.cvsSubSection}>
+            <Text style={styles.cvsLabel}>Liver</Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
           </View>
-          <Text style={[styles.fieldLabel, { fontFamily: "Times-Roman-Bold" }]}>
-            2)Typhoid Vaccine
-          </Text>
-          <View style={styles.mediumField}>
-            <Text style={{ fontSize: 10 }}>Batch No: 05KS12B</Text>
-            <Text style={{ fontSize: 10 }}>MFG Date: 03/2025</Text>
-            <Text style={{ fontSize: 10 }}>EXP Date: 02/2028</Text>
+          <View style={styles.cvsSubSection}>
+            <Text style={styles.cvsLabel}>Spleen</Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
+          </View>
+          <View style={styles.cvsSubSection}>
+            <Text style={styles.cvsLabel}>Mass</Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
+          </View>
+          <View style={styles.fieldRow}>
+            <Text
+              style={[
+                styles.sectionNumber,
+                {
+                  marginTop: 8,
+                  marginBottom: 0,
+                  fontFamily: "Times-Roman-Bold",
+                },
+              ]}
+            >
+              6. CNS: Stroke / Paralysis / Weakness:
+            </Text>
+            <View style={styles.longField}>
+              <Text>NAD</Text>
+            </View>
+          </View>
+          <View style={[styles.fieldRow, { marginBottom: 0 }]}>
+            <Text
+              style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              7. Ear-Nose-Thorat (ENT):
+            </Text>
+            <View style={[styles.longField, { marginTop: -5 }]}>
+              <Text>NAD</Text>
+            </View>
+          </View>
+          <View style={[styles.fieldRow, { marginBottom: 0 }]}>
+            <Text
+              style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              8. Teeth & Tongue & Gum's:
+            </Text>
+            <View style={[styles.longField, { marginTop: -5 }]}>
+              <Text>NAD</Text>
+            </View>
+          </View>
+          <View style={[styles.fieldRow, { marginBottom: 0 }]}>
+            <Text
+              style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              9. Eyes & Vison -Near – Distant – Colour – Squint:
+            </Text>
+            <View style={[styles.longField, { marginTop: -5 }]}>
+              <Text>{data?.visionRemark || data?.visionWithGlasses || ""}</Text>
+            </View>
+          </View>
+          <View style={[styles.fieldRow, { marginBottom: 0 }]}>
+            <Text
+              style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              10. Deformity & Disability:
+            </Text>
+            <View style={[styles.longField, { marginTop: -5 }]}>
+              <Text>NO</Text>
+            </View>
+          </View>
+          <View style={[styles.fieldRow, { marginBottom: 0 }]}>
+            <Text
+              style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              11. Habits:
+            </Text>
+            <View style={[styles.longField, { marginTop: -5 }]}></View>
+          </View>
+          <View style={[styles.fieldRow, { marginBottom: 0 }]}>
+            <Text
+              style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              12. Any other Positive Findings:
+            </Text>
+            <View style={[styles.longField, { marginTop: -5 }]}>
+              <Text>NO</Text>
+            </View>
+          </View>
+          <View style={styles.multiFieldRow}>
+            <Text
+              style={[styles.sectionNumber, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              13. Vaccine
+            </Text>
+            <Text
+              style={[styles.fieldLabel, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              1) T.T injection
+            </Text>
+            <View style={styles.mediumField}>
+              <Text style={{ fontSize: 10 }}>Batch No: KN25960</Text>
+              <Text style={{ fontSize: 10 }}>EXP Date: 07-2028</Text>
+            </View>
+            <Text
+              style={[styles.fieldLabel, { fontFamily: "Times-Roman-Bold" }]}
+            >
+              2)Typhoid Vaccine
+            </Text>
+            <View style={styles.mediumField}>
+              <Text style={{ fontSize: 10 }}>Batch No: 54A25001A</Text>
+              <Text style={{ fontSize: 10 }}>EXP Date: 05-2028 </Text>
+            </View>
           </View>
         </View>
       </View>

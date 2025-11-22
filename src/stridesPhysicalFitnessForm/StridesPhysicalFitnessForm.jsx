@@ -167,16 +167,31 @@ const StridesPhysicalFitnessForm = ({
         {/* Header with logo and address */}
         <View style={styles.headerRow}>
           <Image style={styles.logo} src={uncareheader} />
-          <Image
-            style={{
-              height: 80,
-              width: 50,
-              position: "absolute",
-              top: 14,
-              right: 0,
-            }}
-            src={data?.imageUrl}
-          />
+          {data?.imageUrl ? (
+            <Image
+              style={{
+                height: 80,
+                width: 50,
+                position: "absolute",
+                top: 14,
+                right: 0,
+              }}
+              src={data.imageUrl}
+            />
+          ) : (
+            <View
+              style={{
+                height: 80,
+                width: 50,
+                position: "absolute",
+                top: 14,
+                right: 0,
+                border: "1px solid #000",
+              }}
+            >
+              <Text>No Photo</Text>
+            </View>
+          )}
         </View>
 
         <Text
@@ -209,7 +224,6 @@ const StridesPhysicalFitnessForm = ({
                   width: "100%",
                   borderRight: 0,
                   fontFamily: "Times-Roman-Bold",
-                  textDecoration: "underline",
                 },
               ]}
             >
@@ -750,10 +764,14 @@ const StridesPhysicalFitnessForm = ({
         </View>
         {/* Signature */}
         <View style={styles.signatureBlock}>
-          <Image
-            style={{ height: 100, width: 160 }}
-            src={getSignatureImage()}
-          />
+          {getSignatureImage() ? (
+            <Image
+              style={{ height: 100, width: 160 }}
+              src={getSignatureImage()}
+            />
+          ) : (
+            <Text>No Signature Available</Text>
+          )}
         </View>
       </Page>
     </Document>

@@ -195,7 +195,9 @@ const StridesBlood = ({
     const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
-      const temp = result?.data?.filter((item) => item.bloodTestUrl);
+      const temp = result?.data?.filter(
+        (item) => ["SH179"].includes(item?.empId) && item.bloodTestUrl
+      );
       const sorted = sortDataByName(temp);
       setList(sorted);
       console.log("Total PFT employees:", sorted.length);
@@ -219,8 +221,8 @@ const StridesBlood = ({
 
       const modifiedBlob = await modifyBloodPdfDynamic(bloodTestUrl);
       //   Step 3️⃣: Preview the modified PDF (optional)
-      const previewUrl = URL.createObjectURL(modifiedBlob);
-      window.open(previewUrl, "_blank");
+      // const previewUrl = URL.createObjectURL(modifiedBlob);
+      // window.open(previewUrl, "_blank");
 
       const formData = new FormData();
       formData.append("file", modifiedBlob, `BLOOD_${data?.empId}.pdf`);
@@ -243,7 +245,7 @@ const StridesBlood = ({
   };
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await handleBloodModify(list[i], i);
     }
   };

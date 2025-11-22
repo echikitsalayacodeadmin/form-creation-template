@@ -83,13 +83,16 @@ import EcgPdfModifier from "./tkil/ecgPdfModifier";
 import { SnackbarProvider } from "notistack";
 import StridesBlood from "./stridesPhysicalFitnessForm/StridesBlood";
 import Theobroma from "./Theobroma/TheobromaFssai";
+import StickerPrint from "./sticker/StickerPrint";
+import PhysicalMERFormMain from "./cipplabaddiPhysicalExaminationForm/PhysicalMERFormMain";
+import LiugongCardMain from "./liugongCard/LiugongCardMain";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <Theobroma />
+        <PhysicalMERFormMain />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>

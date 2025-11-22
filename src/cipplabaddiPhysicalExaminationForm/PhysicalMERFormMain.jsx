@@ -1,91 +1,25 @@
+import { pdf, PDFViewer } from "@react-pdf/renderer";
+import { useSnackbar } from "notistack";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
+import { getData } from "../assets/services/GetApiCall";
+import { updateData } from "../assets/services/PatchApi";
+import { uploadFile } from "../assets/services/PostApiCall";
+import { sortDataByName } from "../assets/utils";
+import MedicalExamFormWithBorders from "./PhysicalMedicalExaminationPDF";
 import {
   FormControlLabel,
   FormLabel,
   Grid,
   Radio,
   RadioGroup,
+  TextField,
   Typography,
 } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import { pdf, PDFViewer } from "@react-pdf/renderer";
-import { useSnackbar } from "notistack";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
-import React, { Fragment, useEffect, useMemo, useState } from "react";
-import { getData } from "../assets/services/GetApiCall";
-import { updateData } from "../assets/services/PatchApi";
-import { sortDataByName } from "../assets/utils";
-import StridesHeader2025Template from "./StridesHeader2025Template";
-import { uploadFile } from "../assets/services/PostApiCall";
 
-async function mergeHeaderAndXraySinglePage(headerPdfBytes, pftPdfBytes) {
-  // Load both PDFs
-  const headerPdf = await PDFDocument.load(headerPdfBytes);
-  const pftPdf = await PDFDocument.load(pftPdfBytes);
-
-  // --- STEP 1: Edit text in PFT PDF ---
-  const courier = await pftPdf.embedFont(StandardFonts.Helvetica);
-  const pages = pftPdf.getPages();
-
-  for (const page of pages) {
-    const { width, height } = page.getSize();
-
-    // Remove existing "ID :" text by overlaying a white rectangle
-    page.drawRectangle({
-      x: 218,
-      y: height - 100,
-      width: 30,
-      height: 12,
-      color: rgb(1, 1, 1), // white background
-    });
-
-    // Write new EMP ID text
-    page.drawText(`EMP ID`, {
-      x: 218,
-      y: height - 100,
-      size: 10,
-      font: courier,
-      color: rgb(0, 0, 0),
-    });
-
-    const rectWidth = 500;
-    const rectHeight = 15;
-
-    // Draw a centered black rectangle near the bottom (y = height - 50)
-    page.drawRectangle({
-      x: (width - rectWidth) / 2, // centers the rectangle horizontally
-      y: height - 50, // adjust vertically as needed
-      width: rectWidth,
-      height: rectHeight,
-      color: rgb(1, 1, 1),
-    });
-  }
-
-  // --- STEP 2: Merge header + edited PFT (same page) ---
-  const mergedPdf = await PDFDocument.create();
-
-  const [headerPage] = await mergedPdf.copyPages(headerPdf, [0]);
-  mergedPdf.addPage(headerPage);
-  const page = mergedPdf.getPage(0);
-  const { width, height } = page.getSize();
-
-  const [pftPage] = await pftPdf.getPages();
-  const embeddedPft = await mergedPdf.embedPage(pftPage);
-
-  page.drawPage(embeddedPft, {
-    x: 0,
-    y: 0,
-    width: width,
-    height: height - 150, // shift below header
-  });
-
-  const mergedBytes = await mergedPdf.save();
-  return mergedBytes;
-}
-
-const StridesPFTFormMain = ({
-  corpId = "f62fa674-0710-47c9-9a5e-b76b731a22e3",
-  campCycleId = "347754",
-  fileType = "PFT",
+const PhysicalMERFormMain = ({
+  corpId = "dd16b55c-2de0-4d1e-b6da-d2cbd98f7473",
+  campCycleId = "350262",
+  fileType = "ANNEXURE",
 }) => {
   const _storedData = (() => {
     try {
@@ -121,78 +55,77 @@ const StridesPFTFormMain = ({
 
   const generatePDF = async (data, index) => {
     try {
-      const headerBlob = await pdf(
-        <StridesHeader2025Template data={data} />
+      const pdfBlob = await pdf(
+        <MedicalExamFormWithBorders data={data} fit={fitStatus} />
       ).toBlob();
-      const headerBuffer = await headerBlob.arrayBuffer();
 
-      const res = await fetch(data.pftUrl);
-      const xrayBuffer = await res.arrayBuffer();
+      // const previewUrl = URL.createObjectURL(pdfBlob);
+      // window.open(previewUrl, "_blank");
 
-      const mergedBytes = await mergeHeaderAndXraySinglePage(
-        headerBuffer,
-        xrayBuffer,
-        data.empId
-      );
-      const mergedBlob = new Blob([mergedBytes], { type: "application/pdf" });
-
-      // STEP 4 — Upload the merged file
       const formData = new FormData();
-      formData.append(
-        "file",
-        mergedBlob,
-        `${data?.pftUrl?.split("/").pop() || "Report"}.pdf`
-      );
-
-      // const url = URL.createObjectURL(mergedBlob);
-      // window.open(url, "_blank");
+      formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
 
       const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
-        enqueueSnackbar("Successfully Uploaded Merged PDF!", {
+        enqueueSnackbar("Successfully Uploaded PDF!", {
           variant: "success",
         });
         setUploadedCount((prevCount) => prevCount + 1);
       } else {
-        enqueueSnackbar("An error Occurred!", { variant: "error" });
+        enqueueSnackbar("An error Occurred!", {
+          variant: "error",
+        });
       }
     } catch (error) {
-      console.error("Error generating/uploading merged PDF:", error);
-      enqueueSnackbar("Error generating/uploading merged PDF", {
+      console.error("Error generating/uploading PDF:", error);
+      enqueueSnackbar("Error generating/uploading PDF", {
         variant: "error",
       });
     }
   };
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const result = await getData(url);
-    if (result && result.data) {
-      console.log("Fetched Data successfully");
+    if (corpId && campCycleId) {
+      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await getData(url);
+      if (result && result.data) {
+        const emps = [
+          // "15524", // temp unfit
+          "81000531", // fit
+          "36768", // fit
+        ];
 
-      const temp = result?.data.filter(
-        (item) => !["SH472", "113732"]?.includes(item.empId) && item.pftUrl
-      );
-
-      const length = temp.length;
-      console.log({ length });
-      const sorted = sortDataByName(temp);
-      setList(sorted);
-
-      console.log({ empLisy: sorted });
-    } else {
-      console.log("An error Occurred");
+        const temp = result?.data
+          .filter((item) => emps.includes(item.empId))
+          .map((item) => ({
+            ...item,
+            visionWithGlasses:
+              item?.farRightEyeSightWithGlasses &&
+              item?.farLeftEyeSightWithGlasses &&
+              item?.farRightEyeSightWithGlasses &&
+              item?.nearLeftEyeSightWithGlasses
+                ? `FAR (R-${item?.farRightEyeSightWithGlasses} L-${item?.farLeftEyeSightWithGlasses}) NEAR (R-${item?.nearRightEyeSightWithGlasses} L-${item?.nearLeftEyeSightWithGlasses})`
+                : "",
+          }));
+        // const temp = result?.data.filter((item) => emps.includes(item?.empId));
+        const length = temp.length;
+        const sorted = sortDataByName(temp);
+        setList(sorted);
+        setTotalEmployees(length);
+      } else {
+        console.log("An error Occurred");
+        setList([]);
+        setTotalEmployees("");
+      }
     }
   };
 
   useEffect(() => {
     fetchListOfEmployees();
-    // eslint-disable-next-line
   }, [corpId, campCycleId]);
 
-  // Filtering logic with useMemo
   const filteredList = useMemo(() => {
     let filtered = [...list];
     if (startDate && endDate) {
@@ -234,7 +167,6 @@ const StridesPFTFormMain = ({
       });
     }
   };
-
   useEffect(() => {
     const savedFilter = {
       startDate,
@@ -373,7 +305,7 @@ const StridesPFTFormMain = ({
   return (
     <Fragment>
       {/* User Inputs */}
-      <h2>Strides PFT Report</h2>
+      <h2>Strides Physical Fitness Form</h2>
       <Grid container spacing={2}>
         <Grid item xs={12} md={1.5}>
           <TextField
@@ -407,6 +339,11 @@ const StridesPFTFormMain = ({
           >
             <FormControlLabel value="fit" control={<Radio />} label="Fit" />
             <FormControlLabel value="unfit" control={<Radio />} label="Unfit" />
+            <FormControlLabel
+              value="temporaryUnfit"
+              control={<Radio />}
+              label="Temporary Unfit"
+            />
           </RadioGroup>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -462,22 +399,26 @@ const StridesPFTFormMain = ({
         <button onClick={handleDeletePDF}>Delete Files</button>
         <div>Total Employees: {totalEmployees}</div> <br />
         <div>Uploaded Files: {uploadedCount}</div> <br />
-        {filteredList.map((item, index) => (
+        {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.pftUrl}>
-              <div key={index}>{item.pftUrl}</div>
+            <div
+              key={index}
+            >{`${index}- ${item.empId} ${item.name} ${item?.visionRemark}`}</div>
+
+            <a href={item.annexureUrl}>
+              <div key={index}>{item.annexureUrl}</div>
             </a>
+
             <br />
           </div>
         ))}
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <StridesHeader2025Template data={list[0]} />
+        <MedicalExamFormWithBorders data={list[0]} fit={"temporaryUnfit"} />
       </PDFViewer>
     </Fragment>
   );
 };
 
-export default StridesPFTFormMain;
+export default PhysicalMERFormMain;
