@@ -86,13 +86,14 @@ import Theobroma from "./Theobroma/TheobromaFssai";
 import StickerPrint from "./sticker/StickerPrint";
 import PhysicalMERFormMain from "./cipplabaddiPhysicalExaminationForm/PhysicalMERFormMain";
 import LiugongCardMain from "./liugongCard/LiugongCardMain";
+import HeaderFormsForPuneCorps from "./WithoutHeaderForm(Pune Corps)/HeaderFormsForPuneCorps";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <PhysicalMERFormMain />
+        <Form32Generic />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>

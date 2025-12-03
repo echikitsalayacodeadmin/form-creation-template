@@ -9,6 +9,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
+import DrSwapnilDevidas from "../assets/images/DrSwapnilDevidas.png";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 import uncareheader from "../assets/images/uncareheader.png";
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
 
 const Form32Template = ({
   data,
-  company = "Atlas Copco (India) Private Limited",
+  company = "John Deere India Private Limited",
   date = "12th June 2025",
   fitText,
   signature = "prashantDeshmukh", // default signature
@@ -155,6 +156,8 @@ const Form32Template = ({
         return Dr_Jaydip_Saxena;
       case "prashantDeshmukh.png":
         return prashantDeshmukh;
+      case "DrSwapnilDevidas.png":
+        return DrSwapnilDevidas;
       case "dr_kunal_stamp_sign.png":
       default:
         return dr_kunal_stamp_sign;
@@ -164,10 +167,10 @@ const Form32Template = ({
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header with logo and address */}
-        {/* <View style={styles.headerRow}>
+        <View style={styles.headerRow}>
           <Image style={styles.logo} src={uncareheader} />
         </View>
-        <Text style={styles.regOffice}>
+        {/* <Text style={styles.regOffice}>
           Regd. Office: 253, Shri Krishna Avenue, Phase-1, Limbodi Khandwa Road,
           Indore-452001
         </Text> */}
@@ -298,10 +301,10 @@ const Form32Template = ({
                 { width: "25%", fontFamily: "Times-Roman-Bold" },
               ]}
             >
-              Designation
+              EmpId
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.designation || ""}
+              {data?.empId || ""}
             </Text>
             <Text
               style={[
@@ -414,7 +417,7 @@ const Form32Template = ({
             ></Text>
           </View>
           {/* Important Medical History */}
-          <View style={styles.tableRow}>
+          {/* <View style={styles.tableRow}>
             <Text
               style={[
                 styles.cell,
@@ -475,9 +478,9 @@ const Form32Template = ({
             >
               HBP/DM/BA/Arthritis/PTB Epilepsy/Renal Disease
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>None</Text>
+            <Text style={[styles.cell, { width: "25%" }]}>NAD</Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              None
+              NAD
             </Text>
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
@@ -503,7 +506,7 @@ const Form32Template = ({
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
             ></Text>
-          </View>
+          </View> */}
           {/* General medical Examination */}
           <View style={styles.tableRow}>
             <Text
@@ -539,7 +542,7 @@ const Form32Template = ({
             >
               ENT:
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>None</Text>
+            <Text style={[styles.cell, { width: "25%" }]}>NAD</Text>
             <Text
               style={[
                 styles.cell,
@@ -550,7 +553,7 @@ const Form32Template = ({
               Digestive System:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              None
+              NAD
             </Text>
           </View>
           <View style={styles.tableRow}>
@@ -563,7 +566,7 @@ const Form32Template = ({
             >
               Skin Condition :
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>None</Text>
+            <Text style={[styles.cell, { width: "25%" }]}>NAD</Text>
             <Text
               style={[
                 styles.cell,
@@ -574,7 +577,7 @@ const Form32Template = ({
               Oral Cavity
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              None
+              NAD
             </Text>
           </View>
           <View style={styles.tableRow}>
@@ -692,6 +695,9 @@ const Form32Template = ({
         </View>
         {/* Signature */}
         <View style={styles.signatureBlock}>
+          <Text>
+            Dr Swapnil Devidas Deore, {"\n"}MBBS AFIH, {"\n"}Reg No 2011061931
+          </Text>
           <Image
             style={{ height: 100, width: 160 }}
             src={getSignatureImage()}

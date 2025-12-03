@@ -91,11 +91,7 @@ const PhysicalMERFormMain = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const emps = [
-          // "15524", // temp unfit
-          "81000531", // fit
-          "36768", // fit
-        ];
+        const emps = ["81000234"];
 
         const temp = result?.data
           .filter((item) => emps.includes(item.empId))
@@ -305,7 +301,7 @@ const PhysicalMERFormMain = ({
   return (
     <Fragment>
       {/* User Inputs */}
-      <h2>Strides Physical Fitness Form</h2>
+      <h2>Cippla Physical Fitness Form</h2>
       <Grid container spacing={2}>
         <Grid item xs={12} md={1.5}>
           <TextField

@@ -125,8 +125,8 @@ async function modifyEcgPdf(ecgUrl) {
 
 // ✅ React Component
 const EcgPdfModifier = ({
-  corpId = "b1821b42-807b-419e-8969-3e500d636f4b",
-  campCycleId = "345079",
+  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
+  campCycleId = "355289",
   fileType = "ECG",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -141,7 +141,7 @@ const EcgPdfModifier = ({
     if (result && result.data) {
       const temp = result?.data?.filter((item) => item.ecgUrl);
       const sorted = sortDataByName(temp);
-      setList(sorted);
+      setList(sorted?.slice(1200, 1500));
       console.log("Total PFT employees:", sorted.length);
       setTotalEmployees(sorted.length);
     } else {
@@ -174,8 +174,8 @@ const EcgPdfModifier = ({
       const modifiedBlob = await modifyEcgPdf(ecgUrl, found);
 
       // Step 3️⃣: Preview the modified PDF (optional)
-      //   const previewUrl = URL.createObjectURL(modifiedBlob);
-      //   window.open(previewUrl, "_blank");
+      // const previewUrl = URL.createObjectURL(modifiedBlob);
+      // window.open(previewUrl, "_blank");
 
       // Step 4️⃣: (Optional) Upload the modified PDF back to server
 

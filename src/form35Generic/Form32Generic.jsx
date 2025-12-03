@@ -1,16 +1,20 @@
-import React, { Fragment, useState, useEffect, useMemo } from "react";
-import { PDFViewer, BlobProvider, pdf } from "@react-pdf/renderer";
-import Button from "@mui/material/Button";
+import {
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { useSnackbar } from "notistack";
-import Form32Template from "./Form32Template";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { getData } from "../assets/services/GetApiCall";
-import { uploadFile } from "../assets/services/PostApiCall";
 import { updateData } from "../assets/services/PatchApi";
+import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import { Grid, Typography } from "@mui/material";
-import { RadioGroup, FormControlLabel, Radio, FormLabel } from "@mui/material";
-import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
+import Form32Template from "./Form32Template";
 
 const Form32Generic = () => {
   const _storedData = (() => {
@@ -63,7 +67,7 @@ const Form32Generic = () => {
           data={data}
           fitText={fitText}
           signature={signature}
-          company="ACG Capsules Pithampur"
+          company="John Deere India Private Limited"
         />
       ).toBlob();
 
@@ -101,36 +105,15 @@ const Form32Generic = () => {
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      // const empIDs = [
-      //   "SS0420",
-      //   "92212",
-      //   "253024",
-      //   "72002",
-      //   "235156",
-      //   "52051",
-      //   "252051",
-      //   "102194",
-      //   "253033",
-      //   "SS0373",
-      //   "92078",
-      //   "182008",
-      //   "182176",
-      //   "122355",
-      //   "92293",
-      //   "241225",
-      //   "32078",
-      //   "122344",
-      //   "992083",
-      //   "245084",
-      //   "42048",
-      //   "252038",
-      //   "182012",
-      //   "132394",
-      //   "122611",
-      //   "72163",
-      // ];
-
-      const temp = result?.data;
+      const temp = result?.data?.filter(
+        (item) =>
+          item.vitalsCreatedDate === "2025-11-17" ||
+          item.vitalsCreatedDate === "2025-11-18" ||
+          item.vitalsCreatedDate === "2025-11-19" ||
+          item.vitalsCreatedDate === "2025-11-20" ||
+          item.vitalsCreatedDate === "2025-11-21" ||
+          item.vitalsCreatedDate === "2025-11-22"
+      );
       // .filter((item) => empIDs.includes(item.empId));
 
       const length = temp.length;
@@ -438,6 +421,11 @@ const Form32Generic = () => {
               control={<Radio />}
               label="Prashant Deshmukh"
             />
+            <FormControlLabel
+              value="DrSwapnilDevidas.png"
+              control={<Radio />}
+              label="Dr Swapnil Devidas"
+            />
           </RadioGroup>
         </Grid>
         <Grid item xs={12} md={12} sx={{ maxWidth: 800, flexWrap: "wrap" }}>
@@ -489,7 +477,7 @@ const Form32Generic = () => {
       </BlobProvider> */}
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
         <Form32Template
-          data={{}}
+          data={filteredList[0]}
           fitText={
             fitStatus === "fit"
               ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
