@@ -87,13 +87,14 @@ import StickerPrint from "./sticker/StickerPrint";
 import PhysicalMERFormMain from "./cipplabaddiPhysicalExaminationForm/PhysicalMERFormMain";
 import LiugongCardMain from "./liugongCard/LiugongCardMain";
 import HeaderFormsForPuneCorps from "./WithoutHeaderForm(Pune Corps)/HeaderFormsForPuneCorps";
+import EmployeeLoginAutomationMain from "./employeeLoginAutomation/EmployeeLoginAutomationMain";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <Form32Generic />
+        <EmployeeLoginAutomationMain />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>
