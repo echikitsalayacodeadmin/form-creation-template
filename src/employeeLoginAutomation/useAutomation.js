@@ -23,11 +23,14 @@ const useAutomation = () => {
       const authId = docodedAuth?.id;
       const patient = await getPatientByAuthId(authId, mobile);
 
+      const empId = patient.empId;
+      const corpId = patient.corpId;
+
       const labs = await getLabs({
         lat: 22.7196,
         lng: 75.8577,
-        corpId: "872cd841-9f7a-432d-b8e9-422b780bca10",
-        empId: "LA888",
+        corpId: corpId,
+        empId: empId,
       });
 
       const reportData = { auth, patient, labs };
