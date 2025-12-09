@@ -25,18 +25,31 @@ export default function useAutomationBatch() {
       console.log({ docodedAuth });
 
       const patient = await getPatientByAuthId(docodedAuth.id, mobile);
+
+      console.log({ patient });
+
+      const empId = patient.empId;
+      const corpId = patient.corpId;
       const labs = await getLabs({
         lat: 22.7196,
         lng: 75.8577,
-        corpId: "872cd841-9f7a-432d-b8e9-422b780bca10",
-        empId: "LA888",
+        corpId: corpId,
+        empId: empId,
+      });
+
+      const labsPune = await getLabs({
+        lat: 18.5204,
+        lng: 73.8567,
+        corpId: corpId,
+        empId: empId,
       });
 
       row = {
         mobile,
-        patientId: patient?.id || "",
-        name: patient?.fullName || "",
-        labCount: labs?.length || 0,
+        patientId: patient?.patientId || "",
+        name: patient?.name || "",
+        labCount_indore: labs?.length || 0,
+        labCount_pune: labsPune?.length || 0,
         status: "Success",
         isLabFlowEnabled: patient.isLabFlowEnabled,
       };
