@@ -6,13 +6,14 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
+import { JaydipSaxsenaBase64 } from "../effotelFassai/assets";
 
 const DaawatFoodFssai = ({
   corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
   campCycleId = "316385",
   fileType = "FITNESS_CERTIFICATE_FOOD",
   corpName = "Daawat Foods Limited",
-  // campDate = "27th Feb, 2025",
+  campDate = "3rd Dec, 2025",
   year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -219,7 +220,7 @@ const DaawatFoodFssai = ({
             }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${data?.vitalsCreatedDate}&nbsp;
+              >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -232,7 +233,7 @@ const DaawatFoodFssai = ({
           <br />
           <br />
           
-          <img src=${LogoImageFSSAI} 
+          <img src=${JaydipSaxsenaBase64} 
           style="height:200px;"
           />
           <br />
@@ -353,7 +354,20 @@ const DaawatFoodFssai = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIds = ["KC0013", "1210060", "KC0014", "KC0008", "KC0010"];
+      const empIds = [
+        "1210489",
+        "1210481",
+        "1210499",
+        "1210501",
+        "1211135",
+        "2001",
+        "1210480",
+        "1210988",
+        "1210987",
+        "1210989C",
+        "764",
+        "765",
+      ];
 
       const temp = result?.data.filter((item) => empIds.includes(item.empId));
 

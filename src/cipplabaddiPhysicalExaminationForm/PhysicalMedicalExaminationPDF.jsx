@@ -276,6 +276,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
                   wordBreak: "break-word", // handles long words
                 }}
               >
+                <Text>{data?.empId || ""}</Text> /{" "}
                 {data?.contractorName || "NA"}
               </Text>
             </View>
@@ -347,6 +348,9 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
 
           {/* Complaints row (single wide cell) */}
           <View style={styles.row}>
+            <View style={[styles.cellSmall, { flex: 0.2 }]}>
+              <Text style={{ fontWeight: "bold" }}>Complaints (if any)</Text>
+            </View>
             <View
               style={[
                 {
@@ -359,7 +363,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
                 },
               ]}
             >
-              <Text style={{ fontWeight: "bold" }}>Complaints (if any)</Text>
+              <Text style={{ fontWeight: "bold" }}>NA</Text>
             </View>
           </View>
 
@@ -367,11 +371,11 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
           <View style={styles.row}>
             <View style={[styles.cellLarge]}>
               <Text style={{ fontWeight: "bold" }}>
-                Past Medical/Occupational History
+                Past Medical/Occupational History : NA
               </Text>
             </View>
             <View style={[styles.cellMedium, styles.cellLast]}>
-              <Text>HTN/DM/CAD/TB/Other-</Text>
+              <Text>HTN/DM/CAD/TB/Other- NA</Text>
             </View>
           </View>
 
@@ -385,17 +389,24 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
               </Text>
               <Text style={{ fontWeight: "bold" }}>
                 {data?.healthHistoryFormData?.alcoholHabit
+                  ? `${data?.healthHistoryFormData?.alcoholHabit || "NA"}`
+                  : "NA"}
+                {/* {data?.healthHistoryFormData?.alcoholHabit
                   ? `Alcohol : ${
                       data?.healthHistoryFormData?.alcoholHabit || "NA"
                     }`
-                  : ""}
+                  : "NA"} */}
               </Text>
+              <Text>/</Text>
               <Text style={{ fontWeight: "bold" }}>
                 {data?.healthHistoryFormData?.smokingHabit
+                  ? `${data?.healthHistoryFormData?.smokingHabit || "NA"}`
+                  : "NA"}
+                {/* {data?.healthHistoryFormData?.smokingHabit
                   ? `Smoking : ${
                       data?.healthHistoryFormData?.smokingHabit || "NA"
                     }`
-                  : ""}
+                  : "NA"} */}
               </Text>
             </View>
             <View
@@ -707,7 +718,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
               >
                 ENT:
               </Text>
-              <Text>NA</Text>
+              <Text>NAD</Text>
             </View>
           </View>
 
@@ -732,7 +743,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
               >
                 Chest & Respiratory System:
               </Text>
-              <Text>{"NA"}</Text>
+              <Text>{"NAD"}</Text>
             </View>
           </View>
 
@@ -757,7 +768,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
               >
                 Cardiovascular System:
               </Text>
-              <Text>{"NA"}</Text>
+              <Text>{"NAD"}</Text>
             </View>
           </View>
 
@@ -782,7 +793,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
               >
                 Abdomen & Genitourinary System:
               </Text>
-              <Text>{"NA"}</Text>
+              <Text>{"NAD"}</Text>
             </View>
           </View>
 
@@ -821,7 +832,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
                   <Text>
                     H/o of Epilepsy: Yes/No; If yes give details{" "}
                     {data?.doctorConsultationFormData
-                      ?.centralNervousSystemStatus || "NA"}
+                      ?.centralNervousSystemStatus || "NAD"}
                   </Text>
                 </View>
               </View>
@@ -851,7 +862,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
               </Text>
               <Text>
                 {data?.doctorConsultationFormData?.skinExaminationStatus ||
-                  "NA"}
+                  "NAD"}
               </Text>
             </View>
           </View>
@@ -876,7 +887,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
               >
                 Gynaecology & Obstetrics Examination (For females only):
               </Text>
-              <Text>NA</Text>
+              <Text>{data?.gender === "MALE" ? "NA" : "NAD"}</Text>
             </View>
           </View>
         </View>
@@ -888,11 +899,33 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
             Remarks:
           </Text>
           <Text style={{ marginTop: 6 }}>
-            I hereby certify that I have examined Mr/Ms{" "}
+            I hereby certify that I have examined{" "}
+            <Text
+              style={{
+                textDecoration:
+                  data?.gender === "FEMALE" ? "line-through" : "none",
+              }}
+            >
+              Mr
+            </Text>
+            /
+            <Text
+              style={{
+                textDecoration:
+                  data?.gender === "MALE" ? "line-through" : "none",
+              }}
+            >
+              Ms
+            </Text>{" "}
             <Text style={{ textDecoration: "underline" }}>
               {data?.name || ""}
             </Text>{" "}
-            for pre-employment/periodical medical examination, I have found/not
+            for{" "}
+            <Text style={{ textDecoration: "line-through" }}>
+              pre-employment
+            </Text>
+            /periodical medical examination, I have{" "}
+            <Text style={{ textDecoration: "line-through" }}>found</Text>/not
             found any disease, illness, contagious illness, tuberculosis or any
             other significant abnormalities during the medical examination.
           </Text>

@@ -88,6 +88,7 @@ import PhysicalMERFormMain from "./cipplabaddiPhysicalExaminationForm/PhysicalME
 import LiugongCardMain from "./liugongCard/LiugongCardMain";
 import HeaderFormsForPuneCorps from "./WithoutHeaderForm(Pune Corps)/HeaderFormsForPuneCorps";
 import EmployeeLoginAutomationMain from "./employeeLoginAutomation/EmployeeLoginAutomationMain";
+import StickerFileMain from "./StickerFile/StickerFileMain";
 
 const App = () => {
   return (

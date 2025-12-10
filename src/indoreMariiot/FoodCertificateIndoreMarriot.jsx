@@ -355,7 +355,7 @@ const FoodCertificateIndoreMarriot = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = ["E01781"];
+      const empIDS = ["E01781", "E01817", "E01561", "E01687"];
 
       // const temp = result?.data.filter(
       //   (item) => item.vitalsCreatedDate === "2025-11-03"

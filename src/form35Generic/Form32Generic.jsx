@@ -105,16 +105,77 @@ const Form32Generic = () => {
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data?.filter(
-        (item) =>
-          item.vitalsCreatedDate === "2025-11-17" ||
-          item.vitalsCreatedDate === "2025-11-18" ||
-          item.vitalsCreatedDate === "2025-11-19" ||
-          item.vitalsCreatedDate === "2025-11-20" ||
-          item.vitalsCreatedDate === "2025-11-21" ||
-          item.vitalsCreatedDate === "2025-11-22"
-      );
-      // .filter((item) => empIDs.includes(item.empId));
+      // const EmpIds = [
+      //   "LW5000015727",
+      //   "LW5000031359",
+      //   "LW5000002507",
+      //   "LW5000000802",
+      //   "LW5000000831",
+      //   "10104074",
+      //   "00777986",
+      //   "LW5000030157",
+      //   "LW5000015181",
+      //   "LW5000000814",
+      //   "LW5000025221",
+      //   "LW5000000818",
+      //   "LW5000022796",
+      //   "10106733",
+      //   "10094319",
+      //   "LW5000008244",
+      //   "754269",
+      //   "LW5000030835",
+      //   "LW5000015486",
+      //   "LW5000027756",
+      //   "10100447",
+      //   "LW5000024530",
+      //   "LW5000027156",
+      //   "788795",
+      //   "761699",
+      //   "10087157",
+      //   "LW5000011950",
+      //   "LW5000031050",
+      //   "LW5000002114",
+      //   "LW5000027167",
+      //   "754402",
+      //   "LW5000000943",
+      //   "LW5000023660",
+      //   "LW5000030784",
+      //   "LW5000028154",
+      //   "LW5000013825",
+      //   "10087122",
+      //   "10102559",
+      //   "LW5000022960",
+      //   "LW5000023236",
+      //   "LW5000030632",
+      //   "LW5000002118",
+      //   "LW5000024889",
+      //   "10102739",
+      //   "00747671",
+      //   "LW5000000996",
+      //   "LW5000000769",
+      //   "754391",
+      //   "LW5000032009",
+      //   "LW5000030109",
+      //   "00755558",
+      //   "LW5000029602",
+      //   "10105768",
+      //   "LW5000003621",
+      //   "755937",
+      //   "LW5000032039",
+      //   "LW5000030619",
+      // ].map((item) => item?.toString());
+
+      const temp = result?.data
+        // ?.filter(
+        //   (item) => item?.empId === "LW5000002718"
+        // );
+
+        .filter(
+          (item) =>
+            item.vitalsCreatedDate === "2025-12-05" ||
+            item.vitalsCreatedDate === "2025-12-06"
+        );
+      // ?.filter((item) => EmpIds.includes(item.empId));
 
       const length = temp.length;
       console.log({ length });

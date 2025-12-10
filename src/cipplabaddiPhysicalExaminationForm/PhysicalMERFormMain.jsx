@@ -91,7 +91,7 @@ const PhysicalMERFormMain = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const emps = ["81000234"];
+        const emps = ["81000234", "135943"];
 
         const temp = result?.data
           .filter((item) => emps.includes(item.empId))

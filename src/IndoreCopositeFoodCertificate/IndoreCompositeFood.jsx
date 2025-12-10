@@ -12,7 +12,7 @@ const IndoreCompositeFood = ({
   corpId = "c59a2fbc-bc3d-453c-aae4-313581793890",
   campCycleId = "297398",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "RPSPL PRIVATE LIMITED",
+  corpName = "Indore Composite Pvt. Ltd",
   campDate = "26th Sept, 2025",
   year = "2025",
 }) => {
@@ -354,7 +354,7 @@ const IndoreCompositeFood = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
       const empIds = ["CMF11632", "CMF11596", "CMF11591", "CMF11595"];
-      const temp = result?.data.filter((item) => empIds.includes(item.empId));
+      const temp = result?.data.filter((item) => item.medicalFitnessFoodUrl);
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
