@@ -77,7 +77,7 @@ const StickerPDF = ({ data }) => {
             <View key={i} style={styles.sticker}>
               <Text style={styles.empId}>{item.empId}</Text>
               <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.folder}>{item.date}</Text>
+              <Text style={styles.folder}>{item.folder}</Text>
             </View>
           ))}
         </Page>

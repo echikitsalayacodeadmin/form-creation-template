@@ -165,16 +165,11 @@ const Form32Generic = () => {
       //   "LW5000030619",
       // ].map((item) => item?.toString());
 
-      const temp = result?.data
-        // ?.filter(
-        //   (item) => item?.empId === "LW5000002718"
-        // );
+      const temp = result?.data;
+      // ?.filter(
+      //   (item) => item?.empId === "LW5000002718"
+      // );
 
-        .filter(
-          (item) =>
-            item.vitalsCreatedDate === "2025-12-05" ||
-            item.vitalsCreatedDate === "2025-12-06"
-        );
       // ?.filter((item) => EmpIds.includes(item.empId));
 
       const length = temp.length;

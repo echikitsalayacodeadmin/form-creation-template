@@ -1539,7 +1539,7 @@ const UnichemAnnexure = ({
               Lung Function test
 
               <span style="float: right; margin-right: 30px"
-                >${data?.pftToggle ? "NORMAL" : "NA"}
+                >${"NORMAL"}
               </span>
             </p>
           </td>
@@ -1649,7 +1649,7 @@ const UnichemAnnexure = ({
               X Ray Chest
 
               <span style="float: right; margin-right: 30px"
-                >${data?.xrayToggle ? "NORMAL" : "NA"}
+                >${"NORMAL"}
               </span>
             </p>
           </td>

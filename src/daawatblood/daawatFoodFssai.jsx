@@ -12,7 +12,7 @@ const DaawatFoodFssai = ({
   corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
   campCycleId = "316385",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "Daawat Foods Limited",
+  corpName = "Raghuvesh Agri Food Pvt Ltd Bhopal",
   campDate = "3rd Dec, 2025",
   year = "2025",
 }) => {
@@ -218,7 +218,7 @@ const DaawatFoodFssai = ({
             <span style=" text-transform: capitalize; text-decoration: underline"> ${
               data?.name.toLowerCase() || ""
             }</span>
-            employed with <b>M/S ${corpName} </b>coming in direct
+            employed with <b>M/S ${data?.contractorName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
               >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
             </u> Based
@@ -367,6 +367,7 @@ const DaawatFoodFssai = ({
         "1210989C",
         "764",
         "765",
+        "763C",
       ];
 
       const temp = result?.data.filter((item) => empIds.includes(item.empId));
