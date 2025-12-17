@@ -14,9 +14,13 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import Form32Template from "./Form32Template";
+import SkodaPhysicalFitnessFormTemplate from "./SkodaPhysicalFitnessFormTemplate";
 
-const Form32Generic = () => {
+const SkodaPhysicalFitnessFormMain = ({
+  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
+  campCycleId = "355289",
+  fileType = "PHYSICAL_FITNESS_FORM",
+}) => {
   const _storedData = (() => {
     try {
       return JSON.parse(localStorage.getItem("SAVED_FORM32_FILTERS")) || {};
@@ -27,14 +31,10 @@ const Form32Generic = () => {
   })();
 
   useEffect(() => {
-    setCorpId(_storedData?.corpId || "");
-    setCampCycleId(_storedData?.campCycleId || "");
-    setFileType(_storedData?.fileType || "PHYSICAL_FITNESS_FORM");
     setFitStatus(_storedData?.fitStatus || "fit");
     setStartDate(_storedData?.startDate || "");
     setEndDate(_storedData?.endDate || "");
     setEmpIdFilter(_storedData?.empIdFilter || "");
-    setSignature(_storedData?.signature || "dr_kunal_stamp_sign");
   }, []);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -45,14 +45,11 @@ const Form32Generic = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // New state for user inputs
-  const [corpId, setCorpId] = useState("");
-  const [campCycleId, setCampCycleId] = useState("");
-  const [fileType, setFileType] = useState("PHYSICAL_FITNESS_FORM");
+
   const [fitStatus, setFitStatus] = useState("fit");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [empIdFilter, setEmpIdFilter] = useState("");
-  const [signature, setSignature] = useState("dr_kunal_stamp_sign.png");
 
   const generatePDF = async (data, index) => {
     try {
@@ -63,11 +60,10 @@ const Form32Generic = () => {
           ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
           : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.";
       const pdfBlob = await pdf(
-        <Form32Template
+        <SkodaPhysicalFitnessFormTemplate
           data={data}
           fitText={fitText}
-          signature={signature}
-          company="John Deere India Private Limited"
+          company="SKODA Auto Volkswagen India Pvt Ltd"
         />
       ).toBlob();
 
@@ -105,33 +101,9 @@ const Form32Generic = () => {
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const EmpIds = [
-        "754518",
-        "LW5000000887",
-        "778620",
-        "LW5000031487",
-        "LW5000029693",
-        "838106",
-        "LW5000031979",
-        "LW5000003398",
-        "LW5000032285",
-        "LW5000030281",
-        "762130",
-        "778620",
-        "10083854",
-        "754205",
-        "754349",
-        "758314",
-        "LW5000005557",
-        "LW5000032300",
-      ].map((item) => item?.toString());
+      const temp = result?.data;
 
-      const temp = result?.data
-        // ?.filter(
-        //   (item) => item?.empId === "LW5000002718"
-        // );
-
-        ?.filter((item) => EmpIds.includes(item.empId));
+      // ?.filter((item) => EmpIds.includes(item.empId));
 
       const length = temp.length;
       console.log({ length });
@@ -194,26 +166,13 @@ const Form32Generic = () => {
 
   useEffect(() => {
     const savedFilter = {
-      corpId,
-      campCycleId,
-      fileType,
       startDate,
       endDate,
       fitStatus,
       empIdFilter,
-      signature,
     };
     localStorage.setItem("SAVED_FORM32_FILTERS", JSON.stringify(savedFilter));
-  }, [
-    corpId,
-    campCycleId,
-    fileType,
-    startDate,
-    endDate,
-    fitStatus,
-    empIdFilter,
-    signature,
-  ]);
+  }, [startDate, endDate, fitStatus, empIdFilter]);
 
   const [bloodData, setBloodData] = useState([]);
   const [excludedTestKeys, setExcludedTestKeys] = useState("");
@@ -344,34 +303,6 @@ const Form32Generic = () => {
       {/* User Inputs */}
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <TextField
-            label="Corp ID"
-            value={corpId}
-            onChange={(e) => setCorpId(e.target.value)}
-            size="small"
-            fullWidth
-          />
-        </Grid>
-
-        <Grid item xs={12} md={1}>
-          <TextField
-            label="Camp Cycle ID"
-            value={campCycleId}
-            onChange={(e) => setCampCycleId(e.target.value)}
-            size="small"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
-            label="File Type"
-            value={fileType}
-            onChange={(e) => setFileType(e.target.value)}
-            size="small"
-            fullWidth
-          />
-        </Grid>
         <Grid item xs={12} md={1.5}>
           <TextField
             label="Start Date"
@@ -415,36 +346,7 @@ const Form32Generic = () => {
             fullWidth
           />
         </Grid>
-        <Grid item xs={12} md={4}>
-          <FormLabel component="legend">Signature</FormLabel>
-          <RadioGroup
-            row
-            value={signature}
-            onChange={(e) => setSignature(e.target.value)}
-            name="signature-group"
-          >
-            <FormControlLabel
-              value="dr_kunal_stamp_sign.png"
-              control={<Radio />}
-              label="Dr Kunal"
-            />
-            <FormControlLabel
-              value="Dr_Jaydip_Saxena.png"
-              control={<Radio />}
-              label="Dr Jaydip"
-            />
-            <FormControlLabel
-              value="prashantDeshmukh.png"
-              control={<Radio />}
-              label="Prashant Deshmukh"
-            />
-            <FormControlLabel
-              value="DrSwapnilDevidas.png"
-              control={<Radio />}
-              label="Dr Swapnil Devidas"
-            />
-          </RadioGroup>
-        </Grid>
+
         <Grid item xs={12} md={12} sx={{ maxWidth: 800, flexWrap: "wrap" }}>
           <Typography>UNFIT EMPIDS -</Typography>
           <TextField
@@ -474,37 +376,20 @@ const Form32Generic = () => {
           </div>
         ))}
       </div>
-      {/* <BlobProvider
-        document={
-          <Form32Template
-            data={{}}
-            fitText={
-              fitStatus === "fit"
-                ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
-                : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
-            }
-          />
-        }
-      >
-        {({ url }) => (
-          <Button href={url || ""} download={"FORM35.pdf"}>
-            Download PDF
-          </Button>
-        )}
-      </BlobProvider> */}
+
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <Form32Template
+        <SkodaPhysicalFitnessFormTemplate
           data={filteredList[0]}
           fitText={
             fitStatus === "fit"
               ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
               : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
           }
-          signature={signature}
+          company="SKODA Auto Volkswagen India Pvt Ltd"
         />
       </PDFViewer>
     </Fragment>
   );
 };
 
-export default Form32Generic;
+export default SkodaPhysicalFitnessFormMain;

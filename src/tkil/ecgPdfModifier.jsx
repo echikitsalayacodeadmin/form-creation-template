@@ -141,7 +141,7 @@ const EcgPdfModifier = ({
     if (result && result.data) {
       const temp = result?.data?.filter((item) => item.ecgUrl);
       const sorted = sortDataByName(temp);
-      setList(sorted?.slice(1200, 1500));
+      setList(sorted?.slice(2000, 3000));
       console.log("Total PFT employees:", sorted.length);
       setTotalEmployees(sorted.length);
     } else {

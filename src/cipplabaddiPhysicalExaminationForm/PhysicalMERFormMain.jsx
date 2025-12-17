@@ -538,7 +538,7 @@ const PhysicalMERFormMain = ({
           <div key={index} style={{ display: "flex" }}>
             <div
               key={index}
-            >{`${index}- ${item.empId} ${item.name} ${item?.visionRemark}`}</div>
+            >{`${index}- ${item.empId} ${item.name} ${item?.bloodGroup} ${item?.visionRemark}`}</div>
 
             <a href={item.annexureUrl}>
               <div key={index}>{item.annexureUrl}</div>
