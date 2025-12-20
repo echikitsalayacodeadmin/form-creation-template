@@ -69,6 +69,17 @@ async function mergeHeaderWithReport(reportPdfBytes) {
   return await mergedPdf.save();
 }
 
+const map = {
+  xray: {
+    value: "XRAY",
+    url: "xrayUrl",
+  },
+  form35: {
+    value: "FORM_35",
+    url: "form35Url",
+  },
+};
+
 const HeaderFormsForPuneCorps = ({
   corpId = "51c68a9a-8edb-48dc-a6ac-e8b2a6ef3058",
   campCycleId = "355372",

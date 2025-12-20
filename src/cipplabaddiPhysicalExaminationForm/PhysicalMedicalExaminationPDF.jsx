@@ -645,7 +645,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
                         textAlign: "center",
                       }}
                     >
-                      {data?.colourVision || ""}
+                      {"      "}
                     </Text>
                   </View>
 
@@ -894,7 +894,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
         {/* TABLE END */}
 
         {/* Remarks section (outside the inner table but still in page) */}
-        <View style={styles.remarkBox}>
+        <View style={[styles.remarkBox]}>
           <Text style={{ fontWeight: "bold", fontFamily: "Times-Roman-Bold" }}>
             Remarks:
           </Text>
@@ -929,10 +929,21 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
             found any disease, illness, contagious illness, tuberculosis or any
             other significant abnormalities during the medical examination.
           </Text>
-          <Text style={{ marginTop: 6 }}>
-            I certify that employee is medically
-            ________________________________________
-          </Text>
+          <View style={{ flexDirection: "row", gap: "5px" }}>
+            <Text style={{ marginTop: 6 }}>
+              I certify that employee is medically
+            </Text>
+            <Text
+              style={{
+                borderBottom: 1,
+                borderBottomColor: "#000",
+                paddingBottom: 1,
+                marginTop: 6,
+              }}
+            >
+              Fit with Consultation advised with FMO & Follow up.
+            </Text>
+          </View>
         </View>
 
         {/* Fit / Unfit */}

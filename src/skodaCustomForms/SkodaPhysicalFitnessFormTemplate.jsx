@@ -340,7 +340,7 @@ const SkodaPhysicalFitnessFormTemplate = ({
               Blood Pressure:
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.bp || ""}
+              {data?.bp ? `${data?.bp} mmHg` : ""}
             </Text>
             <Text
               style={[
@@ -366,7 +366,7 @@ const SkodaPhysicalFitnessFormTemplate = ({
               Weight:
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.weight || ""}
+              {data?.weight ? `${data?.weight} kg` : ""}
             </Text>
             <Text
               style={[
@@ -378,7 +378,7 @@ const SkodaPhysicalFitnessFormTemplate = ({
               Height:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              {data?.height || ""}
+              {data?.height ? `${data?.height} cm` : ""}
             </Text>
           </View>
           <View style={styles.tableRow}>

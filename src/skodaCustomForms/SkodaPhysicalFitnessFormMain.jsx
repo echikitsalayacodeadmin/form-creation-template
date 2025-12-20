@@ -58,7 +58,7 @@ const SkodaPhysicalFitnessFormMain = ({
       const fitText =
         fitStatus === "fit"
           ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
-          : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.";
+          : "After examining & above result of above stated executive, I hereby confirm that he is FIT with medication/consultation advised.";
       const pdfBlob = await pdf(
         <SkodaPhysicalFitnessFormTemplate
           data={data}
@@ -101,9 +101,51 @@ const SkodaPhysicalFitnessFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data;
+      // const codes = [
+      //   "40035733",
+      //   "40035431",
+      //   "40036332",
+      //   "40036568",
+      //   "40035744",
+      //   "40035135",
+      //   "40035517",
+      //   "40035702",
+      //   "40035946",
+      // ];
+      const codesUnfit = [
+        "40032189",
+        "40035499",
+        "40036743",
+        "610704",
+        "40035583",
+        "40035970",
+        "40035241",
+        "40035085",
+        "40035066",
+        "40036283",
+        "40038063",
+        "40035284",
+        "40036280",
+        "40035201",
+        "40037962",
+        "611125",
+        "40035949",
+        "40030035",
+        "40035826",
+        "40035770",
+      ];
 
-      // ?.filter((item) => EmpIds.includes(item.empId));
+      const r = ["40037329", "40035744", "40035733", "40035431"];
+
+      const temp = result?.data?.filter(
+        (item) =>
+          item?.vitalsCreatedDate === "2025-11-19" &&
+          codesUnfit.includes(item?.empId)
+
+        // &&
+        // item.vitalsCreatedDate === "2025-11-17" ||
+        // item?.vitalsCreatedDate === "2025-11-18"
+      );
 
       const length = temp.length;
       console.log({ length });
@@ -383,7 +425,7 @@ const SkodaPhysicalFitnessFormMain = ({
           fitText={
             fitStatus === "fit"
               ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
-              : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
+              : "After examining & above result of above stated executive, I hereby confirm that he is FIT with medication/consultation advised."
           }
           company="SKODA Auto Volkswagen India Pvt Ltd"
         />

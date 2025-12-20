@@ -126,12 +126,12 @@ const Form32Generic = () => {
         "LW5000032300",
       ].map((item) => item?.toString());
 
-      const temp = result?.data
-        // ?.filter(
-        //   (item) => item?.empId === "LW5000002718"
-        // );
+      const temp = result?.data;
+      // ?.filter(
+      //   (item) => item?.empId === "LW5000002718"
+      // );
 
-        ?.filter((item) => EmpIds.includes(item.empId));
+      // ?.filter((item) => EmpIds.includes(item.empId));
 
       const length = temp.length;
       console.log({ length });

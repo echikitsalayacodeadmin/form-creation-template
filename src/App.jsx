@@ -91,13 +91,18 @@ import EmployeeLoginAutomationMain from "./employeeLoginAutomation/EmployeeLogin
 import StickerFileMain from "./StickerFile/StickerFileMain";
 import SkodaPhysicalFitnessFormMain from "./skodaCustomForms/SkodaPhysicalFitnessFormMain";
 import SkodaHeaderInsertor from "./skodaCustomForms/SkodaHeaderInsertor";
+import CiplaBaddiEyeFormModify from "./cipplabaddiPhysicalExaminationForm/CiplaBaddiEyeFormModify";
+import ReplaceAgeInAudiometery from "./skodaCustomForms/ReplaceAgeInAudiometery";
+import ReplaceAgeInECG from "./skodaCustomForms/ReplaceAgeInECG";
+import ReplaceAgeInPft from "./skodaCustomForms/ReplaceAgeInPft";
+import ReplaceAgeAllReports from "./skodaCustomForms/ReplaceAgeAllReports";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <SkodaHeaderInsertor />
+        <SkodaPhysicalFitnessFormMain />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>

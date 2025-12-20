@@ -12,16 +12,22 @@ async function removeAddressFromHeaderInReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
   const mergedPdf = await PDFDocument.create();
 
-  const [origPage] = await mergedPdf.copyPages(reportPdf, [0]);
-  const page = origPage;
+  const [page] = await mergedPdf.copyPages(reportPdf, [0]);
   const { width, height } = page.getSize();
 
-  // White-out area where address is located (left side below header)
+  // White-out from top of page till 90 height (full width)
   page.drawRectangle({
     x: 0,
-    y: height - 130, // Y-position of address
-    width: 320, // Width covering address content
-    height: 65, // Height covering address content
+    // Xray
+    y: height - 105, // 90px down from top
+    width: width, // full page width
+    height: 105,
+
+    // Form35
+    // y: height - 75, // 90px down from top
+    // width: width, // full page width
+    // height: 75,
+
     color: rgb(1, 1, 1),
   });
 
@@ -72,6 +78,8 @@ async function mergeHeaderWithReport(reportPdfBytes) {
 const SkodaHeaderInsertor = ({
   corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
   campCycleId = "355289",
+  // fileType = "FORM_35",
+  // urlType = "form35Url",
   fileType = "XRAY",
   urlType = "xrayUrl",
 }) => {
@@ -114,20 +122,20 @@ const SkodaHeaderInsertor = ({
         `${data?.[urlType]?.split("/").pop() || "Report"}`
       );
 
-      const url2 = URL.createObjectURL(mergedBlob);
-      window.open(url2, "_blank");
+      //   const url2 = URL.createObjectURL(mergedBlob);
+      //   window.open(url2, "_blank");
 
-      //   const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-      //   const result = await uploadFile(url, formData);
+      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
 
-      //   if (result && result.data) {
-      //     enqueueSnackbar("Successfully Uploaded Merged PDF!", {
-      //       variant: "success",
-      //     });
-      //     setUploadedCount((prevCount) => prevCount + 1);
-      //   } else {
-      //     enqueueSnackbar("An error Occurred!", { variant: "error" });
-      //   }
+      if (result && result.data) {
+        enqueueSnackbar("Successfully Uploaded Merged PDF!", {
+          variant: "success",
+        });
+        setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+        enqueueSnackbar("An error Occurred!", { variant: "error" });
+      }
     } catch (error) {
       console.error("Error generating/uploading merged PDF:", error);
       enqueueSnackbar("Error generating/uploading merged PDF", {
@@ -141,11 +149,79 @@ const SkodaHeaderInsertor = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-
-      const codes = [];
+      // "710069",
+      // const codes = [
+      //   // "610931",
+      //   // "40030309",
+      //   // "40035005",
+      //   // "40030020",
+      //   // "40030981",
+      //   // "40030960",
+      //   // "40031130",
+      //   // "40036934",
+      //   // "40035572",
+      //   // "40035425",
+      //   // "40032018",
+      //   // "40035298",
+      //   // "40030310",
+      //   // "40036016",
+      //   // "40035718",
+      //   // "40030518",
+      //   // "40035337",
+      //   // "40036397",
+      //   // "40031666",
+      //   // "40036191",
+      //   // "40030280",
+      //   // "40030250",
+      //   // "40035094",
+      //   // "40035965",
+      //   // "40036205",
+      //   // "40000599",
+      //   // "40035163",
+      //   // "40036471",
+      //   // "40037488",
+      //   // "40035948",
+      //   // "40035524",
+      //   // "40035024",
+      //   // "40035167",
+      //   // "40035188",
+      //   // "40050711",
+      //   // "40037950",
+      //   // "40051110",
+      //   // "40036592",
+      //   // "40036396",
+      //   // "40031166",
+      //   // "40035199",
+      //   // "40031589",
+      //   // ;;;
+      //   // "40031130",
+      //   // "40036934",
+      //   // "40035572",
+      //   // "40035425",
+      //   // "40035188",
+      //   // "40031589",
+      // ];
 
       //   const temp = result?.data.filter((item) => codes.includes(item.empId));
-      const temp = result?.data;
+
+      const codes = [
+        "40035733",
+        "40035431",
+        "40036332",
+        "40036568",
+        "40035744",
+        "40035135",
+        "40035517",
+        "40035702",
+        "40035946",
+      ];
+      // const codes2 = ["40036236", "40035085", "40036292", "40035514"];
+
+      const temp = result?.data.filter(
+        (item) => item?.vitalsCreatedDate === "2025-11-19" && item?.[urlType]
+        // !codes.includes(item?.empId)
+        // codes2?.includes(item?.empId)
+      );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -162,7 +238,7 @@ const SkodaHeaderInsertor = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };
