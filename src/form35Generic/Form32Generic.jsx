@@ -126,7 +126,11 @@ const Form32Generic = () => {
         "LW5000032300",
       ].map((item) => item?.toString());
 
-      const temp = result?.data;
+      const temp = result?.data?.filter(
+        (item) =>
+          item.vitalsCreatedDate === "2025-12-16" ||
+          item.vitalsCreatedDate === "2025-12-17"
+      );
       // ?.filter(
       //   (item) => item?.empId === "LW5000002718"
       // );

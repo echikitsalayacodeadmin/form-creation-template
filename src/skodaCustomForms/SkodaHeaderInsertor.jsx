@@ -218,7 +218,7 @@ const SkodaHeaderInsertor = ({
       // const codes2 = ["40036236", "40035085", "40036292", "40035514"];
 
       const temp = result?.data.filter(
-        (item) => item?.vitalsCreatedDate === "2025-11-19" && item?.[urlType]
+        (item) => item?.vitalsCreatedDate === "2025-11-20" && item?.[urlType]
         // !codes.includes(item?.empId)
         // codes2?.includes(item?.empId)
       );

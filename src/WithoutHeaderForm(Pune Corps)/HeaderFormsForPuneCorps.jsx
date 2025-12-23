@@ -8,6 +8,30 @@ import { getData } from "../assets/services/GetApiCall";
 import { PDFDocument, rgb } from "pdf-lib";
 import { uploadFile } from "../assets/services/PostApiCall";
 
+async function removeSignFromReport(reportPdfBytes) {
+  const reportPdf = await PDFDocument.load(reportPdfBytes);
+  const mergedPdf = await PDFDocument.create();
+
+  const [origPage] = await mergedPdf.copyPages(reportPdf, [0]);
+  const page = origPage;
+  const { width, height } = page.getSize();
+
+  // ----------------------------------
+  // White-out Seal / Signature section
+  // (Bottom-right area of the page)
+  // ----------------------------------
+  page.drawRectangle({
+    x: width - 250, // right side
+    y: 230, // distance from bottom
+    width: 250,
+    height: 150,
+    color: rgb(1, 1, 1),
+  });
+
+  mergedPdf.addPage(page);
+  return await mergedPdf.save();
+}
+
 async function removeAddressFromHeaderInReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
   const mergedPdf = await PDFDocument.create();
@@ -28,6 +52,7 @@ async function removeAddressFromHeaderInReport(reportPdfBytes) {
   mergedPdf.addPage(page);
   return await mergedPdf.save();
 }
+
 async function mergeHeaderWithReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
   const mergedPdf = await PDFDocument.create();
@@ -81,10 +106,10 @@ const map = {
 };
 
 const HeaderFormsForPuneCorps = ({
-  corpId = "51c68a9a-8edb-48dc-a6ac-e8b2a6ef3058",
-  campCycleId = "355372",
-  fileType = "PHYSICAL_FITNESS_FORM",
-  urlType = "physicalFitnessFormUrl",
+  corpId = "c2791eda-2b5a-44fc-8958-cd5641c2881c",
+  campCycleId = "361961",
+  fileType = "FORM_35",
+  urlType = "form35Url",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -113,6 +138,9 @@ const HeaderFormsForPuneCorps = ({
       } else if (processType === "remove") {
         console.log("Removing Address from Header...");
         finalBytes = await removeAddressFromHeaderInReport(reportBuffer);
+      } else if (processType === "removeSign") {
+        console.log("Removing Address from Header...");
+        finalBytes = await removeSignFromReport(reportBuffer);
       }
 
       const mergedBlob = new Blob([finalBytes], { type: "application/pdf" });
@@ -156,11 +184,7 @@ const HeaderFormsForPuneCorps = ({
       const codes = [];
 
       //   const temp = result?.data.filter((item) => codes.includes(item.empId));
-      const temp = result?.data.filter(
-        (item) =>
-          item.vitalsCreatedDate === "2025-11-17" &&
-          item.empId === "LW5000032138"
-      );
+      const temp = result?.data.filter((item) => item.empId === "10043");
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -217,6 +241,7 @@ const HeaderFormsForPuneCorps = ({
           >
             <option value="add">Add Header</option>
             <option value="remove">Remove Address</option>
+            <option value="removeSign">Remove Sign Form35</option>
           </select>
         </div>
         <div>Total Employees: {totalEmployees}</div> <br />

@@ -1,37 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { getData } from "../assets/services/GetApiCall";
-import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import { useSnackbar } from "notistack";
 
 /* =========================================================
-   FILE CONFIG (Offsets differ per report)
+   FILE CONFIG
 ========================================================= */
 const FILE_CONFIG = {
-  ECG: {
-    urlKey: "ecgUrl",
-    fileType: "ECG",
-    xOffset: 40,
-    whiteWidth: 15,
+  BLOOD: {
+    urlKey: "bloodTestUrl",
+    fileType: "BLOOD",
   },
   PFT: {
     urlKey: "pftUrl",
     fileType: "PFT",
-    xOffset: 47,
-    whiteWidth: 20,
   },
   AUDIOMETRY: {
     urlKey: "audiometryUrl",
     fileType: "AUDIOMETRY",
-    xOffset: 20,
-    whiteWidth: 30,
   },
 };
 
 /* =========================================================
-   PDF.JS LOADER
+   DATE CONFIG (LABEL + OFFSETS)
+========================================================= */
+const DATE_CONFIG = {
+  AUDIOMETRY: [{ label: "Registration Date", xOffset: 74, whiteWidth: 140 }],
+
+  PFT: [{ label: "Date", xOffset: 45, whiteWidth: 140 }],
+
+  BLOOD: [
+    { label: "Registered On", xOffset: 115, whiteWidth: 59 },
+    { label: "Sample Collected On", xOffset: 115, whiteWidth: 59 },
+    { label: "Sample Reported On", xOffset: 115, whiteWidth: 59 },
+  ],
+};
+
+const DRAW_CONFIG = {
+  AUDIOMETRY: {
+    yOffset: 0,
+    whiteHeightExtra: 1,
+    textYOffset: 0,
+    textSize: 9,
+  },
+
+  PFT: {
+    yOffset: -2, // 👈 PFT baseline fix
+    whiteHeightExtra: 1, // 👈 covers full date + time
+    textYOffset: 1, // 👈 aligns text perfectly
+    textSize: 9,
+  },
+
+  BLOOD: {
+    yOffset: -2,
+    whiteHeightExtra: 1,
+    textYOffset: 1,
+    textSize: 9,
+  },
+};
+
+/* =========================================================
+   LOAD PDF.JS
 ========================================================= */
 async function loadPdfJs() {
   const pdfjsLib = await import(
@@ -43,9 +74,9 @@ async function loadPdfJs() {
 }
 
 /* =========================================================
-   FIND AGE LABEL POSITION
+   FIND LABEL POSITION
 ========================================================= */
-async function findAgeLabelPosition(pdfUrl) {
+async function findLabelPosition(pdfUrl, labelText) {
   const pdfjsLib = await loadPdfJs();
   const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
   const page = await pdf.getPage(1);
@@ -53,7 +84,7 @@ async function findAgeLabelPosition(pdfUrl) {
 
   for (const item of textContent.items) {
     const text = item.str?.trim();
-    if (text && text.startsWith("Age")) {
+    if (text && text.startsWith(labelText)) {
       const [x, y] = item.transform.slice(4, 6);
       await pdf.destroy();
       return { x, y, height: item.height || 10 };
@@ -65,56 +96,57 @@ async function findAgeLabelPosition(pdfUrl) {
 }
 
 /* =========================================================
-   REPLACE AGE IN PDF
+   REPLACE DATE IN PDF
 ========================================================= */
-async function replaceAgeInPdf({
-  pdfUrl,
-  newAge,
-  xOffset,
-  whiteWidth,
-  fileType,
-}) {
-  const ageLabel = await findAgeLabelPosition(pdfUrl);
-  if (!ageLabel) return null;
+async function replaceDateInPdf({ pdfUrl, fileType, customDate }) {
+  const configs = DATE_CONFIG[fileType];
+  if (!configs) return null;
 
   const pdfBytes = await fetch(pdfUrl).then((r) => r.arrayBuffer());
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const page = pdfDoc.getPages()[0];
-
-  const VALUE_X = ageLabel.x + xOffset;
-  const VALUE_Y = ageLabel.y;
-
-  page.drawRectangle({
-    x: VALUE_X,
-    y: VALUE_Y,
-    width: whiteWidth,
-    height: ageLabel.height + 3,
-    color: rgb(1, 1, 1),
-  });
-
-  const textX = fileType === "PFT" ? VALUE_X + 3 + 5 : VALUE_X + 3;
-
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  page.drawText(newAge, {
-    x: textX,
-    y: VALUE_Y,
-    size: 9,
-    font,
-    color: rgb(0, 0, 0),
-  });
+
+  for (const cfg of configs) {
+    const labelPos = await findLabelPosition(pdfUrl, cfg.label);
+    if (!labelPos) continue;
+
+    const drawCfg = DRAW_CONFIG[fileType] || DRAW_CONFIG.BLOOD;
+
+    const VALUE_X = labelPos.x + cfg.xOffset + 3;
+    const VALUE_Y = labelPos.y + drawCfg.yOffset;
+
+    // WHITE OUT OLD DATE (AND TIME)
+    page.drawRectangle({
+      x: VALUE_X,
+      y: VALUE_Y,
+      width: cfg.whiteWidth,
+      height: labelPos.height + drawCfg.whiteHeightExtra,
+      color: rgb(1, 1, 1),
+    });
+
+    // DRAW NEW DATE
+    page.drawText(customDate, {
+      x: VALUE_X + 3,
+      y: VALUE_Y + drawCfg.textYOffset,
+      size: drawCfg.textSize,
+      font,
+      color: rgb(0, 0, 0),
+    });
+  }
 
   return new Blob([await pdfDoc.save()], { type: "application/pdf" });
 }
 
 /* =========================================================
-   PROCESS ALL FILES FOR ONE EMPLOYEE
+   PROCESS EMPLOYEE FILES
 ========================================================= */
 async function processEmployee({
   employee,
   corpId,
   campCycleId,
   enqueueSnackbar,
-  age,
+  customDate,
 }) {
   for (const key of Object.keys(FILE_CONFIG)) {
     const config = FILE_CONFIG[key];
@@ -122,36 +154,36 @@ async function processEmployee({
     if (!pdfUrl) continue;
 
     try {
-      const modifiedBlob = await replaceAgeInPdf({
+      const modifiedBlob = await replaceDateInPdf({
         pdfUrl,
-        newAge: age,
-        xOffset: config.xOffset,
-        whiteWidth: config.whiteWidth,
         fileType: config.fileType,
+        customDate,
       });
 
       if (!modifiedBlob) {
-        enqueueSnackbar(`Age not found in ${key} for ${employee.empId}`, {
+        enqueueSnackbar(`Date not found in ${key} (${employee.empId})`, {
           variant: "warning",
         });
         continue;
       }
 
-      const formData = new FormData();
-      formData.append("file", modifiedBlob, `${key}_${employee.empId}.pdf`);
+      const url2 = URL.createObjectURL(modifiedBlob);
+      window.open(url2, "_blank");
 
-      // const previewUrl = URL.createObjectURL(modifiedBlob);
-      // window.open(previewUrl, "_blank");
+      const originalFileName =
+        employee?.[config.urlKey]?.split("/")?.pop() ||
+        `${key}_${employee.empId}.pdf`;
+
+      const formData = new FormData();
+      formData.append("file", modifiedBlob, originalFileName);
 
       const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${config.fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-
       await uploadFile(uploadUrl, formData);
-
       enqueueSnackbar(`${key} uploaded for ${employee.empId}`, {
         variant: "success",
       });
     } catch (err) {
-      console.error(`${key} failed`, err);
+      console.error(err);
       enqueueSnackbar(`${key} failed for ${employee.empId}`, {
         variant: "error",
       });
@@ -162,9 +194,10 @@ async function processEmployee({
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
-const ReplaceAgeAllReports = ({
-  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
-  campCycleId = "355289",
+const MaralCustomDateOnReports = ({
+  corpId = "b10d9fce-34a9-4a5b-b728-0550bb9014ac",
+  campCycleId = "358831",
+  CUSTOM_DATE = "02-Dec-2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [employees, setEmployees] = useState([]);
@@ -175,18 +208,15 @@ const ReplaceAgeAllReports = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const res = await getData(url);
 
-      const excludedDates = ["2025-11-19", "2025-11-18", "2025-11-17"];
-      const includedDates = ["2025-11-20"];
-
-      const filteredData =
+      const filtered =
         res?.data?.filter(
-          (item) =>
-            includedDates.includes(item?.vitalsCreatedDate) &&
-            item?.bloodTestUrl
+          (item) => item?.vitalsCreatedDate === "2025-12-17"
+          // item?.bloodTestUrl || item?.pftUrl || item?.audiometryUrl
         ) || [];
 
-      setEmployees(sortDataByName(filteredData));
+      setEmployees(sortDataByName(filtered));
     };
+
     fetchEmployees();
   }, [corpId, campCycleId]);
 
@@ -197,7 +227,7 @@ const ReplaceAgeAllReports = ({
         corpId,
         campCycleId,
         enqueueSnackbar,
-        age: employees[i]?.cholestrolData?.["AGE"] || employees[i]?.age,
+        customDate: CUSTOM_DATE,
       });
       setProcessed((p) => p + 1);
     }
@@ -206,7 +236,7 @@ const ReplaceAgeAllReports = ({
   return (
     <div>
       <button onClick={handleStart}>
-        Modify & Upload ECG + PFT + AUDIOMETRY
+        Modify & Upload DATE (Blood + PFT + Audiometry)
       </button>
 
       <div>Total Employees: {employees.length}</div>
@@ -214,12 +244,13 @@ const ReplaceAgeAllReports = ({
 
       {employees.map((e, i) => (
         <div key={i}>
-          {i + 1}. {e.empId} - {e.name}{" "}
-          {employees[i]?.cholestrolData?.["AGE"] || "_"}
+          {i + 1}. {e.empId} - {e.name} isPFT:{e?.pftUrl ? "Yes" : "No"}{" "}
+          isAudio:{e?.audiometryUrl ? "Yes" : "No"} isBlood:
+          {e?.bloodTestUrl ? "Yes" : "No"}
         </div>
       ))}
     </div>
   );
 };
 
-export default ReplaceAgeAllReports;
+export default MaralCustomDateOnReports;

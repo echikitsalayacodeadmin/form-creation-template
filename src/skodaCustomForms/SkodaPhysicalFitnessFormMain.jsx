@@ -112,40 +112,19 @@ const SkodaPhysicalFitnessFormMain = ({
       //   "40035702",
       //   "40035946",
       // ];
-      const codesUnfit = [
-        "40032189",
-        "40035499",
-        "40036743",
-        "610704",
-        "40035583",
-        "40035970",
-        "40035241",
-        "40035085",
-        "40035066",
-        "40036283",
-        "40038063",
-        "40035284",
-        "40036280",
-        "40035201",
-        "40037962",
-        "611125",
-        "40035949",
-        "40030035",
-        "40035826",
-        "40035770",
-      ];
+      // const codesUnfit = ["40035085", "40035241"];
 
-      const r = ["40037329", "40035744", "40035733", "40035431"];
+      // const r = ["40036041"];
 
-      const temp = result?.data?.filter(
-        (item) =>
-          item?.vitalsCreatedDate === "2025-11-19" &&
-          codesUnfit.includes(item?.empId)
+      const temp = result?.data;
+      // ?.filter(
+      //   (item) =>
+      //     // r.includes(item?.empId)
 
-        // &&
-        // item.vitalsCreatedDate === "2025-11-17" ||
-        // item?.vitalsCreatedDate === "2025-11-18"
-      );
+      //     // &&
+
+      //   // item?.vitalsCreatedDate === "2025-11-18"
+      // );
 
       const length = temp.length;
       console.log({ length });

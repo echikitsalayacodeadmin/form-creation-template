@@ -96,13 +96,15 @@ import ReplaceAgeInAudiometery from "./skodaCustomForms/ReplaceAgeInAudiometery"
 import ReplaceAgeInECG from "./skodaCustomForms/ReplaceAgeInECG";
 import ReplaceAgeInPft from "./skodaCustomForms/ReplaceAgeInPft";
 import ReplaceAgeAllReports from "./skodaCustomForms/ReplaceAgeAllReports";
+import SymbiotecPftAudioSeal from "./SymbiotecPftAudioSeal/SymbiotecPftAudioSeal";
+import MaralCustomDateOnReports from "./maralCustomDateOfReports/MaralCustomDateOnReports";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <SkodaPhysicalFitnessFormMain />
+        <Form32Generic />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>
