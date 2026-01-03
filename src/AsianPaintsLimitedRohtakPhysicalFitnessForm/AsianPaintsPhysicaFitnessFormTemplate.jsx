@@ -142,27 +142,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const Form32Template = ({
+const AsianPaintsPhysicaFitnessFormTemplate = ({
   data,
-  company = "John Deere India Private Limited",
+  company = "Asian Paints Limited- Rohtak",
   date = "12th June 2025",
   fitText,
   signature = "prashantDeshmukh", // default signature
 }) => {
   // Function to get the correct signature image
-  const getSignatureImage = () => {
-    switch (signature) {
-      case "Dr_Jaydip_Saxena.png":
-        return Dr_Jaydip_Saxena;
-      case "prashantDeshmukh.png":
-        return prashantDeshmukh;
-      case "DrSwapnilDevidas.png":
-        return DrSwapnilDevidas;
-      case "dr_kunal_stamp_sign.png":
-      default:
-        return dr_kunal_stamp_sign;
-    }
-  };
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -719,17 +707,11 @@ const Form32Template = ({
         </View>
         {/* Signature */}
         <View style={styles.signatureBlock}>
-          <Text>
-            Dr Swapnil Devidas Deore, {"\n"}MBBS AFIH, {"\n"}Reg No 2011061931
-          </Text>
-          <Image
-            style={{ height: 100, width: 160 }}
-            src={getSignatureImage()}
-          />
+          <Image style={{ height: 100, width: 160 }} src={Dr_Jaydip_Saxena} />
         </View>
       </Page>
     </Document>
   );
 };
 
-export default Form32Template;
+export default AsianPaintsPhysicaFitnessFormTemplate;

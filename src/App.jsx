@@ -98,13 +98,17 @@ import ReplaceAgeInPft from "./skodaCustomForms/ReplaceAgeInPft";
 import ReplaceAgeAllReports from "./skodaCustomForms/ReplaceAgeAllReports";
 import SymbiotecPftAudioSeal from "./SymbiotecPftAudioSeal/SymbiotecPftAudioSeal";
 import MaralCustomDateOnReports from "./maralCustomDateOfReports/MaralCustomDateOnReports";
+import JohnDeerePhysicaFitnessForm from "./JohnDeerPhysicalFitnessForm/JohnDeerePhysicaFitnessForm";
+import TKElevatorsPhysicalFitnessForm from "./TKElevatorsPhysicalFitnessForm/TKElevatorsPhysicalFitnessForm";
+import SAHerbal_BIOACTIVES_Food from "./SAHerbal_BIOACTIVES_Food/SAHerbal_BIOACTIVES_Food";
+import AsianPaintsPhysicaFitnessFormMain from "./AsianPaintsLimitedRohtakPhysicalFitnessForm/AsianPaintsPhysicaFitnessFormMain";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <Form32Generic />
+        <JohnDeerePhysicaFitnessForm />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>

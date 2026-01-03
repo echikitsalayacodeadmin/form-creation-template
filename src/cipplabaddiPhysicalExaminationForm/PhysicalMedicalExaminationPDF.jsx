@@ -645,7 +645,7 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
                         textAlign: "center",
                       }}
                     >
-                      {"      "}
+                      {"Normal"}
                     </Text>
                   </View>
 
@@ -941,7 +941,8 @@ export default function MedicalExamFormWithBorders({ data = {}, fit }) {
                 marginTop: 6,
               }}
             >
-              Fit with Consultation advised with FMO & Follow up.
+              Fit
+              {/* with Consultation advised with FMO & Follow up. */}
             </Text>
           </View>
         </View>

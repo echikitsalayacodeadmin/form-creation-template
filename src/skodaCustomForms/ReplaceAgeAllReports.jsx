@@ -5,6 +5,7 @@ import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import { useSnackbar } from "notistack";
+import dayjs from "dayjs";
 
 /* =========================================================
    FILE CONFIG (Offsets differ per report)
@@ -175,14 +176,22 @@ const ReplaceAgeAllReports = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const res = await getData(url);
 
-      const excludedDates = ["2025-11-19", "2025-11-18", "2025-11-17"];
-      const includedDates = ["2025-11-20"];
+      // const excludedDates = ["2025-11-19", "2025-11-18", "2025-11-17"];
+      // const includedDates = ["2025-12-01", "2025-12-02"];
+
+      // const filteredData =
+      //   res?.data?.filter(
+      //     (item) =>
+      //       // ["40030981", "40032255", "611024"].includes(item?.empId) &&
+      //       includedDates.includes(item?.vitalsCreatedDate) &&
+      //       item?.bloodTestUrl
+      //   ) || [];
 
       const filteredData =
         res?.data?.filter(
           (item) =>
-            includedDates.includes(item?.vitalsCreatedDate) &&
-            item?.bloodTestUrl
+            item?.bloodTestUrl &&
+            dayjs(item.vitalsCreatedDate).isAfter("2025-11-30")
         ) || [];
 
       setEmployees(sortDataByName(filteredData));

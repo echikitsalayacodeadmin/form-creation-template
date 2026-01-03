@@ -14,12 +14,11 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import SkodaPhysicalFitnessFormTemplate from "./SkodaPhysicalFitnessFormTemplate";
-import dayjs from "dayjs";
+import TKElevatorsPhysicalFitnessFormTemplate from "./TKElevatorsPhysicalFitnessFormTemplate";
 
-const SkodaPhysicalFitnessFormMain = ({
-  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
-  campCycleId = "355289",
+const TKElevatorsPhysicalFitnessForm = ({
+  corpId = "c2791eda-2b5a-44fc-8958-cd5641c2881c",
+  campCycleId = "361961",
   fileType = "PHYSICAL_FITNESS_FORM",
 }) => {
   const _storedData = (() => {
@@ -45,8 +44,6 @@ const SkodaPhysicalFitnessFormMain = ({
   const [uploadedCount, setUploadedCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // New state for user inputs
-
   const [fitStatus, setFitStatus] = useState("fit");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -59,13 +56,9 @@ const SkodaPhysicalFitnessFormMain = ({
       const fitText =
         fitStatus === "fit"
           ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
-          : "After examining & above result of above stated executive, I hereby confirm that he is FIT with medication/consultation advised.";
+          : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.";
       const pdfBlob = await pdf(
-        <SkodaPhysicalFitnessFormTemplate
-          data={data}
-          fitText={fitText}
-          company="SKODA Auto Volkswagen India Pvt Ltd"
-        />
+        <TKElevatorsPhysicalFitnessFormTemplate data={data} fitText={fitText} />
       ).toBlob();
 
       const formData = new FormData();
@@ -102,32 +95,14 @@ const SkodaPhysicalFitnessFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const cutoff = dayjs("2025-11-30").endOf("day");
+      const temp = result?.data?.filter((item) =>
+        ["10315"].includes(item.empId)
+      );
+      // ?.filter(
+      //   (item) => item?.empId === "LW5000002718"
+      // );
 
-      const temp =
-        result?.data?.filter(
-          (item) =>
-            [
-              // "610660",
-              // "40031571",
-              // "40000838",
-              // "40030151",
-              // "40000075",
-              // "40035527",
-              // "40054423",
-              // "610824",
-              // "40036296",
-              // "40032307",
-              // "40035573",
-              // "40036015",
-              // "40036206",
-              // "40030086",
-              //
-              "40032246",
-            ].includes(item?.empId)
-          // item?.vitalsCreatedDate &&
-          // dayjs(item.vitalsCreatedDate).isAfter(cutoff)
-        ) || [];
+      // ?.filter((item) => EmpIds.includes(item.empId));
 
       const length = temp.length;
       console.log({ length });
@@ -392,9 +367,7 @@ const SkodaPhysicalFitnessFormMain = ({
         <div>Uploaded Files: {uploadedCount}</div> <br />
         {filteredList.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div
-              key={index}
-            >{`${index}- ${item.empId} ${item.name} ${item?.age}`}</div>
+            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
             <a href={item.physicalFitnessFormUrl}>
               <div key={index}>{item.physicalFitnessFormUrl}</div>
             </a>
@@ -404,18 +377,17 @@ const SkodaPhysicalFitnessFormMain = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <SkodaPhysicalFitnessFormTemplate
+        <TKElevatorsPhysicalFitnessFormTemplate
           data={filteredList[0]}
           fitText={
             fitStatus === "fit"
               ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
-              : "After examining & above result of above stated executive, I hereby confirm that he is FIT with medication/consultation advised."
+              : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
           }
-          company="SKODA Auto Volkswagen India Pvt Ltd"
         />
       </PDFViewer>
     </Fragment>
   );
 };
 
-export default SkodaPhysicalFitnessFormMain;
+export default TKElevatorsPhysicalFitnessForm;
