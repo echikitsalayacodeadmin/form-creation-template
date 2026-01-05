@@ -106,10 +106,14 @@ const map = {
 };
 
 const HeaderFormsForPuneCorps = ({
-  corpId = "c2791eda-2b5a-44fc-8958-cd5641c2881c",
-  campCycleId = "361961",
-  fileType = "FORM_35",
-  urlType = "form35Url",
+  // corpId = "c2791eda-2b5a-44fc-8958-cd5641c2881c",
+  // campCycleId = "361961",
+  corpId = "7166ef04-e16f-4ae9-bda8-a7ee6d6833fa",
+  campCycleId = "364055",
+  // fileType = "XRAY",
+  // urlType = "xrayUrl",
+  fileType = "FITNESS_CERTIFICATE",
+  urlType = "fitnessCertificateUrl",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -153,8 +157,8 @@ const HeaderFormsForPuneCorps = ({
         `${data?.[urlType]?.split("/").pop() || "Report"}`
       );
 
-      const url2 = URL.createObjectURL(mergedBlob);
-      window.open(url2, "_blank");
+      // const url2 = URL.createObjectURL(mergedBlob);
+      // window.open(url2, "_blank");
 
       const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
@@ -184,7 +188,9 @@ const HeaderFormsForPuneCorps = ({
       const codes = [];
 
       //   const temp = result?.data.filter((item) => codes.includes(item.empId));
-      const temp = result?.data.filter((item) => item.empId === "10043");
+      const temp = result?.data.filter(
+        (item) => ["403050"].includes(item?.empId) && item?.[urlType]
+      );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -201,7 +207,7 @@ const HeaderFormsForPuneCorps = ({
   }, []);
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < list.length; i++) {
       await generatePDF(list[i], i);
     }
   };

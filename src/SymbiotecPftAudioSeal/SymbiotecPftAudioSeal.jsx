@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { getData } from "../assets/services/GetApiCall";
 import { sortDataByName } from "../assets/utils";
 import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
@@ -11,7 +11,7 @@ import { uploadFile } from "../assets/services/PostApiCall";
 ========================================================= */
 
 const FILE_CONFIG = {
-  PFT: { urlKey: "pftUrl", fileType: "PFT" },
+  // PFT: { urlKey: "pftUrl", fileType: "PFT" },
   AUDIOMETRY: { urlKey: "audiometryUrl", fileType: "AUDIOMETRY" },
 };
 
@@ -54,6 +54,48 @@ async function addDoctorSealToPdf({ pdfUrl, fileType }) {
   });
 }
 
+async function addRemarkToPdf({ pdfUrl, fileType, remarkText }) {
+  const pdfBytes = await fetch(pdfUrl).then((r) => r.arrayBuffer());
+  const pdfDoc = await PDFDocument.load(pdfBytes);
+
+  const pages = pdfDoc.getPages();
+  const page = pages[pages.length - 1];
+
+  const { width, height } = page.getSize();
+
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+  // --- Coordinates of "Not Found" ---
+  const boxX = 45;
+  const boxY = height * 0.165;
+  const boxWidth = width - 90;
+  const boxHeight = 25;
+
+  // 1️⃣ White-out existing "Not Found"
+  page.drawRectangle({
+    x: boxX + 15,
+    y: boxY - 20,
+    width: 100,
+    height: boxHeight,
+    color: rgb(1, 1, 1),
+  });
+
+  // 2️⃣ Draw your remark text
+  page.drawText(remarkText, {
+    x: boxX + 20,
+    y: boxY + -10,
+    size: 10,
+    font,
+    maxWidth: boxWidth - 10,
+    lineHeight: 14,
+    color: rgb(0, 0, 0),
+  });
+
+  return new Blob([await pdfDoc.save()], {
+    type: "application/pdf",
+  });
+}
+
 /* =========================================================
    PROCESS SINGLE EMPLOYEE
 ========================================================= */
@@ -71,21 +113,25 @@ async function processEmployee({
     if (!pdfUrl) continue;
 
     try {
-      const modifiedBlob = await addDoctorSealToPdf({ pdfUrl, fileType });
-
-      //   const previewUrl = URL.createObjectURL(modifiedBlob);
-      //   window.open(previewUrl, "_blank");
-
-      const formData = new FormData();
-      formData.append("file", modifiedBlob, `${key}_${employee.empId}.pdf`);
-
-      const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-
-      await uploadFile(uploadUrl, formData);
-
-      enqueueSnackbar(`${key} uploaded for ${employee.empId}`, {
-        variant: "success",
+      const modifiedBlob = await addRemarkToPdf({
+        pdfUrl,
+        fileType,
+        remarkText: "Bilateral Hearing within normal limits",
       });
+
+      const previewUrl = URL.createObjectURL(modifiedBlob);
+      window.open(previewUrl, "_blank");
+
+      // const formData = new FormData();
+      // formData.append("file", modifiedBlob, `${key}_${employee.empId}.pdf`);
+
+      // const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+
+      // await uploadFile(uploadUrl, formData);
+
+      // enqueueSnackbar(`${key} uploaded for ${employee.empId}`, {
+      //   variant: "success",
+      // });
     } catch (err) {
       console.error(`${key} failed`, err);
       enqueueSnackbar(`${key} failed for ${employee.empId}`, {
@@ -112,9 +158,7 @@ const SymbiotecPftAudioSeal = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const res = await getData(url);
       setEmployees(
-        sortDataByName(
-          res?.data?.filter((item) => item?.audiometryUrl || item?.pftUrl) || []
-        )
+        sortDataByName(res?.data?.filter((item) => item?.audiometryUrl) || [])
       );
     };
     fetchEmployees();
@@ -128,7 +172,7 @@ const SymbiotecPftAudioSeal = ({
 
     setProcessed(0);
 
-    for (let i = 0; i < employees.length; i++) {
+    for (let i = 0; i < 1; i++) {
       await processEmployee({
         employee: employees[i],
         corpId,

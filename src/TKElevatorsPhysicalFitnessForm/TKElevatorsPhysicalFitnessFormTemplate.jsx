@@ -1,20 +1,17 @@
-import React from "react";
 import {
   Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
   Font,
   Image,
+  Page,
+  StyleSheet,
+  Text,
+  View,
 } from "@react-pdf/renderer";
-import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
-import DrSwapnilDevidas from "../assets/images/DrSwapnilDevidas.png";
-import TimeRoman from "../assets/fonts/Times-Roman.ttf";
+import React from "react";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+import TimeRoman from "../assets/fonts/Times-Roman.ttf";
+import drPratibhaVBandekar from "../assets/images/drPratibhaVBandekar.png";
 import uncareheader from "../assets/images/uncareheader.png";
-import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
-import dr_kunal_stamp_sign from "../assets/images/dr_kunal_stamp_sign.png";
 
 // Register fonts
 Font.register({
@@ -142,27 +139,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const Form32Template = ({
+const TKElevatorsPhysicalFitnessFormTemplate = ({
   data,
-  company = "John Deere India Private Limited",
+  company = "TK Elevator India Private Ltd",
   date = "12th June 2025",
   fitText,
   signature = "prashantDeshmukh", // default signature
 }) => {
   // Function to get the correct signature image
-  const getSignatureImage = () => {
-    switch (signature) {
-      case "Dr_Jaydip_Saxena.png":
-        return Dr_Jaydip_Saxena;
-      case "prashantDeshmukh.png":
-        return prashantDeshmukh;
-      case "DrSwapnilDevidas.png":
-        return DrSwapnilDevidas;
-      case "dr_kunal_stamp_sign.png":
-      default:
-        return dr_kunal_stamp_sign;
-    }
-  };
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -319,30 +304,7 @@ const Form32Template = ({
               {data?.department || ""}
             </Text>
           </View>
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "25%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              Blood Group
-            </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.bloodGroup || ""}
-            </Text>
-            <Text
-              style={[
-                styles.cell,
-                styles.cellLabel,
-                { width: "25%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            ></Text>
-            <Text
-              style={[styles.cell, { width: "25%" }, styles.cellNoRight]}
-            ></Text>
-          </View>
+
           {/* Physical Details */}
           <View style={styles.tableRow}>
             <Text
@@ -719,12 +681,9 @@ const Form32Template = ({
         </View>
         {/* Signature */}
         <View style={styles.signatureBlock}>
-          <Text>
-            Dr Swapnil Devidas Deore, {"\n"}MBBS AFIH, {"\n"}Reg No 2011061931
-          </Text>
           <Image
             style={{ height: 100, width: 160 }}
-            src={getSignatureImage()}
+            src={drPratibhaVBandekar}
           />
         </View>
       </Page>
@@ -732,4 +691,4 @@ const Form32Template = ({
   );
 };
 
-export default Form32Template;
+export default TKElevatorsPhysicalFitnessFormTemplate;

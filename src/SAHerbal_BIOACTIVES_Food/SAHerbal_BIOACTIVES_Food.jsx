@@ -1,20 +1,20 @@
-import dayjs from "dayjs";
 import html2pdf from "html2pdf.js";
-import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { getData } from "../assets/services/GetApiCall";
+import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
-import { JaydipSaxsenaBase64, LogoImage } from "./assets";
-import { data3 } from "./isconBalaji";
 import { uploadFile } from "../assets/services/PostApiCall";
+import { JaydipSaxsenaBase64, LogoImage, LogoImageFSSAI } from "./assets";
+import dayjs from "dayjs";
 
-const IsconBalajiLudhiana = ({
-  corpId = "9f2ccdd9-a5d2-426f-a196-1595c09353c0",
-  campCycleId = "363113",
+const SAHerbal_BIOACTIVES_Food = ({
+  corpId = "89f89437-7025-4353-879f-e079922e5a83",
+  campCycleId = "362988",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "Iscon Balaji Foods Pvt. Ltd",
-  campDate = "18 Jan, 2025",
+  corpName = "S. A. HERBAL BIOACTIVES LLP",
+  campDate = "26th Sept, 2025",
+  year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -24,7 +24,7 @@ const IsconBalajiLudhiana = ({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const generatePDF = async (data, index) => {
-    const FITNESS_CERTIFICATE_FOOD = `
+    const FoodCertificate = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
@@ -182,7 +182,7 @@ const IsconBalajiLudhiana = ({
           </h1>
     
           <p class="s4" style="text-indent: 0pt; text-align: center">
-            (FOR THE YEAR<u>&nbsp;</u>2025)
+            (FOR THE YEAR ${year})
           </p>
           <p style="  padding-top: 4pt;
                     padding-left: 2pt;
@@ -220,9 +220,7 @@ const IsconBalajiLudhiana = ({
             }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${dayjs(data?.vitalsCreatedDate).format(
-                "DD MMM YYYY"
-              )}&nbsp;
+              >&nbsp;&nbsp;&nbsp;${data?.vitalsCreatedDate}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -320,7 +318,7 @@ const IsconBalajiLudhiana = ({
         </div>
     `;
     const pdfBlob = await html2pdf()
-      .from(FITNESS_CERTIFICATE_FOOD)
+      .from(FoodCertificate)
       .output("blob")
       .then((data) => {
         return data;
@@ -331,7 +329,7 @@ const IsconBalajiLudhiana = ({
 
     const formData = new FormData();
     //formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
-    formData.append("file", pdfBlob, `${data.empId}_physical_fitness_form.pdf`);
+    formData.append("file", pdfBlob, `${data.empId}_food_certificate_form.pdf`);
 
     const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
@@ -357,7 +355,7 @@ const IsconBalajiLudhiana = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => item?.vitalsCreatedDate === "2025-12-16"
+        (item) => item.vitalsCreatedDate === "2025-12-16"
       );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
@@ -401,8 +399,6 @@ const IsconBalajiLudhiana = ({
     }
   };
 
-  console.log({ data3 });
-
   return (
     <div>
       <div>
@@ -413,6 +409,7 @@ const IsconBalajiLudhiana = ({
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+
             <a href={item.medicalFitnessFoodUrl}>
               <div key={index}>{item.medicalFitnessFoodUrl}</div>
             </a>
@@ -424,5 +421,4 @@ const IsconBalajiLudhiana = ({
     </div>
   );
 };
-
-export default IsconBalajiLudhiana;
+export default SAHerbal_BIOACTIVES_Food;

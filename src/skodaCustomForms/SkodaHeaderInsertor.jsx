@@ -7,6 +7,7 @@ import { sortDataByName } from "../assets/utils";
 import { getData } from "../assets/services/GetApiCall";
 import { PDFDocument, rgb } from "pdf-lib";
 import { uploadFile } from "../assets/services/PostApiCall";
+import dayjs from "dayjs";
 
 async function removeAddressFromHeaderInReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
@@ -19,14 +20,14 @@ async function removeAddressFromHeaderInReport(reportPdfBytes) {
   page.drawRectangle({
     x: 0,
     // Xray
-    y: height - 105, // 90px down from top
-    width: width, // full page width
-    height: 105,
+    // y: height - 105, // 90px down from top
+    // width: width, // full page width
+    // height: 105,
 
     // Form35
-    // y: height - 75, // 90px down from top
-    // width: width, // full page width
-    // height: 75,
+    y: height - 75, // 90px down from top
+    width: width, // full page width
+    height: 75,
 
     color: rgb(1, 1, 1),
   });
@@ -78,10 +79,10 @@ async function mergeHeaderWithReport(reportPdfBytes) {
 const SkodaHeaderInsertor = ({
   corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
   campCycleId = "355289",
-  // fileType = "FORM_35",
-  // urlType = "form35Url",
-  fileType = "XRAY",
-  urlType = "xrayUrl",
+  fileType = "FORM_35",
+  urlType = "form35Url",
+  // fileType = "XRAY",
+  // urlType = "xrayUrl",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -149,79 +150,22 @@ const SkodaHeaderInsertor = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-      // "710069",
-      // const codes = [
-      //   // "610931",
-      //   // "40030309",
-      //   // "40035005",
-      //   // "40030020",
-      //   // "40030981",
-      //   // "40030960",
-      //   // "40031130",
-      //   // "40036934",
-      //   // "40035572",
-      //   // "40035425",
-      //   // "40032018",
-      //   // "40035298",
-      //   // "40030310",
-      //   // "40036016",
-      //   // "40035718",
-      //   // "40030518",
-      //   // "40035337",
-      //   // "40036397",
-      //   // "40031666",
-      //   // "40036191",
-      //   // "40030280",
-      //   // "40030250",
-      //   // "40035094",
-      //   // "40035965",
-      //   // "40036205",
-      //   // "40000599",
-      //   // "40035163",
-      //   // "40036471",
-      //   // "40037488",
-      //   // "40035948",
-      //   // "40035524",
-      //   // "40035024",
-      //   // "40035167",
-      //   // "40035188",
-      //   // "40050711",
-      //   // "40037950",
-      //   // "40051110",
-      //   // "40036592",
-      //   // "40036396",
-      //   // "40031166",
-      //   // "40035199",
-      //   // "40031589",
-      //   // ;;;
-      //   // "40031130",
-      //   // "40036934",
-      //   // "40035572",
-      //   // "40035425",
-      //   // "40035188",
-      //   // "40031589",
-      // ];
 
-      //   const temp = result?.data.filter((item) => codes.includes(item.empId));
+      const cutoff = dayjs("2025-11-30").endOf("day");
 
-      const codes = [
-        "40035733",
-        "40035431",
-        "40036332",
-        "40036568",
-        "40035744",
-        "40035135",
-        "40035517",
-        "40035702",
-        "40035946",
-      ];
-      // const codes2 = ["40036236", "40035085", "40036292", "40035514"];
-
-      const temp = result?.data.filter(
-        (item) => item?.vitalsCreatedDate === "2025-11-20" && item?.[urlType]
-        // !codes.includes(item?.empId)
-        // codes2?.includes(item?.empId)
-      );
+      const temp =
+        result?.data?.filter(
+          (item) =>
+            ["40000756"].includes(item?.empId) &&
+            // item?.vitalsCreatedDate &&
+            // dayjs(item.vitalsCreatedDate).isAfter(cutoff) &&
+            item?.[urlType]
+        ) || [];
+      // item?.vitalsCreatedDate === "2025-11-26" ||
+      // item?.vitalsCreatedDate === "2025-11-27" ||
+      // item?.vitalsCreatedDate === "2025-11-28" ||
+      // item?.vitalsCreatedDate === "2025-11-29" ||
+      // item?.vitalsCreatedDate === "2025-11-30"
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;

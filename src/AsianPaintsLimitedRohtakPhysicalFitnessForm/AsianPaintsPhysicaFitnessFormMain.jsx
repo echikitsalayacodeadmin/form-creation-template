@@ -14,12 +14,11 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import SkodaPhysicalFitnessFormTemplate from "./SkodaPhysicalFitnessFormTemplate";
-import dayjs from "dayjs";
+import AsianPaintsPhysicaFitnessFormTemplate from "./AsianPaintsPhysicaFitnessFormTemplate";
 
-const SkodaPhysicalFitnessFormMain = ({
-  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
-  campCycleId = "355289",
+const AsianPaintsPhysicaFitnessFormMain = ({
+  corpId = "7166ef04-e16f-4ae9-bda8-a7ee6d6833fa",
+  campCycleId = "364055",
   fileType = "PHYSICAL_FITNESS_FORM",
 }) => {
   const _storedData = (() => {
@@ -45,8 +44,6 @@ const SkodaPhysicalFitnessFormMain = ({
   const [uploadedCount, setUploadedCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // New state for user inputs
-
   const [fitStatus, setFitStatus] = useState("fit");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -59,12 +56,12 @@ const SkodaPhysicalFitnessFormMain = ({
       const fitText =
         fitStatus === "fit"
           ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
-          : "After examining & above result of above stated executive, I hereby confirm that he is FIT with medication/consultation advised.";
+          : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation.";
       const pdfBlob = await pdf(
-        <SkodaPhysicalFitnessFormTemplate
+        <AsianPaintsPhysicaFitnessFormTemplate
           data={data}
           fitText={fitText}
-          company="SKODA Auto Volkswagen India Pvt Ltd"
+          company="Asian Paints Limited- Rohtak"
         />
       ).toBlob();
 
@@ -102,32 +99,15 @@ const SkodaPhysicalFitnessFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const cutoff = dayjs("2025-11-30").endOf("day");
+      // const h = ["132064"];
 
-      const temp =
-        result?.data?.filter(
-          (item) =>
-            [
-              // "610660",
-              // "40031571",
-              // "40000838",
-              // "40030151",
-              // "40000075",
-              // "40035527",
-              // "40054423",
-              // "610824",
-              // "40036296",
-              // "40032307",
-              // "40035573",
-              // "40036015",
-              // "40036206",
-              // "40030086",
-              //
-              "40032246",
-            ].includes(item?.empId)
-          // item?.vitalsCreatedDate &&
-          // dayjs(item.vitalsCreatedDate).isAfter(cutoff)
-        ) || [];
+      const temp = result?.data?.filter(
+        (item) => ["403050"]?.includes(item?.empId)
+        // item?.vitalsCreatedDate === "2025-12-19" ||
+        // item?.vitalsCreatedDate === "2025-12-20" ||
+        // item?.vitalsCreatedDate === "2025-12-22" ||
+        // item?.vitalsCreatedDate === "2025-12-23"
+      );
 
       const length = temp.length;
       console.log({ length });
@@ -324,6 +304,7 @@ const SkodaPhysicalFitnessFormMain = ({
 
   return (
     <Fragment>
+      <h1>AsianPaintsPhysicaFitnessFormMain</h1>
       {/* User Inputs */}
 
       <Grid container spacing={2}>
@@ -394,7 +375,7 @@ const SkodaPhysicalFitnessFormMain = ({
           <div key={index} style={{ display: "flex" }}>
             <div
               key={index}
-            >{`${index}- ${item.empId} ${item.name} ${item?.age}`}</div>
+            >{`${index}- ${item.empId} ${item.name} ${item.bloodGroup}`}</div>
             <a href={item.physicalFitnessFormUrl}>
               <div key={index}>{item.physicalFitnessFormUrl}</div>
             </a>
@@ -404,18 +385,18 @@ const SkodaPhysicalFitnessFormMain = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <SkodaPhysicalFitnessFormTemplate
+        <AsianPaintsPhysicaFitnessFormTemplate
           data={filteredList[0]}
           fitText={
             fitStatus === "fit"
               ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
-              : "After examining & above result of above stated executive, I hereby confirm that he is FIT with medication/consultation advised."
+              : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
           }
-          company="SKODA Auto Volkswagen India Pvt Ltd"
+          company="Asian Paints Limited- Rohtak"
         />
       </PDFViewer>
     </Fragment>
   );
 };
 
-export default SkodaPhysicalFitnessFormMain;
+export default AsianPaintsPhysicaFitnessFormMain;
