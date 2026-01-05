@@ -116,22 +116,25 @@ async function processEmployee({
       const modifiedBlob = await addRemarkToPdf({
         pdfUrl,
         fileType,
-        remarkText: "Bilateral Hearing within normal limits",
+        remarkText:
+          employee.empId === "9000005"
+            ? `Right ear: Medical consultation advised, Left ear: Normal hearing`
+            : "Bilateral Hearing within normal limits",
       });
 
-      const previewUrl = URL.createObjectURL(modifiedBlob);
-      window.open(previewUrl, "_blank");
+      // const previewUrl = URL.createObjectURL(modifiedBlob);
+      // window.open(previewUrl, "_blank");
 
-      // const formData = new FormData();
-      // formData.append("file", modifiedBlob, `${key}_${employee.empId}.pdf`);
+      const formData = new FormData();
+      formData.append("file", modifiedBlob, `${key}_${employee.empId}.pdf`);
 
-      // const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
 
-      // await uploadFile(uploadUrl, formData);
+      await uploadFile(uploadUrl, formData);
 
-      // enqueueSnackbar(`${key} uploaded for ${employee.empId}`, {
-      //   variant: "success",
-      // });
+      enqueueSnackbar(`${key} uploaded for ${employee.empId}`, {
+        variant: "success",
+      });
     } catch (err) {
       console.error(`${key} failed`, err);
       enqueueSnackbar(`${key} failed for ${employee.empId}`, {
@@ -172,7 +175,7 @@ const SymbiotecPftAudioSeal = ({
 
     setProcessed(0);
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < employees.length; i++) {
       await processEmployee({
         employee: employees[i],
         corpId,
@@ -193,7 +196,8 @@ const SymbiotecPftAudioSeal = ({
 
       {employees.map((e, i) => (
         <div key={i}>
-          {i + 1}. {e.empId} - {e.name}
+          {i + 1}. {e.empId} - {e.name} <br /> url:
+          <a href={`${e.audiometryUrl}?_ts=${Date.now()}`}>{e.audiometryUrl}</a>
         </div>
       ))}
     </div>

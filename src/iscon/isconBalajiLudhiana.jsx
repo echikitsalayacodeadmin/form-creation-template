@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
-import { LogoImage } from "./assets";
+import { JaydipSaxsenaBase64, LogoImage } from "./assets";
 import { data3 } from "./isconBalaji";
 import { uploadFile } from "../assets/services/PostApiCall";
 
