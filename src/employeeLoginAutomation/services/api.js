@@ -30,9 +30,9 @@ export const getPatientByAuthId = async (authId, mobile) => {
 };
 
 // 4️⃣ Get labs
-export const getLabs = async ({ lat, lng, corpId, empId }) => {
+export const getLabs = async ({ lat, lng, corpId, empId, city }) => {
   const res = await API.get(
-    `/lab/all?userLocationCoordinates=${lat}%2C${lng}&corpId=${corpId}&empId=${empId}`
+    `/lab/all?city=${city}&userLocationCoordinates=${lat}%2C${lng}&corpId=${corpId}&empId=${empId}`
   );
   return res.data;
 };
