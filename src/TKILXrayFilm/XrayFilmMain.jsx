@@ -31,12 +31,15 @@ export async function mergeHeaderAndXraySinglePage(data) {
 
   // Employee info
   const infoTop = height - 60;
-  const empId = data?.empId || "N/A";
+  const token = data?.tokenNumber;
   const name = data?.name || "N/A";
-  const age = data?.age || "N/A";
+  const empId = data?.empId || "N/A";
   const gender = data?.gender || "N/A";
+  // const age = data?.age || "N/A";
 
-  page.drawText(`Emp ID: ${empId}   Name: ${name}`, {
+  const lineGap = 15; // adjust this for tighter/looser spacing
+
+  page.drawText(`Token: ${token}`, {
     x: 40,
     y: infoTop,
     size: fontSize,
@@ -44,14 +47,29 @@ export async function mergeHeaderAndXraySinglePage(data) {
     color: rgb(0, 0, 0),
   });
 
-  page.drawText(`Age: ${age}   Gender: ${gender}`, {
+  page.drawText(`Name: ${name}`, {
     x: 40,
-    y: infoTop - 18,
+    y: infoTop - lineGap,
     size: fontSize,
     font,
     color: rgb(0, 0, 0),
   });
 
+  page.drawText(`Employee ID: ${empId}`, {
+    x: 40,
+    y: infoTop - lineGap * 2,
+    size: fontSize,
+    font,
+    color: rgb(0, 0, 0),
+  });
+
+  page.drawText(`Gender: ${gender}`, {
+    x: 40,
+    y: infoTop - lineGap * 3,
+    size: fontSize,
+    font,
+    color: rgb(0, 0, 0),
+  });
   // Fetch X-ray image
   if (data?.xrayFilmUrl) {
     try {
@@ -64,7 +82,7 @@ export async function mergeHeaderAndXraySinglePage(data) {
         : await mergedPdf.embedJpg(imgBytes);
 
       // Calculate space below info
-      const topMargin = infoTop - 40; // leave small gap below text
+      const topMargin = infoTop - 40 - 20; // leave small gap below text
       const bottomMargin = 170;
       const availableHeight = topMargin - bottomMargin;
 
@@ -112,8 +130,10 @@ export async function mergeHeaderAndXraySinglePage(data) {
 }
 
 const XrayFilmMain = ({
-  corpId = "b1821b42-807b-419e-8969-3e500d636f4b",
-  campCycleId = "345079",
+  // corpId = "b1821b42-807b-419e-8969-3e500d636f4b",
+  // campCycleId = "345079",
+  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
+  campCycleId = "355289",
   fileType = "XRAY_FILM",
 }) => {
   const _storedData = (() => {
@@ -182,19 +202,9 @@ const XrayFilmMain = ({
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
-      const xrayMap = rawData.reduce((acc, curr) => {
-        acc[curr.empId] = curr.xrayFilmUrl;
-        return acc;
-      }, {});
 
       // Step 2: Merge it into your result.data
-      const temp = result?.data?.filter(
-        (item) =>
-          item.xrayFilmUrl &&
-          !["PEM-tk", "PEM-tk61", "PEM-tk17", "PEM-14", "PEM-tk62"].includes(
-            item.empId
-          )
-      );
+      const temp = result?.data?.filter((item) => item.xrayFilmUrl);
 
       const length = temp.length;
       console.log({ length });
@@ -485,7 +495,7 @@ const XrayFilmMain = ({
         {filteredList.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.xrayFilmUrl}>
+            <a href={item.xrayFilmUrl} target="_blank">
               <div key={index}>{item.xrayFilmUrl}</div>
             </a>
             <br />

@@ -100,7 +100,32 @@ const JohnDeerePhysicaFitnessForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data?.filter((item) =>
-        ["00770463", "00760152", "00771504", "00730342"].includes(item.empId)
+        [
+          "LW5000031613",
+          "LW5000027443",
+          "10110769",
+          "10017485",
+          "Lw8709",
+          "10069614",
+          "LW5000022330",
+          "LW5000027120",
+          "754287",
+          "LW5000001150",
+          "LW5000021335",
+          "769578",
+          "LW5000015563",
+          "00782082",
+          "LW5000000917",
+          "LW5000030284",
+          "LW5000032200",
+          "10101524",
+          "10102745",
+          "LW5000031520",
+          "LW5000013923",
+          "LW5000029281",
+          "LW5000032017",
+          "10104644",
+        ].includes(item.empId)
       );
 
       const length = temp.length;
