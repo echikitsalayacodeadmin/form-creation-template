@@ -96,7 +96,35 @@ const TKElevatorsPhysicalFitnessForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data?.filter((item) =>
-        ["10315"].includes(item.empId)
+        [
+          "10245",
+          "Rakesh-786",
+          "1226",
+          "10374",
+          "10064",
+          "10087",
+          "10351",
+          "60385",
+          "10052",
+          "60703",
+          "AG Enterprises-28",
+          "1400368",
+          "10343",
+          "60043",
+          "10300",
+          "1156791",
+          "20729",
+          "Rakesh-844",
+          "10287",
+          "10225",
+          "ABS Industries-852",
+          "NAPS K-89",
+          "10187",
+          "10170",
+          "10017",
+          "Rakesh-762",
+          "BSA-155",
+        ].includes(item.empId)
       );
       // ?.filter(
       //   (item) => item?.empId === "LW5000002718"

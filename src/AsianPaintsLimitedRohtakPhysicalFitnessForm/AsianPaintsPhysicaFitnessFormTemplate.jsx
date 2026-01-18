@@ -367,7 +367,7 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
               Blood Pressure:
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.bp || ""}
+              {data?.bp ? `${data?.bp} mmHg` : ""}
             </Text>
             <Text
               style={[
@@ -379,7 +379,9 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
               RBS:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              {data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""}
+              {data?.cholestrolData?.["BLOOD SUGAR RANDOM"]
+                ? `${data?.cholestrolData?.["BLOOD SUGAR RANDOM"]} mg/dL`
+                : ""}
             </Text>
           </View>
           <View style={styles.tableRow}>
@@ -393,7 +395,7 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
               Weight:
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>
-              {data?.weight || ""}
+              {data?.weight ? `${data?.weight} cm` : ""}
             </Text>
             <Text
               style={[
@@ -405,7 +407,7 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
               Height:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              {data?.height || ""}
+              {data?.height ? `${data?.height} cm` : ""}
             </Text>
           </View>
           <View style={styles.tableRow}>
@@ -592,7 +594,7 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
               NAD
             </Text>
           </View>
-          <View style={styles.tableRow}>
+          {/* <View style={styles.tableRow}>
             <Text
               style={[
                 styles.cell,
@@ -612,9 +614,9 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
             ></Text>
-          </View>
+          </View> */}
           {/* Recommendation */}
-          <View style={styles.tableRow}>
+          {/* <View style={styles.tableRow}>
             <Text
               style={[
                 styles.cell,
@@ -639,8 +641,8 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
             ></Text>
-          </View>
-          <View style={styles.tableRow}>
+          </View> */}
+          {/* <View style={styles.tableRow}>
             <Text
               style={[
                 styles.cell,
@@ -660,9 +662,9 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
             ></Text>
-          </View>
+          </View> */}
           {/* Fitness Certificate */}
-          <View style={styles.tableRow}>
+          {/* <View style={styles.tableRow}>
             <Text
               style={[
                 styles.cell,
@@ -703,12 +705,12 @@ const AsianPaintsPhysicaFitnessFormTemplate = ({
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
             ></Text>
-          </View>
+          </View> */}
         </View>
         {/* Signature */}
-        <View style={styles.signatureBlock}>
+        {/* <View style={styles.signatureBlock}>
           <Image style={{ height: 100, width: 160 }} src={Dr_Jaydip_Saxena} />
-        </View>
+        </View> */}
       </Page>
     </Document>
   );

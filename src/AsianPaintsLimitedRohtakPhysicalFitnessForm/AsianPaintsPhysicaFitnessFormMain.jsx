@@ -102,7 +102,7 @@ const AsianPaintsPhysicaFitnessFormMain = ({
       // const h = ["132064"];
 
       const temp = result?.data?.filter(
-        (item) => ["403050"]?.includes(item?.empId)
+        (item) => item?.physicalFitnessFormUrl
         // item?.vitalsCreatedDate === "2025-12-19" ||
         // item?.vitalsCreatedDate === "2025-12-20" ||
         // item?.vitalsCreatedDate === "2025-12-22" ||

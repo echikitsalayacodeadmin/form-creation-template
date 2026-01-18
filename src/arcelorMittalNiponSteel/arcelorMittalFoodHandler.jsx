@@ -6,14 +6,14 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
+import { JaydipSaxsenaBase64 } from "../effotelFassai/assets";
 
 const ArcelorMittalFoodHandler = ({
   corpId = "0d2ef92b-5527-4170-88b4-a3a72c7f1071",
   campCycleId = "246264",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "ArcelorMittal Nippon Steel India Limited",
-  campDate = "18th Feb, 2025",
-  year = "2025",
+  corpName = "Hotel Mannat",
+  year = "2026",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -219,7 +219,7 @@ const ArcelorMittalFoodHandler = ({
             }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
+              >&nbsp;&nbsp;&nbsp;${data?.vitalsCreatedDate}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -232,7 +232,7 @@ const ArcelorMittalFoodHandler = ({
           <br />
           <br />
           
-          <img src=${LogoImageFSSAI} 
+          <img src=${JaydipSaxsenaBase64} 
           style="height:200px;"
           />
           <br />
@@ -353,7 +353,7 @@ const ArcelorMittalFoodHandler = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIDS = ["A-033"];
+      const empIDS = ["2000"];
 
       const temp = result?.data.filter((item) => empIDS.includes(item.empId));
 
