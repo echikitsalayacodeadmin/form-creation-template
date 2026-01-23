@@ -14,7 +14,7 @@ import React, { useState } from "react";
 export default function BatchAutomationDashboard() {
   const { results, startBatch, inProgress } = useAutomationBatch();
   const [mobileListText, setMobileListText] = useState("");
-  const [otp, setOtp] = React.useState("");
+  const [otp, setOtp] = React.useState("100000");
 
   const handleRun = () => {
     const numbers = mobileListText

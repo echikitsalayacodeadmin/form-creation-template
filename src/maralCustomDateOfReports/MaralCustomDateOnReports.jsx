@@ -195,9 +195,9 @@ async function processEmployee({
    MAIN COMPONENT
 ========================================================= */
 const MaralCustomDateOnReports = ({
-  corpId = "b10d9fce-34a9-4a5b-b728-0550bb9014ac",
-  campCycleId = "358831",
-  CUSTOM_DATE = "02-Dec-2025",
+  corpId = "058c1ace-4ade-4dab-a13e-4f75c49339f2",
+  campCycleId = "369186",
+  CUSTOM_DATE = "29-Dec-2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [employees, setEmployees] = useState([]);
@@ -210,7 +210,32 @@ const MaralCustomDateOnReports = ({
 
       const filtered =
         res?.data?.filter(
-          (item) => item?.vitalsCreatedDate === "2025-12-17"
+          (item) =>[
+            '54201590',
+            '54201380',
+            '54201620',
+            '54201276',
+            '54201609',
+            '54201578',
+            '54201510',
+            '54201505',
+            '54201451',
+            '54201367',
+            '54201291',
+            '54201350',
+            '54201386',
+            '54201128',
+            '54201409',
+            '54201384',
+            '54201548',
+            '54201667',
+            '54201692',
+            '54201244',
+            '54201366',
+            '54201311',
+            '54201283',
+            '54201671',
+            '54201597'].includes(item?.empId)
           // item?.bloodTestUrl || item?.pftUrl || item?.audiometryUrl
         ) || [];
 

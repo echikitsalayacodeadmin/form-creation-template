@@ -10,10 +10,10 @@ import { JaydipSaxsenaBase64 } from "../effotelFassai/assets";
 
 const DaawatFoodFssai = ({
   corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
-  campCycleId = "316385",
+  campCycleId = "364062",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "Raghuvesh Agri Food Pvt Ltd Bhopal",
-  campDate = "3rd Dec, 2025",
+  corpName = "Daawat Foods Limited",
+  campDate = "24th Dec, 2025",
   year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -218,7 +218,7 @@ const DaawatFoodFssai = ({
             <span style=" text-transform: capitalize; text-decoration: underline"> ${
               data?.name.toLowerCase() || ""
             }</span>
-            employed with <b>M/S ${data?.contractorName} </b>coming in direct
+            employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
               >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
             </u> Based
@@ -355,22 +355,17 @@ const DaawatFoodFssai = ({
       console.log("Fetched Data successfully");
 
       const empIds = [
-        "1210489",
-        "1210481",
-        "1210499",
-        "1210501",
-        "1211135",
-        "2001",
-        "1210480",
-        "1210988",
-        "1210987",
-        "1210989C",
-        "764",
-        "765",
-        "763C",
+        "2025-12-23",
+        // "2025-12-20",
+        // "2025-12-21",
+        // "2025-12-22",
+        // "2025-12-23",
+        // "2025-12-24",
       ];
 
-      const temp = result?.data.filter((item) => empIds.includes(item.empId));
+      const temp = result?.data.filter((item) =>
+        empIds.includes(item.vitalsCreatedDate)
+      );
 
       const length = temp.length;
       console.log({ length });

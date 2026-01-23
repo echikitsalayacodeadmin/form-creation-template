@@ -2192,31 +2192,8 @@ export function cityByLabel(label) {
 }
 
 export const cityList = [
-  "Nimbahera",
-  "Jhajjar",
-  "Dhule",
-  "Aligarh",
-  "Badnawar",
-  "Tulsigam",
-  "Jaipur",
-  "Jaisalmer",
-  "Ahmedabad",
-  "New Delhi",
-  "Delhi",
-  "Indore",
-  "Ghaziabad",
-  "Nashik",
-  "Surat",
-  "Vadodara",
-  "Agra",
-  "Bhopal",
-  "Jodhpur",
-  "Gurgaon",
-  "Dehradun",
-  "Alwar",
-  "Barmer",
+  { label: "Bangalore", coordinates: [12.9716, 77.5946] },
 ];
-
 export const cityListV2 = [
   "Agar",
   "Agra",
