@@ -109,7 +109,7 @@ const App = () => {
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <PhysicalMERFormMain />
+        <XrayFilmMain />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>
