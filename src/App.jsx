@@ -103,13 +103,14 @@ import TKElevatorsPhysicalFitnessForm from "./TKElevatorsPhysicalFitnessForm/TKE
 import SAHerbal_BIOACTIVES_Food from "./SAHerbal_BIOACTIVES_Food/SAHerbal_BIOACTIVES_Food";
 import AsianPaintsPhysicaFitnessFormMain from "./AsianPaintsLimitedRohtakPhysicalFitnessForm/AsianPaintsPhysicaFitnessFormMain";
 import TKECardMain from "./TKECard/TKECardMain";
+import ReplaceGenderInAudiometery from "./skodaCustomForms/ReplaceGenderInAudiometery";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <XrayFilmMain />
+        <ReplaceGenderInAudiometery />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>
