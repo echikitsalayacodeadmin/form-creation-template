@@ -1299,7 +1299,7 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Haemoglobin: ${data?.cholestrolData?.["HB"] || ""} mg/dl gm/dl
+            Haemoglobin: ${data?.cholestrolData?.["HB"] || ""} mg/dl
           </td>
           <td
             style="
@@ -1417,7 +1417,7 @@ const GrasimAgencyStaff = ({
             "
           >
             S. Triglycerides:: ${
-              data?.cholestrolData?.["S.TRIGLYCERIDE"] || ""
+              `data?.cholestrolData?.["S.TRIGLYCERIDE"]` || ""
             }mg/dl
           </td>
         </tr>

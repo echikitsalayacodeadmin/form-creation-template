@@ -102,26 +102,7 @@ const AsianPaintsPhysicaFitnessFormMain = ({
       // const h = ["132064"];
 
       const temp = result?.data?.filter(
-        (item) =>
-          [
-            '403401',
-            '403363',
-            '137475',
-            '403367',
-            '121020',
-            '131162',
-            '134451',
-            '115789',
-            '130583',
-            '106344',
-            '134246',
-            '114776',
-            '402936',
-            '113044',
-            '402670',
-            '402471',
-            '133037',
-          ]?.includes(item?.empId)
+        (item) => item?.physicalFitnessFormUrl
         // item?.vitalsCreatedDate === "2025-12-19" ||
         // item?.vitalsCreatedDate === "2025-12-20" ||
         // item?.vitalsCreatedDate === "2025-12-22" ||

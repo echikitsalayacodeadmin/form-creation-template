@@ -106,25 +106,7 @@ const SkodaPhysicalFitnessFormMain = ({
 
       const temp =
         result?.data?.filter(
-          (item) =>
-            [
-              // "610660",
-              // "40031571",
-              // "40000838",
-              // "40030151",
-              // "40000075",
-              // "40035527",
-              // "40054423",
-              // "610824",
-              // "40036296",
-              // "40032307",
-              // "40035573",
-              // "40036015",
-              // "40036206",
-              // "40030086",
-              //
-              "611156",
-            ].includes(item?.empId)
+          (item) => ["611196"].includes(item?.empId)
           // item?.vitalsCreatedDate &&
           // dayjs(item.vitalsCreatedDate).isAfter(cutoff)
         ) || [];

@@ -102,13 +102,14 @@ import JohnDeerePhysicaFitnessForm from "./JohnDeerPhysicalFitnessForm/JohnDeere
 import TKElevatorsPhysicalFitnessForm from "./TKElevatorsPhysicalFitnessForm/TKElevatorsPhysicalFitnessForm";
 import SAHerbal_BIOACTIVES_Food from "./SAHerbal_BIOACTIVES_Food/SAHerbal_BIOACTIVES_Food";
 import AsianPaintsPhysicaFitnessFormMain from "./AsianPaintsLimitedRohtakPhysicalFitnessForm/AsianPaintsPhysicaFitnessFormMain";
+import TKECardMain from "./TKECard/TKECardMain";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <XrayFilmMain />
+        <PhysicalMERFormMain />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>

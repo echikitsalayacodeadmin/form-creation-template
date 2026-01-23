@@ -29,14 +29,14 @@ const StridesHeader2025Template = ({ data }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header Section */}
-        <View style={styles.headerRow}>
+        {/* <View style={styles.headerRow}>
           <Image style={styles.logo} src={uncareheader} />
-        </View>
+        </View> */}
 
         {/* Title */}
-        <Text style={styles.title}>
+        {/* <Text style={styles.title}>
           Bi-Annual Medical Check-up – October 2025
-        </Text>
+        </Text> */}
       </Page>
     </Document>
   );
