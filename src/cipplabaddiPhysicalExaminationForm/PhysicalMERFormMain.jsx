@@ -408,8 +408,7 @@ const PhysicalMERFormMain = ({
         //   "30838",
         // ];
         const emps = [
-         "81000647"
-
+          "158586", "3584027"
         ];
 
         const temp = result?.data
@@ -421,9 +420,9 @@ const PhysicalMERFormMain = ({
             vitalsCreatedDate: '2025-12-28',
             visionWithGlasses:
               item?.farRightEyeSightWithGlasses &&
-              item?.farLeftEyeSightWithGlasses &&
-              item?.farRightEyeSightWithGlasses &&
-              item?.nearLeftEyeSightWithGlasses
+                item?.farLeftEyeSightWithGlasses &&
+                item?.farRightEyeSightWithGlasses &&
+                item?.nearLeftEyeSightWithGlasses
                 ? `FAR (R-${item?.farRightEyeSightWithGlasses} L-${item?.farLeftEyeSightWithGlasses}) NEAR (R-${item?.nearRightEyeSightWithGlasses} L-${item?.nearLeftEyeSightWithGlasses})`
                 : "",
           }));
@@ -540,7 +539,7 @@ const PhysicalMERFormMain = ({
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({
@@ -719,11 +718,9 @@ const PhysicalMERFormMain = ({
         <div>Uploaded Files: {uploadedCount}</div> <br />
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div key={index}>{`${index}- ${item.empId} ${item.name}${
-              item?.age
-            } ${item?.bloodGroup}  ${item?.pulseRate || "p_R"} CV-${
-              item?.colourVision || "_"
-            } ${item?.visionRemark}`}</div>
+            <div key={index}>{`${index}- ${item.empId} ${item.name}${item?.age
+              } ${item?.bloodGroup}  ${item?.pulseRate || "p_R"} CV-${item?.colourVision || "_"
+              } ${item?.visionRemark}`}</div>
 
             <a href={item.annexureUrl}>
               <div key={index}>{item.annexureUrl}</div>

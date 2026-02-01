@@ -104,6 +104,9 @@ import SAHerbal_BIOACTIVES_Food from "./SAHerbal_BIOACTIVES_Food/SAHerbal_BIOACT
 import AsianPaintsPhysicaFitnessFormMain from "./AsianPaintsLimitedRohtakPhysicalFitnessForm/AsianPaintsPhysicaFitnessFormMain";
 import TKECardMain from "./TKECard/TKECardMain";
 import ReplaceGenderInAudiometery from "./skodaCustomForms/ReplaceGenderInAudiometery";
+import AartiCustomDateOnReport from "./aartiCustomDateOnReport/AartiCustomDateOnReport";
+import DaawatStoolReportCreation from "./DaawatStoolReportCreation/DaawatStoolReportCreation";
+import CeatTyreCustomForm from "./ceatTyreForm/CeatTyreCustomForm";
 
 const App = () => {
   return (

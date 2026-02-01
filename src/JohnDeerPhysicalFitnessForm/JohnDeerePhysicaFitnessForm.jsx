@@ -100,19 +100,20 @@ const JohnDeerePhysicaFitnessForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data?.filter((item) =>
-        [
-          "10016212",
-          "10021915",
-          "LW5000030558",
-          "10097526",
-          "779931",
-          "00843762",
-          "10092876",
-          "761459",
-          "10102081",
-          "754401",
-          "10109109"
-        ].includes(item.empId)
+        item?.vitalsCreatedDate === "2026-12-16"
+        // [
+        //   "10016212",
+        //   "10021915",
+        //   "LW5000030558",
+        //   "10097526",
+        //   "779931",
+        //   "00843762",
+        //   "10092876",
+        //   "761459",
+        //   "10102081",
+        //   "754401",
+        //   "10109109"
+        // ].includes(item.empId)
       );
 
       const length = temp.length;
@@ -228,7 +229,7 @@ const JohnDeerePhysicaFitnessForm = ({
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({
