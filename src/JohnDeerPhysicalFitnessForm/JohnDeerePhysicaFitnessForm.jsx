@@ -17,9 +17,17 @@ import { sortDataByName } from "../assets/utils";
 import JohnDeerePhysicaFitnessFormTemplate from "./JohnDeerePhysicaFitnessFormTemplate";
 
 const JohnDeerePhysicaFitnessForm = ({
-  corpId = "51c68a9a-8edb-48dc-a6ac-e8b2a6ef3058",
-  campCycleId = "355372",
+  // corpId = "51c68a9a-8edb-48dc-a6ac-e8b2a6ef3058", // Pune
+  // campCycleId = "355372", // Pune
+  // companyName = "John Deere India Private Limited", // Pune
+  // corpId = 'd88f5f2b-61e7-4d9b-a4b0-e9b3079121f2', //(Construction & Forestry Division)
+  // campCycleId = '378902', //(Construction & Forestry Division)
+  // companyName = "John deere Construction and Forestry Division, PV&V Lab",  //(Construction & Forestry Division)
+  corpId = 'f90f7099-a611-40d7-bfe6-32d3f8b19938', // ISG Unit
+  campCycleId = '378928', // ISG Unit
+  companyName = "John Deere India  ISG Unit",
   fileType = "PHYSICAL_FITNESS_FORM",
+
 }) => {
   const _storedData = (() => {
     try {
@@ -61,7 +69,7 @@ const JohnDeerePhysicaFitnessForm = ({
         <JohnDeerePhysicaFitnessFormTemplate
           data={data}
           fitText={fitText}
-          company="John Deere India Private Limited"
+          company={companyName}
         />
       ).toBlob();
 
@@ -100,7 +108,7 @@ const JohnDeerePhysicaFitnessForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data?.filter((item) =>
-        item?.vitalsCreatedDate === "2026-12-16"
+        item?.empId === '10086916'
         // [
         //   "10016212",
         //   "10021915",
@@ -399,6 +407,7 @@ const JohnDeerePhysicaFitnessForm = ({
               ? "After examining & above result of above stated executive, I hereby confirm that he is FIT to work."
               : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
           }
+          company={companyName}
         />
       </PDFViewer>
     </Fragment>

@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 
 const JohnDeerePhysicaFitnessFormTemplate = ({
   data,
-  company = "John Deere India Private Limited",
+  company,
   date = "12th June 2025",
   fitText,
   signature = "prashantDeshmukh", // default signature
