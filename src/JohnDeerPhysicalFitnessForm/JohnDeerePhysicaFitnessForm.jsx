@@ -108,20 +108,8 @@ const JohnDeerePhysicaFitnessForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data?.filter((item) =>
-        item?.empId === '10086916'
-        // [
-        //   "10016212",
-        //   "10021915",
-        //   "LW5000030558",
-        //   "10097526",
-        //   "779931",
-        //   "00843762",
-        //   "10092876",
-        //   "761459",
-        //   "10102081",
-        //   "754401",
-        //   "10109109"
-        // ].includes(item.empId)
+        ['739109'].includes(item?.empId)
+
       );
 
       const length = temp.length;
