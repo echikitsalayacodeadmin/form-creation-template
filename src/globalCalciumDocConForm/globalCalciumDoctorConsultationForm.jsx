@@ -10,8 +10,8 @@ import GlobalCalciumDoctorConsultationFormTemplate from "./GlobalCalciumDoctorCo
 
 const GlobalCalciumDoctorConsultationForm = ({
   corpId = "053026e4-0900-493e-b2da-3849981a16f5",
-  campCycleId = "316872",
-  fileType = "CONSOLIDATED_REPORT",
+  campCycleId = "382282",
+  fileType = "PHYSICAL_FITNESS_FORM",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -122,8 +122,8 @@ const GlobalCalciumDoctorConsultationForm = ({
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.consolidatedRUrl}>
-              <div key={index}>{item.consolidatedRUrl}</div>
+            <a href={item.annexureUrl}>
+              <div key={index}>{item.annexureUrl}</div>
             </a>
 
             <br />

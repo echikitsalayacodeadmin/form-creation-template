@@ -87,46 +87,39 @@ async function modifyEcgPdf(ecgUrl) {
     return null;
   }
 
-  const { x: leftX, y: targetY, pageNum } = found;
+  const { x, y, pageNum } = found;
+
   const pdfBytes = await fetch(ecgUrl).then((r) => r.arrayBuffer());
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const page = pdfDoc.getPages()[pageNum - 1];
 
-  const rectHeight = 65;
-  const rectWidth = 260;
-  const rectY = targetY - rectHeight - 5;
-  const rectX = leftX - 2; // start slightly before "I"
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-  page.drawRectangle({
-    x: rectX,
-    y: rectY + 2,
-    width: rectWidth,
-    height: rectHeight,
-    color: rgb(1, 1, 1),
-  });
+  // Width of "Interpretations :" so we know where to start "Normal"
+  const labelText = "Interpretations :";
+  const labelWidth = fontBold.widthOfTextAtSize(labelText, 10);
 
-  const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  const text = "Normal ECG";
-  const textSize = 12;
-  const textWidth = font.widthOfTextAtSize(text, textSize);
-
-  page.drawText(text, {
-    x: rectX + 10, // offset from left (center-ish)
-    y: rectY + 45 + 15, // vertically centered
-    size: 9.5,
-    color: rgb(0, 0, 0), // black text
-    font: await pdfDoc.embedFont(StandardFonts.Helvetica),
+  // ✅ Draw ONLY the text "Normal"
+  page.drawText(" Normal", {
+    x: x + labelWidth + 4, // small gap after colon
+    y: y,              // tiny baseline adjustment
+    size: 10,
+    font: fontBold,
+    color: rgb(0, 0, 0),
   });
 
   const modifiedPdfBytes = await pdfDoc.save();
-  const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
-  return blob;
+  return new Blob([modifiedPdfBytes], { type: "application/pdf" });
 }
+
 
 // ✅ React Component
 const EcgPdfModifier = ({
-  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
-  campCycleId = "355289",
+  // corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
+  // campCycleId = "355289",
+  campCycleId = "375099",
+  corpId = '9afda601-e74f-46b2-9581-6db360f5acca',
   fileType = "ECG",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -141,7 +134,7 @@ const EcgPdfModifier = ({
     if (result && result.data) {
       const temp = result?.data?.filter((item) => item.ecgUrl);
       const sorted = sortDataByName(temp);
-      setList(sorted?.slice(2000, 3000));
+      setList(sorted);
       console.log("Total PFT employees:", sorted.length);
       setTotalEmployees(sorted.length);
     } else {
@@ -168,7 +161,7 @@ const EcgPdfModifier = ({
         return;
       }
 
-      console.log("Detected line position:", found);
+      // console.log("Detected line position:", found);
 
       // Step 2️⃣: Modify the ECG PDF (add rectangle + text)
       const modifiedBlob = await modifyEcgPdf(ecgUrl, found);

@@ -8,9 +8,8 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
-import dr_kunal_stamp_sign from "../../src/assets/images/dr_kunal_stamp_sign.png";
+import Dr_Jaydip_Saxena from "../../src/assets/images/Dr_Jaydip_Saxena.png";
 import uncareheader from "../../src/assets/images/uncareheader.png";
-
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 
@@ -230,8 +229,8 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
               data?.doctorConsultationFormData?.habitFoodNonVegYesNo === "Yes"
                 ? "Non Veg"
                 : "No"
-                ? "Veg"
-                : ""
+                  ? "Veg"
+                  : ""
             }
             width={80}
           />
@@ -279,8 +278,8 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
                 {key?.label === "Alcohol"
                   ? "Alcohol consumption"
                   : key?.label === "Tobacco"
-                  ? "Tobacco Chewing"
-                  : "Smoking"}
+                    ? "Tobacco Chewing"
+                    : "Smoking"}
               </Text>
               <Text style={styles.tableCell}>
                 {data?.doctorConsultationFormData?.[`${key?.property}`] || ""}
@@ -583,8 +582,8 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
             {data?.gender === "MALE"
               ? "He"
               : data?.gender === "FEMALE"
-              ? "She"
-              : "He/she"}{" "}
+                ? "She"
+                : "He/she"}{" "}
             is found free from any
           </Text>
           <Text>
@@ -592,8 +591,8 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
             {data?.gender === "MALE"
               ? "he"
               : data?.gender === "FEMALE"
-              ? "she"
-              : "he/she"}{" "}
+                ? "she"
+                : "he/she"}{" "}
             is
           </Text>
           <Text style={styles.bold}>Medically Fit</Text>
@@ -610,10 +609,10 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
             Signature of Medical Officer with Seal
           </Text>
           <Image
-            src={dr_kunal_stamp_sign}
+            src={Dr_Jaydip_Saxena}
             style={{
-              height: 60,
-              width: 80,
+              height: 90,
+              width: 100,
               position: "absolute",
               bottom: 10,
               right: 100,

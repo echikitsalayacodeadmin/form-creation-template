@@ -10,7 +10,7 @@ import VisionReportByOPTemplate from "./VisionReportByOPTemplate";
 
 const VisionReportByOP = ({
   corpId = "053026e4-0900-493e-b2da-3849981a16f5",
-  campCycleId = "316872",
+  campCycleId = "382282",
   fileType = "FORM_35",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -63,7 +63,7 @@ const VisionReportByOP = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data;
+        const temp = result?.data?.filter((item) => item?.vitalsCreatedDate);
 
         const length = temp.length;
         const sorted = sortDataByName(temp);

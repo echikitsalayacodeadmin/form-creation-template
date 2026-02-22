@@ -107,13 +107,18 @@ import ReplaceGenderInAudiometery from "./skodaCustomForms/ReplaceGenderInAudiom
 import AartiCustomDateOnReport from "./aartiCustomDateOnReport/AartiCustomDateOnReport";
 import DaawatStoolReportCreation from "./DaawatStoolReportCreation/DaawatStoolReportCreation";
 import CeatTyreCustomForm from "./ceatTyreForm/CeatTyreCustomForm";
+import SitecECG from "./sitecECG/SitecECG";
+import HDHyundaiMERForm from "./hdHyundaiMERForm/HDHyundaiMERForm";
+import AcgFoodHandlerV2 from "./acg/AcgFoodHandlerV2";
+import BPCLForm21Main from "./bpclForm21/BPCLForm21Main";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <JohnDeerePhysicaFitnessForm />
+        <BPCLForm21Main />
+        {/* <VisionReportByOP /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>

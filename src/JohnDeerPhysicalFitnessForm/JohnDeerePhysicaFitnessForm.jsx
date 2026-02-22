@@ -17,15 +17,15 @@ import { sortDataByName } from "../assets/utils";
 import JohnDeerePhysicaFitnessFormTemplate from "./JohnDeerePhysicaFitnessFormTemplate";
 
 const JohnDeerePhysicaFitnessForm = ({
-  // corpId = "51c68a9a-8edb-48dc-a6ac-e8b2a6ef3058", // Pune
-  // campCycleId = "355372", // Pune
-  // companyName = "John Deere India Private Limited", // Pune
+  corpId = "51c68a9a-8edb-48dc-a6ac-e8b2a6ef3058", // Pune
+  campCycleId = "355372", // Pune
+  companyName = "John Deere India Private Limited", // Pune
   // corpId = 'd88f5f2b-61e7-4d9b-a4b0-e9b3079121f2', //(Construction & Forestry Division)
   // campCycleId = '378902', //(Construction & Forestry Division)
   // companyName = "John deere Construction and Forestry Division, PV&V Lab",  //(Construction & Forestry Division)
-  corpId = 'f90f7099-a611-40d7-bfe6-32d3f8b19938', // ISG Unit
-  campCycleId = '378928', // ISG Unit
-  companyName = "John Deere India  ISG Unit",
+  // corpId = 'f90f7099-a611-40d7-bfe6-32d3f8b19938', // ISG Unit
+  // campCycleId = '378928', // ISG Unit
+  // companyName = "John Deere India  ISG Unit",
   fileType = "PHYSICAL_FITNESS_FORM",
 
 }) => {
@@ -108,7 +108,37 @@ const JohnDeerePhysicaFitnessForm = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data?.filter((item) =>
-        ['739109'].includes(item?.empId)
+        [
+          "10093398",
+          "10062221",
+          "LW5000023394",
+          "LW5000024839",
+          "10087081",
+          "LW5000032123",
+          "LW5000030925",
+          "10097481",
+          "LW5000031820",
+          "10101437",
+          "LW5000015316",
+          "LW5000027987",
+          "LW5000013228",
+          "LW5000031276",
+          "10102339",
+          "10097113",
+          "758757",
+          "LW5000023484",
+          "LW5000027276",
+          "10016212",
+          "10021915",
+          "10097526",
+          "779931",
+          "843762",
+          "10092876",
+          "761459",
+          "10102081",
+          "754401",
+          "10109109"
+        ].includes(item?.empId)
 
       );
 
@@ -159,7 +189,7 @@ const JohnDeerePhysicaFitnessForm = ({
   const deleteFiles = async (data) => {
     const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
-    if (result && result.data) {
+    if (result && result?.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
         variant: "success",
       });
@@ -186,14 +216,14 @@ const JohnDeerePhysicaFitnessForm = ({
   const getTestDetails = async () => {
     const url = `https://apibackend.uno.care/api/org/testsconfig`;
     const result = await getData(url);
-    if (result.error) {
-      console.log(result.error);
+    if (result?.error) {
+      console.log(result?.error);
     } else {
-      const temp = result.data.map((item, index) => ({
+      const temp = result?.data.map((item, index) => ({
         id: index,
         ...item,
         editRow: "editRow",
-      }));
+      })) || [];
       setBloodData(temp);
     }
   };
@@ -216,19 +246,19 @@ const JohnDeerePhysicaFitnessForm = ({
 
   const transformedData = useMemo(() => {
     const stringValuesUrine =
-      bloodData.find((test) => test.testKey === "URINE.GLUCOSE")
+      bloodData?.find((test) => test.testKey === "URINE.GLUCOSE")
         ?.stringTestKeyValues || [];
     const stringValuesHbsag =
-      bloodData.find((test) => test.testKey === "HbsAg")?.stringTestKeyValues
+      bloodData?.find((test) => test.testKey === "HbsAg")?.stringTestKeyValues
         ?.UNHEALTHY_VALUES || [];
     const urineGlucoseEmployees = errorEmployeeList
-      .filter(
+      ?.filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
           item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
-      .map((item) => ({
+      ?.map((item) => ({
         empId: item.empId,
         name: item.name,
         age: item.age,

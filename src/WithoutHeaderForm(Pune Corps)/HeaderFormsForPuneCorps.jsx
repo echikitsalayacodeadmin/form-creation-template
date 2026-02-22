@@ -32,26 +32,63 @@ async function removeSignFromReport(reportPdfBytes) {
   return await mergedPdf.save();
 }
 
-async function removeAddressFromHeaderInReport(reportPdfBytes) {
+// async function removeAddressFromHeaderInReport(reportPdfBytes,fileType) {
+//   const reportPdf = await PDFDocument.load(reportPdfBytes);
+//   const mergedPdf = await PDFDocument.create();
+
+//   const [origPage] = await mergedPdf.copyPages(reportPdf, [0]);
+//   const page = origPage;
+//   const { width, height } = page.getSize();
+
+//   // White-out area where address is located (left side below header)
+//   page.drawRectangle({
+//     x: 0,
+//     y: height - 130, // Y-position of address
+//     width: 320, // Width covering address content
+//     height: 65, // Height covering address content
+//     color: rgb(1, 1, 1),
+//   });
+
+//   mergedPdf.addPage(page);
+//   return await mergedPdf.save();
+// }
+
+
+
+async function removeAddressFromHeaderInReport(reportPdfBytes, fileType) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
   const mergedPdf = await PDFDocument.create();
 
-  const [origPage] = await mergedPdf.copyPages(reportPdf, [0]);
-  const page = origPage;
+  // copy first page
+  const [page] = await mergedPdf.copyPages(reportPdf, [0]);
+
   const { width, height } = page.getSize();
 
-  // White-out area where address is located (left side below header)
+  // calculate address cover area
+  const rectY =
+    height - (fileType === "PHYSICAL_FITNESS_FORM" ? 115 : 130);
+
+  const rectHeight =
+    fileType === "PHYSICAL_FITNESS_FORM" ? 50 : 65;
+
+  // draw white rectangle to hide address
   page.drawRectangle({
     x: 0,
-    y: height - 130, // Y-position of address
-    width: 320, // Width covering address content
-    height: 65, // Height covering address content
+    y: rectY,
+    width: 320,
+    height: rectHeight,
     color: rgb(1, 1, 1),
   });
 
+  // add modified page to new PDF
   mergedPdf.addPage(page);
-  return await mergedPdf.save();
+
+  // save and return bytes
+  const pdfBytes = await mergedPdf.save();
+
+  return pdfBytes;
 }
+
 
 async function mergeHeaderWithReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
@@ -108,12 +145,16 @@ const map = {
 const HeaderFormsForPuneCorps = ({
   // corpId = "c2791eda-2b5a-44fc-8958-cd5641c2881c",
   // campCycleId = "361961",
-  corpId = "7166ef04-e16f-4ae9-bda8-a7ee6d6833fa",
-  campCycleId = "364055",
-  // fileType = "XRAY",
-  // urlType = "xrayUrl",
-  fileType = "FITNESS_CERTIFICATE",
-  urlType = "fitnessCertificateUrl",
+  // corpId = "7166ef04-e16f-4ae9-bda8-a7ee6d6833fa",
+  // campCycleId = "364055",
+  corpId = "88817967-6a3e-4d3f-a127-9612c96589d7",
+  campCycleId = "382544",
+  fileType = "XRAY",
+  urlType = "xrayUrl",
+  // fileType = "FITNESS_CERTIFICATE",
+  // urlType = "fitnessCertificateUrl",
+  // fileType = "PHYSICAL_FITNESS_FORM",
+  // urlType = "physicalFitnessFormUrl",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -141,7 +182,7 @@ const HeaderFormsForPuneCorps = ({
         finalBytes = await mergeHeaderWithReport(reportBuffer);
       } else if (processType === "remove") {
         console.log("Removing Address from Header...");
-        finalBytes = await removeAddressFromHeaderInReport(reportBuffer);
+        finalBytes = await removeAddressFromHeaderInReport(reportBuffer, fileType);
       } else if (processType === "removeSign") {
         console.log("Removing Address from Header...");
         finalBytes = await removeSignFromReport(reportBuffer);
@@ -189,7 +230,7 @@ const HeaderFormsForPuneCorps = ({
 
       //   const temp = result?.data.filter((item) => codes.includes(item.empId));
       const temp = result?.data.filter(
-        (item) => ["403050"].includes(item?.empId) && item?.[urlType]
+        (item) => ["37000641"].includes(item?.empId) && item?.[urlType]
       );
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
