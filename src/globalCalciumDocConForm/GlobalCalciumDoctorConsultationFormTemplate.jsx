@@ -399,9 +399,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>BP:</Text>
-          <DottedField width={60} value={data?.cholestrolData?.["highBp"]} />
-          <Text style={{ marginLeft: 2 }}>/</Text>
-          <DottedField width={60} value={data?.cholestrolData?.["lowBp"]} />
+          <DottedField width={60} value={data?.bp} />
           <Text style={{ marginLeft: 2 }}>mmHg</Text>
           <Text style={[styles.label, { marginLeft: 16 }]}>Pulse:</Text>
           <DottedField width={60} value={data?.pulseRate || ""} />

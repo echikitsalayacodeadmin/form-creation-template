@@ -252,13 +252,9 @@ const VisionReportByOPTemplate = ({ data }) => (
 
           {/* Colour Vision */}
           <Text style={[styles.tableCol, { flex: 3, borderRight: 0 }]}>
-            {data?.colourVision?.toLowerCase() === "nad"
-              ? "Abnormal"
-              : data?.colourVision?.toLowerCase()?.includes("r") ||
-                data?.colourVision?.toLowerCase()?.includes("right") ||
-                data?.colourVision?.toLowerCase()?.includes("both")
-              ? "Normal"
-              : "-"}
+            {data?.colourVision?.toLowerCase() === "nad" ? "Normal" : data?.colourVision?.toLowerCase()?.includes("r") ||
+              data?.colourVision?.toLowerCase()?.includes("right") ||
+              data?.colourVision?.toLowerCase()?.includes("both") ? "Abnormal" : "-"}
           </Text>
         </View>
 
@@ -296,13 +292,17 @@ const VisionReportByOPTemplate = ({ data }) => (
               { flex: 3, borderBottom: 0, borderRight: 0 },
             ]}
           >
-            {data?.colourVision?.toLowerCase() === "nad"
+            {/* {data?.colourVision?.toLowerCase() === "nad"
               ? "Abnormal"
               : data?.colourVision?.toLowerCase()?.includes("l") ||
                 data?.colourVision?.toLowerCase()?.includes("left") ||
                 data?.colourVision?.toLowerCase()?.includes("both")
               ? "Normal"
-              : "-"}
+              : "-"} */}
+
+            {data?.colourVision?.toLowerCase() === "nad" ? "Normal" : data?.colourVision?.toLowerCase()?.includes("l") ||
+              data?.colourVision?.toLowerCase()?.includes("left") ||
+              data?.colourVision?.toLowerCase()?.includes("both") ? "Abnormal" : "-"}
           </Text>
         </View>
       </View>

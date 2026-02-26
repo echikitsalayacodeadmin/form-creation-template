@@ -133,7 +133,7 @@ const HdHyundaiMERFormTemplate = ({ data }) => (
                     contact: safe(data?.mobile),
                     companyName:
                         data?.employmentType === "CONTRACTOR"
-                            ? safe(data?.contractorName)
+                            ? safe(data?.contractorName || "")
                             : "HD Hyundai Pvt Ltd",
                     designation: safe(data?.designation),
                     employeeId: safe(data?.empId),

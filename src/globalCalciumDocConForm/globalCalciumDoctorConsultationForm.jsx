@@ -122,8 +122,8 @@ const GlobalCalciumDoctorConsultationForm = ({
           <div key={index} style={{ display: "flex" }}>
             <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-            <a href={item.annexureUrl}>
-              <div key={index}>{item.annexureUrl}</div>
+            <a href={item.physicalFitnessFormUrl}>
+              <div key={index}>{item.physicalFitnessFormUrl}</div>
             </a>
 
             <br />
