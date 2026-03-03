@@ -14,7 +14,7 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import StridesHeader2025Template from "../stridesPhysicalFitnessForm/StridesHeader2025Template";
+import StridesHeader2026Template from "../stridesPhysicalFitnessForm/StridesHeader2026Template";
 import unoHeader from "./unoHeader.png";
 
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
@@ -320,7 +320,7 @@ const XrayFilmMain = ({
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({
@@ -504,7 +504,7 @@ const XrayFilmMain = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <StridesHeader2025Template data={list[0]} />
+        <StridesHeader2026Template data={list[0]} />
       </PDFViewer>
     </Fragment>
   );

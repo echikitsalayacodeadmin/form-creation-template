@@ -14,8 +14,8 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import StridesHeader2025Template from "./StridesHeader2025Template";
-import { PDFDocument } from "pdf-lib";
+import StridesHeader2026Template from "./StridesHeader2026Template";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
 async function mergeHeaderAndXraySinglePage(headerPdfBytes, xrayPdfBytes) {
   const headerPdf = await PDFDocument.load(headerPdfBytes);
@@ -46,9 +46,52 @@ async function mergeHeaderAndXraySinglePage(headerPdfBytes, xrayPdfBytes) {
 
   return await mergedPdf.save();
 }
+
+const addTextToExistingPdf = async (existingPdfBytes) => {
+  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+  const pages = pdfDoc.getPages();
+  const firstPage = pages[0];
+
+  const { width, height } = firstPage.getSize();
+
+  const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+  const text = "Annual Medical Check-up – February 2026";
+  const fontSize = 12;
+
+  const textWidth = font.widthOfTextAtSize(text, fontSize);
+
+  // Center horizontally
+  const x = (width - textWidth) / 2;
+
+  // 150px from top
+  const y = height - 100;
+
+  // Draw text
+  firstPage.drawText(text, {
+    x,
+    y,
+    size: fontSize,
+    font,
+    color: rgb(0, 0, 0),
+  });
+
+  // 🔥 Draw underline
+  const underlineY = y - 3; // slight gap below text
+  firstPage.drawLine({
+    start: { x, y: underlineY },
+    end: { x: x + textWidth, y: underlineY },
+    thickness: 1,
+    color: rgb(0, 0, 0),
+  });
+
+  const modifiedPdf = await pdfDoc.save();
+  return modifiedPdf;
+};
+
 const StridesXrayFormMain = ({
-  corpId = "f62fa674-0710-47c9-9a5e-b76b731a22e3",
-  campCycleId = "347754",
+  corpId = "b4055483-4ae1-4c35-851c-6922940bfa80",
+  campCycleId = "385039",
   fileType = "XRAY",
 }) => {
   const _storedData = (() => {
@@ -86,7 +129,7 @@ const StridesXrayFormMain = ({
   // const generatePDF = async (data, index) => {
   //   try {
   //     const pdfBlob = await pdf(
-  //       <StridesHeader2025Template data={data} />
+  //       <StridesHeader2026Template data={data} />
   //     ).toBlob();
 
   //     const formData = new FormData();
@@ -115,16 +158,11 @@ const StridesXrayFormMain = ({
 
   const generatePDF = async (data, index) => {
     try {
-      const headerBlob = await pdf(
-        <StridesHeader2025Template data={data} />
-      ).toBlob();
-      const headerBuffer = await headerBlob.arrayBuffer();
 
       const res = await fetch(data.xrayUrl);
       const xrayBuffer = await res.arrayBuffer();
 
-      const mergedBytes = await mergeHeaderAndXraySinglePage(
-        headerBuffer,
+      const mergedBytes = await addTextToExistingPdf(
         xrayBuffer
       );
       const mergedBlob = new Blob([mergedBytes], { type: "application/pdf" });
@@ -166,7 +204,7 @@ const StridesXrayFormMain = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => item.empId !== "SH472" && item.xrayUrl
+        (item) => item.empId === "114290" && item.xrayUrl
       );
 
       const length = temp.length;
@@ -283,7 +321,7 @@ const StridesXrayFormMain = ({
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({
@@ -467,7 +505,7 @@ const StridesXrayFormMain = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <StridesHeader2025Template data={list[0]} />
+        <StridesHeader2026Template data={list[0]} />
       </PDFViewer>
     </Fragment>
   );

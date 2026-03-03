@@ -68,7 +68,7 @@ const HDHyundaiMERForm = ({ corpId = '88817967-6a3e-4d3f-a127-9612c96589d7', cam
             const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await getData(url);
             if (result && result.data) {
-                const temp = result?.data?.filter((item) => item?.vitalsCreatedDate === "2026-02-09" || item?.vitalsCreatedDate === "2026-02-10" || item?.vitalsCreatedDate === "2026-02-11" || item?.vitalsCreatedDate === "2026-02-12" || item?.vitalsCreatedDate === "2026-02-13" || item?.vitalsCreatedDate === "2026-02-14");
+                const temp = result?.data?.filter((item) => item?.annexureUrl && !item?.tetanusDose1);
                 const length = temp.length;
                 const sorted = sortDataByName(temp);
                 setList(sorted);

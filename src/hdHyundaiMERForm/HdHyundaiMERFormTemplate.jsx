@@ -209,7 +209,7 @@ const HdHyundaiMERFormTemplate = ({ data }) => (
                     typhoid: "Not Done",
                     cholera: "Not Done",
                     hepatitis: "Not Done",
-                    tt: "Done",
+                    tt: data?.tetanusDose1 ? "Done" : "NA",
                     stool: "NA",
                 }}
             />
@@ -261,7 +261,7 @@ const HdHyundaiMERFormTemplate = ({ data }) => (
 
                     sgot: safe(data?.cholestrolData?.["SGOT"], " U/L"),
 
-                    stool: "Normal",
+                    stool: "NA",
                 }}
             />
 

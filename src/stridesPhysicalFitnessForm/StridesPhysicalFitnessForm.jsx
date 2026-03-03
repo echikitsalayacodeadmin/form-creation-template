@@ -143,8 +143,7 @@ const styles = StyleSheet.create({
 
 const StridesPhysicalFitnessForm = ({
   data,
-  company = "Strides Pharma Science Limited Chandapura",
-  date = "12th June 2025",
+  company = "Strides Pharma Science Limited",
   fitText,
   isFit = true,
   signature = "prashantDeshmukh", // default signature
@@ -227,7 +226,7 @@ const StridesPhysicalFitnessForm = ({
                 },
               ]}
             >
-              Bi-Annual Medical Check-up – October 2025
+              Annual Medical Check-up – February 2026
             </Text>
             <Text
               style={[styles.cell, styles.cellNoRight, { width: 0 }]}

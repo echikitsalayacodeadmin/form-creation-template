@@ -17,8 +17,8 @@ import { sortDataByName } from "../assets/utils";
 import StridesPhysicalFitnessForm from "./StridesPhysicalFitnessForm";
 
 const StridesPhysicalFitnessFormMain = ({
-  corpId = "f62fa674-0710-47c9-9a5e-b76b731a22e3",
-  campCycleId = "347754",
+  corpId = "b4055483-4ae1-4c35-851c-6922940bfa80",
+  campCycleId = "385039",
   fileType = "PHYSICAL_FITNESS_FORM",
 }) => {
   const _storedData = (() => {
@@ -68,7 +68,7 @@ const StridesPhysicalFitnessFormMain = ({
           fitText={fitText}
           signature={signature}
           isFit={isFit}
-          company="Strides Pharma Science Limited Chandapura"
+          company="Strides Pharma Science Limited "
         />
       ).toBlob();
 
@@ -106,7 +106,7 @@ const StridesPhysicalFitnessFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data?.filter((item) => item.physicalFitnessFormUrl);
+      const temp = result?.data?.filter((item) => item.empId === '114290');
 
       const length = temp.length;
       console.log({ length });
@@ -222,7 +222,7 @@ const StridesPhysicalFitnessFormMain = ({
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({
@@ -414,7 +414,7 @@ const StridesPhysicalFitnessFormMain = ({
               : "After examining & above result of above stated executive, I hereby confirm that he is advised medical consultation."
           }
           signature={signature}
-          company="Strides Pharma Science Limited Chandapura"
+          company="Strides Pharma Science Limited"
           isFit={fitStatus === "fit" ? true : false}
         />
       </PDFViewer>

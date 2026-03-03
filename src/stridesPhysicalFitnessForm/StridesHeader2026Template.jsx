@@ -24,25 +24,25 @@ Font.register({
 });
 
 // Example component
-const StridesHeader2025Template = ({ data }) => {
+const StridesHeader2026Template = ({ data }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header Section */}
-        {/* <View style={styles.headerRow}>
+        <View style={styles.headerRow}>
           <Image style={styles.logo} src={uncareheader} />
-        </View> */}
+        </View>
 
         {/* Title */}
-        {/* <Text style={styles.title}>
-          Bi-Annual Medical Check-up – October 2025
-        </Text> */}
+        <Text style={styles.title}>
+          Annual Medical Check-up – February 2026
+        </Text>
       </Page>
     </Document>
   );
 };
 
-export default StridesHeader2025Template;
+export default StridesHeader2026Template;
 
 // ----------------------
 // Styles

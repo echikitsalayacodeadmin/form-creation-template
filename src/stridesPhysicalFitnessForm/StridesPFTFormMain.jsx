@@ -14,8 +14,8 @@ import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
-import StridesHeader2025Template from "./StridesHeader2025Template";
 import { uploadFile } from "../assets/services/PostApiCall";
+import StridesHeader2026Template from "./StridesHeader2026Template";
 
 async function mergeHeaderAndXraySinglePage(headerPdfBytes, pftPdfBytes) {
   // Load both PDFs
@@ -83,8 +83,8 @@ async function mergeHeaderAndXraySinglePage(headerPdfBytes, pftPdfBytes) {
 }
 
 const StridesPFTFormMain = ({
-  corpId = "f62fa674-0710-47c9-9a5e-b76b731a22e3",
-  campCycleId = "347754",
+  corpId = "b4055483-4ae1-4c35-851c-6922940bfa80",
+  campCycleId = "385039",
   fileType = "PFT",
 }) => {
   const _storedData = (() => {
@@ -122,7 +122,7 @@ const StridesPFTFormMain = ({
   const generatePDF = async (data, index) => {
     try {
       const headerBlob = await pdf(
-        <StridesHeader2025Template data={data} />
+        <StridesHeader2026Template data={data} />
       ).toBlob();
       const headerBuffer = await headerBlob.arrayBuffer();
 
@@ -173,7 +173,7 @@ const StridesPFTFormMain = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => !["SH472", "113732"]?.includes(item.empId) && item.pftUrl
+        (item) => ['114290']?.includes(item.empId) && item.pftUrl
       );
 
       const length = temp.length;
@@ -290,7 +290,7 @@ const StridesPFTFormMain = ({
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({
@@ -474,7 +474,7 @@ const StridesPFTFormMain = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <StridesHeader2025Template data={list[0]} />
+        <StridesHeader2026Template data={list[0]} />
       </PDFViewer>
     </Fragment>
   );

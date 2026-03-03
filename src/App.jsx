@@ -117,7 +117,7 @@ const App = () => {
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <HDHyundaiMERForm />
+        <StridesPFTFormMain />
         {/* <VisionReportByOP /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>

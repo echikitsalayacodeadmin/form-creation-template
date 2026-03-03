@@ -606,7 +606,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <Text style={[styles.bold, { textAlign: "right", flex: 1 }]}>
             Signature of Medical Officer with Seal
           </Text>
-          <Image
+          {/* <Image
             src={Dr_Jaydip_Saxena}
             style={{
               height: 90,
@@ -615,7 +615,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
               bottom: 10,
               right: 100,
             }}
-          />
+          /> */}
         </View>{" "}
         <View style={[{ marginTop: 30 }]}>
           <View
