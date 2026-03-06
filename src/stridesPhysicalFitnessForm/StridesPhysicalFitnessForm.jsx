@@ -365,7 +365,7 @@ const StridesPhysicalFitnessForm = ({
               {data?.department || ""}
             </Text>
           </View>
-          <View style={styles.tableRow}>
+          {/* <View style={styles.tableRow}>
             <Text
               style={[
                 styles.cell,
@@ -388,7 +388,7 @@ const StridesPhysicalFitnessForm = ({
             <Text
               style={[styles.cell, { width: "25%" }, styles.cellNoRight]}
             ></Text>
-          </View>
+          </View> */}
 
           {/* Physical Details */}
           <View style={styles.tableRow}>
@@ -500,7 +500,7 @@ const StridesPhysicalFitnessForm = ({
                 },
               ]}
             >
-              Important Medical History
+              Past Medical History
             </Text>
             <Text
               style={[styles.cell, styles.cellNoRight, { width: 0 }]}
@@ -538,7 +538,7 @@ const StridesPhysicalFitnessForm = ({
                 { width: "48.5%", fontFamily: "Times-Roman-Bold" },
               ]}
             >
-              HBP/DM/BA/Arthritis/PTB Epilepsy/Renal Disease
+              HTN/DM/BA/Arthritis/PTB Epilepsy/Renal Disease
             </Text>
             <Text style={[styles.cell, { width: "25%" }]}>No</Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
@@ -605,7 +605,7 @@ const StridesPhysicalFitnessForm = ({
             >
               ENT:
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>NA</Text>
+            <Text style={[styles.cell, { width: "25%" }]}></Text>
             <Text
               style={[
                 styles.cell,
@@ -616,7 +616,7 @@ const StridesPhysicalFitnessForm = ({
               Digestive System:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              NA
+
             </Text>
           </View>
           <View style={styles.tableRow}>
@@ -629,7 +629,7 @@ const StridesPhysicalFitnessForm = ({
             >
               Skin Condition :
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>NA</Text>
+            <Text style={[styles.cell, { width: "25%" }]}></Text>
             <Text
               style={[
                 styles.cell,
@@ -640,9 +640,36 @@ const StridesPhysicalFitnessForm = ({
               Oral Cavity
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              NA
+
             </Text>
           </View>
+          <View style={styles.tableRow}>
+            <Text
+              style={[
+                styles.cell,
+                styles.cellLabel,
+                { width: "26%", fontFamily: "Times-Roman-Bold" },
+              ]}
+            >
+              Remarks :
+            </Text>
+            <Text
+              style={[
+                styles.cell,
+                { width: "75%", textAlign: "center" },
+                styles.cellNoRight,
+              ]}
+            >
+              Balance diet and Exercise is advised
+            </Text>
+            <Text
+              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
+            ></Text>
+            <Text
+              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
+            ></Text>
+          </View>
+
           <View style={styles.tableRow}>
             <Text
               style={[

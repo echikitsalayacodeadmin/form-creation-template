@@ -144,20 +144,20 @@ const StridesPFTFormMain = ({
         `${data?.pftUrl?.split("/").pop() || "Report"}.pdf`
       );
 
-      // const url = URL.createObjectURL(mergedBlob);
-      // window.open(url, "_blank");
+      const url = URL.createObjectURL(mergedBlob);
+      window.open(url, "_blank");
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-      const result = await uploadFile(url, formData);
+      // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      // const result = await uploadFile(url, formData);
 
-      if (result && result.data) {
-        enqueueSnackbar("Successfully Uploaded Merged PDF!", {
-          variant: "success",
-        });
-        setUploadedCount((prevCount) => prevCount + 1);
-      } else {
-        enqueueSnackbar("An error Occurred!", { variant: "error" });
-      }
+      // if (result && result.data) {
+      //   enqueueSnackbar("Successfully Uploaded Merged PDF!", {
+      //     variant: "success",
+      //   });
+      //   setUploadedCount((prevCount) => prevCount + 1);
+      // } else {
+      //   enqueueSnackbar("An error Occurred!", { variant: "error" });
+      // }
     } catch (error) {
       console.error("Error generating/uploading merged PDF:", error);
       enqueueSnackbar("Error generating/uploading merged PDF", {

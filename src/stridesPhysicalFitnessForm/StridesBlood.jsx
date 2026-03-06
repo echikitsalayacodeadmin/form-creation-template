@@ -182,6 +182,189 @@ async function loadPdfJs() {
 // ✅ React Component
 
 
+// export async function replaceUreaUricCreatinineWithRFT(bloodUrl) {
+//   const pdfBytes = await fetch(bloodUrl).then((r) => r.arrayBuffer());
+//   const pdfDoc = await PDFDocument.load(pdfBytes);
+
+//   const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+
+
+
+
+//   const pdfjsLib = await loadPdfJs();
+//   const loadingTask = pdfjsLib.getDocument({ url: bloodUrl });
+//   const pdf = await loadingTask.promise;
+
+
+
+
+//   const fontSize = 10;
+
+//   const targets = {
+//     "CREATININE SERUM": "RFT – RENAL FUNCTION TEST (CREATININE SERUM)",
+//     "UREA": "RFT – Renal Function Test (Urea)",
+//     "URIC ACID": "RFT – RENAL FUNCTION TEST (URIC ACID)",
+//     "URIC ACID (UA)": "RFT – RENAL FUNCTION TEST (URIC ACID (UA)",
+//     "UREA": "RFT – RENAL FUNCTION TEST (UREA)",
+//   };
+
+//   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+//     const page = await pdf.getPage(pageNum);
+//     const textContent = await page.getTextContent();
+
+//     const pageLib = pdfDoc.getPages()[pageNum - 1];
+//     const { width, height } = pageLib.getSize();
+
+//     for (const item of textContent.items) {
+//       const text = item.str.trim().toUpperCase();
+
+//       for (const key in targets) {
+
+//         if (text.includes(key)) {
+
+//           const replaceText = targets[key];
+//           const [x, y] = item.transform.slice(4, 6);
+
+//           if (height - y < 230) {
+
+//             const textWidth = font.widthOfTextAtSize(replaceText, fontSize);
+//             const centerX = (width - textWidth) / 2;
+
+//             pageLib.drawRectangle({
+//               x: 0,
+//               y: y - 2,
+//               width: width,
+//               height: 10,
+//               color: rgb(1, 1, 1),
+//             });
+
+//             pageLib.drawText(replaceText, {
+//               x: centerX,
+//               y: y + 1,
+//               size: fontSize,
+//               font,
+//               color: rgb(0, 0, 0),
+//             });
+
+//             console.log(`✅ Replaced ${key} on page ${pageNum}`);
+//           }
+//         }
+//       }
+//     }
+//   }
+//   await pdf.destroy();
+
+//   const modifiedBytes = await pdfDoc.save();
+//   return new Blob([modifiedBytes], { type: "application/pdf" });
+// }
+
+export async function modifyBloodPdfWithRFT(bloodUrl) {
+  const pdfBytes = await fetch(bloodUrl).then((r) => r.arrayBuffer());
+  const pdfDoc = await PDFDocument.load(pdfBytes);
+
+  const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+  const headerText = "Annual Medical Check-Up – February 2026";
+  const fontSize = 10;
+
+  const targets = {
+    "CREATININE SERUM": "RFT – RENAL FUNCTION TEST (CREATININE SERUM)",
+    "UREA": "RFT – RENAL FUNCTION TEST (UREA)",
+    "URIC ACID": "RFT – RENAL FUNCTION TEST (URIC ACID)",
+    "URIC ACID (UA)": "RFT – RENAL FUNCTION TEST (URIC ACID)",
+  };
+
+  // load pdf.js
+  const pdfjsLib = await loadPdfJs();
+  const loadingTask = pdfjsLib.getDocument({ url: bloodUrl });
+  const pdf = await loadingTask.promise;
+
+  const pageCount = pdfDoc.getPageCount();
+
+  /* ------------------------------------------------ */
+  /* 1️⃣ WRITE HEADER ON EVERY PAGE */
+  /* ------------------------------------------------ */
+
+  for (let pageNum = 1; pageNum <= pageCount; pageNum++) {
+    const page = pdfDoc.getPages()[pageNum - 1];
+    const { width, height } = page.getSize();
+
+    const textWidth = font.widthOfTextAtSize(headerText, fontSize);
+    const centerX = (width - textWidth) / 2;
+    const y = height - 197;
+
+    page.drawText(headerText, {
+      x: centerX,
+      y,
+      size: fontSize,
+      font,
+      color: rgb(0, 0, 0),
+    });
+
+    page.drawLine({
+      start: { x: centerX, y: y - 2 },
+      end: { x: centerX + textWidth, y: y - 2 },
+      thickness: 0.6,
+      color: rgb(0, 0, 0),
+    });
+
+    console.log(`✅ Header added on page ${pageNum}`);
+  }
+
+  /* ------------------------------------------------ */
+  /* 2️⃣ REPLACE UREA / URIC ACID / CREATININE */
+  /* ------------------------------------------------ */
+
+  for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+    const page = await pdf.getPage(pageNum);
+    const textContent = await page.getTextContent();
+
+    const pageLib = pdfDoc.getPages()[pageNum - 1];
+    const { width, height } = pageLib.getSize();
+
+    for (const item of textContent.items) {
+      const text = item.str.trim().toUpperCase();
+
+      for (const key in targets) {
+        if (text.includes(key)) {
+          const replaceText = targets[key];
+          const [, y] = item.transform.slice(4, 6);
+
+          if (height - y < 230) {
+            const textWidth = font.widthOfTextAtSize(replaceText, fontSize);
+            const centerX = (width - textWidth) / 2;
+
+            // cover old heading
+            pageLib.drawRectangle({
+              x: 0,
+              y: y - 3,
+              width: width,
+              height: 12,
+              color: rgb(1, 1, 1),
+            });
+
+            // draw new centered heading
+            pageLib.drawText(replaceText, {
+              x: centerX,
+              y: y + 1,
+              size: fontSize,
+              font,
+              color: rgb(0, 0, 0),
+            });
+
+            console.log(`✅ Replaced ${key} on page ${pageNum}`);
+          }
+        }
+      }
+    }
+  }
+
+  await pdf.destroy();
+
+  const modifiedBytes = await pdfDoc.save();
+  return new Blob([modifiedBytes], { type: "application/pdf" });
+}
 
 
 export async function modifyBloodPdfDynamic(bloodUrl) {
@@ -272,7 +455,7 @@ const StridesBlood = ({
         return;
       }
 
-      const modifiedBlob = await modifyBloodPdfDynamic(bloodTestUrl);
+      const modifiedBlob = await modifyBloodPdfWithRFT(bloodTestUrl);
       //   Step 3️⃣: Preview the modified PDF (optional)
       const previewUrl = URL.createObjectURL(modifiedBlob);
       window.open(previewUrl, "_blank");
@@ -298,7 +481,7 @@ const StridesBlood = ({
   };
 
   const handleGeneratePDFs = async () => {
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < 1; i++) {
       await handleBloodModify(list[i], i);
     }
   };
