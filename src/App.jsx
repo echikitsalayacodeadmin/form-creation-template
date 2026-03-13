@@ -120,7 +120,7 @@ const App = () => {
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <ThreeMPhysicalFitnessFrom />
+        <StridesBlood />
         {/* <AhcBulkUploadData /> */}
         {/* <VisionReportByOP /> */}
         {/* <GenericFormGenerator /> */}
