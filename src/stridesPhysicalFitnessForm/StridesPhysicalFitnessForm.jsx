@@ -478,7 +478,7 @@ const StridesPhysicalFitnessForm = ({
               Additional : Smoking/Alcohol/Tabacco/Other :
             </Text>
             <Text style={[styles.cell, { width: "50%" }, styles.cellNoRight]}>
-              {"No"}
+
             </Text>
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
@@ -540,9 +540,9 @@ const StridesPhysicalFitnessForm = ({
             >
               HTN/DM/BA/Arthritis/PTB Epilepsy/Renal Disease
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}>No</Text>
+            <Text style={[styles.cell, { width: "25%" }]}></Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-              No
+
             </Text>
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
@@ -605,7 +605,7 @@ const StridesPhysicalFitnessForm = ({
             >
               ENT:
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}></Text>
+            <Text style={[styles.cell, { width: "25%" }]}>NA</Text>
             <Text
               style={[
                 styles.cell,
@@ -616,7 +616,7 @@ const StridesPhysicalFitnessForm = ({
               Digestive System:
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-
+              NA
             </Text>
           </View>
           <View style={styles.tableRow}>
@@ -629,7 +629,7 @@ const StridesPhysicalFitnessForm = ({
             >
               Skin Condition :
             </Text>
-            <Text style={[styles.cell, { width: "25%" }]}></Text>
+            <Text style={[styles.cell, { width: "25%" }]}>NA</Text>
             <Text
               style={[
                 styles.cell,
@@ -640,57 +640,27 @@ const StridesPhysicalFitnessForm = ({
               Oral Cavity
             </Text>
             <Text style={[styles.cell, { width: "25%" }, styles.cellNoRight]}>
-
+              NA
             </Text>
           </View>
           <View style={styles.tableRow}>
+
             <Text
               style={[
                 styles.cell,
-                styles.cellLabel,
-                { width: "26%", fontFamily: "Times-Roman-Bold" },
-              ]}
-            >
-              Remarks :
-            </Text>
-            <Text
-              style={[
-                styles.cell,
-                { width: "75%", textAlign: "center" },
+                { width: "100%", textAlign: "center" },
                 styles.cellNoRight,
               ]}
             >
-              Balance diet and Exercise is advised
+
             </Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
+
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}
             ></Text>
           </View>
 
-          <View style={styles.tableRow}>
-            <Text
-              style={[
-                styles.cell,
-                { width: "100%" },
-                styles.cellNoRight,
-                styles.cellCenter,
-              ]}
-            >
-              .
-            </Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
-            <Text
-              style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-            ></Text>
-          </View>
+
           {/* Recommendation */}
           <View style={styles.tableRow}>
             <Text
@@ -709,7 +679,8 @@ const StridesPhysicalFitnessForm = ({
                 styles.cellNoRight,
               ]}
             >
-              {isFit ? "No advise" : "Further consultation advised."}
+              {/* {isFit ? "No advise" : "Further consultation advised."} */}
+              Balance diet and Exercise is advised
             </Text>
             <Text
               style={[styles.cell, { width: 0 }, styles.cellNoRight]}

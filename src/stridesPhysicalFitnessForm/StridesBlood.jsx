@@ -432,7 +432,7 @@ const StridesBlood = ({
     const result = await getData(url);
     if (result && result.data) {
       const temp = result?.data?.filter(
-        (item) => ["114290"].includes(item?.empId) && item.bloodTestUrl
+        (item) => item?.tokenNumber === "7"
       );
       const sorted = sortDataByName(temp);
       setList(sorted);

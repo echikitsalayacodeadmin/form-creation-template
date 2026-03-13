@@ -8,7 +8,7 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
-import Dr_Jaydip_Saxena from "../../src/assets/images/Dr_Jaydip_Saxena.png";
+import drDamodharanSealSign from "../../src/assets/images/drDamodharanSealSign.png";
 import uncareheader from "../../src/assets/images/uncareheader.png";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
@@ -167,13 +167,13 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         <View key={i} style={[styles.row, { marginHorizontal: 20 }]}>
           <Text style={styles.label}>{condition.label}:</Text>
           <DottedField
-            value={data?.doctorConsultationFormData?.[condition.property]}
+            value={data?.doctorConsultationFormData?.[condition.property] || "No"}
             width={100}
           />
           <Text style={styles.label}>If Yes Duration:</Text>
           <DottedField
             value={
-              data?.doctorConsultationFormData?.[`${condition.property}`] || ""
+              data?.doctorConsultationFormData?.[`${condition.property}`] || "No"
             }
             width={100}
           />
@@ -199,7 +199,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         >
           <Text>
             {data?.doctorConsultationFormData?.["medHistCurrentMedications"] ||
-              " "}
+              "Nil"}
           </Text>
         </View>
       </View>
@@ -282,7 +282,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
                     : "Smoking"}
               </Text>
               <Text style={styles.tableCell}>
-                {data?.doctorConsultationFormData?.[`${key?.property}`] || ""}
+                {data?.doctorConsultationFormData?.[`${key?.property}`] || "No"}
               </Text>
               <Text style={styles.tableCell}>
                 {data?.doctorConsultationFormData?.[`${key.duration}`] || ""}
@@ -309,7 +309,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         <View style={{ borderBottom: "1pt dotted black", minHeight: 20 }}>
           <Text>
             {data?.doctorConsultationFormData?.["medHistPastSignificant"] ||
-              " "}
+              "Nil"}
           </Text>
         </View>
       </View>
@@ -318,7 +318,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         <View style={{ borderBottom: "1pt dotted black", minHeight: 20 }}>
           <Text>
             {data?.doctorConsultationFormData?.["medHistFamilySignificant"] ||
-              " "}
+              "Nil"}
           </Text>
         </View>
       </View>
@@ -326,8 +326,8 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         <Text>Menstrual History (only for Females):</Text>
         <View style={{ borderBottom: "1pt dotted black", minHeight: 20 }}>
           <Text>
-            {data?.doctorConsultationFormData?.["medHistMenstrualFemale"] ||
-              " "}
+            {data?.gender === "MALE" ? "NA" : data?.doctorConsultationFormData?.["medHistMenstrualFemale"] ||
+              "Nil"}
           </Text>
         </View>
       </View>
@@ -388,25 +388,56 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           General Examination
         </Text>
         <View style={styles.row}>
-          <Text style={styles.label}>Height:</Text>
-          <DottedField width={60} value={data?.height} />
-          <Text style={{ marginLeft: 2 }}>cm</Text>
-          <Text style={[styles.label, { marginLeft: 16 }]}>Weight:</Text>
-          <DottedField width={60} value={data?.weight} />
-          <Text style={{ marginLeft: 2 }}>Kg</Text>
-          <Text style={[styles.label, { marginLeft: 16 }]}>BMI:</Text>
-          <DottedField width={60} value={data?.bmi} />
+          {data?.height &&
+            <>
+              <Text style={styles.label}>Height:</Text>
+              <DottedField width={60} value={data?.height} />
+              <Text style={{ marginLeft: 2 }}>cm</Text>
+            </>}
+          {data?.weight &&
+            <>
+              <Text style={[styles.label, { marginLeft: 16 }]}>Weight:</Text>
+              <DottedField width={60} value={data?.weight} />
+              <Text style={{ marginLeft: 2 }}>Kg</Text>
+            </>
+          }
+
+          {data?.bmi &&
+            <>
+              <Text style={[styles.label, { marginLeft: 16 }]}>BMI:</Text>
+              <DottedField width={60} value={data?.bmi} />
+            </>}
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>BP:</Text>
-          <DottedField width={60} value={data?.bp} />
-          <Text style={{ marginLeft: 2 }}>mmHg</Text>
-          <Text style={[styles.label, { marginLeft: 16 }]}>Pulse:</Text>
-          <DottedField width={60} value={data?.pulseRate || ""} />
-          <Text style={{ marginLeft: 2 }}>bpm</Text>
-          <Text style={[styles.label, { marginLeft: 16 }]}>SpO2:</Text>
-          <DottedField width={60} value={data?.spO2Percent || ""} />
-          <Text style={{ marginLeft: 2 }}>%</Text>
+          {((data?.cholestrolData?.highBp && data?.cholestrolData?.lowBp) ||
+            data?.bp) && (
+              <>
+                <Text style={styles.label}>BP:</Text>
+
+                <DottedField
+                  width={60}
+                  value={
+                    data?.cholestrolData?.highBp && data?.cholestrolData?.lowBp
+                      ? `${data.cholestrolData.highBp} / ${data.cholestrolData.lowBp}`
+                      : data?.bp || ""
+                  }
+                />
+
+                <Text style={{ marginLeft: 2 }}>mmHg</Text>
+              </>
+            )}
+          {data?.pulseRate &&
+            <>
+              <Text style={[styles.label, { marginLeft: 16 }]}>Pulse:</Text>
+              <DottedField width={60} value={data?.pulseRate || ""} />
+              <Text style={{ marginLeft: 2 }}>bpm</Text>
+            </>}
+          {data?.spO2Percent &&
+            <>
+              <Text style={[styles.label, { marginLeft: 16 }]}>SpO2:</Text>
+              <DottedField width={60} value={data?.spO2Percent || ""} />
+              <Text style={{ marginLeft: 2 }}>%</Text>
+            </>}
         </View>
       </View>
       <View style={{ borderBottom: "1pt solid #000", marginVertical: 10 }} />
@@ -428,48 +459,48 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <Text style={styles.label}>Pallor:</Text>
           <DottedField
             width={80}
-            value={data?.doctorConsultationFormData?.examSignPallor}
+            value={data?.doctorConsultationFormData?.examSignPallor || "Nil"}
           />
           <Text style={[styles.label, { marginLeft: 8 }]}>Icterus:</Text>
           <DottedField
             width={80}
-            value={data?.doctorConsultationFormData?.examSignIcterus}
+            value={data?.doctorConsultationFormData?.examSignIcterus || "Nil"}
           />
           <Text style={[styles.label, { marginLeft: 8 }]}>Cyanosis:</Text>
           <DottedField
             width={80}
-            value={data?.doctorConsultationFormData?.examSignCyanosis}
+            value={data?.doctorConsultationFormData?.examSignCyanosis || "Nil"}
           />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Clubbing:</Text>
           <DottedField
             width={80}
-            value={data?.doctorConsultationFormData?.examSignClubbing}
+            value={data?.doctorConsultationFormData?.examSignClubbing || "Nil"}
           />
           <Text style={[styles.label, { marginLeft: 8 }]}>Pedal Edema:</Text>
           <DottedField
             width={80}
-            value={data?.doctorConsultationFormData?.examSignPedalEdema}
+            value={data?.doctorConsultationFormData?.examSignPedalEdema || "Nil"}
           />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Skin Examination:</Text>
           <DottedField
             width={300}
-            value={data?.doctorConsultationFormData?.examSkin || ""}
+            value={data?.doctorConsultationFormData?.examSkin || "NAD"}
           />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Oral Hygiene:</Text>
           <DottedField
             width={120}
-            value={data?.doctorConsultationFormData?.examOralHygiene || ""}
+            value={data?.doctorConsultationFormData?.examOralHygiene || "NAD"}
           />
           <Text style={[styles.label, { marginLeft: 16 }]}>Deformities:</Text>
           <DottedField
             width={120}
-            value={data?.doctorConsultationFormData?.examDeformities || ""}
+            value={data?.doctorConsultationFormData?.examDeformities || "NAD"}
           />
         </View>
       </View>
@@ -493,28 +524,28 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <Text style={styles.label}>Cardio-Vascular System:</Text>
           <DottedField
             width={120}
-            value={data?.doctorConsultationFormData?.examCvs || ""}
+            value={data?.doctorConsultationFormData?.examCvs || "NAD"}
           />
           <Text style={[styles.label, { marginLeft: 16 }]}>
             Respiratory System:
           </Text>
           <DottedField
             width={120}
-            value={data?.doctorConsultationFormData?.examRespiratory || ""}
+            value={data?.doctorConsultationFormData?.examRespiratory || "NAD"}
           />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Gastro-Intestinal System:</Text>
           <DottedField
             width={120}
-            value={data?.doctorConsultationFormData?.examGastrointestinal || ""}
+            value={data?.doctorConsultationFormData?.examGastrointestinal || "NAD"}
           />
           <Text style={[styles.label, { marginLeft: 16 }]}>
             Central Nervous System:
           </Text>
           <DottedField
             width={120}
-            value={data?.doctorConsultationFormData?.examCns || ""}
+            value={data?.doctorConsultationFormData?.examCns || "NAD"}
           />
         </View>
         <View style={styles.row}>
@@ -522,7 +553,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <DottedField
             width={220}
             value={
-              data?.doctorConsultationFormData?.visionFinalImpression || ""
+              data?.doctorConsultationFormData?.visionFinalImpression || "Nil"
             }
           />
         </View>
@@ -534,7 +565,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <Text style={styles.label}>Provisional Diagnosis:</Text>
           <DottedField
             width={350}
-            value={data?.doctorConsultationFormData?.diagnosisProvisional || ""}
+            value={data?.doctorConsultationFormData?.diagnosisProvisional || "Nil"}
           />
         </View>
         <View style={styles.row}>
@@ -585,7 +616,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
             is found free from any
           </Text>
           <Text>
-            diseases and{" "}
+            infectious and communicable disease and{" "}
             {data?.gender === "MALE"
               ? "he"
               : data?.gender === "FEMALE"
@@ -606,17 +637,18 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
           <Text style={[styles.bold, { textAlign: "right", flex: 1 }]}>
             Signature of Medical Officer with Seal
           </Text>
-          {/* <Image
-            src={Dr_Jaydip_Saxena}
+          <Image
+            src={drDamodharanSealSign}
             style={{
               height: 90,
-              width: 100,
+              width: 120,
               position: "absolute",
-              bottom: 10,
-              right: 100,
+              bottom: 0,
+              right: 70,
+
             }}
-          /> */}
-        </View>{" "}
+          />
+        </View>
         <View style={[{ marginTop: 30 }]}>
           <View
             style={{
@@ -635,7 +667,7 @@ const GlobalCalciumDoctorConsultationFormTemplate = ({ data }) => (
         </View>
       </View>
     </Page>
-  </Document>
+  </Document >
 );
 
 export default GlobalCalciumDoctorConsultationFormTemplate;
@@ -935,10 +967,10 @@ export default GlobalCalciumDoctorConsultationFormTemplate;
 //           <DottedField width={60} value={data?.bmi} />
 //         </View>
 //         <View style={styles.row}>
-//           <Text style={styles.label}>BP:</Text>
-//           <DottedField width={60} value={data?.cholestrolData?.["highBp"]} />
-//           <Text style={{ marginLeft: 2 }}>/</Text>
-//           <DottedField width={60} value={data?.cholestrolData?.["lowBp"]} />
+// <Text style={styles.label}>BP:</Text>
+// <DottedField width={60} value={data?.cholestrolData?.["highBp"]} />
+// <Text style={{ marginLeft: 2 }}>/</Text>
+// <DottedField width={60} value={data?.cholestrolData?.["lowBp"]} />
 //           <Text style={{ marginLeft: 2 }}>mmHg</Text>
 //           <Text style={[styles.label, { marginLeft: 16 }]}>Pulse:</Text>
 //           <DottedField width={60} value={data?.pulseRate || ""} />

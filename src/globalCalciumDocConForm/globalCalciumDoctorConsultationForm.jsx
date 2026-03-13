@@ -63,7 +63,7 @@ const GlobalCalciumDoctorConsultationForm = ({
       const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
-        const temp = result?.data?.filter((item) => item.vitalsCreatedDate);
+        const temp = result?.data?.filter((item) => item.vitalsCreatedDate === '2026-02-10' || item.vitalsCreatedDate === '2026-02-11' || item.vitalsCreatedDate === '2026-02-12');
         const length = temp.length;
         const sorted = sortDataByName(temp);
         setList(sorted);
@@ -132,7 +132,7 @@ const GlobalCalciumDoctorConsultationForm = ({
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <GlobalCalciumDoctorConsultationFormTemplate data={{}} />
+        <GlobalCalciumDoctorConsultationFormTemplate data={list[0]} />
       </PDFViewer>
     </Fragment>
   );

@@ -204,7 +204,7 @@ const StridesXrayFormMain = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => item.empId === "114290" && item.xrayUrl
+        (item) => item?.tokenNumber === "7"
       );
 
       const length = temp.length;

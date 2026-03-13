@@ -105,8 +105,8 @@ const SkodaPhysicalFitnessFormMain = ({
       const cutoff = dayjs("2025-11-30").endOf("day");
 
       const temp =
-        result?.data?.filter(
-          (item) => ["611196"].includes(item?.empId)
+        result?.data?.filter((item) =>
+          ["40031905", "610705", "40030017", "40030345", "610252"].includes(item?.empId)
           // item?.vitalsCreatedDate &&
           // dayjs(item.vitalsCreatedDate).isAfter(cutoff)
         ) || [];
@@ -224,7 +224,7 @@ const SkodaPhysicalFitnessFormMain = ({
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({

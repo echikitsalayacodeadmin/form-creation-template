@@ -118,8 +118,11 @@ async function modifyEcgPdf(ecgUrl) {
 const EcgPdfModifier = ({
   // corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
   // campCycleId = "355289",
-  campCycleId = "375099",
-  corpId = '9afda601-e74f-46b2-9581-6db360f5acca',
+  // campCycleId = "375099",
+  // corpId = '9afda601-e74f-46b2-9581-6db360f5acca',
+
+  corpId = "3e980884-00a6-470a-bb69-f29dfa0b01c2", // 3m
+  campCycleId = "390725",
   fileType = "ECG",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -132,7 +135,7 @@ const EcgPdfModifier = ({
     const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
-      const temp = result?.data?.filter((item) => item.ecgUrl);
+      const temp = result?.data?.filter((item) => !item.cholestrolData?.["ECG.INTERPRETATION"] && item?.vitalsCreatedDate);
       const sorted = sortDataByName(temp);
       setList(sorted);
       console.log("Total PFT employees:", sorted.length);

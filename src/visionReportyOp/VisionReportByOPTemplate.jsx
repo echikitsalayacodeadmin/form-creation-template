@@ -11,6 +11,7 @@ import {
 import dr_rohit_solanki_stamp_sign from "../../src/assets/images/dr_rohit_solanki_stamp_sign.png";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+import uncareheader from "../../src/assets/images/uncareheader.png";
 
 // Register fonts
 Font.register({ family: "Times-Roman-Normal", src: TimeRoman });
@@ -82,6 +83,14 @@ const DottedField = ({ width = 160, value }) => (
 const VisionReportByOPTemplate = ({ data }) => (
   <Document>
     <Page size="A4" style={styles.page}>
+      <Image
+        src={uncareheader}
+        style={{
+          width: "100%",
+          height: 70,
+          marginBottom: 5,
+        }}
+      />
       {/* Heading */}
       <Text style={styles.heading}>VISION REPORT</Text>
 
@@ -252,7 +261,7 @@ const VisionReportByOPTemplate = ({ data }) => (
 
           {/* Colour Vision */}
           <Text style={[styles.tableCol, { flex: 3, borderRight: 0 }]}>
-            {data?.colourVision?.toLowerCase() === "nad" ? "Normal" : data?.colourVision?.toLowerCase()?.includes("r") ||
+            {data?.colourVision?.toLowerCase() === "nad" || data?.colourVision?.toLowerCase() === "normal" ? "Normal" : data?.colourVision?.toLowerCase()?.includes("r") ||
               data?.colourVision?.toLowerCase()?.includes("right") ||
               data?.colourVision?.toLowerCase()?.includes("both") ? "Abnormal" : "-"}
           </Text>
@@ -300,7 +309,7 @@ const VisionReportByOPTemplate = ({ data }) => (
               ? "Normal"
               : "-"} */}
 
-            {data?.colourVision?.toLowerCase() === "nad" ? "Normal" : data?.colourVision?.toLowerCase()?.includes("l") ||
+            {data?.colourVision?.toLowerCase() === "nad" || data?.colourVision?.toLowerCase() === "normal" ? "Normal" : data?.colourVision?.toLowerCase()?.includes("l") ||
               data?.colourVision?.toLowerCase()?.includes("left") ||
               data?.colourVision?.toLowerCase()?.includes("both") ? "Abnormal" : "-"}
           </Text>

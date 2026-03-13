@@ -20,14 +20,14 @@ async function removeAddressFromHeaderInReport(reportPdfBytes) {
   page.drawRectangle({
     x: 0,
     // Xray
-    // y: height - 105, // 90px down from top
-    // width: width, // full page width
-    // height: 105,
+    y: height - 105, // 90px down from top
+    width: width, // full page width
+    height: 105,
 
     // Form35
-    y: height - 75, // 90px down from top
-    width: width, // full page width
-    height: 75,
+    // y: height - 75, // 90px down from top
+    // width: width, // full page width
+    // height: 75,
 
     color: rgb(1, 1, 1),
   });
@@ -79,10 +79,10 @@ async function mergeHeaderWithReport(reportPdfBytes) {
 const SkodaHeaderInsertor = ({
   corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
   campCycleId = "355289",
-  fileType = "FORM_35",
-  urlType = "form35Url",
-  // fileType = "XRAY",
-  // urlType = "xrayUrl",
+  // fileType = "FORM_35",
+  // urlType = "form35Url",
+  fileType = "XRAY",
+  urlType = "xrayUrl",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -156,8 +156,8 @@ const SkodaHeaderInsertor = ({
       const temp =
         result?.data?.filter(
           (item) =>
-            ["610920"].includes(item?.empId) &&
-            // item?.vitalsCreatedDate &&
+            // ["610920"].includes(item?.empId) &&
+            ["40035795", "40030345", "610252"].includes(item?.empId) &&
             // dayjs(item.vitalsCreatedDate).isAfter(cutoff) &&
             item?.[urlType]
         ) || [];

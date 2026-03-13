@@ -173,7 +173,7 @@ const StridesPFTFormMain = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => ['114290']?.includes(item.empId) && item.pftUrl
+        (item) => ["40031905", "610705", "40030017", "40030345", "610252"].includes(item?.empId)
       );
 
       const length = temp.length;

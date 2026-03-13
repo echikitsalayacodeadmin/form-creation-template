@@ -111,13 +111,17 @@ import SitecECG from "./sitecECG/SitecECG";
 import HDHyundaiMERForm from "./hdHyundaiMERForm/HDHyundaiMERForm";
 import AcgFoodHandlerV2 from "./acg/AcgFoodHandlerV2";
 import BPCLForm21Main from "./bpclForm21/BPCLForm21Main";
+import AhcBulkUploadData from "./ahcBulkUpload/AhcBulkUploadData";
+import ThreeMPhysicalFitnessFrom from "./3MForms/ThreeMPhysicalFitnessFrom";
+import IsconNarwarFoodCert from "./iscon/isconNarwarFoodCert";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <StridesPFTFormMain />
+        <ThreeMPhysicalFitnessFrom />
+        {/* <AhcBulkUploadData /> */}
         {/* <VisionReportByOP /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
