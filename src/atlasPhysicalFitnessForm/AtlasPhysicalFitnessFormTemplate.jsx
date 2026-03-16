@@ -155,9 +155,9 @@ const AtlasPhysicalFitnessFormTemplate = ({
         <Document>
             <Page size="A4" style={styles.page}>
                 {/* Header with logo and address */}
-                <View style={styles.headerRow}>
+                {/* <View style={styles.headerRow}>
                     <Image style={styles.logo} src={uncareheader} />
-                </View>
+                </View> */}
                 {/* <Text style={styles.regOffice}>
           Regd. Office: 253, Shri Krishna Avenue, Phase-1, Limbodi Khandwa Road,
           Indore-452001
@@ -721,9 +721,10 @@ const AtlasPhysicalFitnessFormTemplate = ({
           </View> */}
                 </View>
                 {/* Signature */}
-                {/* <View style={styles.signatureBlock}>
-          <Image style={{ height: 100, width: 160 }} src={Dr_Jaydip_Saxena} />
-        </View> */}
+                <View style={styles.signatureBlock}>
+                    <Image style={{ height: 100, width: 160 }} src={prashantDeshmukh} />
+
+                </View>
             </Page>
         </Document>
     );

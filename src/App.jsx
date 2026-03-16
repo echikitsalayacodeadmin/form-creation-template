@@ -123,7 +123,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <AhcBulkUploadData /> */}
-        <SkodaHeaderInsertor />
+        <AtlasPhysicalFitnessFormMain />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>
