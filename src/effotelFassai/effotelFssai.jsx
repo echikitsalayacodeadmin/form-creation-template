@@ -9,12 +9,14 @@ import { JaydipSaxsenaBase64, LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
 
 const EffotelFssai = ({
-  corpId = "15f6b1de-093f-4490-9e11-8d06904404f8",
-  campCycleId = "347490",
+  corpId = "769987c2-0a25-4c1d-922e-3e939e009bcf",
+  campCycleId = "377917",
+  // corpId = "15f6b1de-093f-4490-9e11-8d06904404f8",
+  // campCycleId = "347490",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "Effotel by Sayaji ( Indore )",
-  campDate = "26th Sept, 2025",
-  year = "2025",
+  corpName = "Effotel By Sayaji-Bhopal",
+  // campDate = "26th Sept, 2025",
+  year = "2026",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -215,9 +217,8 @@ const EffotelFssai = ({
             "
           >
             Shri/ Smt.
-            <span style=" text-transform: capitalize; text-decoration: underline"> ${
-              data?.name.toLowerCase() || ""
-            }</span>
+            <span style=" text-transform: capitalize; text-decoration: underline"> ${data?.name.toLowerCase() || ""
+      }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
               >&nbsp;&nbsp;&nbsp;${data?.vitalsCreatedDate}&nbsp;
@@ -355,8 +356,29 @@ const EffotelFssai = ({
       console.log("Fetched Data successfully");
 
       const temp = result?.data.filter(
-        (item) => item.vitalsCreatedDate === "2025-10-13"
-      );
+        (item) => [
+          "S01385",
+          "S016612",
+          "S015312",
+          "S013468",
+          "S014108",
+          "S014312",
+          "S018870",
+          "S019285",
+          "S018918",
+          "S018838",
+          "S019270",
+          "S019027",
+          "S01895",
+          "S019286",
+          "S013383",
+          "S018918",
+          "Efotel18"
+        ].includes(item?.empId)
+      )?.map((ite) => ({
+        ...ite,
+        vitalsCreatedDate: "2026-02-16"
+      }));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;

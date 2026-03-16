@@ -135,7 +135,7 @@ const EcgPdfModifier = ({
     const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
-      const temp = result?.data?.filter((item) => !item.cholestrolData?.["ECG.INTERPRETATION"] && item?.vitalsCreatedDate);
+      const temp = result?.data?.filter((item) => item.cholestrolData?.["ECG.INTERPRETATION"] === "IIIIIIaVR");
       const sorted = sortDataByName(temp);
       setList(sorted);
       console.log("Total PFT employees:", sorted.length);
@@ -232,7 +232,7 @@ const EcgPdfModifier = ({
       <div>Uploaded Files: {uploadedCount}</div> <br />
       {list.map((item, index) => (
         <div key={index} style={{ display: "flex" }}>
-          <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+          <div key={index}>{`${index}- ${item.empId} ${item.name} ECG:_${item.cholestrolData?.["ECG.INTERPRETATION"] || "NA"}`}</div>
           <a href={item.ecgUrl}>
             <div key={index}>{item.ecgUrl}</div>
           </a>

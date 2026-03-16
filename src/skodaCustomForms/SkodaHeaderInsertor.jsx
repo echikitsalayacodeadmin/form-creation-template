@@ -77,8 +77,10 @@ async function mergeHeaderWithReport(reportPdfBytes) {
 }
 
 const SkodaHeaderInsertor = ({
-  corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
-  campCycleId = "355289",
+  corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
+  campCycleId = "394961", // atlas copco campCycleId
+  // corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
+  // campCycleId = "355289",
   // fileType = "FORM_35",
   // urlType = "form35Url",
   fileType = "XRAY",
@@ -157,7 +159,9 @@ const SkodaHeaderInsertor = ({
         result?.data?.filter(
           (item) =>
             // ["610920"].includes(item?.empId) &&
-            ["40035795", "40030345", "610252"].includes(item?.empId) &&
+            [
+              '166769'
+            ].includes(item?.empId) &&
             // dayjs(item.vitalsCreatedDate).isAfter(cutoff) &&
             item?.[urlType]
         ) || [];

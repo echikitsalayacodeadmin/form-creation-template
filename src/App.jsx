@@ -114,15 +114,16 @@ import BPCLForm21Main from "./bpclForm21/BPCLForm21Main";
 import AhcBulkUploadData from "./ahcBulkUpload/AhcBulkUploadData";
 import ThreeMPhysicalFitnessFrom from "./3MForms/ThreeMPhysicalFitnessFrom";
 import IsconNarwarFoodCert from "./iscon/isconNarwarFoodCert";
+import AtlasPhysicalFitnessFormMain from "./atlasPhysicalFitnessForm/AtlasPhysicalFitnessFormMain";
 
 const App = () => {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
-        <StridesBlood />
+        {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <AhcBulkUploadData /> */}
-        {/* <VisionReportByOP /> */}
+        <SkodaHeaderInsertor />
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>
