@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { getData } from "../assets/services/GetApiCall";
-import { PDFDocument, rgb } from "pdf-lib";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { uploadFile } from "../assets/services/PostApiCall";
 import dayjs from "dayjs";
 
@@ -76,6 +76,52 @@ async function mergeHeaderWithReport(reportPdfBytes) {
   return await mergedPdf.save();
 }
 
+
+async function cleanAndRewriteHeader(reportPdfBytes) {
+  const reportPdf = await PDFDocument.load(reportPdfBytes);
+  const mergedPdf = await PDFDocument.create();
+
+  const [page] = await mergedPdf.copyPages(reportPdf, [0]);
+  const { width, height } = page.getSize();
+
+  // Embed font
+  const font = await mergedPdf.embedFont(StandardFonts.HelveticaBold);
+
+  /**
+   * STEP 1: White-out header area
+   */
+  page.drawRectangle({
+    x: 0,
+    y: height - 105, // 90px down from top
+    width: width, // full page width
+    height: 105,
+    color: rgb(1, 1, 1),
+  });
+
+  page.drawRectangle({
+    x: 0,
+    y: 575, // 90px down from top
+    width: width, // full page width
+    height: 60,
+    color: rgb(1, 1, 1),
+  });
+
+  /**
+   * STEP 2: Rewrite the title text
+   */
+  page.drawText("X-RAY CHEST PA VIEW", {
+    x: 200, // adjust based on alignment
+    y: height - 100, // top 100 as you wanted
+    size: 14,
+    font,
+    color: rgb(0, 0, 0),
+  });
+
+  mergedPdf.addPage(page);
+
+  return await mergedPdf.save();
+}
+
 const SkodaHeaderInsertor = ({
   corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
   campCycleId = "394961", // atlas copco campCycleId
@@ -112,7 +158,7 @@ const SkodaHeaderInsertor = ({
         finalBytes = await mergeHeaderWithReport(reportBuffer);
       } else if (processType === "remove") {
         console.log("Removing Address from Header...");
-        finalBytes = await removeAddressFromHeaderInReport(reportBuffer);
+        finalBytes = await cleanAndRewriteHeader(reportBuffer);
       }
 
       const mergedBlob = new Blob([finalBytes], { type: "application/pdf" });
@@ -125,8 +171,8 @@ const SkodaHeaderInsertor = ({
         `${data?.[urlType]?.split("/").pop() || "Report"}`
       );
 
-      //   const url2 = URL.createObjectURL(mergedBlob);
-      //   window.open(url2, "_blank");
+      // const url2 = URL.createObjectURL(mergedBlob);
+      // window.open(url2, "_blank");
 
       const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
@@ -159,9 +205,7 @@ const SkodaHeaderInsertor = ({
         result?.data?.filter(
           (item) =>
             // ["610920"].includes(item?.empId) &&
-            [
-              '166769'
-            ].includes(item?.empId) &&
+            item?.vitalsCreatedDate === "2026-03-13" &&
             // dayjs(item.vitalsCreatedDate).isAfter(cutoff) &&
             item?.[urlType]
         ) || [];

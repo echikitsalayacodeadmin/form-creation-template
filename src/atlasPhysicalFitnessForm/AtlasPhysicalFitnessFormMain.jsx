@@ -114,9 +114,7 @@ const AtlasPhysicalFitnessFormMain = ({
             // const h = ["132064"];
 
             const temp = result?.data?.filter((item) =>
-                [
-                    '166769'
-                ].includes(item?.empId)
+                item?.vitalsCreatedDate === "2026-03-13"
             );
 
             const length = temp.length;
