@@ -115,6 +115,13 @@ import AhcBulkUploadData from "./ahcBulkUpload/AhcBulkUploadData";
 import ThreeMPhysicalFitnessFrom from "./3MForms/ThreeMPhysicalFitnessFrom";
 import IsconNarwarFoodCert from "./iscon/isconNarwarFoodCert";
 import AtlasPhysicalFitnessFormMain from "./atlasPhysicalFitnessForm/AtlasPhysicalFitnessFormMain";
+import UnoCarePFTReportModifier from "./UnocareReportsModifier/UnoCarePFTReportModifier";
+import UnoCarePftHeightModifier from "./UnocareReportsModifier/UnoCarePftHeightModifier";
+import SunPharmaTuansaBloodModifier from "./UnocareReportsModifier/SunPharmaTuansaBloodModifier";
+import ZestPharmaMERFormMain from "./zestPharma/ZestPharmaMERFormMain";
+import ScanECGAgeModification from "./UnocareReportsModifier/ScanECGAgeModification";
+import ForceMotorForm2Main from "./forceMotorForms/ForceMotorForm2Main";
+import ForceMotorForm6Main from "./forceMotorForms/ForceMotorForm6Main";
 
 const App = () => {
   return (
@@ -122,8 +129,8 @@ const App = () => {
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
-        {/* <AhcBulkUploadData /> */}
-        <AtlasPhysicalFitnessFormMain />
+        <ForceMotorForm2Main />
+        {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
     </div>

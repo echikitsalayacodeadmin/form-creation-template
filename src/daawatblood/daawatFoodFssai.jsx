@@ -13,7 +13,7 @@ const DaawatFoodFssai = ({
   campCycleId = "364062",
   fileType = "FITNESS_CERTIFICATE_FOOD",
   corpName = "Daawat Foods Limited",
-  campDate = "24th Dec, 2025",
+  campDate = "19th Dec, 2025",
   year = "2025",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -215,9 +215,8 @@ const DaawatFoodFssai = ({
             "
           >
             Shri/ Smt.
-            <span style=" text-transform: capitalize; text-decoration: underline"> ${
-              data?.name.toLowerCase() || ""
-            }</span>
+            <span style=" text-transform: capitalize; text-decoration: underline"> ${data?.name.toLowerCase() || ""
+      }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
               >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
@@ -355,7 +354,7 @@ const DaawatFoodFssai = ({
       console.log("Fetched Data successfully");
 
       const empIds = [
-        "2025-12-23",
+        "KC0014",
         // "2025-12-20",
         // "2025-12-21",
         // "2025-12-22",
@@ -364,7 +363,7 @@ const DaawatFoodFssai = ({
       ];
 
       const temp = result?.data.filter((item) =>
-        empIds.includes(item.vitalsCreatedDate)
+        empIds.includes(item.empId)
       );
 
       const length = temp.length;

@@ -395,7 +395,7 @@ const AtlasPhysicalFitnessFormTemplate = ({
                             Weight:
                         </Text>
                         <Text style={[styles.cell, { width: "25%" }]}>
-                            {data?.weight ? `${data?.weight} cm` : ""}
+                            {data?.weight ? `${data?.weight} kg` : ""}
                         </Text>
                         <Text
                             style={[
