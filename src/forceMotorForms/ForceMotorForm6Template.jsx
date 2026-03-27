@@ -97,10 +97,20 @@ const ForceMotorForm6Template = ({ data }) => {
 
                     {/* FORM + DATE */}
                     <View style={styles.row}>
-                        <Text style={[styles.cell, { width: "20%", borderTop: 0 }, styles.label]}>FORM NO</Text>
-                        <Text style={[styles.cell, { width: "20%", borderTop: 0 }]}>1</Text>
-                        <Text style={[styles.cell, { width: "30%", borderTop: 0 }, styles.label]}>DATE OF EXAMINATION</Text>
-                        <Text style={[styles.cell, { width: "30%", borderTop: 0, borderRight: 0 }]}>{dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY")}</Text>
+                        <Text style={[styles.cell, { width: "100%", borderTop: 0, borderBottom: 0, textAlign: 'center', borderRight: 0, padding: 2 }, styles.label]}>FORM 6</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={[styles.cell, { width: "100%", borderTop: 0, borderBottom: 0, textAlign: 'center', borderRight: 0, padding: 2 }, styles.label]}>(See Rule 18)</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={[styles.cell, { width: "100%", borderTop: 0, textAlign: 'center', borderRight: 0, padding: 2 }, styles.label]}>Certificate Of Fitness</Text>
+
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={[styles.cell, { width: "20%", }, styles.label]}>FORM NO</Text>
+                        <Text style={[styles.cell, { width: "20%", }]}>1</Text>
+                        <Text style={[styles.cell, { width: "30%", }, styles.label]}>DATE OF EXAMINATION</Text>
+                        <Text style={[styles.cell, { width: "30%", borderRight: 0 }]}>{dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY")}</Text>
                     </View>
 
                     {/* ORG */}

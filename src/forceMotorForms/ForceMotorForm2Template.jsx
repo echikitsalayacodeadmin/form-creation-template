@@ -13,6 +13,7 @@ import uncareheader from "../assets/images/uncareheader.png";
 import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+import dayjs from "dayjs";
 
 // ✅ Font Registration
 Font.register({
@@ -129,8 +130,8 @@ const ForceMotorForm2Template = ({ data }) => {
         {/* DATE */}
         <View style={styles.rowBetween}>
           <Text />
-          <Text>
-            DATE : <Text style={styles.bold}>{data?.vitalsCreadtedDate || ""}</Text>
+          <Text style={styles.bold}>
+            DATE : <Text style={styles.bold}>{dayjs(data?.vitalsCreatedDate)?.format("DD-MM-YYYY") || ""}</Text>
           </Text>
         </View>
 
@@ -144,7 +145,7 @@ const ForceMotorForm2Template = ({ data }) => {
           </View>
 
           <View style={styles.section}>
-            <Text>
+            <Text style={styles.bold}>
               SERIAL NUMBER :{" "}
               <Text style={styles.bold}>SAI/CERTI/FIT-1</Text>
             </Text>
@@ -179,7 +180,9 @@ const ForceMotorForm2Template = ({ data }) => {
               </Text>
 
               <Text style={styles.bold}>
-                {data?.period || "31-01-2025 to 30-01-2026"}
+                {dayjs(data?.vitalsCreatedDate)?.format("DD-MM-YYYY")} to {data?.vitalsCreatedDate
+                  ? dayjs(data.vitalsCreatedDate).add(1, "year").format("DD-MM-YYYY")
+                  : ""}
               </Text>
             </View>
 
@@ -235,12 +238,14 @@ const ForceMotorForm2Template = ({ data }) => {
           <View style={styles.tableRow}>
             <Text style={[styles.tableCell, styles.center]}>
               <Text style={styles.bold}>
-                {data?.vitalsCreadtedDate || ""}
+                {dayjs(data?.vitalsCreatedDate)?.format("DD-MM-YYYY") || ""}
               </Text>
             </Text>
             <Text style={[styles.tableCell, styles.center]}>
               <Text style={styles.bold}>
-                {data?.validTillDate || ""}
+                {data?.vitalsCreatedDate
+                  ? dayjs(data.vitalsCreatedDate).add(1, "year").format("DD-MM-YYYY")
+                  : ""}
               </Text>
             </Text>
             <Text style={[styles.tableCell, styles.center]}>

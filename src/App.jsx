@@ -122,6 +122,9 @@ import ZestPharmaMERFormMain from "./zestPharma/ZestPharmaMERFormMain";
 import ScanECGAgeModification from "./UnocareReportsModifier/ScanECGAgeModification";
 import ForceMotorForm2Main from "./forceMotorForms/ForceMotorForm2Main";
 import ForceMotorForm6Main from "./forceMotorForms/ForceMotorForm6Main";
+import SignedPFTReports from "./UnocareReportsModifier/SignedPFTReports";
+import SignedAudioReport from "./UnocareReportsModifier/SignedAudioReport";
+import SignedPhysicalFitnessReport from "./UnocareReportsModifier/SignedPhysicalFitnessReport";
 
 const App = () => {
   return (
@@ -129,7 +132,7 @@ const App = () => {
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
-        <ForceMotorForm2Main />
+        <ForceMotorForm6Main />
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
