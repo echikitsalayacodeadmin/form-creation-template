@@ -74,9 +74,12 @@ const ForceMotorForm6Main = ({
                             (val) => String(val.EMP_NO) === String(item?.empId)
                         );
 
+                        const pulseRate = Math.floor(Math.random() * (80 - 72 + 1)) + 72;
+
                         return {
                             ...item,
                             EXTRAS: d || {},
+                            pulseRate,
                         };
                     });
                 const length = temp.length;

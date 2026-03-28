@@ -127,6 +127,53 @@ const ForceMotorForm2Template = ({ data }) => {
         {/* HEADER */}
         <Image src={uncareheader} />
 
+        <View
+          style={{
+            textAlign: "center",
+            marginBottom: 6,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: 700,
+            }}
+          >
+            Form 23
+          </Text>
+
+          <Text
+            style={{
+              fontSize: 10,
+              marginTop: 1,
+            }}
+          >
+            (See Rule 114)
+          </Text>
+
+          <Text
+            style={{
+              fontSize: 9,
+              marginTop: 1,
+              lineHeight: 1.3,
+            }}
+          >
+            Prescribed under Schedule II, III, IV, VIII, XI, XVII enaph and XX
+          </Text>
+        </View>
+
+        <Text
+          style={[styles.bold, {
+            fontSize: 13,
+            marginTop: 1,
+            lineHeight: 1.3,
+            textAlign: 'center',
+            textDecoration: 'underline'
+          }]}
+        >
+          Special Certificate Of Fitness
+        </Text>
+
         {/* DATE */}
         <View style={styles.rowBetween}>
           <Text />
@@ -147,7 +194,7 @@ const ForceMotorForm2Template = ({ data }) => {
           <View style={styles.section}>
             <Text style={styles.bold}>
               SERIAL NUMBER :{" "}
-              <Text style={styles.bold}>SAI/CERTI/FIT-1</Text>
+              <Text style={styles.bold}>{data?.empId}</Text>
             </Text>
           </View>
         </View>
