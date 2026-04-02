@@ -12,7 +12,7 @@ import ForceMotorForm2Template from "./ForceMotorForm2Template";
 const ForceMotorForm2Main = ({
     corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     campCycleId = "396613",
-    fileType = "ANNEXURE",
+    fileType = "TMT",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -29,26 +29,26 @@ const ForceMotorForm2Main = ({
                 <ForceMotorForm2Template data={data} />
             ).toBlob();
 
-            // const formData = new FormData();
-            // formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
+            const formData = new FormData();
+            formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
 
-            // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-            // const result = await uploadFile(url, formData);
+            const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const result = await uploadFile(url, formData);
 
-            // if (result && result.data) {
-            //     enqueueSnackbar("Successfully Uploaded PDF!", {
-            //         variant: "success",
-            //     });
-            //     setUploadedCount((prevCount) => prevCount + 1);
-            // } else {
-            //     enqueueSnackbar("An error Occurred!", {
-            //         variant: "error",
-            //     });
-            //     setErrorEmpCount((prevCount) => prevCount + 1);
-            //     setErrorEmpIDs((prev) => [...prev, data?.empId]);
-            // }
-            const url = URL.createObjectURL(pdfBlob);
-            window.open(url, "_blank");
+            if (result && result.data) {
+                enqueueSnackbar("Successfully Uploaded PDF!", {
+                    variant: "success",
+                });
+                setUploadedCount((prevCount) => prevCount + 1);
+            } else {
+                enqueueSnackbar("An error Occurred!", {
+                    variant: "error",
+                });
+                setErrorEmpCount((prevCount) => prevCount + 1);
+                setErrorEmpIDs((prev) => [...prev, data?.empId]);
+            }
+            // const url = URL.createObjectURL(pdfBlob);
+            // window.open(url, "_blank");
         } catch (error) {
             console.error("Error generating/uploading PDF:", error);
             enqueueSnackbar("Error generating/uploading PDF", {
@@ -65,9 +65,7 @@ const ForceMotorForm2Main = ({
             const result = await getData(url);
             if (result && result.data) {
 
-                const temp = result?.data?.filter((item) => [
-                    "28365"
-                ].includes(item.empId));
+                const temp = result?.data?.filter((item) => ["10479", "508217"]?.includes(item?.empId))
                 const length = temp.length;
                 const sorted = sortDataByName(temp);
 
@@ -88,7 +86,7 @@ const ForceMotorForm2Main = ({
     }, [corpId, campCycleId]);
 
     const handleGeneratePDFs = async () => {
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < list.length; i++) {
             await generatePDF(list[i], i);
         }
     };
@@ -129,8 +127,8 @@ const ForceMotorForm2Main = ({
                     <div key={index} style={{ display: "flex" }}>
                         <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
-                        <a href={item.annexureUrl}>
-                            <div key={index}>{item.annexureUrl}</div>
+                        <a href={item.tmtUrl}>
+                            <div key={index}>{item.tmtUrl}</div>
                         </a>
 
                         <br />

@@ -13,12 +13,12 @@ import dayjs from "dayjs";
    FILE CONFIG (Offsets differ per report)
 ========================================================= */
 const FILE_CONFIG_AGE = {
-    ECG: {
-        urlKey: "ecgUrl",
-        fileType: "ECG",
-        xOffset: 22,
-        whiteWidth: 20,
-    },
+    // ECG: {
+    //     urlKey: "ecgUrl",
+    //     fileType: "ECG",
+    //     xOffset: 22,
+    //     whiteWidth: 20,
+    // },
     PFT: {
         urlKey: "pftUrl",
         fileType: "PFT",
@@ -224,8 +224,8 @@ async function processEmployee({
    MAIN COMPONENT
 ========================================================= */
 const UnoCarePFTReportModifier = ({
-    corpId = "3e980884-00a6-470a-bb69-f29dfa0b01c2",
-    campCycleId = "390725",
+    corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
+    campCycleId = "396613",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [employees, setEmployees] = useState([]);
@@ -250,13 +250,8 @@ const UnoCarePFTReportModifier = ({
             const filteredData =
                 res?.data?.filter(
                     (item) => [
-                        "173", "326", "321", "AFM273", "CWJPPL1", "CWJPPL2", "1146300", "1146758", "156", "1352235",
-                        "2098991", "37", "1199278", "1521372", "1138696", "1182839", "1390559", "1206505", "56", "29003282",
-                        "GS7", "GS20", "1182919", "177", "GS15", "Sh1505", "GS34", "GS27", "347", "148",
-                        "JPPL7", "256", "301", "AP3", "DTS11", "BK100203", "1156061", "1305236", "Sh1552", "1199529",
-                        "198", "1194717", "1185137", "GS29", "Sh1319", "86", "1786995", "325", "A518", "1175330",
-                        "Y0716", "1367483", "BK001066", "1531021", "2107065", "2155646", "1141680", "B5", "29005984", "159", "68"
-                    ].includes(item?.empId)
+                        "507803", "170500", "170501", "170490", "507798", "507806", "508073", "507796", "507799", "507800", "507909", "170494", "170495", "170648", "507951", "507953", "507955", "507969", "507987", "507988", "508031", "508042", "508043", "508046", "508049", "508050", "508084", "508102", "508103", "508146"
+                    ]?.includes(item?.empId)
                     // item?.bloodTestUrl &&
                     // dayjs(item.vitalsCreatedDate).isAfter("2025-11-30")
                 ) || [];

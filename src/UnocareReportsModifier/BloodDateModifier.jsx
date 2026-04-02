@@ -1,8 +1,10 @@
 
+
+
 import { useSnackbar } from "notistack";
 import { PDFDocument } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
+import { rgb, StandardFonts } from "pdf-lib";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
@@ -18,53 +20,49 @@ async function loadPdfJs() {
     return pdfjsLib;
 }
 
-const modifyPftPdf = async (pdfUrl, signatureImage) => {
-    // 1. Fetch existing PDF
-    const existingPdfBytes = await fetch(pdfUrl).then((res) =>
-        res.arrayBuffer()
-    );
 
-    // 2. Load PDF
+
+const modifyBloodPdf = async (pdfUrl, customDate) => {
+    const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
-    // 3. Get last page (important for reports)
     const pages = pdfDoc.getPages();
-    const page = pages[pages.length - 1];
 
-    const { width, height } = page.getSize();
+    // ⚠️ IMPORTANT: Date appears on ALL pages
+    for (let i = 0; i < pages.length; i++) {
+        const page = pages[i];
+        const { width, height } = page.getSize();
 
-    // 4. Fetch signature image
-    const signatureBytes = await fetch(signatureImage).then((res) =>
-        res.arrayBuffer()
-    );
+        // ✅ STEP 1: Cover old date (white rectangle)
+        page.drawRectangle({
+            x: width - 118,   // tweak this
+            y: height - 120,  // tweak this
+            width: 55,
+            height: 20,
+            color: rgb(1, 1, 1),
+        });
 
-    // 5. Embed image
-    const signature = await pdfDoc.embedPng(signatureBytes);
+        // ✅ STEP 2: Add new date text
+        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-    // 6. Resize (IMPORTANT)
-    const scaled = signature.scale(0.25);
+        page.drawText(customDate, {
+            x: width - 115,
+            y: height - 112.5,
+            size: 8.5,
+            font,
+            color: rgb(0, 0, 0),
+        });
+    }
 
-    // 7. Draw at bottom-right (adjusted for YOUR report layout)
-    page.drawImage(signature, {
-        x: width - scaled.width - 40, // right margin
-        y: 40, // slightly above footer text (important)
-        width: scaled.width,
-        height: scaled.height,
-    });
-
-    // 8. Save
     const pdfBytes = await pdfDoc.save();
-
     return new Blob([pdfBytes], { type: "application/pdf" });
 };
 
-
-
 // ✅ React Component
-const SignedAudioReport = ({
-    corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
-    campCycleId = "396613",
-    fileType = "UNHEALTHY_VITALS_FORM",
+const BloodDateModifier = ({
+    corpId = "3e875c62-9ecb-49b7-9fda-067379425f75",
+    campCycleId = "397403",
+    fileType = "BLOODTEST",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -76,9 +74,13 @@ const SignedAudioReport = ({
         const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
         if (result && result.data) {
-            const temp = result?.data?.filter((item) =>
-                ["10479", "508217"]
-                    ?.includes(item?.empId) && item?.audiometryUrl);
+            const temp = result?.data?.filter((item) => item.bloodTestUrl && [
+                "60076", "70055", "IN377", "IN340", "IN252", "IN385", "IN343", "IN306", "IN164", "IN014",
+                "M734", "IN263", "IN387", "IN272", "L081", "IN206", "IN140", "P729", "60071", "60065",
+                "60041", "80004", "80041", "70104", "80012", "60032", "60051", "60044", "60099", "60077",
+                "70014", "60048", "70062", "80007", "60069", "80042", "60060", "60040", "IN257", "IN326",
+                "IN353", "IN142", "IN194", "IN351"
+            ].includes(item?.empId));
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -94,17 +96,17 @@ const SignedAudioReport = ({
 
     const handleModify = async (data) => {
         try {
-            const audiometryUrl = data?.audiometryUrl;
-            if (!audiometryUrl) {
-                enqueueSnackbar("Missing PFT URL!", { variant: "warning" });
+            const bloodTestUrl = data?.bloodTestUrl;
+            if (!bloodTestUrl) {
+                enqueueSnackbar("Missing BLOOD URL!", { variant: "warning" });
                 return;
             }
 
             // Step 1️⃣: Find where the line occurs in 
             // Step 2️⃣: Modify the PDF (apply rectangle + image)
-            const modifiedBlob = await modifyPftPdf(
-                audiometryUrl,
-                prashantDeshmukh // ✅ your actual signature
+            const modifiedBlob = await modifyBloodPdf(
+                bloodTestUrl,
+                "24-Mar-2026"
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)
@@ -114,7 +116,7 @@ const SignedAudioReport = ({
             // Step 4️⃣: (Optional) Upload back to server
 
             const formData = new FormData();
-            formData.append("file", modifiedBlob, `Audio_${data?.empId}.pdf`);
+            formData.append("file", modifiedBlob, `PFT_${data?.empId}.pdf`);
 
             const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
 
@@ -169,8 +171,8 @@ const SignedAudioReport = ({
             {list.map((item, index) => (
                 <div key={index} style={{ display: "flex" }}>
                     <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-                    <a href={item.unhealthyVitalsFormUrl}>
-                        <div key={index}>{item.unhealthyVitalsFormUrl}</div>
+                    <a href={item.bloodTestUrl}>
+                        <div key={index}>{item.bloodTestUrl}</div>
                     </a>
                     <br />
                 </div>
@@ -179,4 +181,4 @@ const SignedAudioReport = ({
     );
 };
 
-export default SignedAudioReport;
+export default BloodDateModifier;

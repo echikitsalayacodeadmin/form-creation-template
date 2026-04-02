@@ -413,7 +413,7 @@ const ForceMotorForm6Template = ({ data }) => {
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>NAME OF ORGANISATION</Text>
                         <Text style={[styles.cell, { width: "80%", borderRight: 0 }]}>
-                            FORCE MOTORS LTD - AKURDI PLANT
+                            FORCE MOTORS LTD - CHAKAN PLANT
                         </Text>
                     </View>
 
@@ -440,13 +440,13 @@ const ForceMotorForm6Template = ({ data }) => {
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>DESIGNATION</Text>
                         <Text style={[styles.cell, { width: "20%" }]}> {data?.EXTRAS?.DESIGNATION || ""}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>GRADE</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}></Text>
+                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.Grade}</Text>
                     </View>
 
                     {/* CC */}
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>CC NUMBER</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}></Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.Cc}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>EMP ID</Text>
                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.empId}</Text>
                     </View>
@@ -454,9 +454,9 @@ const ForceMotorForm6Template = ({ data }) => {
                     {/* PLAN */}
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>MAIN SR NO</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}></Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.["Sno"]}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>CATEGORY</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>HAZARDOUS</Text>
+                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.type}</Text>
                     </View>
 
                     {/* PHYSICAL */}

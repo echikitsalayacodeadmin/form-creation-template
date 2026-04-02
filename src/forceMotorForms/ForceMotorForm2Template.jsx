@@ -184,13 +184,6 @@ const ForceMotorForm2Template = ({ data }) => {
 
         {/* CENTER */}
         <View style={{ marginVertical: 20 }}>
-          <View style={styles.centerBlock}>
-            <Text style={styles.bold}>FROM 23</Text>
-            <Text style={styles.bold}>PRESCRIBED UNDER RULE</Text>
-            <Text style={styles.bold}>21(5)</Text>
-            <Text style={{ marginTop: 4 }}>CERTIFICATE OF FITNESS</Text>
-          </View>
-
           <View style={styles.section}>
             <Text style={styles.bold}>
               SERIAL NUMBER :{" "}
