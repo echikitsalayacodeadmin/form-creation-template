@@ -102,9 +102,7 @@ const ThreeMPhysicalFitnessFrom = ({
             // const h = ["132064"];
 
             const temp = result?.data?.filter((item) =>
-                [
-                    "Sh1426"
-                ].includes(item?.empId)
+                item?.vitalsCreatedDate === "2026-04-03"
             );
 
             const length = temp.length;

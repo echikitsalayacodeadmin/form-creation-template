@@ -413,7 +413,7 @@ const ForceMotorForm6Template = ({ data }) => {
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>NAME OF ORGANISATION</Text>
                         <Text style={[styles.cell, { width: "80%", borderRight: 0 }]}>
-                            FORCE MOTORS LTD - CHAKAN PLANT
+                            FORCE MOTORS LTD - AKURDI PLANT
                         </Text>
                     </View>
 
