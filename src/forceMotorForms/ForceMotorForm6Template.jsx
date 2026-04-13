@@ -1,3 +1,4 @@
+
 // import React from "react";
 // import {
 //     Page,
@@ -150,7 +151,7 @@
 //                     {/* CC */}
 //                     <View style={styles.row}>
 //                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>CC NUMBER</Text>
-//                         <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.CC}</Text>
+//                         <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.Cc}</Text>
 //                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>EMP ID</Text>
 //                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.empId}</Text>
 //                     </View>
@@ -158,9 +159,9 @@
 //                     {/* PLAN */}
 //                     <View style={styles.row}>
 //                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>MAIN SR NO</Text>
-//                         <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.SR}</Text>
+//                         <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.["Sno"]}</Text>
 //                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>CATEGORY</Text>
-//                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>HAZARDOUS</Text>
+//                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.type}</Text>
 //                     </View>
 
 //                     {/* PHYSICAL */}
@@ -289,8 +290,6 @@
 // };
 
 // export default ForceMotorForm6Template;
-
-
 
 
 
@@ -456,7 +455,7 @@ const ForceMotorForm6Template = ({ data }) => {
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>MAIN SR NO</Text>
                         <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.["Sno"]}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>CATEGORY</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.type}</Text>
+                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>STAFF / WORKERS</Text>
                     </View>
 
                     {/* PHYSICAL */}

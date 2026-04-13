@@ -128,6 +128,8 @@ import SignedPhysicalFitnessReport from "./UnocareReportsModifier/SignedPhysical
 import UnocarePFTNormalReport from "./UnocareReportsModifier/UnocarePFTNormalReport";
 import BloodDateModifier from "./UnocareReportsModifier/BloodDateModifier";
 import RocaFSSAI from "./rocaBathroomsFSSAI/RocaFSSAI";
+import JayHindForm2Main from "./jayhind/JayHindForm2Main";
+import JayHindForm6Main from "./jayhind/JayHindForm6Main";
 
 const App = () => {
   return (
@@ -135,8 +137,8 @@ const App = () => {
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
-        {/* <ForceMotorForm6Main /> */}
-        <UnocarePFTNormalReport />
+        <JayHindForm2Main />
+        {/* <UnocarePFTNormalReport /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>

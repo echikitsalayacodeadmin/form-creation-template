@@ -8,12 +8,12 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import ForceMotorForm6Template from "./ForceMotorForm6Template";
+import JayHindForm6Template from "./JayHindForm6Template";
 
 
-const ForceMotorForm6Main = ({
-    corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
-    campCycleId = "396613",
+const JayHindForm6Main = ({
+    corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
+    campCycleId = "401838",
     fileType = "ANNEXURE",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -28,7 +28,7 @@ const ForceMotorForm6Main = ({
         console.log({ data });
         try {
             const pdfBlob = await pdf(
-                <ForceMotorForm6Template data={data} />
+                <JayHindForm6Template data={data} />
             ).toBlob();
 
             const formData = new FormData();
@@ -62,38 +62,13 @@ const ForceMotorForm6Main = ({
     };
 
 
+
     const fetchListOfEmployees = async () => {
         if (corpId && campCycleId) {
             const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await getData(url);
             if (result && result.data) {
-
-                // const temp = result?.data
-                //     ?.filter((item) => [
-                //         "170761"
-                //     ]?.includes(item?.empId))
-
-                const staffMap = Object.fromEntries(
-                    STAFF_WORKER_LIST.map((val) => [
-                        String(val.employeeid),
-                        val,
-                    ])
-                );
-
-                const temp = result?.data
-                    ?.map((item) => {
-                        const d = staffMap[String(item?.empId)];
-
-                        if (!d) return null;
-
-                        return {
-                            ...item,
-                            EXTRAS: d,
-                            pulseRate:
-                                Math.floor(Math.random() * (80 - 72 + 1)) + 72,
-                        };
-                    })
-                    ?.filter(Boolean);
+                const temp = result?.data?.filter((item) => ["100169"]?.includes(item?.empId))
                 const length = temp.length;
                 const sorted = sortDataByName(temp);
 
@@ -114,7 +89,7 @@ const ForceMotorForm6Main = ({
     }, [corpId, campCycleId]);
 
     const handleGeneratePDFs = async () => {
-        for (let i = 0; i < list.length; i++) {
+        for (let i = 0; i < 1; i++) {
             await generatePDF(list[i], i);
         }
     };
@@ -153,7 +128,7 @@ const ForceMotorForm6Main = ({
                 <br />
                 {list.map((item, index) => (
                     <div key={index} style={{ display: "flex" }}>
-                        <div key={index}>{`${index}- ${item.empId} ${item.name} ${item?.age}`}</div>
+                        <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
 
                         <a href={item.annexureUrl}>
                             <div key={index}>{item.annexureUrl}</div>
@@ -165,50 +140,12 @@ const ForceMotorForm6Main = ({
             </div>
 
             <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-                <ForceMotorForm6Template data={list[0]} />
+                <JayHindForm6Template data={list[0]} />
             </PDFViewer>
         </Fragment>
     );
 };
 
-export default ForceMotorForm6Main;
+export default JayHindForm6Main;
 
 
-
-
-const STAFF_WORKER_LIST = [
-    {
-        "type": "HAZARDOUS PROCESS",
-        "Sno": 635,
-        "Cc": 7421,
-        "DESCRIPTION": "TOOL ROOM - SHOP",
-        "employeeid": 170735,
-        "NAME": "PATIL SHYAM SUKLAL",
-        "Vitals date": "#N/A",
-        "Grade": "W-0",
-        "DESIGNATION": "ASST.WELDER"
-    },
-    {
-        "type": "STAFF / WORKERS",
-        "Sno": 321,
-        "Cc": 7133,
-        "DESCRIPTION": "SOFT LINE - GEAR,SHAFT",
-        "employeeid": 400750,
-        "NAME": "GAJANAN BABURAO KATKAR",
-        "Vitals date": "24-03-2026",
-        "Grade": "S-2",
-        "DESIGNATION": "OFFICER"
-    },
-    {
-        "type": "STAFF / WORKERS",
-        "Sno": "",
-        "Cc": "",
-        "DESCRIPTION": "",
-        "employeeid": "170761",
-        "NAME": "",
-        "Vitals date": "",
-        "Grade": "",
-        "DESIGNATION": ""
-    }
-
-]
