@@ -137,7 +137,7 @@ const App = () => {
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
-        <JayHindForm2Main />
+        <UploadDataOPD />
         {/* <UnocarePFTNormalReport /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
