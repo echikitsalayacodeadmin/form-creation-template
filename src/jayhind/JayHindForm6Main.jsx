@@ -68,7 +68,30 @@ const JayHindForm6Main = ({
             const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await getData(url);
             if (result && result.data) {
-                const temp = result?.data?.filter((item) => ["100169"]?.includes(item?.empId))
+
+                const staffMap = Object.fromEntries(
+                    STAFF_WORKER_LIST.map((val) => [
+                        String(val.EMP_NO),
+                        val,
+                    ])
+                );
+
+                const temp = result?.data
+                    ?.map((item) => {
+                        const d = staffMap[String(item?.empId)];
+
+                        if (!d) return null;
+
+                        return {
+                            ...item,
+                            EXTRAS: d,
+                            pulseRate:
+                                Math.floor(Math.random() * (80 - 72 + 1)) + 72,
+                        };
+                    })
+                    ?.filter(Boolean);
+
+                console.log({ EMPLOYEE_LIST: temp?.map((item) => item?.empId) })
                 const length = temp.length;
                 const sorted = sortDataByName(temp);
 
@@ -89,7 +112,7 @@ const JayHindForm6Main = ({
     }, [corpId, campCycleId]);
 
     const handleGeneratePDFs = async () => {
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < list.length; i++) {
             await generatePDF(list[i], i);
         }
     };
@@ -149,3 +172,159 @@ const JayHindForm6Main = ({
 export default JayHindForm6Main;
 
 
+const STAFF_WORKER_LIST = [
+    {
+        "SR": "",
+        "CC": 6187,
+        "DESCRIPTION": "PDC 2 FETTLING URSE",
+        "EMP_NO": 318365,
+        "NAME": "ARBIND KUMAR",
+        "Grade": "",
+        "DESIGNATION": "OPERATOR - SKILLED A",
+        "DATE": "2026-04-06",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 8859,
+        "DESCRIPTION": "",
+        "EMP_NO": 508186,
+        "NAME": "BHASKAR ROY",
+        "Grade": "",
+        "DESIGNATION": "ASST. MANAGER",
+        "DATE": "2026-04-06",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": "",
+        "DESCRIPTION": "",
+        "EMP_NO": "PSS11",
+        "NAME": "Datta baburao bhosle",
+        "Grade": "",
+        "DESIGNATION": "",
+        "DATE": "2026-04-06",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": "",
+        "DESCRIPTION": "",
+        "EMP_NO": "PSS12",
+        "NAME": "Laxman Sutar",
+        "Grade": "",
+        "DESIGNATION": "Material Handling",
+        "DATE": "2026-04-06",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6124,
+        "DESCRIPTION": "",
+        "EMP_NO": 100692,
+        "NAME": "ASHOK KUMAR KORI",
+        "Grade": "",
+        "DESIGNATION": "OPERATOR - SKILLED A",
+        "DATE": "2026-04-07",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6196,
+        "DESCRIPTION": "STANDARD ROOM",
+        "EMP_NO": 407170,
+        "NAME": "BHUPENDRA MATHANKAR",
+        "Grade": "",
+        "DESIGNATION": "ASST. MANAGER",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6135,
+        "DESCRIPTION": "",
+        "EMP_NO": 400014,
+        "NAME": "BHUSHAN PATIL",
+        "Grade": "",
+        "DESIGNATION": "OPERATOR - SKILLED A",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6222,
+        "DESCRIPTION": "",
+        "EMP_NO": 407274,
+        "NAME": "GULSHAN",
+        "Grade": "",
+        "DESIGNATION": "ASST. MANAGER",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6173,
+        "DESCRIPTION": "FETTLING P.D.C.",
+        "EMP_NO": 318462,
+        "NAME": "PRAKASH PRADHAN",
+        "Grade": "",
+        "DESIGNATION": "OPERATOR - SKILLED A",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6187,
+        "DESCRIPTION": "PDC 2 FETTLING URSE",
+        "EMP_NO": 318542,
+        "NAME": "PRONAB MUKHARJEE",
+        "Grade": "",
+        "DESIGNATION": "OPERATOR - SKILLED A",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6216,
+        "DESCRIPTION": "UR GDC ELECT MAINT",
+        "EMP_NO": 407151,
+        "NAME": "SHUBHAM JADHAV",
+        "Grade": "",
+        "DESIGNATION": "ASST. MANAGER",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6222,
+        "DESCRIPTION": "",
+        "EMP_NO": 407263,
+        "NAME": "SOUMENDU PANJA",
+        "Grade": "",
+        "DESIGNATION": "ASST. MANAGER",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 8859,
+        "DESCRIPTION": "",
+        "EMP_NO": 508010,
+        "NAME": "SURAJIT JANA",
+        "Grade": "",
+        "DESIGNATION": "ASST. MANAGER",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    },
+    {
+        "SR": "",
+        "CC": 6172,
+        "DESCRIPTION": "",
+        "EMP_NO": 317916,
+        "NAME": "SUSANTA MAHATO",
+        "Grade": "",
+        "DESIGNATION": "OPERATOR - SKILLED A",
+        "DATE": "2026-04-08",
+        "CATEGORY": "STAFF"
+    }
+]

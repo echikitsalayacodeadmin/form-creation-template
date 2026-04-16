@@ -66,7 +66,22 @@ const JayHindForm2Main = ({
             if (result && result.data) {
 
 
-                const temp = result?.data?.filter((item) => ["100169"]?.includes(item?.empId))
+                const temp = result?.data?.filter((item) => [
+                    "508186",
+                    "318365",
+                    "PSS11",
+                    "PSS12",
+                    "317916",
+                    "508010",
+                    "407151",
+                    "318542",
+                    "407263",
+                    "407274",
+                    "100692",
+                    "400014",
+                    "318462",
+                    "407170"
+                ]?.includes(item?.empId))
 
                 const length = temp.length;
                 const sorted = sortDataByName(temp);
@@ -88,7 +103,7 @@ const JayHindForm2Main = ({
     }, [corpId, campCycleId]);
 
     const handleGeneratePDFs = async () => {
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < list.length; i++) {
             await generatePDF(list[i], i);
         }
     };

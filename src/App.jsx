@@ -1,13 +1,4 @@
 import React from "react";
-// import UltraTech from "./ultratech/ultraTech";
-// import GenericFormGenerator from "./genericFormGenerator/genericFormGenerator";
-// import UltratechDepartmentWise from "./ultratech/ultratechDepartmentWise";
-// import VacinationCertificate from "./adaniWilmar/vacinationCertificate";
-// import VacinationVIkram from "./vikram/vacinationVIkram";
-// import BloodPdf from "./blood/bloodPdf";
-// import UshaKiranPalace from "./ushaKiranPalace/ushaKiranPalace";
-// import Hershey from "./hershey/hershey";
-// import Pepsico from "./pepsico/pepsico";
 import UnichemAnnexure from "./unichem/unichemAnnexure";
 import GrasimForm32 from "./Grasim/GrasimForm32";
 import GrasimForm35 from "./Grasim/GrasimForm35";
@@ -130,6 +121,8 @@ import BloodDateModifier from "./UnocareReportsModifier/BloodDateModifier";
 import RocaFSSAI from "./rocaBathroomsFSSAI/RocaFSSAI";
 import JayHindForm2Main from "./jayhind/JayHindForm2Main";
 import JayHindForm6Main from "./jayhind/JayHindForm6Main";
+import KachMotorsFSSAI from "./kachMotors/KachMotorsFSSAI";
+import GenerateStateCityJSON from "./generateCityStateJson/GenerateStateCityJSON";
 
 const App = () => {
   return (
@@ -137,7 +130,8 @@ const App = () => {
       <SnackbarProvider maxSnack={3}>
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
-        <UploadDataOPD />
+        {/* <UploadDataOPD /> */}
+        <UnocarePFTNormalReport />
         {/* <UnocarePFTNormalReport /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}

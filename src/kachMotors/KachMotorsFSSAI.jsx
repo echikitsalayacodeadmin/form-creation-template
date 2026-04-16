@@ -5,16 +5,16 @@ import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
-import { LogoImage, LogoImageFSSAI } from "./assets";
-import { JaydipSaxsenaBase64 } from "../effotelFassai/assets";
+import { JaydipSaxsenaBase64, LogoImage, LogoImageFSSAI } from "./assets";
+import dayjs from "dayjs";
 
-const DaawatFoodFssai = ({
-  corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
-  campCycleId = "364062",
+const KachMotorsFSSAI = ({
+  corpId = "76cfdb38-722a-4f77-8f67-09d6318e2667",
+  campCycleId = "373294",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "Daawat Foods Limited",
-  campDate = "24 Mar, 2026",
+  corpName = "Kach Motors Pvt. Ltd",
   year = "2026",
+  customDate = "14 April 2026"
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -219,7 +219,7 @@ const DaawatFoodFssai = ({
       }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
+              >&nbsp;&nbsp;&nbsp;${customDate ? customDate : data?.vitalsCreatedDate}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -353,14 +353,16 @@ const DaawatFoodFssai = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIds = [
-        "KC0005", 'KC0009', 'KC0014'
-      ]
+      const temp = result?.data.filter(
+        (item) => [
+          "501", "502", "503", "504"
+        ].includes(item?.empId)
+      )?.map((ite) => ({
+        ...ite,
+        vitalsCreatedDate: "2026-02-16"
+      }));
 
-      const temp = result?.data.filter((item) =>
-        empIds.includes(item.empId)
-      );
-
+      console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
       console.log({ length });
       setList(sortDataByName(temp));
@@ -423,4 +425,4 @@ const DaawatFoodFssai = ({
     </div>
   );
 };
-export default DaawatFoodFssai;
+export default KachMotorsFSSAI;

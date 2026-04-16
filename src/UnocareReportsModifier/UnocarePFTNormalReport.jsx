@@ -121,8 +121,10 @@ const modifyPftPdf = async (pdfUrl, normalPftImage) => {
 
 // ✅ React Component
 const UnocarePFTNormalReport = ({
-    corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
-    campCycleId = "396613",
+    corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
+    campCycleId = "401838",
+    // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
+    // campCycleId = "396613",
     fileType = "FITNESS_CERTIFICATE_FOOD",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -137,7 +139,20 @@ const UnocarePFTNormalReport = ({
         if (result && result.data) {
             const temp = result?.data
                 ?.filter((item) => [
-                    "170735", "400750", "170761"
+                    "508186",
+                    "318365",
+                    "PSS11",
+                    "PSS12",
+                    "317916",
+                    "508010",
+                    "407151",
+                    "318542",
+                    "407263",
+                    "407274",
+                    "100692",
+                    "400014",
+                    "318462",
+                    "407170"
                 ]?.includes(item?.empId) && item?.pftUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
