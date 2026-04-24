@@ -125,6 +125,8 @@ const UnocarePFTNormalReport = ({
     campCycleId = "401838",
     // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     // campCycleId = "396613",
+    // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
+    // campCycleId = "403772",
     fileType = "FITNESS_CERTIFICATE_FOOD",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -139,20 +141,11 @@ const UnocarePFTNormalReport = ({
         if (result && result.data) {
             const temp = result?.data
                 ?.filter((item) => [
-                    "508186",
-                    "318365",
-                    "PSS11",
-                    "PSS12",
-                    "317916",
-                    "508010",
-                    "407151",
-                    "318542",
-                    "407263",
-                    "407274",
-                    "100692",
-                    "400014",
-                    "318462",
-                    "407170"
+                    "404070", "98343", "97173", "98755", "98982", "99034", "99035", "99124",
+                    "99746", "99792", "99881", "100595", "97839", "400540", "97864", "98341",
+                    "98784", "98971", "99351", "99765", "99983", "100324", "100576", "318581",
+                    "317829", "318200", "800145", "800013", "800029", "800056", "900012",
+                    "900016", "900062", "900096", "900120", "900124", "318056", "318011", "407177"
                 ]?.includes(item?.empId) && item?.pftUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);

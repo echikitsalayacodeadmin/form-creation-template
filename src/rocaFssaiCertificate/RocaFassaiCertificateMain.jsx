@@ -1,4 +1,6 @@
 
+
+
 import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { useSnackbar } from "notistack";
 import React, { Fragment, useEffect, useState } from "react";
@@ -6,15 +8,13 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import JayHindForm2Template from "./JayHindForm2Template";
+import RocaFassaiCertificateTemplate from "./RocaFassaiCertificateTemplate";
 
 
-const JayHindForm2Main = ({
-    // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
-    // campCycleId = "403772",
-    corpId = '14dca1f0-fa04-4526-ba01-f5f83e0f2494',
-    campCycleId = '401838',
-    fileType = "TMT",
+const RocaFassaiCertificateMain = ({
+    corpId = "03506c23-1be1-481d-b7fb-eb0230c62e78",
+    campCycleId = "376020",
+    fileType = "FITNESS_CERTIFICATE_FOOD",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -28,11 +28,11 @@ const JayHindForm2Main = ({
         console.log({ data });
         try {
             const pdfBlob = await pdf(
-                <JayHindForm2Template data={data} />
+                <RocaFassaiCertificateTemplate data={data} />
             ).toBlob();
-            console.log({ pdfBlob })
+
             const formData = new FormData();
-            formData.append("file", pdfBlob, `${data?.empId}_MER_FORM.pdf`);
+            formData.append("file", pdfBlob, `${data?.empId}_form6.pdf`);
 
             const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await uploadFile(url, formData);
@@ -61,22 +61,14 @@ const JayHindForm2Main = ({
         }
     };
 
+
     const fetchListOfEmployees = async () => {
         if (corpId && campCycleId) {
             const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await getData(url);
             if (result && result.data) {
 
-
-                const temp = result?.data?.filter((item) => [
-                    "404070", "98343", "97173", "98755", "98982", "99034", "99035", "99124",
-                    "99746", "99792", "99881", "100595", "97839", "400540", "97864", "98341",
-                    "98784", "98971", "99351", "99765", "99983", "100324", "100576", "318581",
-                    "317829", "318200", "800145", "800013", "800029", "800056", "900012",
-                    "900016", "900062", "900096", "900120", "900124", "318056", "318011", "407177"
-                ]?.includes(item?.empId))
-
-                const length = temp.length;
+                const temp = result?.data
                 const sorted = sortDataByName(temp);
 
                 setList(sorted);
@@ -135,10 +127,10 @@ const JayHindForm2Main = ({
                 <br />
                 {list.map((item, index) => (
                     <div key={index} style={{ display: "flex" }}>
-                        <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+                        <div key={index}>{`${index}- ${item.empId} ${item.name} ${item?.age}`}</div>
 
-                        <a href={item.tmtUrl}>
-                            <div key={index}>{item.tmtUrl}</div>
+                        <a href={item.annexureUrl}>
+                            <div key={index}>{item.annexureUrl}</div>
                         </a>
 
                         <br />
@@ -147,10 +139,13 @@ const JayHindForm2Main = ({
             </div>
 
             <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-                <JayHindForm2Template data={list[0]} />
+                <RocaFassaiCertificateTemplate data={list[0]} />
             </PDFViewer>
         </Fragment>
     );
 };
 
-export default JayHindForm2Main;
+export default RocaFassaiCertificateMain;
+
+
+

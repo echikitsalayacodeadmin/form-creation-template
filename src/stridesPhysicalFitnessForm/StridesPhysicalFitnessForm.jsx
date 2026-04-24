@@ -9,11 +9,11 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
-import TimeRoman from "../assets/fonts/Times-Roman.ttf";
-import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 import uncareheader from "../assets/images/uncareheader.png";
 import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
 import dr_kunal_stamp_sign from "../assets/images/dr_kunal_stamp_sign.png";
+import TimeRoman from "../assets/fonts/Times-Roman.ttf";
+import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
 
 // Register fonts
 Font.register({
@@ -226,7 +226,7 @@ const StridesPhysicalFitnessForm = ({
                 },
               ]}
             >
-              Annual Medical Check-up – February 2026
+              Annual Medical Check-up – April 2026
             </Text>
             <Text
               style={[styles.cell, styles.cellNoRight, { width: 0 }]}

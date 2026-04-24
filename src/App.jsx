@@ -123,6 +123,9 @@ import JayHindForm2Main from "./jayhind/JayHindForm2Main";
 import JayHindForm6Main from "./jayhind/JayHindForm6Main";
 import KachMotorsFSSAI from "./kachMotors/KachMotorsFSSAI";
 import GenerateStateCityJSON from "./generateCityStateJson/GenerateStateCityJSON";
+import ModifyRefByInBlood from "./UnocareReportsModifier/ModifyRefByInBlood";
+import RocaFassaiCertificateMain from "./rocaFssaiCertificate/RocaFassaiCertificateMain";
+import StridesChandapuraBloodReport from "./stridesPharmaChandapura/StridesChandapuraBloodReport";
 
 const App = () => {
   return (

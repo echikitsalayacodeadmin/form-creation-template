@@ -109,7 +109,7 @@ const JayHindForm6Template = ({ data }) => {
                     </View>
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%", }, styles.label]}>FORM NO</Text>
-                        <Text style={[styles.cell, { width: "20%", }]}>1</Text>
+                        <Text style={[styles.cell, { width: "20%", }]}>{data?.EXTRAS?.Sno}</Text>
                         <Text style={[styles.cell, { width: "30%", }, styles.label]}>DATE OF EXAMINATION</Text>
                         <Text style={[styles.cell, { width: "30%", borderRight: 0 }]}>{dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY")}</Text>
                     </View>
@@ -118,7 +118,7 @@ const JayHindForm6Template = ({ data }) => {
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>NAME OF ORGANISATION</Text>
                         <Text style={[styles.cell, { width: "80%", borderRight: 0 }]}>
-                            JAYA HIND INDUSTRY PVT LTD - URSE
+                            JAYA HIND INDUSTRY PVT LTD - {"Urse"}
                         </Text>
                     </View>
 
@@ -159,9 +159,9 @@ const JayHindForm6Template = ({ data }) => {
                     {/* PLAN */}
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>MAIN SR NO</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.SR}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.MainSrNo}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>CATEGORY</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.CATEGORY}</Text>
+                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.Type}</Text>
                     </View>
 
                     {/* PHYSICAL */}

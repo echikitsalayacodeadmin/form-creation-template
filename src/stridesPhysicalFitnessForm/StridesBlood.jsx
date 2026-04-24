@@ -372,7 +372,7 @@ export async function modifyBloodPdfDynamic(bloodUrl) {
   const pdfDoc = await PDFDocument.load(pdfBytes);
 
   const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  const text = "Annual Medical Check-Up – February 2026";
+  const text = "Annual Medical Check-Up – April 2026";
 
   const fontSize = 10;
 
@@ -389,7 +389,7 @@ export async function modifyBloodPdfDynamic(bloodUrl) {
       const x = (width - textWidth) / 2;
 
       // 200pt from top
-      const y = height - 197;
+      const y = height - 223;
 
       // Draw text
       page.drawText(text, {
@@ -472,8 +472,8 @@ export async function replaceAgeSexInPdf(bloodUrl, age, sex) {
 }
 
 const StridesBlood = ({
-  corpId = "b4055483-4ae1-4c35-851c-6922940bfa80",
-  campCycleId = "385039",
+  corpId = "f62fa674-0710-47c9-9a5e-b76b731a22e3",
+  campCycleId = "404052",
   fileType = "BLOODTEST",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -486,44 +486,7 @@ const StridesBlood = ({
     const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
-      const temp = result?.data?.filter((item) => [
-        "113257", "111372", "114375", "113414", "40003043", "114558", "114624", "109594", "615559U", "113999",
-        "111049", "114574", "113378", "113379", "110606", "40002655", "113396", "114396", "180412", "114480",
-        "113695", "180813", "112927", "109482", "113704", "40001563", "40003264", "40002094", "108757", "40003625",
-        "112400", "40003628", "250497", "109251", "40003642", "113442", "111385", "112993", "40003301", "112873",
-        "111402", "113482", "109355", "113269", "109595", "40000724", "114556", "109535", "111383", "40003158",
-        "112195", "40002415", "111239", "114108", "40003588", "114557", "113696", "40000607", "113412", "114547",
-        "131073C", "40003213", "250491", "113924", "113624", "114584", "40002957", "40003571", "114453", "20010392",
-        "40003114", "40001326", "113317", "40002961", "615582U", "111838", "113291", "40002876", "114473", "114568",
-        "113901", "114426", "112520", "111292", "40003302", "113648", "112713", "40003566", "110604", "40003110",
-        "40003045", "40002538", "113371", "111296", "112006", "40003029", "40003608", "130889C", "40000351", "20030406",
-        "40002555", "114418", "V711", "V061", "V079", "V615", "V088", "V100", "V979", "111290",
-        "70053673C", "DTSS0388240", "DTSS0261719", "TME1014", "V127", "DTSS0261646", "V614", "TME1004", "40003132", "DTSS0261693",
-        "DTSS0261718", "V780", "V723", "V119", "V045", "250621", "DTSS0388233", "DTSS0261662", "DTSS0425587", "TME1019",
-        "TME1001", "Dtss021673", "V833", "V114", "V082", "40002206", "111221", "111389", "113603", "113900",
-        "40003225", "TME1008", "DTSS0261623", "V212", "DTSS0261655", "TME1007", "DTSS0261698", "DTSS0261679", "DTSS0261647", "DTSS0261663",
-        "DTSS0261650", "V1004", "DTSS0261674", "DTSS0359874", "V050", "V002", "V035", "V1023", "TME1003", "40002881",
-        "V130", "TME1006", "V782", "TME1013", "40001062", "40002903", "40000526", "114585", "112609", "40001080",
-        "DTSS0448600", "V059", "V019", "V058", "V101", "DTSS0261631", "DTSS0261627", "V1009", "V1011", "SV1073",
-        "V954", "V797", "SV1077", "113566", "DTSS0569923", "V893", "V922", "DTSS0560032", "SV1025", "V415",
-        "V086", "V944", "V899", "V190", "DTSS0261705", "DTSS0302892", "111687", "114255", "V044", "V560",
-        "V816", "SV1027", "V388", "V092", "40002440", "V528", "V128", "V245", "SV1068", "V449",
-        "V005", "40000901", "SV1011", "DTSS0492980", "SV1007", "V703", "V357", "V951", "SV1008", "V401",
-        "V037", "DTSS0261708", "V056", "DTSS0298798", "V1005", "V533", "V379", "V779", "V823", "BSS14399",
-        "V1012", "V1013", "V714", "40002844", "111306", "V871", "V221", "DTSS0359902", "DTSS0431603", "V1008",
-        "V1042", "V057", "V390", "V693", "V1025", "V544", "V1030", "V095", "TME1012", "V1029",
-        "SV1012", "SV1054", "V181", "SV1053", "V1007", "TME1024", "V428", "TME1017", "V084", "V605",
-        "DTSS0368805", "TME1016", "V900", "V947", "DTSS0261671", "DTSS0261724", "V975", "BSS15069", "V054", "V830",
-        "BSS16811", "BSS18102", "V066", "DTSS0388248", "DTSS0261780", "BSS17223", "V981", "V767", "V877", "V531",
-        "V414", "PA092", "SV1062", "BSS15067", "SV1022", "SV1006", "V858", "V182", "111091", "40003605",
-        "V976", "V213", "V113", "V774", "V024", "V946", "V391", "V980", "V022", "20010405",
-        "615549U", "DTSS0623338", "V1020", "V126", "BSS14364", "BSS14381", "40002252", "PA151", "V957", "V041",
-        "PA161", "40003343", "40002989", "BSS14398", "BSS14377", "DTSS0518012", "V1002", "V276", "V744", "V102",
-        "BSS17584", "BSS14378", "PA165", "113650", "113567", "114378", "V1019", "V1038", "40003500", "40002556",
-        "V210", "V987", "V881", "V106", "V916", "114395", "SV1001", "BSS14379", "BSS14678", "V1028",
-        "V1032", "BSS18838", "V386", "V118", "V439", "V001", "250326", "113524", "PA146", "DTSS0261670",
-        "DTSS0261667", "DTSS0261642", "V563", "110588", "V216"
-      ].includes(item?.empId) && item?.bloodTestUrl
+      const temp = result?.data?.filter((item) => item?.vitalsCreatedDate === "2026-04-14" || item?.vitalsCreatedDate === "2026-04-15"
       );
       const sorted = sortDataByName(temp);
       setList(sorted);
@@ -546,7 +509,7 @@ const StridesBlood = ({
         return;
       }
 
-      const modifiedBlob = await replaceAgeSexInPdf(bloodTestUrl, data?.age, data?.gender);
+      const modifiedBlob = await modifyBloodPdfDynamic(bloodTestUrl);
       //   Step 3️⃣: Preview the modified PDF (optional)
       // const previewUrl = URL.createObjectURL(modifiedBlob);
       // window.open(previewUrl, "_blank");

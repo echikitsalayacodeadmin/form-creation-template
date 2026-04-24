@@ -35,7 +35,7 @@ const StridesHeader2026Template = ({ data }) => {
 
         {/* Title */}
         <Text style={styles.title}>
-          Annual Medical Check-up – February 2026
+          Annual Medical Check-up – April 2026
         </Text>
       </Page>
     </Document>

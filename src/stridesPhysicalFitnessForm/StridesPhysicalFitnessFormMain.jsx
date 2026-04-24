@@ -17,8 +17,8 @@ import { sortDataByName } from "../assets/utils";
 import StridesPhysicalFitnessForm from "./StridesPhysicalFitnessForm";
 
 const StridesPhysicalFitnessFormMain = ({
-  corpId = "b4055483-4ae1-4c35-851c-6922940bfa80",
-  campCycleId = "385039",
+  corpId = "f62fa674-0710-47c9-9a5e-b76b731a22e3",
+  campCycleId = "404052",
   fileType = "PHYSICAL_FITNESS_FORM",
 }) => {
   const _storedData = (() => {
@@ -106,9 +106,7 @@ const StridesPhysicalFitnessFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data?.filter((item) => [
-        'DTSS0388258'
-      ].includes(item?.empId)
+      const temp = result?.data?.filter((item) => item?.vitalsCreatedDate === "2026-04-14" || item?.vitalsCreatedDate === "2026-04-15"
       );
 
       const length = temp.length;

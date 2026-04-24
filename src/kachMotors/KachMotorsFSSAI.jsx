@@ -8,13 +8,16 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { JaydipSaxsenaBase64, LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
 
+
 const KachMotorsFSSAI = ({
-  corpId = "76cfdb38-722a-4f77-8f67-09d6318e2667",
-  campCycleId = "373294",
+  corpId = '16361d45-8dca-4319-b0f7-d9dbc05fd94f',
+  campCycleId = '404050',
+  // corpId = "76cfdb38-722a-4f77-8f67-09d6318e2667",
+  // campCycleId = "373294",
   fileType = "FITNESS_CERTIFICATE_FOOD",
-  corpName = "Kach Motors Pvt. Ltd",
+  corpName = "Enrise By Sayaji",
   year = "2026",
-  customDate = "14 April 2026"
+  customDate = "13 April 2026"
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const batchSize = 50;
@@ -355,11 +358,22 @@ const KachMotorsFSSAI = ({
 
       const temp = result?.data.filter(
         (item) => [
-          "501", "502", "503", "504"
-        ].includes(item?.empId)
+          "S014662",
+          "S018776",
+          "S019870",
+          "S010570",
+          "S019401",
+          "S010613",
+          "S019552",
+          "S019879",
+          "S019698",
+          "S019527",
+          "S019549",
+        ]
+          ?.includes(item?.empId)
       )?.map((ite) => ({
         ...ite,
-        vitalsCreatedDate: "2026-02-16"
+
       }));
 
       console.log({ list: temp.map((item) => item.empId).join(",") });

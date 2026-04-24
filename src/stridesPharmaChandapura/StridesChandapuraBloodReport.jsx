@@ -1,8 +1,10 @@
 
+
+
 import { useSnackbar } from "notistack";
 import { PDFDocument } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
+import { rgb, StandardFonts } from "pdf-lib";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
@@ -18,57 +20,75 @@ async function loadPdfJs() {
     return pdfjsLib;
 }
 
-const modifyPftPdf = async (pdfUrl, signatureImage) => {
-    // 1. Fetch existing PDF
-    const existingPdfBytes = await fetch(pdfUrl).then((res) =>
-        res.arrayBuffer()
-    );
 
-    // 2. Load PDF
+
+
+
+const modifyClientAndSpecimen = async (pdfUrl) => {
+    const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
-    // 3. Get last page (important for reports)
     const pages = pdfDoc.getPages();
-    const page = pages[pages.length - 1];
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-    const { width, height } = page.getSize();
+    for (let i = 0; i < pages.length; i++) {
+        const page = pages[i];
+        const { height } = page.getSize();
 
-    // 4. Fetch signature image
-    const signatureBytes = await fetch(signatureImage).then((res) =>
-        res.arrayBuffer()
-    );
+        // =========================
+        // 🔹 CLIENT NAME REPLACE
+        // =========================
 
-    // 5. Embed image
-    const signature = await pdfDoc.embedPng(signatureBytes);
+        // Cover old "Client Name"
+        page.drawRectangle({
+            x: 85,
+            y: height - 182,
+            width: 100,
+            height: 16,
+            color: rgb(1, 1, 1),
+        });
 
-    // 6. Resize (IMPORTANT)
-    const scaled = signature.scale(0.25);
+        // Draw new Client Name
+        page.drawText("Strides Pharma Science Limited Chandapura", {
+            x: 86,
+            y: height - 175,
+            size: 8.5, // smaller to fit long text
+            font,
+            color: rgb(0, 0, 0),
+        });
 
-    // 7. Draw at bottom-right (adjusted for YOUR report layout)
-    page.drawImage(signature, {
-        x: width - scaled.width - 40, // right margin
-        y: 40, // slightly above footer text (important)
-        width: scaled.width,
-        height: scaled.height,
-    });
+        // =========================
+        // 🔹 SPECIMEN COLLECTED BY
+        // =========================
 
-    // 8. Save
+        // Cover old text
+        page.drawRectangle({
+            x: 458,
+            y: height - 150,
+            width: 100,
+            height: 16,
+            color: rgb(1, 1, 1),
+        });
+
+        // Draw new text
+        page.drawText("Uno.care", {
+            x: 458,
+            y: height - 145,
+            size: 10,
+            font,
+            color: rgb(0, 0, 0),
+        });
+    }
+
     const pdfBytes = await pdfDoc.save();
-
     return new Blob([pdfBytes], { type: "application/pdf" });
 };
 
-
-
 // ✅ React Component
-const SignedAudioReport = ({
-    corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
-    campCycleId = "401838",
-    // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
-    // campCycleId = "396613",
-    // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
-    // campCycleId = "403772",
-    fileType = "UNHEALTHY_VITALS_FORM",
+const StridesChandapuraBloodReport = ({
+    corpId = "f62fa674-0710-47c9-9a5e-b76b731a22e3",
+    campCycleId = "404052",
+    fileType = "BLOODTEST",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -80,14 +100,7 @@ const SignedAudioReport = ({
         const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
         if (result && result.data) {
-            const temp = result?.data
-                ?.filter((item) => [
-                    "404070", "98343", "97173", "98755", "98982", "99034", "99035", "99124",
-                    "99746", "99792", "99881", "100595", "97839", "400540", "97864", "98341",
-                    "98784", "98971", "99351", "99765", "99983", "100324", "100576", "318581",
-                    "317829", "318200", "800145", "800013", "800029", "800056", "900012",
-                    "900016", "900062", "900096", "900120", "900124", "318056", "318011", "407177"
-                ]?.includes(item?.empId) && item?.audiometryUrl);
+            const temp = result?.data?.filter((item) => item.bloodTestUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -103,27 +116,21 @@ const SignedAudioReport = ({
 
     const handleModify = async (data) => {
         try {
-            const audiometryUrl = data?.audiometryUrl;
-            if (!audiometryUrl) {
-                enqueueSnackbar("Missing PFT URL!", { variant: "warning" });
+            const bloodTestUrl = data?.bloodTestUrl;
+            if (!bloodTestUrl) {
+                enqueueSnackbar("Missing BLOOD URL!", { variant: "warning" });
                 return;
             }
 
-            // Step 1️⃣: Find where the line occurs in 
-            // Step 2️⃣: Modify the PDF (apply rectangle + image)
-            const modifiedBlob = await modifyPftPdf(
-                audiometryUrl,
-                prashantDeshmukh // ✅ your actual signature
+            const modifiedBlob = await modifyClientAndSpecimen(
+                bloodTestUrl,
+
             );
 
-            // Step 3️⃣: Open for preview (uncomment if needed)
             // const previewUrl = URL.createObjectURL(modifiedBlob);
             // window.open(previewUrl, "_blank");
-
-            // Step 4️⃣: (Optional) Upload back to server
-
             const formData = new FormData();
-            formData.append("file", modifiedBlob, `Audio_${data?.empId}.pdf`);
+            formData.append("file", modifiedBlob, `BLOOD_${data?.empId}.pdf`);
 
             const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
 
@@ -178,8 +185,8 @@ const SignedAudioReport = ({
             {list.map((item, index) => (
                 <div key={index} style={{ display: "flex" }}>
                     <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-                    <a href={item.unhealthyVitalsFormUrl}>
-                        <div key={index}>{item.unhealthyVitalsFormUrl}</div>
+                    <a href={item.bloodTestUrl}>
+                        <div key={index}>{item.bloodTestUrl}</div>
                     </a>
                     <br />
                 </div>
@@ -188,4 +195,4 @@ const SignedAudioReport = ({
     );
 };
 
-export default SignedAudioReport;
+export default StridesChandapuraBloodReport;
