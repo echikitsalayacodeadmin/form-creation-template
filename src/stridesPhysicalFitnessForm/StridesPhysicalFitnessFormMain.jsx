@@ -106,7 +106,7 @@ const StridesPhysicalFitnessFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data?.filter((item) => item?.vitalsCreatedDate === "2026-04-14" || item?.vitalsCreatedDate === "2026-04-15"
+      const temp = result?.data?.filter((item) => (item?.vitalsCreatedDate === "2026-04-14" || item?.vitalsCreatedDate === "2026-04-15") && ["SH496"].includes(item?.empId)
       );
 
       const length = temp.length;

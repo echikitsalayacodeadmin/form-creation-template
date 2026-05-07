@@ -126,6 +126,8 @@ import GenerateStateCityJSON from "./generateCityStateJson/GenerateStateCityJSON
 import ModifyRefByInBlood from "./UnocareReportsModifier/ModifyRefByInBlood";
 import RocaFassaiCertificateMain from "./rocaFssaiCertificate/RocaFassaiCertificateMain";
 import StridesChandapuraBloodReport from "./stridesPharmaChandapura/StridesChandapuraBloodReport";
+import AlembicAnnexureMain from "./alembicAnnexure/AlembicAnnexureMain";
+import GeAeroSpacePhyscialFitnessMain from "./GEAerospace/GeAeroSpacePhyscialFitnessMain";
 
 const App = () => {
   return (
@@ -134,7 +136,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <UnocarePFTNormalReport />
+        <GeAeroSpacePhyscialFitnessMain />
         {/* <UnocarePFTNormalReport /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}

@@ -109,7 +109,7 @@ const JayHindForm6Template = ({ data }) => {
                     </View>
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%", }, styles.label]}>FORM NO</Text>
-                        <Text style={[styles.cell, { width: "20%", }]}>{data?.EXTRAS?.Sno}</Text>
+                        <Text style={[styles.cell, { width: "20%", }]}>{data?.EXTRAS?.SNO}</Text>
                         <Text style={[styles.cell, { width: "30%", }, styles.label]}>DATE OF EXAMINATION</Text>
                         <Text style={[styles.cell, { width: "30%", borderRight: 0 }]}>{dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY")}</Text>
                     </View>
@@ -145,7 +145,7 @@ const JayHindForm6Template = ({ data }) => {
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>DESIGNATION</Text>
                         <Text style={[styles.cell, { width: "20%" }]}> {data?.EXTRAS?.DESIGNATION || ""}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>GRADE</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.Grade}</Text>
+                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.GRADE}</Text>
                     </View>
 
                     {/* CC */}
@@ -159,9 +159,9 @@ const JayHindForm6Template = ({ data }) => {
                     {/* PLAN */}
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>MAIN SR NO</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.MainSrNo}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.MAINSRNO}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>CATEGORY</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.Type}</Text>
+                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.CATEGORY}</Text>
                     </View>
 
                     {/* PHYSICAL */}

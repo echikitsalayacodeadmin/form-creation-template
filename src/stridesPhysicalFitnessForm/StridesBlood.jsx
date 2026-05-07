@@ -486,7 +486,8 @@ const StridesBlood = ({
     const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
-      const temp = result?.data?.filter((item) => item?.vitalsCreatedDate === "2026-04-14" || item?.vitalsCreatedDate === "2026-04-15"
+      const temp = result?.data?.filter((item) => (item?.vitalsCreatedDate === "2026-04-14" || item?.vitalsCreatedDate === "2026-04-15") && ["SH496"].includes(item?.empId)
+
       );
       const sorted = sortDataByName(temp);
       setList(sorted);

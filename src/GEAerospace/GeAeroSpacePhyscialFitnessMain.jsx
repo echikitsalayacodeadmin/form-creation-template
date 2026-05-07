@@ -1,40 +1,49 @@
-
-
-
+import {
+    FormControlLabel,
+    FormLabel,
+    Grid,
+    Radio,
+    RadioGroup,
+    Typography,
+} from "@mui/material";
+import TextField from "@mui/material/TextField";
 import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { useSnackbar } from "notistack";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import JayHindForm6Template from "./JayHindForm6Template";
+import GeAeroSpacePhyscialFitnessTemplate from "./GeAeroSpacePhyscialFitnessTemplate";
 
-
-const JayHindForm6Main = ({
-    // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
-    // campCycleId = "403772",
-    corpId = '14dca1f0-fa04-4526-ba01-f5f83e0f2494',
-    campCycleId = '401838',
-    fileType = "ANNEXURE",
+const GeAeroSpacePhyscialFitnessMain = ({
+    corpId = "c97b2b3a-a847-4d76-bdce-747b6cb9687e",
+    campCycleId = "405334",
+    fileType = "PHYSICAL_FITNESS_FORM",
 }) => {
-    const { enqueueSnackbar } = useSnackbar();
 
+    const { enqueueSnackbar } = useSnackbar();
+    const batchSize = 50;
     const [list, setList] = useState([]);
     const [totalEmployees, setTotalEmployees] = useState(0);
     const [uploadedCount, setUploadedCount] = useState(0);
-    const [errorEmpCount, setErrorEmpCount] = useState(0);
-    const [errorEmpIDs, setErrorEmpIDs] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
 
     const generatePDF = async (data, index) => {
-        console.log({ data });
         try {
+            console.log({ data });
+
             const pdfBlob = await pdf(
-                <JayHindForm6Template data={data} />
+                <GeAeroSpacePhyscialFitnessTemplate data={data} />
             ).toBlob();
 
             const formData = new FormData();
-            formData.append("file", pdfBlob, `${data?.empId}_form6.pdf`);
+            formData.append(
+                "file",
+                pdfBlob,
+                `${data?.empId}_PhysicalFitnessForm.pdf`
+            );
 
             const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await uploadFile(url, formData);
@@ -48,70 +57,47 @@ const JayHindForm6Main = ({
                 enqueueSnackbar("An error Occurred!", {
                     variant: "error",
                 });
-                setErrorEmpCount((prevCount) => prevCount + 1);
-                setErrorEmpIDs((prev) => [...prev, data?.empId]);
             }
-            // const url = URL.createObjectURL(pdfBlob);
-            // window.open(url, "_blank");
         } catch (error) {
             console.error("Error generating/uploading PDF:", error);
             enqueueSnackbar("Error generating/uploading PDF", {
                 variant: "error",
             });
-            setErrorEmpCount((prevCount) => prevCount + 1);
-            setErrorEmpIDs((prev) => [...prev, data?.empId]);
         }
     };
-
-
 
     const fetchListOfEmployees = async () => {
-        if (corpId && campCycleId) {
-            const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
-            const result = await getData(url);
-            if (result && result.data) {
+        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+        const result = await getData(url);
+        if (result && result.data) {
+            console.log("Fetched Data successfully");
 
-                const staffMap = Object.fromEntries(
-                    STAFF_WORKER_LIST.map((val) => [
-                        String(val.EMPLOYEEID),
-                        val,
-                    ])
-                );
+            const temp = result?.data?.filter((item) =>
+                item?.vitalsCreatedDate === "2026-04-21"
+                ||
+                item?.vitalsCreatedDate === "2026-04-22" ||
+                item?.vitalsCreatedDate === "2026-04-23" ||
+                item?.vitalsCreatedDate === "2026-04-24" ||
+                item?.vitalsCreatedDate === "2026-04-25" ||
+                item?.vitalsCreatedDate === "2026-04-26" ||
+                item?.vitalsCreatedDate === "2026-04-27"
+            );
 
-                const temp = result?.data
-                    ?.map((item) => {
-                        const d = staffMap[String(item?.empId)];
+            const length = temp.length;
+            console.log({ length });
+            const sorted = sortDataByName(temp);
+            setList(sorted);
 
-                        if (!d) return null;
-
-                        return {
-                            ...item,
-                            EXTRAS: d,
-                            pulseRate:
-                                Math.floor(Math.random() * (80 - 72 + 1)) + 72,
-                        };
-                    })
-                    ?.filter(Boolean);
-
-                console.log({ EMPLOYEE_LIST: temp?.map((item) => item?.empId) })
-                const length = temp.length;
-                const sorted = sortDataByName(temp);
-
-                setList(sorted);
-                setTotalEmployees(length);
-            } else {
-                console.log("An error Occurred");
-                setList([]);
-                setTotalEmployees("");
-            }
+            console.log({ empLisy: sorted });
+        } else {
+            console.log("An error Occurred");
         }
     };
-
-    console.log({ list })
 
     useEffect(() => {
         fetchListOfEmployees();
     }, [corpId, campCycleId]);
+
 
     const handleGeneratePDFs = async () => {
         for (let i = 0; i < list.length; i++) {
@@ -139,6 +125,9 @@ const JayHindForm6Main = ({
         }
     };
 
+
+
+
     return (
         <Fragment>
             <div>
@@ -146,45 +135,24 @@ const JayHindForm6Main = ({
                 <button onClick={handleDeletePDF}>Delete Files</button>
                 <div>Total Employees: {totalEmployees}</div> <br />
                 <div>Uploaded Files: {uploadedCount}</div> <br />
-                <div>Error Files: {errorEmpCount}</div> <br />
-                <div>
-                    Error EmpID: {errorEmpIDs?.map((item) => item).join(",")}
-                </div>{" "}
-                <br />
                 {list.map((item, index) => (
                     <div key={index} style={{ display: "flex" }}>
                         <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-
-                        <a href={item.annexureUrl}>
-                            <div key={index}>{item.annexureUrl}</div>
+                        <a href={item.physicalFitnessFormUrl}>
+                            <div key={index}>{item.physicalFitnessFormUrl}</div>
                         </a>
-
                         <br />
                     </div>
                 ))}
             </div>
 
             <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-                <JayHindForm6Template data={list[0]} />
+                <GeAeroSpacePhyscialFitnessTemplate
+                    data={list[0]}
+                />
             </PDFViewer>
         </Fragment>
     );
 };
 
-export default JayHindForm6Main;
-
-
-const STAFF_WORKER_LIST = [
-    {
-        "SNO": 242,
-        "MAINSRNO": 45,
-        "CC": 6158,
-        "DESCRIPTION": "PDC 1 DIE CASTING QUALITY CONTROL",
-        "EMPLOYEEID": 406088,
-        "NAME": "SAIBAL PUSTI",
-        "GRADE": "5A",
-        "DESIGNATION": "JR. ENGINEER",
-        "DATE": "15-04-2026",
-        "CATEGORY": "STAFF"
-    },
-]
+export default GeAeroSpacePhyscialFitnessMain

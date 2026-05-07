@@ -8,14 +8,13 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import JayHindForm6Template from "./JayHindForm6Template";
+import AlembicAnnexureTemplate from "./AlembicAnnexureTemplate";
 
 
-const JayHindForm6Main = ({
-    // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
-    // campCycleId = "403772",
-    corpId = '14dca1f0-fa04-4526-ba01-f5f83e0f2494',
-    campCycleId = '401838',
+
+const AlembicAnnexureMain = ({
+    corpId = "23d71680-57e1-4084-84ba-103b556cbe6d",
+    campCycleId = "403639",
     fileType = "ANNEXURE",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -30,7 +29,7 @@ const JayHindForm6Main = ({
         console.log({ data });
         try {
             const pdfBlob = await pdf(
-                <JayHindForm6Template data={data} />
+                <AlembicAnnexureTemplate data={data} />
             ).toBlob();
 
             const formData = new FormData();
@@ -64,37 +63,13 @@ const JayHindForm6Main = ({
     };
 
 
-
     const fetchListOfEmployees = async () => {
         if (corpId && campCycleId) {
             const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await getData(url);
             if (result && result.data) {
 
-                const staffMap = Object.fromEntries(
-                    STAFF_WORKER_LIST.map((val) => [
-                        String(val.EMPLOYEEID),
-                        val,
-                    ])
-                );
-
                 const temp = result?.data
-                    ?.map((item) => {
-                        const d = staffMap[String(item?.empId)];
-
-                        if (!d) return null;
-
-                        return {
-                            ...item,
-                            EXTRAS: d,
-                            pulseRate:
-                                Math.floor(Math.random() * (80 - 72 + 1)) + 72,
-                        };
-                    })
-                    ?.filter(Boolean);
-
-                console.log({ EMPLOYEE_LIST: temp?.map((item) => item?.empId) })
-                const length = temp.length;
                 const sorted = sortDataByName(temp);
 
                 setList(sorted);
@@ -153,7 +128,7 @@ const JayHindForm6Main = ({
                 <br />
                 {list.map((item, index) => (
                     <div key={index} style={{ display: "flex" }}>
-                        <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+                        <div key={index}>{`${index}- ${item.empId} ${item.name} ${item?.age}`}</div>
 
                         <a href={item.annexureUrl}>
                             <div key={index}>{item.annexureUrl}</div>
@@ -165,26 +140,13 @@ const JayHindForm6Main = ({
             </div>
 
             <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-                <JayHindForm6Template data={list[0]} />
+                <AlembicAnnexureTemplate data={list[0]} />
             </PDFViewer>
         </Fragment>
     );
 };
 
-export default JayHindForm6Main;
+export default AlembicAnnexureMain;
 
 
-const STAFF_WORKER_LIST = [
-    {
-        "SNO": 242,
-        "MAINSRNO": 45,
-        "CC": 6158,
-        "DESCRIPTION": "PDC 1 DIE CASTING QUALITY CONTROL",
-        "EMPLOYEEID": 406088,
-        "NAME": "SAIBAL PUSTI",
-        "GRADE": "5A",
-        "DESIGNATION": "JR. ENGINEER",
-        "DATE": "15-04-2026",
-        "CATEGORY": "STAFF"
-    },
-]
+
