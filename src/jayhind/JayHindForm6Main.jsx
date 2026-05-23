@@ -15,7 +15,7 @@ const JayHindForm6Main = ({
     // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
     // campCycleId = "403772",
     corpId = '14dca1f0-fa04-4526-ba01-f5f83e0f2494',
-    campCycleId = '401838',
+    campCycleId = '410802',
     fileType = "ANNEXURE",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -87,7 +87,7 @@ const JayHindForm6Main = ({
                         return {
                             ...item,
                             EXTRAS: d,
-                            pulseRate:
+                            pulseRate: item?.pulseRate ??
                                 Math.floor(Math.random() * (80 - 72 + 1)) + 72,
                         };
                     })
@@ -176,15 +176,11 @@ export default JayHindForm6Main;
 
 const STAFF_WORKER_LIST = [
     {
-        "SNO": 242,
-        "MAINSRNO": 45,
-        "CC": 6158,
-        "DESCRIPTION": "PDC 1 DIE CASTING QUALITY CONTROL",
-        "EMPLOYEEID": 406088,
-        "NAME": "SAIBAL PUSTI",
-        "GRADE": "5A",
-        "DESIGNATION": "JR. ENGINEER",
-        "DATE": "15-04-2026",
-        "CATEGORY": "STAFF"
+        "SNO": 9,
+        "EMPLOYEEID": "508074",
     },
+    {
+        "SNO": 10,
+        "EMPLOYEEID": "Jh5",
+    }
 ]

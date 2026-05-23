@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Checkup Reminder</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      font-family: Arial, Helvetica, sans-serif;
+    "
+  >
+    <table
+      width="100%"
+      border="0"
+      cellspacing="0"
+      cellpadding="0"
+      bgcolor="#f5f5f5"
+    >
+      <tr>
+        <td align="center">
+          <!-- Main Container -->
+          <table
+            width="800"
+            border="0"
+            cellspacing="0"
+            cellpadding="0"
+            bgcolor="#ffffff"
+            style="max-width: 800px; width: 100%"
+          >
+            <!-- Header -->
+            <tr>
+              <td style="padding: 25px 30px">
+                <table width="100%">
+                  <tr>
+                    <td align="left">
+                      <img
+                        src="{{uno_logo_s3_url}}"
+                        alt="UNO Care"
+                        width="140"
+                      />
+                    </td>
+                    <td align="right">
+                      <img
+                        src="{{company_logo_s3_url}}"
+                        alt="Company Logo"
+                        width="100"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Hero Section -->
+            <tr>
+              <td
+                background="{{banner_bg_s3_url}}"
+                style="
+                background-image:url('{{banner_bg_s3_url}}');
+                background-size:cover;
+                background-position:center;
+                padding:50px 40px;
+              "
+              >
+                <table width="100%">
+                  <tr>
+                    <!-- Left Content -->
+                    <td width="55%" valign="top">
+                      <h2
+                        style="
+                          color: #ffffff;
+                          margin: 0;
+                          font-size: 34px;
+                          font-weight: bold;
+                        "
+                      >
+                        Hi {{employee_name}},
+                      </h2>
+
+                      <div
+                        style="
+                          width: 60px;
+                          height: 4px;
+                          background: #b9d969;
+                          margin: 25px 0;
+                        "
+                      ></div>
+
+                      <p
+                        style="
+                          color: #ffffff;
+                          font-size: 18px;
+                          line-height: 32px;
+                          margin: 0;
+                        "
+                      >
+                        We hope you’ve been doing well.
+                      </p>
+
+                      <p
+                        style="
+                          color: #ffffff;
+                          font-size: 18px;
+                          line-height: 34px;
+                          margin-top: 20px;
+                        "
+                      >
+                        Just a quick note — many health conditions don’t show
+                        clear symptoms until they become serious. That’s why a
+                        simple preventive check-up can go a long way in helping
+                        you stay ahead.
+                      </p>
+                    </td>
+
+                    <!-- Right Spacer -->
+                    <td width="45%"></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Complimentary Section -->
+            <tr>
+              <td style="padding: 30px">
+                <table
+                  width="100%"
+                  bgcolor="#f3f6f4"
+                  style="border-radius: 12px; padding: 20px"
+                >
+                  <tr>
+                    <td width="80" valign="top">
+                      <img src="{{gift_icon_s3_url}}" width="50" alt="Gift" />
+                    </td>
+                    <td>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 22px;
+                          line-height: 34px;
+                          color: #222;
+                        "
+                      >
+                        As part of your company’s wellness program, you’ve been
+                        offered a
+                        <strong style="color: #106d45">
+                          complimentary health check-up </strong
+                        >, but we noticed it hasn’t been booked yet.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Benefits -->
+            <tr>
+              <td style="padding: 10px 30px">
+                <h3 style="color: #106d45; font-size: 28px; margin: 0 0 30px 0">
+                  This check-up can help identify:
+                </h3>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 0 30px 30px">
+                <table width="100%">
+                  <tr>
+                    <td align="center" width="33%">
+                      <img src="{{heart_icon_s3_url}}" width="60" />
+                      <p style="font-size: 18px; line-height: 28px">
+                        Early signs of<br />
+                        <strong>lifestyle-related</strong><br />
+                        conditions
+                      </p>
+                    </td>
+
+                    <td align="center" width="33%">
+                      <img src="{{nutrition_icon_s3_url}}" width="60" />
+                      <p style="font-size: 18px; line-height: 28px">
+                        Nutritional or<br />
+                        <strong>metabolic</strong><br />
+                        imbalances
+                      </p>
+                    </td>
+
+                    <td align="center" width="33%">
+                      <img src="{{stress_icon_s3_url}}" width="60" />
+                      <p style="font-size: 18px; line-height: 28px">
+                        Stress-related<br />
+                        <strong>health</strong><br />
+                        indicators
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Reminder -->
+            <tr>
+              <td style="padding: 0 30px 30px">
+                <table
+                  width="100%"
+                  bgcolor="#fff6e8"
+                  style="border-radius: 12px; padding: 20px"
+                >
+                  <tr>
+                    <td width="60">
+                      <img src="{{clock_icon_s3_url}}" width="40" />
+                    </td>
+                    <td>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 20px;
+                          line-height: 30px;
+                          color: #8b5a00;
+                        "
+                      >
+                        Just a reminder — this benefit is available for
+                        <strong>90 days from your birthday</strong>, after which
+                        it will expire.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- CTA -->
+            <tr>
+              <td style="padding: 0 30px 30px">
+                <table width="100%">
+                  <tr>
+                    <td width="65%">
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 26px;
+                          line-height: 36px;
+                          color: #111;
+                          font-weight: bold;
+                        "
+                      >
+                        You can book your appointment in under
+                        <span style="color: #106d45">2 minutes</span> here:
+                      </p>
+                    </td>
+
+                    <td width="35%" align="right">
+                      <a
+                        href="{{booking_link}}"
+                        style="
+                          background: #106d45;
+                          color: #ffffff;
+                          text-decoration: none;
+                          padding: 18px 40px;
+                          border-radius: 10px;
+                          font-size: 22px;
+                          font-weight: bold;
+                          display: inline-block;
+                        "
+                      >
+                        BOOK NOW
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Reply Section -->
+            <tr>
+              <td style="padding: 0 30px 30px">
+                <table
+                  width="100%"
+                  bgcolor="#f3f6f4"
+                  style="border-radius: 12px; padding: 20px"
+                >
+                  <tr>
+                    <td width="60">
+                      <img src="{{support_icon_s3_url}}" width="40" />
+                    </td>
+                    <td>
+                      <p style="margin: 0; font-size: 20px; line-height: 30px">
+                        If it’s easier, just reply to this email with your
+                        <strong style="color: #106d45">
+                          preferred date and location
+                        </strong>
+                        — we’ll be happy to book it for you.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="padding: 30px">
+                <table width="100%">
+                  <tr>
+                    <td width="50%">
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 28px;
+                          color: #106d45;
+                          font-weight: bold;
+                        "
+                      >
+                        Take care,<br />
+                        Team UNO Care
+                      </p>
+                    </td>
+
+                    <td width="50%" align="right">
+                      <p style="margin: 0; font-size: 18px; line-height: 30px">
+                        <strong>Need help?</strong><br />
+                        Call {{support_number}}<br />
+                        (Mon–Sat, 9 AM – 6 PM)
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

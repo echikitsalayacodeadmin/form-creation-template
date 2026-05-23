@@ -83,7 +83,7 @@
 //     },
 // });
 
-// const ForceMotorForm6Template = ({ data }) => {
+// const ForceMotorForm6TemplateAKRUDI = ({ data }) => {
 //     return (
 //         <Document>
 //             <Page size="A4" style={styles.page}>
@@ -289,7 +289,7 @@
 //     );
 // };
 
-// export default ForceMotorForm6Template;
+// export default ForceMotorForm6TemplateAKRUDI;
 
 
 
@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const ForceMotorForm6Template = ({ data }) => {
+const ForceMotorForm6TemplateAKRUDI = ({ data }) => {
     return (
         <Document>
             <Page size="A4" style={styles.page}>
@@ -402,8 +402,8 @@ const ForceMotorForm6Template = ({ data }) => {
 
                     </View>
                     <View style={styles.row}>
-                        <Text style={[styles.cell, { width: "20%", }, styles.label]}>FORM NO</Text>
-                        <Text style={[styles.cell, { width: "20%", }]}>{data?.EXTRAS?.Sno}</Text>
+                        <Text style={[styles.cell, { width: "20%", }, styles.label]}>SERIAL NO</Text>
+                        <Text style={[styles.cell, { width: "20%", }]}>{data?.EXTRAS?.sno}</Text>
                         <Text style={[styles.cell, { width: "30%", }, styles.label]}>DATE OF EXAMINATION</Text>
                         <Text style={[styles.cell, { width: "30%", borderRight: 0 }]}>{dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY")}</Text>
                     </View>
@@ -412,8 +412,12 @@ const ForceMotorForm6Template = ({ data }) => {
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>NAME OF ORGANISATION</Text>
                         <Text style={[styles.cell, { width: "80%", borderRight: 0 }]}>
-                            JAYA HIND INDUSTRY PVT LTD - AKRUDI
+                            FORCE MOTORS LTD - AKRUDI
                         </Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={[styles.cell, { width: "20%" }, styles.label]}>CONTRACTOR NAME</Text>
+                        <Text style={[styles.cell, { width: "80%" }]}>{data?.contractorName}</Text>
                     </View>
 
                     {/* NAME */}
@@ -438,25 +442,15 @@ const ForceMotorForm6Template = ({ data }) => {
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>DESIGNATION</Text>
                         <Text style={[styles.cell, { width: "20%" }]}> {data?.EXTRAS?.DESIGNATION || ""}</Text>
-                        <Text style={[styles.cell, { width: "20%" }, styles.label]}>GRADE</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.Grade}</Text>
-                    </View>
-
-                    {/* CC */}
-                    <View style={styles.row}>
-                        <Text style={[styles.cell, { width: "20%" }, styles.label]}>CC NUMBER</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.CC}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>EMP ID</Text>
                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.empId}</Text>
+
                     </View>
 
+
+
                     {/* PLAN */}
-                    <View style={styles.row}>
-                        <Text style={[styles.cell, { width: "20%" }, styles.label]}>MAIN SR NO</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.EXTRAS?.["MainSrNo"]}</Text>
-                        <Text style={[styles.cell, { width: "20%" }, styles.label]}>CATEGORY</Text>
-                        <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.CATEGORY}</Text>
-                    </View>
+
 
                     {/* PHYSICAL */}
                     <Text style={styles.section}>PHYSICAL EXAMINATION</Text>
@@ -516,13 +510,14 @@ const ForceMotorForm6Template = ({ data }) => {
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>RT</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>LT</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>COLOUR VISION : </Text>
-                        <Text style={[styles.cell, { width: "20%", borderRight: 0 }]}>{data?.colourVision || "NAD"}</Text>
+                        <Text style={[styles.cell, { width: "20%", borderRight: 0 }]}>{data?.colourVision}</Text>
                     </View>
 
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>DISTANT VISION</Text>
                         <Text style={[styles.cell, { width: "20%" }]}>{data?.farRightEyeSight || "6/6"}</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.farLeftEyeSight || "6/6"}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.farLeftEyeSight ||
+                            "6/6"}</Text>
                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}></Text>
                     </View>
 
@@ -583,6 +578,6 @@ const ForceMotorForm6Template = ({ data }) => {
     );
 };
 
-export default ForceMotorForm6Template;
+export default ForceMotorForm6TemplateAKRUDI;
 
 

@@ -6,6 +6,7 @@ import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
+import { uploadFile } from "../assets/services/PostApiCall";
 
 // ✅ Load official PDF.js build + worker from CDN dynamically
 async function loadPdfJs() {
@@ -61,8 +62,8 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedPFTReports = ({
-    corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
-    campCycleId = "396613",
+    corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
+    campCycleId = "410802",
     fileType = "PFT",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -75,7 +76,7 @@ const SignedPFTReports = ({
         const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
         if (result && result.data) {
-            const temp = result?.data?.filter((item) => item.pftUrl && ['28365'].includes(item?.empId));
+            const temp = result?.data?.filter((item) => item.pftUrl && item?.vitalsCreatedDate === "2026-05-13");
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -105,26 +106,26 @@ const SignedPFTReports = ({
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)
-            const previewUrl = URL.createObjectURL(modifiedBlob);
-            window.open(previewUrl, "_blank");
+            // const previewUrl = URL.createObjectURL(modifiedBlob);
+            // window.open(previewUrl, "_blank");
 
             // Step 4️⃣: (Optional) Upload back to server
 
-            // const formData = new FormData();
-            // formData.append("file", modifiedBlob, `PFT_${data?.empId}.pdf`);
+            const formData = new FormData();
+            formData.append("file", modifiedBlob, `PFT_${data?.empId}.pdf`);
 
-            // const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
 
-            // const result = await uploadFile(uploadUrl, formData);
+            const result = await uploadFile(uploadUrl, formData);
 
-            // if (result && result.data) {
-            //     enqueueSnackbar("Successfully Uploaded Modified PDF!", {
-            //         variant: "success",
-            //     });
-            //     setUploadedCount((prev) => prev + 1);
-            // } else {
-            //     enqueueSnackbar("Upload failed!", { variant: "error" });
-            // }
+            if (result && result.data) {
+                enqueueSnackbar("Successfully Uploaded Modified PDF!", {
+                    variant: "success",
+                });
+                setUploadedCount((prev) => prev + 1);
+            } else {
+                enqueueSnackbar("Upload failed!", { variant: "error" });
+            }
         } catch (err) {
             console.error("Error modifying/uploading PDF:", err);
             enqueueSnackbar("Error modifying/uploading PDF!", { variant: "error" });

@@ -1,90 +1,262 @@
-import React from "react";
 import {
     Document,
-    Page,
-    Text,
-    View,
-    StyleSheet,
     Font,
     Image,
+    Page,
+    StyleSheet,
+    Text,
+    View,
 } from "@react-pdf/renderer";
-import drPratibhaVBandekar from "../assets/images/drPratibhaVBandekar.png";
-import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
-import DrSwapnilDevidas from "../assets/images/DrSwapnilDevidas.png";
-import TimeRoman from "../assets/fonts/Times-Roman.ttf";
+import React from "react";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+import TimeRoman from "../assets/fonts/Times-Roman.ttf";
+import drPratibhaVBandekar from "../assets/images/drPratibhaVBandekar.png";
 import uncareheader from "../assets/images/uncareheader.png";
-import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
-import dr_kunal_stamp_sign from "../assets/images/dr_kunal_stamp_sign.png";
 
+const TOKEN_NUMBERS_STRIP_FIT_FROM_RECOMMENDATION = new Set([
+    "288",
+    "322",
+    "693",
+    "794",
+    "823",
+    "1121",
+    "1224",
+    "1279",
+    "1239",
+    "1318",
+    "1532",
+    "1596",
+]);
+
+const tokenNumberContainsStripFitToken = (tokenNumber) => {
+    const parts = String(tokenNumber ?? "")
+        .split(/\D+/)
+        .filter(Boolean);
+    return parts.some((p) => TOKEN_NUMBERS_STRIP_FIT_FROM_RECOMMENDATION.has(p));
+};
+
+/** Removes trailing "Fit for work" / "Fit to work" style phrases (case-insensitive). */
+const stripFitWorkFromRecommendationText = (msg) => {
+    if (!msg || typeof msg !== "string") return msg;
+    let out = msg
+        .replace(/\s*\.?\s*Fit\s+to\s+work\.?/gi, "")
+        .replace(/\s*\.?\s*Fit\s+for\s+work\.?/gi, "")
+        .trim();
+    out = out.replace(/\s+\./g, ".").replace(/\s{2,}/g, " ").trim();
+    out = out.replace(/\s*,\s*$/g, "").trim();
+    return out;
+};
+
+/**
+ * Severe / Stage 2 / Stage 1 / Low only (no comment for Elevated or Normal).
+ * Priority: severe > stage2 > stage1 > low.
+ */
+const getBpCategory = (bpStr) => {
+    const [sysRaw, diasRaw] = String(bpStr ?? "")
+        .trim()
+        .split("/")
+        .map((s) => s.trim());
+    const sys = Number(sysRaw);
+    const dias = Number(diasRaw);
+    if (Number.isNaN(sys) || Number.isNaN(dias)) return null;
+
+    if (sys > 180 || dias > 120) return "severe";
+    if (sys >= 140 || dias >= 90) return "stage2";
+    if (sys < 90 || dias < 60) return "low";
+    return null;
+};
+
+const addBpRecommendation = (add, bpStr) => {
+    const cat = getBpCategory(bpStr);
+    if (!cat) return;
+    if (cat === "low") {
+        add("Consult Doctor.");
+    } else {
+        add("Monitor BP");
+    }
+};
+
+const parseLabNumeric = (raw) => {
+    if (raw == null || raw === "") return NaN;
+    if (typeof raw === "number" && !Number.isNaN(raw)) return raw;
+    const m = String(raw).trim().match(/-?\d+\.?\d*/);
+    return m ? Number(m[0]) : Number(raw);
+};
+
+const isFemaleForHb = (gender) => {
+    const s = String(gender ?? "").trim().toLowerCase();
+    return (
+        s === "female"
+    );
+};
+
+const isMaleForHb = (gender) => {
+    const s = String(gender ?? "").trim().toLowerCase();
+    return (
+        s === "male"
+    );
+};
+
+/** Haemoglobin: male 13–17 g/dL, female 12–15; outside band → lifestyle (per spec). */
+const addHbRecommendation = (add, gender, hbRaw) => {
+    const hb = parseLabNumeric(hbRaw);
+    if (Number.isNaN(hb)) return;
+
+    if (isFemaleForHb(gender)) {
+        if (hb > 15 || hb < 13) {
+            add("Lifestyle changes advised.");
+        }
+    } else if (isMaleForHb(gender)) {
+        if (hb > 17 || hb < 13) {
+            add("Lifestyle changes advised.");
+        }
+    }
+};
+
+/** Platelets in lakhs-style units (e.g. 1.5–4.1); normal inclusive between bounds. */
+const addPlateletRecommendation = (add, plateletRaw) => {
+    const plt = parseLabNumeric(plateletRaw);
+    if (Number.isNaN(plt)) return;
+    if (plt > 4.1) {
+        add("Consult doctor");
+    } else if (plt < 1.5) {
+        add("Consult doctor");
+    }
+};
+
+/** True if text already asks for consult / medical consultation (avoid repeating "and consult doctor"). */
+const consultDoctorPhrasePresent = (text) =>
+    /\bconsult\s+doctor\b/i.test(text) ||
+    /\bmedical\s+consultation\b/i.test(text);
+
+/** Dedupe advice lines: case-insensitive, ignore trailing full stops (e.g. "Consult doctor" vs "Consult Doctor."). */
+const uniqueRecommendationMessages = (messages) => {
+    const seen = new Set();
+    return messages.filter((m) => {
+        const key = m
+            .trim()
+            .toLowerCase()
+            .replace(/\.+$/, "");
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+};
 
 const getFinalRecommendation = (data) => {
     const rbs = Number(data?.cholestrolData?.["BLOOD SUGAR RANDOM"]);
     const sgpt = Number(data?.cholestrolData?.["SGPT"]);
+    const sgot = Number(data?.cholestrolData?.["SGOT"]);
     const creatinine = Number(data?.cholestrolData?.["S.CREATININE"]);
     const bmi = Number(data?.bmi);
 
-    const [systolic, diastolic] = (data?.bp || "")
-        .split("/")
-        .map(Number);
+    const messages = [];
 
-    let best = {
-        severity: 0,
-        message: "FIT for work",
+    const add = (text) => {
+        messages.push(text);
     };
 
-    const check = (severity, message) => {
-        if (severity > best.severity) {
-            best = { severity, message };
-        }
-    };
+    addBpRecommendation(add, data?.bp);
+    addHbRecommendation(add, data?.gender, data?.cholestrolData?.["HB"]);
+    addPlateletRecommendation(
+        add,
+        data?.cholestrolData?.["PLATELET"] ?? data?.cholestrolData?.["PLATELETS"]
+    );
 
-    // 🔴 CRITICAL (5)
     if (rbs >= 200) {
-        check(5, "Potential diabetes; medical evaluation required. Fit for work");
+        add("Medical consultation required.");
     }
 
     if (creatinine > 1.3) {
-        check(5, "Hydrate, avoid NSAIDs, check BP, limit red meat. Fit for work");
+        add("Lifestyle changes advised.");
     }
 
-    if (systolic > 130 || diastolic > 80) {
-        check(5, "Reduce sodium, increase aerobic activity, monitor stress. Fit for work");
-    }
-
-    // 🟠 HIGH (4)
     if (rbs >= 140 && rbs < 200) {
-        check(4, "Consult doctor for follow-up tests (A1c/Fasting). Fit for work");
+        add("Consult doctor for follow-up.");
     }
 
-    // 🟡 MEDIUM (3)
-    if (sgpt > 40) {
-        check(3, "Abstain from alcohol, review hepatotoxic meds, manage BMI. Fit for work");
+    if (sgpt > 40 || sgot > 40) {
+        add("Dietry adjustment required , low fat diet.");
     }
 
-    // 🟢 LOW (2)
     if (bmi > 25) {
-        check(2, "Increase fiber/protein, reduce sugar, cardio + strength. Fit for work");
+        add("Monitor diet and keep it balanced.");
     }
 
     if (bmi < 18.5) {
-        check(2, "Add healthy fats, strength training. Fit for work");
+        add("Monitor diet and keep it balanced.");
     }
 
     if (rbs < 70) {
-        check(2, "Fast-acting sugar + re-test in 15 mins. Fit for work");
+        add("Monitor your sugar intake");
     }
 
-    if (systolic < 90 || diastolic < 60) {
-        check(2, "Increase hydration, add salt, change positions slowly. Fit for work");
+    const unique = uniqueRecommendationMessages(messages);
+
+    const stripFit = tokenNumberContainsStripFitToken(data?.tokenNumber);
+
+    let message;
+    if (unique.length > 0) {
+        const core = unique
+            .map((m) => m.trim().replace(/\.+$/, ""))
+            .filter(Boolean)
+            .join("; ");
+        const needConsultSuffix = !consultDoctorPhrasePresent(core);
+        if (stripFit) {
+            message = needConsultSuffix
+                ? `${core}, and consult doctor.`
+                : core;
+        } else if (needConsultSuffix) {
+            message = `${core}, and consult doctor. Fit to work.`;
+        } else {
+            const body = /[.!?]$/.test(core.trim()) ? core : `${core}.`;
+            message = `${body} Fit to work.`;
+        }
+    } else if (rbs >= 70 && rbs < 140) {
+        message = "Fit to work.";
+    } else {
+        message = "Fit for work.";
     }
 
-    // ✅ NORMAL (1)
-    if (rbs >= 70 && rbs < 140 && best.severity === 0) {
-        check(1, "Maintain healthy habits. Fit for work");
+    if (stripFit) {
+        message = stripFitWorkFromRecommendationText(message);
     }
+    return message;
+};
 
-    return best.message;
+/** WHO-style PTA average (dB HL): left/right from `cholestrolData`. */
+export const getAudiometryHearingCategory = (raw) => {
+    const db = Number(raw);
+    if (raw === null || raw === undefined || raw === "" || Number.isNaN(db)) {
+        return "NA";
+    }
+    if (db <= 25) return "NORMAL";
+    if (db <= 40) return "MILD HEARING LOSS";
+    if (db <= 55) return "MODERATE";
+    if (db <= 70) return "MODERATELY SEVERE";
+    if (db <= 90) return "SEVERE";
+    return "PROFOUND";
+};
+
+const getColourVisionDisplay = (data) => {
+    const cv = data?.colourVision;
+    if (cv != null && String(cv).trim() !== "") {
+        const lower = String(cv).toLowerCase().trim();
+        if (lower === "nad") return "Normal";
+        return String(cv).trim();
+    }
+    const left = data?.leftEyeColourVision;
+    const right = data?.rightEyeColourVision;
+    const leftStr =
+        left != null && String(left).trim() !== "" ? String(left).trim() : null;
+    const rightStr =
+        right != null && String(right).trim() !== ""
+            ? String(right).trim()
+            : null;
+    if (leftStr || rightStr) {
+        return `Left: ${leftStr ?? "NA"} , Right: ${rightStr ?? "NA"}`;
+    }
+    return "NA";
 };
 
 // Register fonts
@@ -100,14 +272,14 @@ Font.register({
 
 const styles = StyleSheet.create({
     page: {
-        paddingHorizontal: 24,
+        paddingHorizontal: 16,
         fontSize: 11,
         fontFamily: "Times-Roman",
     },
     headerRow: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 8,
+
     },
     logo: {
         width: "100%",
@@ -128,15 +300,14 @@ const styles = StyleSheet.create({
     dateRow: {
         flexDirection: "row",
         justifyContent: "flex-end",
-        marginBottom: 4,
     },
     table: {
         display: "table",
         width: "100%",
         border: "1px solid #000",
         margin: "0 auto",
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: 10,
+        marginBottom: 10,
     },
     tableRow: {
         flexDirection: "row",
@@ -657,29 +828,45 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "50%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             PFT (Pulmonary Function Test): Result:
                         </Text>
-                        <Text style={[styles.cell, { width: "50%" }]}>Within Normal Limits</Text>
+                        <Text style={[styles.cell, { width: "25%" }]}>
+                            {data?.pftRemark || "NA"}
+                        </Text>
+
+
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "50%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Audiometry (Hearing Test): Result:
                         </Text>
-                        <Text style={[styles.cell, styles.cellNoRight, { width: "50%" }]}>Within Normal Limits</Text>
+                        <Text style={[styles.cell, styles.cellNoRight, { width: "25%" }]}>
+                            Left:{" "}
+                            {getAudiometryHearingCategory(
+                                data?.cholestrolData?.AUDIOMETRY_AVG_LEFT
+                            )}{" "}
+                            {"\n"}
+                            Right:{" "}
+                            {getAudiometryHearingCategory(
+                                data?.cholestrolData?.AUDIOMETRY_AVG_RIGHT
+                            )}
+                            {"\n"}
+                        </Text>
+
                     </View>
                     <View style={styles.tableRow}>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "50%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25.3%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Eye Examination:
@@ -688,7 +875,54 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "25%", fontFamily: "Times-Roman-Bold" },
+                                { width: "38%", fontFamily: "Times-Roman-Bold", textAlign: "center" },
+                            ]}
+                        >
+                            Without Glasses
+                        </Text>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel, styles.cellNoRight,
+                                { width: "38%", fontFamily: "Times-Roman-Bold", textAlign: "center" },
+                            ]}
+                        >
+                            With Glasses
+                        </Text>
+                    </View>
+                    <View style={styles.tableRow}>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel,
+                                { width: "25.3%", fontFamily: "Times-Roman-Bold" },
+                            ]}
+                        >
+
+                        </Text>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel,
+                                { width: "19%", fontFamily: "Times-Roman-Bold" },
+                            ]}
+                        >
+                            Left
+                        </Text>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel,
+                                { width: "19%", fontFamily: "Times-Roman-Bold" },
+                            ]}
+                        >
+                            Right
+                        </Text>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel,
+                                { width: "19%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Left
@@ -697,18 +931,19 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel, styles.cellNoRight,
-                                { width: "25%", fontFamily: "Times-Roman-Bold" },
+                                { width: "19%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Right
                         </Text>
                     </View>
+
                     <View style={styles.tableRow}>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "50%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25.3%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Distant Vision
@@ -717,19 +952,38 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "25%", },
+                                { width: "19%", },
                             ]}
                         >
-                            {data?.["farLeftEyeSight"]}
+                            {data?.["farLeftEyeSight"] || "NA"}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel,
+                                { width: "19%", },
+                            ]}
+                        >
+                            {data?.["farRightEyeSight"] || "NA"}
+
+                        </Text>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel,
+                                { width: "19%", },
+                            ]}
+                        >
+                            {data?.["farLeftEyeSightWithGlasses"] || "NA"}
                         </Text>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel, styles.cellNoRight,
-                                { width: "25%", },
+                                { width: "19%", },
                             ]}
                         >
-                            {data?.["farRightEyeSight"]}
+                            {data?.["farRightEyeSightWithGlasses"] || "NA"}
 
                         </Text>
                     </View>
@@ -738,7 +992,7 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "50%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25.3%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Near Vision
@@ -747,57 +1001,47 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "25%", },
+                                { width: "19%", },
                             ]}
                         >
-                            {data?.["nearLeftEyeSight"]}
+                            {data?.["nearLeftEyeSight"] || "NA"}
 
                         </Text>
                         <Text
                             style={[
                                 styles.cell,
-                                styles.cellLabel, styles.cellNoRight,
-                                { width: "25%", },
+                                styles.cellLabel,
+                                { width: "19%", },
                             ]}
                         >
-                            {data?.["nearRightEyeSight"]}
+                            {data?.["nearRightEyeSight"] || "NA"}
                         </Text>
-                    </View>
-                    <View style={styles.tableRow}>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "50%", fontFamily: "Times-Roman-Bold" },
+                                { width: "19%", },
                             ]}
                         >
-                            Color Vision
+                            {data?.["nearLeftEyeSightWithGlasses"] || "NA"}
                         </Text>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel, styles.cellNoRight,
-                                { width: "25%", },
+                                { width: "19%", },
                             ]}
                         >
-                            {data?.colourVision?.toLowerCase() === "nad" ? "Normal" : data?.colourVision}
+                            {data?.["nearRightEyeSightWithGlasses"] || "NA"}
                         </Text>
-                        <Text
-                            style={[
-                                styles.cell,
-                                styles.cellLabel, styles.cellNoRight,
-                                { width: "25%", },
-                            ]}
-                        >
+                    </View>
 
-                        </Text>
-                    </View>
                     <View style={styles.tableRow}>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "50%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Remarks
@@ -806,18 +1050,32 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "25%", },
+                                styles.cellNoRight,
+                                { width: "75%", },
                             ]}
                         >
+                            {data?.eyeRemark || "NA"}
+                        </Text>
+                    </View>
 
+                    <View style={styles.tableRow}>
+                        <Text
+                            style={[
+                                styles.cell,
+                                styles.cellLabel,
+                                { width: "25%", fontFamily: "Times-Roman-Bold" },
+                            ]}
+                        >
+                            Color Vision
                         </Text>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel, styles.cellNoRight,
-                                { width: "25%", },
+                                { width: "75%", },
                             ]}
                         >
+                            {getColourVisionDisplay(data)}
 
                         </Text>
                     </View>
@@ -893,7 +1151,7 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                                 { width: "25%", },
                             ]}
                         >
-                            {data?.tetanusDose1 ? "Vaccinated" : "No"}
+                            Vaccinated
                         </Text>
                     </View>
                     {/* Recommendation */}
@@ -902,7 +1160,7 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "35%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Final Recommendations
@@ -910,18 +1168,13 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                         <Text
                             style={[
                                 styles.cell,
-                                { width: "65%", textAlign: "center" },
+                                { width: "75%", textAlign: "center" },
                                 styles.cellNoRight,
+
                             ]}
                         >
-                            {getFinalRecommendation(data)}
+                            {getFinalRecommendation(data) || "Fit to work."}
                         </Text>
-                        <Text
-                            style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-                        ></Text>
-                        <Text
-                            style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-                        ></Text>
                     </View>
 
                     <View style={styles.tableRow}>
@@ -929,7 +1182,7 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "35%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Doctor's  Name:
@@ -937,25 +1190,19 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                         <Text
                             style={[
                                 styles.cell,
-                                { width: "65%", },
+                                { width: "75%", },
                                 styles.cellNoRight,
                             ]}
                         >
                             Dr. Pratibha
                         </Text>
-                        <Text
-                            style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-                        ></Text>
-                        <Text
-                            style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-                        ></Text>
                     </View>
                     <View style={styles.tableRow}>
                         <Text
                             style={[
                                 styles.cell,
                                 styles.cellLabel,
-                                { width: "35%", fontFamily: "Times-Roman-Bold" },
+                                { width: "25%", fontFamily: "Times-Roman-Bold" },
                             ]}
                         >
                             Signature &  Seal
@@ -963,24 +1210,18 @@ const GeAeroSpacePhyscialFitnessTemplate = ({
                         <View
                             style={[
                                 styles.cell,
-                                { width: "65%", textAlign: "center" },
+                                { width: "75%", textAlign: "center" },
                                 styles.cellNoRight,
                             ]}
                         >
                             <Image src={drPratibhaVBandekar} style={{ height: 80, width: 120 }} />
                         </View>
-                        <Text
-                            style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-                        ></Text>
-                        <Text
-                            style={[styles.cell, { width: 0 }, styles.cellNoRight]}
-                        ></Text>
                     </View>
 
                 </View>
 
             </Page>
-        </Document>
+        </Document >
     );
 };
 

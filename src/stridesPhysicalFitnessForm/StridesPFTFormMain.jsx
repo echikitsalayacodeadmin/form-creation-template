@@ -172,7 +172,7 @@ const StridesPFTFormMain = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const temp = result?.data?.filter((item) => (item?.vitalsCreatedDate === "2026-04-14" || item?.vitalsCreatedDate === "2026-04-15") && ['SH472'].includes(item?.empId)
+      const temp = result?.data?.filter((item) => ["113420", "112330", "112754", "113424", "SH280", "111646", "111418", "114026", "112341", "112348", "111142", "113864", "113733"].includes(item?.empId)
         && item?.pftUrl
       );
 

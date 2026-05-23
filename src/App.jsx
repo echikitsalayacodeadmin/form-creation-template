@@ -128,6 +128,11 @@ import RocaFassaiCertificateMain from "./rocaFssaiCertificate/RocaFassaiCertific
 import StridesChandapuraBloodReport from "./stridesPharmaChandapura/StridesChandapuraBloodReport";
 import AlembicAnnexureMain from "./alembicAnnexure/AlembicAnnexureMain";
 import GeAeroSpacePhyscialFitnessMain from "./GEAerospace/GeAeroSpacePhyscialFitnessMain";
+import ThreemElectronicCityEyeReport from "./3mElectronicCity/ThreemElectronicCityEyeReport";
+import ThreemElectronicCity2DEcho from "./3mElectronicCity/ThreemElectronicCity2DEcho";
+import MittalAppliances from "./mittalAppliances/MittalAppliances";
+import UnocarePFTReportsIndependent from "./UnocareReportsModifier/UnocarePFTReportsIndependent";
+import ForceMotorForm6MainAKRUDI from "./forceMotorForms/ForceMotorForm6MainAKRUDI";
 
 const App = () => {
   return (
@@ -136,8 +141,8 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <GeAeroSpacePhyscialFitnessMain />
-        {/* <UnocarePFTNormalReport /> */}
+        <ForceMotorForm2Main />
+
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>

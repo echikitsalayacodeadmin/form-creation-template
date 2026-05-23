@@ -143,7 +143,7 @@ const JayHindForm6Template = ({ data }) => {
                     {/* DESIGNATION */}
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>DESIGNATION</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}> {data?.EXTRAS?.DESIGNATION || ""}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}> {data?.EXTRAS?.DESIGNATION || data?.designation || ""}</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>GRADE</Text>
                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}>{data?.EXTRAS?.GRADE}</Text>
                     </View>
@@ -222,20 +222,20 @@ const JayHindForm6Template = ({ data }) => {
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>RT</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>LT</Text>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>COLOUR VISION : </Text>
-                        <Text style={[styles.cell, { width: "20%", borderRight: 0 }]}>{data?.colourVision}</Text>
+                        <Text style={[styles.cell, { width: "20%", borderRight: 0 }]}>{data?.colourVision || "NAD"}</Text>
                     </View>
 
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>DISTANT VISION</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.farRightEyeSight}</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.farLeftEyeSight}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.farRightEyeSight || "6/6"}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.farLeftEyeSight || "6/6"}</Text>
                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}></Text>
                     </View>
 
                     <View style={styles.row}>
                         <Text style={[styles.cell, { width: "20%" }, styles.label]}>NEAR VISION</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.nearRightEyeSight}</Text>
-                        <Text style={[styles.cell, { width: "20%" }]}>{data?.nearLeftEyeSight}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.nearRightEyeSight || "N/6"}</Text>
+                        <Text style={[styles.cell, { width: "20%" }]}>{data?.nearLeftEyeSight || "N/6"}</Text>
                         <Text style={[styles.cell, { width: "40%", borderRight: 0 }]}></Text>
                     </View>
 

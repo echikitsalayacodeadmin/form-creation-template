@@ -63,12 +63,12 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 // ✅ React Component
 const SignedAudioReport = ({
     corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
-    campCycleId = "401838",
+    campCycleId = "410802",
     // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     // campCycleId = "396613",
     // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
     // campCycleId = "403772",
-    fileType = "UNHEALTHY_VITALS_FORM",
+    fileType = "AUDIOMETRY",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -81,65 +81,7 @@ const SignedAudioReport = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => [
-                    "406645",
-                    "406711",
-                    "800005",
-                    "407121",
-                    "900052",
-                    "900049",
-                    "900067",
-                    "900101",
-                    "900090",
-                    "900082",
-                    "900087",
-                    "97950",
-                    "900071",
-                    "318507",
-                    "900072",
-                    "900061",
-                    "900058",
-                    "318299",
-                    "900040",
-                    "100383",
-                    "318466",
-                    "900022",
-                    "900023",
-                    "406088",
-                    "900050",
-                    "800008",
-                    "318545",
-                    "318315",
-                    "318238",
-                    "900118",
-                    "800149",
-                    "318514",
-                    "900003",
-                    "406798",
-                    "406797",
-                    "900060",
-                    "900027",
-                    "900085",
-                    "800148",
-                    "318373",
-                    "406724",
-                    "406723",
-                    "406826",
-                    "406751",
-                    "317964",
-                    "406713",
-                    "318117",
-                    "406865",
-                    "406337",
-                    "406588",
-                    "406702",
-                    "318081",
-                    "318082",
-                    "318118",
-                    "406669",
-                    "406923",
-                    "406101"
-                ]?.includes(item?.empId) && item?.audiometryUrl);
+                ?.filter((item) => item?.vitalsCreatedDate === "2026-05-13" && item?.audiometryUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -230,8 +172,8 @@ const SignedAudioReport = ({
             {list.map((item, index) => (
                 <div key={index} style={{ display: "flex" }}>
                     <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-                    <a href={item.unhealthyVitalsFormUrl}>
-                        <div key={index}>{item.unhealthyVitalsFormUrl}</div>
+                    <a href={item.audiometryUrl}>
+                        <div key={index}>{item.audiometryUrl}</div>
                     </a>
                     <br />
                 </div>

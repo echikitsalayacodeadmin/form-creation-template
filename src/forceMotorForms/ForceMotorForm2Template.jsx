@@ -204,7 +204,7 @@ const ForceMotorForm2Template = ({ data }) => {
 
               <Txt> OF BEING EMPLOYED AS IN</Txt>
 
-              <Txt bold>FORCE MOTORS LTD</Txt><Txt> AND THAT {genderPronoun} AGE, AS NEARLY AS CAN BE ASCERTAINED</Txt>
+              <Txt bold>JAYA HIND INDUSTRY PVT LTD</Txt><Txt> AND THAT {genderPronoun} AGE, AS NEARLY AS CAN BE ASCERTAINED</Txt>
 
               <Txt>FROM MY EXAMINATION IS
               </Txt>

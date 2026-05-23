@@ -115,7 +115,7 @@ const AhcBulkUploadData = () => {
                 // Step 2: Clean & format
                 const finalData = transformedData.map((item) => {
                     const { PFT, ...rest } = item;
-
+                    const pftValue = item?.cholestrolData?.PFT;
                     const cleanedCholesterolData = {
                         ...item?.cholestrolData,
                     };
@@ -134,7 +134,7 @@ const AhcBulkUploadData = () => {
                         eyeSightWithGlasses: item?.eyeSightWithGlasses === "TRUE" ? true : item?.eyeSightWithGlasses === "FALSE" ? false : "",
                         cholestrolData: {
                             ...cleanedCholesterolData,
-                            PFT,
+                            PFT: pftValue,
                         },
                         healthHistoryFormData: item.healthHistoryFormData,
                         remarks: item.remarks,
