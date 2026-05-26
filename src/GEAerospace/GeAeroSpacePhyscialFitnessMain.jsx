@@ -97,7 +97,7 @@ const GeAeroSpacePhyscialFitnessMain = ({
             ]);
 
             const allowedEmpIds = new Set([
-                "270008940", "223139891", "223040937"
+                "223142123"
             ]);
 
             const temp = result?.data?.filter((v) => allowedEmpIds.has(String(v?.empId)))

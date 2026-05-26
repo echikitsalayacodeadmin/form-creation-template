@@ -141,7 +141,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <ForceMotorForm2Main />
+        <AhcBulkUploadData />
 
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
