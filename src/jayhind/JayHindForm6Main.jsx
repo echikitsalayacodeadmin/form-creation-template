@@ -12,10 +12,10 @@ import JayHindForm6Template from "./JayHindForm6Template";
 
 
 const JayHindForm6Main = ({
-    // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
-    // campCycleId = "403772",
-    corpId = '14dca1f0-fa04-4526-ba01-f5f83e0f2494',
-    campCycleId = '410802',
+    corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
+    campCycleId = "403772",
+    // corpId = '14dca1f0-fa04-4526-ba01-f5f83e0f2494',
+    // campCycleId = '410802',
     fileType = "ANNEXURE",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -177,10 +177,6 @@ export default JayHindForm6Main;
 const STAFF_WORKER_LIST = [
     {
         "SNO": 9,
-        "EMPLOYEEID": "508074",
+        "EMPLOYEEID": "93668",
     },
-    {
-        "SNO": 10,
-        "EMPLOYEEID": "Jh5",
-    }
 ]
