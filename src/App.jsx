@@ -133,6 +133,12 @@ import ThreemElectronicCity2DEcho from "./3mElectronicCity/ThreemElectronicCity2
 import MittalAppliances from "./mittalAppliances/MittalAppliances";
 import UnocarePFTReportsIndependent from "./UnocareReportsModifier/UnocarePFTReportsIndependent";
 import ForceMotorForm6MainAKRUDI from "./forceMotorForms/ForceMotorForm6MainAKRUDI";
+import FakeMasterPdfWithInjectedData from "./fakeReportsSwastik/FakeMasterPdfWithInjectedData";
+import GenericPftReportGenerator from "./UnocareReportsModifier/GenericPftReportGenerator";
+import GenericBloodReportGenerator from "./UnocareReportsModifier/GenericBloodReportGenerator";
+import DhootAudio from "./dhootAudioPft/DhootAudio";
+import DhootPft from "./dhootAudioPft/DhootPft";
+import ForceMotorsPuneVertigoFormMain from "./forceMotorForms/ForceMotorsPuneVertigoFormMain";
 
 const App = () => {
   return (
@@ -141,7 +147,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <AhcBulkUploadData />
+        <ForceMotorsPuneVertigoFormMain />
 
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
