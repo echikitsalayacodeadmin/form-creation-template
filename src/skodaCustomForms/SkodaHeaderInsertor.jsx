@@ -123,8 +123,10 @@ async function cleanAndRewriteHeader(reportPdfBytes) {
 }
 
 const SkodaHeaderInsertor = ({
-  corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
-  campCycleId = "394961", // atlas copco campCycleId
+  corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
+  campCycleId = "410953", // atlas copco campCycleId
+  // corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
+  // campCycleId = "394961", // atlas copco campCycleId
   // corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
   // campCycleId = "355289",
   // fileType = "FORM_35",
@@ -205,7 +207,7 @@ const SkodaHeaderInsertor = ({
         result?.data?.filter(
           (item) =>
             // ["610920"].includes(item?.empId) &&
-            item?.vitalsCreatedDate === "2026-03-13" &&
+            (item?.vitalsCreatedDate === "2026-05-30" || item?.vitalsCreatedDate === "2026-06-01" || item?.vitalsCreatedDate === "2026-06-02") &&
             // dayjs(item.vitalsCreatedDate).isAfter(cutoff) &&
             item?.[urlType]
         ) || [];

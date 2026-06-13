@@ -1,11 +1,11 @@
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
 const PFT_TITLE_CONFIG = {
-  headerHeight: 30,
+  headerHeight: 10,
   fontSize: 12,
-  rectYOffset: 20,
-  rectHeightExtra: 10,
-  textYOffset: 25,
+  rectYOffset: 40,
+  rectHeightExtra: 5,
+  textYOffset: 33,
 };
 
 const AUDIOMETRY_TITLE_CONFIG = {

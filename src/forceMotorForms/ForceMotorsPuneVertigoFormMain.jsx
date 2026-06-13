@@ -8,9 +8,11 @@ import { sortDataByName } from "../assets/utils";
 import ForceMotorsPuneVertigoFormTemplate from "./ForceMotorsPuneVertigoFormTemplate";
 
 const ForceMotorsPuneVertigoFormMain = ({
-  corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
-  campCycleId = "410816",
-  fileType = "PHYSICAL_FITNESS",
+  // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
+  // campCycleId = "403772",
+  corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
+  campCycleId = "410802",
+  fileType = "FITNESS_CERTIFICATE_FOOD",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [list, setList] = useState([]);
@@ -65,7 +67,18 @@ const ForceMotorsPuneVertigoFormMain = ({
     const result = await getData(url);
 
     if (result && result.data) {
-      const temp = result.data.filter((item) => item?.name);
+      const temp = result.data.filter((item) => ["800071", "800120", "405492", "407151", "900068", "900074", "405857", "508086", "508177", "406721", "406732", "317751", "317762", "317872", "318226", "318281", "318606", "96681", "100373", "406654", "40216", "98947", "401291", "402881", "100011", "100473", "400389", "404849", "404735", "405870", "405711"
+
+      ].includes(item?.empId))?.map((item) => ({
+        ...item,
+        visionWithGlasses:
+          item?.farRightEyeSightWithGlasses &&
+            item?.farLeftEyeSightWithGlasses &&
+            item?.farRightEyeSightWithGlasses &&
+            item?.nearLeftEyeSightWithGlasses
+            ? `FAR (R-${item?.farRightEyeSightWithGlasses} L-${item?.farLeftEyeSightWithGlasses}) NEAR (R-${item?.nearRightEyeSightWithGlasses} L-${item?.nearLeftEyeSightWithGlasses})`
+            : "",
+      }));
       const sorted = sortDataByName(temp);
       setList(sorted);
       setTotalEmployees(sorted.length);
@@ -102,18 +115,6 @@ const ForceMotorsPuneVertigoFormMain = ({
     }
   };
 
-  const previewData = list[0] || {
-    name: "Sample Employee",
-    empId: "12345",
-    age: "35",
-    gender: "MALE",
-    department: "Production",
-    bp: "120/80",
-    pulseRate: "72",
-    vitalsCreatedDate: "2026-05-29",
-    companyName: "FORCE MOTORS LTD - PUNE PLANT",
-  };
-
   return (
     <Fragment>
       <div>
@@ -125,13 +126,13 @@ const ForceMotorsPuneVertigoFormMain = ({
         <div>Error EmpID: {errorEmpIDs.join(", ")}</div> <br />
         {list.map((item, index) => (
           <div key={index} style={{ display: "flex", gap: 12 }}>
-            <div>{`${index}- ${item.empId} ${item.name}`}</div>
+            <div>{`${index}- ${item.empId} ${item.name}`} {item?.medicalFitnessFoodUrl ? <a href={item?.medicalFitnessFoodUrl}>{item?.medicalFitnessFoodUrl}</a> : ""}</div>
           </div>
         ))}
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <ForceMotorsPuneVertigoFormTemplate data={previewData} />
+        <ForceMotorsPuneVertigoFormTemplate data={list[0]} />
       </PDFViewer>
     </Fragment>
   );

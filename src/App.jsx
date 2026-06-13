@@ -139,6 +139,7 @@ import GenericBloodReportGenerator from "./UnocareReportsModifier/GenericBloodRe
 import DhootAudio from "./dhootAudioPft/DhootAudio";
 import DhootPft from "./dhootAudioPft/DhootPft";
 import ForceMotorsPuneVertigoFormMain from "./forceMotorForms/ForceMotorsPuneVertigoFormMain";
+import UnocareNormalAudioReport from "./UnocareReportsModifier/UnocareNormalAudioReport";
 
 const App = () => {
   return (
@@ -147,7 +148,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <ForceMotorsPuneVertigoFormMain />
+        <DaawatStoolReportCreation />
 
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}

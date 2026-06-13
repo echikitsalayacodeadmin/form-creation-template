@@ -6,10 +6,13 @@ import {
     Document,
     StyleSheet,
     Font,
+    Image,
 } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 import TimeRoman from "../assets/fonts/Times-Roman.ttf";
 import TimeRomanBold from "../assets/fonts/Times-Bold.ttf";
+import tick from "../cipplabaddiPhysicalExaminationForm/tick.png";
+import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
 
 Font.register({
     family: "Times",
@@ -91,6 +94,24 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 8,
     },
+    qYNCell: {
+        width: "8%",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 3,
+        borderRightWidth: 1,
+        borderRightColor: "#000",
+    },
+    qYNCellLast: {
+        width: "8%",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 3,
+    },
+    tickImage: {
+        width: 10,
+        height: 10,
+    },
     headerRow: {
         flexDirection: "row",
         backgroundColor: "#f5f5f5",
@@ -117,6 +138,14 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 11,
     },
+    doctorSignature: {
+        height: 70,
+        width: 100,
+        marginTop: -10
+    },
+    signatureDateBlock: {
+        alignItems: "flex-end",
+    },
     footerSectionTitle: {
         fontWeight: "bold",
         fontSize: 11,
@@ -139,14 +168,14 @@ const styles = StyleSheet.create({
         fontSize: 8.5,
     },
     healthLabel: {
-        width: "14%",
+        width: "20%",
         fontWeight: "bold",
     },
     healthContent: {
-        width: "78%",
+        width: "70%",
     },
     fitCol: {
-        width: "8%",
+        width: "10%",
         textAlign: "right",
         fontWeight: "bold",
     },
@@ -175,7 +204,7 @@ const styles = StyleSheet.create({
     },
     remarkBoxP2: {
         fontSize: 10.5,
-        minHeight: 56,
+        minHeight: 100,
         padding: 6,
     },
 });
@@ -211,20 +240,26 @@ const QuestionTableHeader = () => (
     </View>
 );
 
+const TickMark = ({ size = 10 }) => (
+    <Image src={tick} style={{ width: size, height: size }} />
+);
+
 const QuestionRow = ({ no, text }) => (
     <View style={styles.row}>
         <Text style={styles.qNo}>{no}</Text>
         <Text style={styles.qText}>{text}</Text>
-        <Text style={styles.qYN} />
-        <Text style={styles.qYNLast} />
+        <View style={styles.qYNCell} />
+        <View style={styles.qYNCellLast}>
+            <TickMark />
+        </View>
     </View>
 );
 
-const HealthRow = ({ label, children, fit = "Y/N", rowStyle, textStyle }) => (
+const HealthRow = ({ label, children, fit = "Yes", rowStyle, textStyle }) => (
     <View style={[styles.healthRow, rowStyle]}>
         <Text style={[styles.healthLabel, textStyle]}>{label}</Text>
         <Text style={[styles.healthContent, textStyle]}>{children}</Text>
-        <Text style={[styles.fitCol, textStyle]}>{fit}</Text>
+        <Text style={[styles.fitCol, textStyle, styles.label]}>{fit}</Text>
     </View>
 );
 
@@ -243,7 +278,7 @@ const ForceMotorsPuneVertigoFormTemplate = ({ data = {} }) => {
     const companyName =
         data?.companyName ||
         data?.EXTRAS?.companyName ||
-        "FORCE MOTORS LTD - PUNE PLANT";
+        "JAYA HIND INDUSTRIES PVT. LTD - AKRUDI";
     const jobProfile =
         data?.jobProfile ||
         data?.EXTRAS?.DESIGNATION ||
@@ -287,10 +322,10 @@ const ForceMotorsPuneVertigoFormTemplate = ({ data = {} }) => {
                         </Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={[styles.cell, { width: "28%" }, styles.label]}>
+                        <Text style={[styles.cell, { width: "18%" }, styles.label]}>
                             Name of company :
                         </Text>
-                        <Text style={[styles.cell, { width: "72%", borderRightWidth: 0 }]}>
+                        <Text style={[styles.cell, { width: "82%", borderRightWidth: 0 }]}>
                             {companyName}
                         </Text>
                     </View>
@@ -341,9 +376,12 @@ const ForceMotorsPuneVertigoFormTemplate = ({ data = {} }) => {
 
                 <View style={styles.signatureRow}>
                     <Text style={styles.signatureText}>Signature of employee</Text>
-                    <Text style={styles.signatureText}>
-                        Date {examDate ? `: ${examDate}` : ""}
-                    </Text>
+                    <View style={styles.signatureDateBlock}>
+                        <Text style={styles.signatureText}>
+                            Date {examDate ? `: ${examDate}` : ""}
+                        </Text>
+                        <Image src={prashantDeshmukh} style={styles.doctorSignature} />
+                    </View>
                 </View>
             </Page>
 
@@ -352,41 +390,40 @@ const ForceMotorsPuneVertigoFormTemplate = ({ data = {} }) => {
 
                 <View style={[styles.healthHeader, styles.healthHeaderP2]}>
                     <Text style={styles.healthHeaderP2}>Health Assessment</Text>
-                    <Text style={styles.healthHeaderP2}>FIT</Text>
+                    <Text style={styles.healthHeaderP2}>FIT(Yes/No)</Text>
                 </View>
 
                 <HealthRow label="1 — Vision:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>
-                    Specs: Right eye {data?.rightEye || "N"}   Left eye{" "}
-                    {data?.leftEye || "N"}   Colour Y/N
+                    {data?.visionWithGlasses ? `Specs: ${data?.visionWithGlasses}` : `Without Specs: ${data?.visionRemark || ""}`}, Colour Vision - Normal
                 </HealthRow>
                 <HealthRow label="2 — Hearing:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>
-                    Whisper Test Pass Y/N   Audiology Required Y/N
+                    Whisper Test Pass - Yes, Audiology Required - No
                 </HealthRow>
                 <HealthRow label="3 — Cardio:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>
-                    B.P. {data?.bp ? `${data.bp} mmHg` : ""}   Pulse{" "}
+                    B.P. {data?.bp ? `${data.bp} mmHg` : ""},   Pulse{" "}
                     {data?.pulseRate ? `${data.pulseRate} bpm` : ""}
                 </HealthRow>
                 <HealthRow label="4 — Lung Function:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>
-                    Normal Spiro Y/N
+                    Normal Spiro - Yes
                 </HealthRow>
                 <HealthRow label="5 — C.N.S. :" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2} />
                 <HealthRow label="6 — Musculoskeletal :" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2} />
-                <HealthRow label="7 — Urinalysis:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>Glucose Y/N</HealthRow>
+                <HealthRow label="7 — Urinalysis:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>Glucose - No</HealthRow>
                 <HealthRow label="8 — Mental Health:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>
-                    Mental health issues of Concern Y/N
+                    Mental health issues of Concern - No
                 </HealthRow>
                 <HealthRow label="9 — Medication:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>
-                    Ant Contradicted Effects/ side effects Y/N
+                    Ant Contradicted Effects/ side effects - No
                 </HealthRow>
                 <HealthRow label="10 — Drug & Alcohol:" rowStyle={styles.healthRowP2} textStyle={styles.healthRowP2}>
-                    Recent/ Current D & A problems Y/N
+                    Recent/ Current D & A problems - No
                 </HealthRow>
 
                 <Text style={[styles.sectionTitle, styles.sectionTitleP2, { marginTop: 10 }]}>
-                    Remark:
+                    Remark: Fit to work
                 </Text>
                 <View style={[styles.remarkBox, styles.remarkBoxP2]}>
-                    <Text style={styles.remarkBoxP2}>{data?.remark || data?.doctorRemark || ""}</Text>
+                    <Image src={prashantDeshmukh} style={{ height: 100, width: 130 }} />
                 </View>
             </Page>
         </Document>

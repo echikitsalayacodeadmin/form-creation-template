@@ -1,52 +1,53 @@
-
 import React, { useEffect, useState } from "react";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { getData } from "../assets/services/GetApiCall";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import { useSnackbar } from "notistack";
-import pftReportTemplate from "../assets/pftReportTemplate.pdf";
+import normalAudioReportTemplate from "../assets/NormalAudioReport.pdf";
 import dayjs from "dayjs";
 
 /* =========================================================
-   CUSTOM COORDS — tuned from pftReportTemplate.pdf (612×792)
+   CUSTOM COORDS — tuned from NormalAudioReport.pdf (612×792)
    rect: white-out box (x,y = bottom-left) | text: draw position
 ========================================================= */
-const PFT_CUSTOM_FIELDS = {
-    patient: {
-        rect: { x: 52 + 10, y: 725.5, width: 125, height: 14 },
-        text: { x: 52 + 10, y: 728.52, size: 9 },
+const AUDIO_CUSTOM_FIELDS = {
+    patientId: {
+        rect: { x: 111, y: 696, width: 50, height: 12 },
+        text: { x: 111, y: 699.6, size: 9 },
+    },
+    name: {
+        rect: { x: 91, y: 684, width: 220, height: 12 },
+        text: { x: 91, y: 687.4, size: 9 },
+    },
+    crNumber: {
+        rect: { x: 113, y: 672, width: 130, height: 12 },
+        text: { x: 113, y: 675.1, size: 9 },
+    },
+    registrationDate: {
+        rect: { x: 137, y: 660, width: 100, height: 12 },
+        text: { x: 137, y: 662.9, size: 9 },
     },
     age: {
-        rect: { x: 260 + 10, y: 725.5, width: 58, height: 14 },
-        text: { x: 268 + 10, y: 728.52, size: 9 },
-    },
-    height: {
-        rect: { x: 272, y: 714, width: 55, height: 14 },
-        text: { x: 278, y: 717.12, size: 9 },
-    },
-    weight: {
-        rect: { x: 272, y: 702.5, width: 52, height: 14 },
-        text: { x: 278, y: 705.84, size: 9 },
+        rect: { x: 520, y: 696, width: 25, height: 12 },
+        text: { x: 520, y: 699.6, size: 9 },
     },
     gender: {
-        rect: { x: 426 + 10, y: 725.5, width: 48, height: 14 },
-        text: { x: 433 + 10, y: 728.52, size: 9 },
+        rect: { x: 510, y: 684, width: 40, height: 12 },
+        text: { x: 510, y: 687.4, size: 9 },
     },
-    vitalsCreatedDate: {
-        rect: { x: 52 + 10, y: 725.5 - 35, width: 125, height: 14 },
-        text: { x: 52 + 10, y: 728.52 - 35, size: 9 },
-    }
-
+    printDate: {
+        rect: { x: 292, y: 35, width: 70, height: 7.5 },
+        text: { x: 292, y: 37.8, size: 6 },
+    },
 };
 
-// Covers static "Age" label and value area on pftReportTemplate.pdf
-const PFT_AGE_WHITE_OUT = { x: 224, y: 725.5, width: 92, height: 14 };
+// Covers static "Age : XX" label and value on NormalAudioReport.pdf
+const AUDIO_AGE_WHITE_OUT = { x: 498, y: 696, width: 38, height: 12 };
 
 async function loadTemplateBytes() {
-    const res = await fetch(pftReportTemplate);
-    if (!res.ok) throw new Error("Failed to load PFT template PDF");
-    // Keep a stable copy — pdf.js detaches buffers passed to getDocument()
+    const res = await fetch(normalAudioReportTemplate);
+    if (!res.ok) throw new Error("Failed to load audio report template PDF");
     return new Uint8Array(await res.arrayBuffer());
 }
 
@@ -60,14 +61,20 @@ function formatGender(gender) {
     return gender || "";
 }
 
-function formatPftDate(dateValue) {
+function formatAudioDate(dateValue) {
     const parsed = dayjs(dateValue);
     if (!parsed.isValid()) return "";
-    return parsed.format("DD MMM YYYY");
+    return parsed.format("DD-MMM-YYYY");
+}
+
+function formatCrNumber(dateValue) {
+    const parsed = dayjs(dateValue);
+    if (!parsed.isValid()) return "";
+    return `${parsed.format("YYYYMMDD")}104045`;
 }
 
 function whiteOutAgeField(page) {
-    const { x, y, width, height } = PFT_AGE_WHITE_OUT;
+    const { x, y, width, height } = AUDIO_AGE_WHITE_OUT;
     page.drawRectangle({
         x,
         y,
@@ -98,59 +105,39 @@ function drawCustomField(page, font, fieldConfig, value) {
         color: rgb(0, 0, 0),
     });
 }
-/* =========================================================
-   FILL TEMPLATE WITH EMPLOYEE DATA
-========================================================= */
-async function buildPftPdfFromTemplate({
+
+async function buildAudioPdfFromTemplate({
     templateBytes,
+    patientId,
     name,
+    crNumber,
+    registrationDate,
     age,
     gender,
-    height,
-    weight,
-    vitalsCreatedDate,
+    printDate,
     removeAge = false,
 }) {
     const pdfDoc = await PDFDocument.load(cloneTemplateBytes(templateBytes));
     const page = pdfDoc.getPages()[0];
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-    drawCustomField(page, font, PFT_CUSTOM_FIELDS.patient, name);
+    drawCustomField(page, font, AUDIO_CUSTOM_FIELDS.patientId, patientId);
+    drawCustomField(page, font, AUDIO_CUSTOM_FIELDS.name, name);
+    drawCustomField(page, font, AUDIO_CUSTOM_FIELDS.crNumber, crNumber);
+    drawCustomField(page, font, AUDIO_CUSTOM_FIELDS.registrationDate, registrationDate);
+
     if (removeAge) {
         whiteOutAgeField(page);
     } else {
-        drawCustomField(page, font, PFT_CUSTOM_FIELDS.age, age ? `${age} Yrs` : "");
+        drawCustomField(page, font, AUDIO_CUSTOM_FIELDS.age, age ? String(age) : "");
     }
-    drawCustomField(
-        page,
-        font,
-        PFT_CUSTOM_FIELDS.height,
-        height ? `${height} Cms` : ""
-    );
-    drawCustomField(
-        page,
-        font,
-        PFT_CUSTOM_FIELDS.weight,
-        weight ? `${weight} Kgs` : ""
-    );
-    drawCustomField(page, font, PFT_CUSTOM_FIELDS.gender, gender);
-    drawCustomField(page, font, PFT_CUSTOM_FIELDS.vitalsCreatedDate, vitalsCreatedDate);
 
-    page.drawRectangle({
-        x: 172 + 10,
-        y: 725.5 - 37,
-        width: 180,
-        height: 14,
-        color: rgb(1, 1, 1),
-    });
-
+    drawCustomField(page, font, AUDIO_CUSTOM_FIELDS.gender, gender);
+    drawCustomField(page, font, AUDIO_CUSTOM_FIELDS.printDate, printDate);
 
     return new Blob([await pdfDoc.save()], { type: "application/pdf" });
 }
 
-/* =========================================================
-   PROCESS PFT FOR ONE EMPLOYEE
-========================================================= */
 async function processEmployee({
     employee,
     templateBytes,
@@ -163,15 +150,17 @@ async function processEmployee({
 }) {
     try {
         const patientName = `${employee?.name || ""} ${employee?.empId || ""}`.trim();
+        const formattedDate = formatAudioDate(customDate);
 
-        const modifiedBlob = await buildPftPdfFromTemplate({
+        const modifiedBlob = await buildAudioPdfFromTemplate({
             templateBytes,
+            patientId: employee?.empId,
             name: patientName,
+            crNumber: formatCrNumber(customDate),
+            registrationDate: formattedDate,
             age: employee?.age,
             gender: formatGender(employee?.gender),
-            height: employee?.height,
-            weight: employee?.weight,
-            vitalsCreatedDate: formatPftDate(customDate),
+            printDate: formattedDate,
             removeAge,
         });
 
@@ -182,25 +171,24 @@ async function processEmployee({
         }
 
         const formData = new FormData();
-        formData.append("file", modifiedBlob, `PFT_${employee.empId}.pdf`);
+        formData.append("file", modifiedBlob, `AUDIOMETRY_${employee.empId}.pdf`);
 
-        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=PFT&corpId=${corpId}&campCycleId=${campCycleId}`;
+        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=AUDIOMETRY&corpId=${corpId}&campCycleId=${campCycleId}`;
 
         await uploadFile(uploadUrl, formData);
 
-        enqueueSnackbar(`PFT uploaded for ${employee.empId}`, {
+        enqueueSnackbar(`Audiometry report uploaded for ${employee.empId}`, {
             variant: "success",
         });
     } catch (err) {
-        console.error("PFT modify failed", err);
-        enqueueSnackbar(`PFT failed for ${employee.empId}`, { variant: "error" });
+        console.error("Audiometry report modify failed", err);
+        enqueueSnackbar(`Audiometry report failed for ${employee.empId}`, {
+            variant: "error",
+        });
     }
 }
 
-/* =========================================================
-   MAIN COMPONENT
-========================================================= */
-const UnocarePFTReportsIndependent = ({
+const UnocareNormalAudioReport = ({
     corpId = "38b5388c-4d5d-4388-847e-cc8d6f6dc939",
     campCycleId = "394171",
 }) => {
@@ -219,8 +207,8 @@ const UnocarePFTReportsIndependent = ({
                 setTemplateBytes(bytes);
                 setTemplateReady(true);
             } catch (err) {
-                console.error("Failed to load PFT template", err);
-                enqueueSnackbar("Failed to load pftReportTemplate.pdf", {
+                console.error("Failed to load audio report template", err);
+                enqueueSnackbar("Failed to load NormalAudioReport.pdf", {
                     variant: "error",
                 });
             }
@@ -234,11 +222,29 @@ const UnocarePFTReportsIndependent = ({
             const res = await getData(url);
 
             const filteredData =
-                res?.data?.filter(item =>
+                res?.data?.filter((item) =>
                     [
-                        "601002", "601003", "601044", "601045", "601114", "601125", "C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C010", "C011", "C012", "C013"
+                        "601002",
+                        "601003",
+                        "601044",
+                        "601045",
+                        "601114",
+                        "601125",
+                        "C01",
+                        "C02",
+                        "C03",
+                        "C04",
+                        "C05",
+                        "C06",
+                        "C07",
+                        "C08",
+                        "C09",
+                        "C010",
+                        "C011",
+                        "C012",
+                        "C013",
                     ].includes(item?.empId)
-                )
+                ) || [];
 
             setEmployees(sortDataByName(filteredData));
         };
@@ -247,11 +253,11 @@ const UnocarePFTReportsIndependent = ({
 
     const handleStart = async () => {
         if (!templateBytes) {
-            enqueueSnackbar("PFT template not loaded yet", { variant: "warning" });
+            enqueueSnackbar("Audio template not loaded yet", { variant: "warning" });
             return;
         }
 
-        for (let i = 0; i < employees.length; i++) {
+        for (let i = 0; i < employees.length; i += 1) {
             await processEmployee({
                 employee: employees[i],
                 templateBytes,
@@ -268,9 +274,10 @@ const UnocarePFTReportsIndependent = ({
     const handlePreviewFirst = async () => {
         if (!employees.length) return;
         if (!templateBytes) {
-            enqueueSnackbar("PFT template not loaded yet", { variant: "warning" });
+            enqueueSnackbar("Audio template not loaded yet", { variant: "warning" });
             return;
         }
+
         await processEmployee({
             employee: employees[0],
             templateBytes,
@@ -304,7 +311,7 @@ const UnocarePFTReportsIndependent = ({
             </label>
 
             <button onClick={handleStart} disabled={!templateReady || !customDate}>
-                Modify & Upload PFT Reports
+                Modify & Upload Audiometry Reports
             </button>
             <button
                 onClick={handlePreviewFirst}
@@ -321,13 +328,15 @@ const UnocarePFTReportsIndependent = ({
 
             {employees.map((e, i) => (
                 <div key={i}>
-                    {i + 1}. {e.empId} - {e.name}{" "}
-                    {e?.age || "_"} yrs | {e?.gender || "_"} | H: {e?.height || "_"}{" "}
-                    | W: {e?.weight || "_"} URL - <a href={e?.pftUrl || ""} target="_blank">{e?.pftUrl || ""}</a>
+                    {i + 1}. {e.empId} - {e.name} {e?.age || "_"} yrs |{" "}
+                    {e?.gender || "_"} | URL -{" "}
+                    <a href={e?.audiometryUrl || ""} target="_blank" rel="noreferrer">
+                        {e?.audiometryUrl || ""}
+                    </a>
                 </div>
             ))}
         </div>
     );
 };
 
-export default UnocarePFTReportsIndependent;
+export default UnocareNormalAudioReport;

@@ -5,7 +5,7 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import { useSnackbar } from "notistack";
 import dayjs from "dayjs";
-import genericBloodReportSample from "../assets/genericBloodReportSample.pdf";
+import genericBloodReportSample from "../assets/bloodSampleRusan.pdf";
 
 const BLOOD_CUSTOM_FIELDS = {
     patientName: {
@@ -34,6 +34,12 @@ const BLOOD_QR_WHITE_OUT_RECTS = [
     { x: 40, y: 30, width: 88, height: 78 },
     { x: 416, y: 30, width: 88, height: 78 },
 ];
+
+// Static "Age/Gender" template label — white out and replace with "Gender"
+const BLOOD_AGE_GENDER_LABEL = {
+    rect: { x: 26, y: 688, width: 52, height: 14 },
+    text: { x: 26, y: 693, size: 9 },
+};
 
 async function loadTemplateBytes() {
     const res = await fetch(genericBloodReportSample);
@@ -129,11 +135,37 @@ function whiteOutBottomQrs(page) {
     });
 }
 
+function replaceAgeGenderLabelWithGender(page, font) {
+    const { rect, text } = BLOOD_AGE_GENDER_LABEL;
+
+    page.drawRectangle({
+        x: rect.x,
+        y: rect.y,
+        width: rect.width,
+        height: rect.height,
+        color: rgb(1, 1, 1),
+    });
+
+    page.drawText("Gender", {
+        x: text.x,
+        y: text.y,
+        size: text.size,
+        font,
+        color: rgb(0, 0, 0),
+    });
+}
+
+function formatAgeGenderText(age, gender, genderOnly) {
+    if (genderOnly) return gender || "";
+    return age ? `${age} Yrs / ${gender}` : "";
+}
+
 async function buildBloodPdfFromTemplate({
     templateBytes,
     patientName,
     age,
     gender,
+    genderOnly = false,
     registeredOn,
     sampleCollectedOn,
     sampleReportedOn,
@@ -143,11 +175,14 @@ async function buildBloodPdfFromTemplate({
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     pages.forEach((page) => {
         drawCustomField(page, font, BLOOD_CUSTOM_FIELDS.patientName, patientName);
+        if (genderOnly) {
+            replaceAgeGenderLabelWithGender(page, font);
+        }
         drawCustomField(
             page,
             font,
             BLOOD_CUSTOM_FIELDS.ageGender,
-            age ? `${age} Yrs / ${gender}` : ""
+            formatAgeGenderText(age, gender, genderOnly)
         );
         drawCustomField(page, font, BLOOD_CUSTOM_FIELDS.registeredOn, registeredOn);
         drawCustomField(
@@ -175,10 +210,11 @@ async function processEmployee({
     corpId,
     campCycleId,
     previewOnly = false,
+    genderOnly = false,
 }) {
     try {
-        const patientName = `${employee?.name || ""}`.trim();
-        const baseDate = '2026-05-19';
+        const patientName = `${employee?.name || ""} ${employee?.empId || ""}`.trim();
+        const baseDate = '2026-05-13';
         const formattedGender = formatGender(employee?.gender);
 
         const modifiedBlob = await buildBloodPdfFromTemplate({
@@ -186,6 +222,7 @@ async function processEmployee({
             patientName,
             age: employee?.age,
             gender: formattedGender,
+            genderOnly,
             registeredOn: formatBloodDateTime(baseDate, "05:30 PM"),
             sampleCollectedOn: formatBloodDateTime(baseDate, "05:45 PM"),
             sampleReportedOn: formatBloodDateTime(baseDate, "11:55 AM"),
@@ -216,21 +253,22 @@ async function processEmployee({
         enqueueSnackbar(
             `Blood report failed for ${employee.empId}${status ? ` (${status})` : ""}: ${serverMessage}`,
             {
-            variant: "error",
+                variant: "error",
             }
         );
     }
 }
 
 const GenericBloodReportGenerator = ({
-    corpId = "872cd841-9f7a-432d-b8e9-422b780bca10",
-    campCycleId = "391664",
+    corpId = "38b5388c-4d5d-4388-847e-cc8d6f6dc939",
+    campCycleId = "394171",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [employees, setEmployees] = useState([]);
     const [processed, setProcessed] = useState(0);
     const [templateBytes, setTemplateBytes] = useState(null);
     const [templateReady, setTemplateReady] = useState(false);
+    const [genderOnly, setGenderOnly] = useState(false);
 
     useEffect(() => {
         const loadTemplate = async () => {
@@ -256,28 +294,7 @@ const GenericBloodReportGenerator = ({
             const filteredData =
                 res?.data?.filter((item) =>
                     [
-                        "S1",
-                        "S2",
-                        "S3",
-                        "S4",
-                        "S5",
-                        "S6",
-                        "S7",
-                        "S8",
-                        "S9",
-                        "S10",
-                        "S11",
-                        "S12",
-                        "S13",
-                        "S14",
-                        "S15",
-                        "S16",
-                        "S17",
-                        "S18",
-                        "S19",
-                        "S20",
-                        "S21",
-                        "S22",
+                        "601002", "601003", "601044", "601045", "601114", "601125", "C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C010", "C011", "C012", "C013"
                     ].includes(item?.empId)
                 ) || [];
 
@@ -299,6 +316,7 @@ const GenericBloodReportGenerator = ({
                 enqueueSnackbar,
                 corpId,
                 campCycleId,
+                genderOnly,
             });
             setProcessed((p) => p + 1);
         }
@@ -318,11 +336,21 @@ const GenericBloodReportGenerator = ({
             corpId,
             campCycleId,
             previewOnly: true,
+            genderOnly,
         });
     };
 
     return (
         <div>
+            <label style={{ display: "block", marginBottom: 8 }}>
+                <input
+                    type="checkbox"
+                    checked={genderOnly}
+                    onChange={(e) => setGenderOnly(e.target.checked)}
+                />{" "}
+                Gender Only
+            </label>
+
             <button onClick={handleStart} disabled={!templateReady}>
                 Generate & Upload Blood Reports
             </button>
