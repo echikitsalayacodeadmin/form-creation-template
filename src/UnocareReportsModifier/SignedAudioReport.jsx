@@ -2,7 +2,7 @@
 import { useSnackbar } from "notistack";
 import { PDFDocument } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
+import DrShivaSealSign from "../assets/images/DrShivaSealSign.png";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
@@ -62,8 +62,8 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedAudioReport = ({
-    corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
-    campCycleId = "410802",
+    corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
+    campCycleId = "410953",
     // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     // campCycleId = "396613",
     // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
@@ -81,7 +81,7 @@ const SignedAudioReport = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => item?.vitalsCreatedDate === "2026-05-13" && item?.audiometryUrl);
+                ?.filter((item) => (item?.vitalsCreatedDate === "2026-05-30" || item?.vitalsCreatedDate === "2026-06-01" || item?.vitalsCreatedDate === "2026-06-02") && item?.audiometryUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -107,7 +107,7 @@ const SignedAudioReport = ({
             // Step 2️⃣: Modify the PDF (apply rectangle + image)
             const modifiedBlob = await modifyPftPdf(
                 audiometryUrl,
-                prashantDeshmukh // ✅ your actual signature
+                DrShivaSealSign // ✅ your actual signature
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)
