@@ -81,7 +81,8 @@ const SignedAudioReport = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => (item?.vitalsCreatedDate === "2026-05-30" || item?.vitalsCreatedDate === "2026-06-01" || item?.vitalsCreatedDate === "2026-06-02") && item?.audiometryUrl);
+                ?.filter((item) => (item?.vitalsCreatedDate === "2026-06-03" || item?.vitalsCreatedDate === "2026-06-04" || item?.vitalsCreatedDate === "2026-06-05" || item?.vitalsCreatedDate === "2026-06-06" || item?.vitalsCreatedDate === "2026-06-07" || item?.vitalsCreatedDate === "2026-06-08" ||
+                    item?.vitalsCreatedDate === "2026-06-09" || item?.vitalsCreatedDate === "2026-06-10") && item?.audiometryUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);

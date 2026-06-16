@@ -207,7 +207,9 @@ const SkodaHeaderInsertor = ({
         result?.data?.filter(
           (item) =>
             // ["610920"].includes(item?.empId) &&
-            (item?.vitalsCreatedDate === "2026-05-30" || item?.vitalsCreatedDate === "2026-06-01" || item?.vitalsCreatedDate === "2026-06-02") &&
+            (item?.vitalsCreatedDate === "2026-06-03" || item?.vitalsCreatedDate === "2026-06-04" || item?.vitalsCreatedDate === "2026-06-05" || item?.vitalsCreatedDate === "2026-06-06" || item?.vitalsCreatedDate === "2026-06-07" || item?.vitalsCreatedDate === "2026-06-08" ||
+              item?.vitalsCreatedDate === "2026-06-09" || item?.vitalsCreatedDate === "2026-06-10"
+            ) &&
             // dayjs(item.vitalsCreatedDate).isAfter(cutoff) &&
             item?.[urlType]
         ) || [];
