@@ -140,6 +140,9 @@ import DhootAudio from "./dhootAudioPft/DhootAudio";
 import DhootPft from "./dhootAudioPft/DhootPft";
 import ForceMotorsPuneVertigoFormMain from "./forceMotorForms/ForceMotorsPuneVertigoFormMain";
 import UnocareNormalAudioReport from "./UnocareReportsModifier/UnocareNormalAudioReport";
+import CiplaBommaSandraXrayModifier from "./ciplaBommasandra/CiplaBommaSandraXrayModifier";
+import CiplaBommaSandraPFTModifier from "./ciplaBommasandra/CiplaBommaSandraPFTModifier";
+import CiplaBommaSandraECGModifier from "./ciplaBommasandra/CiplaBommaSandraECGModifier";
 
 const App = () => {
   return (
@@ -148,7 +151,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <SignedAudioReport />
+        <CiplaBommaSandraXrayModifier />
 
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
