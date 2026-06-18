@@ -143,6 +143,7 @@ import UnocareNormalAudioReport from "./UnocareReportsModifier/UnocareNormalAudi
 import CiplaBommaSandraXrayModifier from "./ciplaBommasandra/CiplaBommaSandraXrayModifier";
 import CiplaBommaSandraPFTModifier from "./ciplaBommasandra/CiplaBommaSandraPFTModifier";
 import CiplaBommaSandraECGModifier from "./ciplaBommasandra/CiplaBommaSandraECGModifier";
+import ModifyHeightInPFT from "./skodaCustomForms/ModifyHeightInPFT";
 
 const App = () => {
   return (
@@ -151,7 +152,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <CiplaBommaSandraXrayModifier />
+        <ModifyHeightInPFT />
 
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
