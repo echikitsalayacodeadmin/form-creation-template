@@ -2,7 +2,7 @@
 import { useSnackbar } from "notistack";
 import { PDFDocument } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-import DrShivaSealSign from "../assets/images/DrShivaSealSign.png";
+import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
@@ -62,8 +62,8 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedAudioReport = ({
-    corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
-    campCycleId = "410953",
+    corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
+    campCycleId = "425836",
     // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     // campCycleId = "396613",
     // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
@@ -81,8 +81,7 @@ const SignedAudioReport = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => (item?.vitalsCreatedDate === "2026-06-03" || item?.vitalsCreatedDate === "2026-06-04" || item?.vitalsCreatedDate === "2026-06-05" || item?.vitalsCreatedDate === "2026-06-06" || item?.vitalsCreatedDate === "2026-06-07" || item?.vitalsCreatedDate === "2026-06-08" ||
-                    item?.vitalsCreatedDate === "2026-06-09" || item?.vitalsCreatedDate === "2026-06-10") && item?.audiometryUrl);
+                ?.filter((item) => ["221153", "182025"].includes(item?.empId) && item?.audiometryUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -108,7 +107,7 @@ const SignedAudioReport = ({
             // Step 2️⃣: Modify the PDF (apply rectangle + image)
             const modifiedBlob = await modifyPftPdf(
                 audiometryUrl,
-                DrShivaSealSign // ✅ your actual signature
+                Dr_Jaydip_Saxena // ✅ your actual signature
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)

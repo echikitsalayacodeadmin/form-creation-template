@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
-import drRaviHeaderSkoda from "../assets/images/drRaviHeaderSkoda.png";
+// import drRaviHeaderSkoda from "../assets/images/drRaviHeaderSkoda.png";
 import { useSnackbar } from "notistack";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
@@ -8,6 +8,7 @@ import { getData } from "../assets/services/GetApiCall";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { uploadFile } from "../assets/services/PostApiCall";
 import dayjs from "dayjs";
+import uncareheader from "../assets/images/uncareheader.png";
 
 async function removeAddressFromHeaderInReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
@@ -40,7 +41,7 @@ async function mergeHeaderWithReport(reportPdfBytes) {
   const mergedPdf = await PDFDocument.create();
 
   // Import header image
-  const headerImageBytes = await fetch(drRaviHeaderSkoda).then((res) =>
+  const headerImageBytes = await fetch(uncareheader).then((res) =>
     res.arrayBuffer()
   );
   const headerImage = await mergedPdf.embedPng(headerImageBytes);
@@ -123,8 +124,10 @@ async function cleanAndRewriteHeader(reportPdfBytes) {
 }
 
 const SkodaHeaderInsertor = ({
-  corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
-  campCycleId = "410953", // atlas copco campCycleId
+  corpId = "1f084b0a-0423-47ec-a812-345500977336", // atlas copco corpId
+  campCycleId = "425856", // atlas copco campCycleId
+  // corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
+  // campCycleId = "410953", // atlas copco campCycleId
   // corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
   // campCycleId = "394961", // atlas copco campCycleId
   // corpId = "35693879-486b-44b6-8a6a-15d57f111a08",
@@ -206,11 +209,7 @@ const SkodaHeaderInsertor = ({
       const temp =
         result?.data?.filter(
           (item) =>
-            // ["610920"].includes(item?.empId) &&
-            (item?.vitalsCreatedDate === "2026-06-03" || item?.vitalsCreatedDate === "2026-06-04" || item?.vitalsCreatedDate === "2026-06-05" || item?.vitalsCreatedDate === "2026-06-06" || item?.vitalsCreatedDate === "2026-06-07" || item?.vitalsCreatedDate === "2026-06-08" ||
-              item?.vitalsCreatedDate === "2026-06-09" || item?.vitalsCreatedDate === "2026-06-10"
-            ) &&
-            // dayjs(item.vitalsCreatedDate).isAfter(cutoff) &&
+            ["122169"].includes(item?.empId) &&
             item?.[urlType]
         ) || [];
       // item?.vitalsCreatedDate === "2025-11-26" ||

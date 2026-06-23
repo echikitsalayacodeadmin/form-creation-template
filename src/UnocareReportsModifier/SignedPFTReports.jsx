@@ -2,7 +2,7 @@
 import { useSnackbar } from "notistack";
 import { PDFDocument } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
+import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
@@ -62,8 +62,8 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedPFTReports = ({
-    corpId = "14dca1f0-fa04-4526-ba01-f5f83e0f2494",
-    campCycleId = "410802",
+    corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
+    campCycleId = "425836",
     fileType = "PFT",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -76,7 +76,7 @@ const SignedPFTReports = ({
         const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
         if (result && result.data) {
-            const temp = result?.data?.filter((item) => item.pftUrl && item?.vitalsCreatedDate === "2026-05-13");
+            const temp = result?.data?.filter((item) => item.pftUrl && ["221153", "182025"].includes(item?.empId));
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -102,7 +102,7 @@ const SignedPFTReports = ({
             // Step 2️⃣: Modify the PDF (apply rectangle + image)
             const modifiedBlob = await modifyPftPdf(
                 pftUrl,
-                prashantDeshmukh // ✅ your actual signature
+                Dr_Jaydip_Saxena // ✅ your actual signature
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)

@@ -233,7 +233,7 @@ const MaharashtraFactRuleMain = () => {
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({
@@ -411,6 +411,11 @@ const MaharashtraFactRuleMain = () => {
               control={<Radio />}
               label="Dr Jaydip"
             />
+            <FormControlLabel
+              value="drPratibhaVBandekar.png"
+              control={<Radio />}
+              label="Dr Pratibha"
+            />
           </RadioGroup>
         </Grid>
         <Grid item xs={12} md={12} sx={{ maxWidth: 800, flexWrap: "wrap" }}>
@@ -434,11 +439,13 @@ const MaharashtraFactRuleMain = () => {
         <div>Uploaded Files: {uploadedCount}</div> <br />
         {filteredList.map((item, index) => (
           <div key={index} style={{ display: "flex" }}>
-            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+            <div key={index}>{`${index}- ${item.empId} ${item.name}`}
+              <a href={item.annexureUrl}>
+                <div key={index}>{item.annexureUrl}</div>
+              </a>
+            </div>
 
-            <a href={item.form32Url}>
-              <div key={index}>{item.form32Url}</div>
-            </a>
+
 
             <br />
           </div>
@@ -446,7 +453,7 @@ const MaharashtraFactRuleMain = () => {
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <MaharashtraFactRule />
+        <MaharashtraFactRule signature={signature} data={filteredList[0]} />
       </PDFViewer>
     </Fragment>
   );

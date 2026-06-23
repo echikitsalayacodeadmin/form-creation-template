@@ -11,6 +11,7 @@ import {
 } from "@react-pdf/renderer";
 import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
 import dr_kunal_stamp_sign from "../assets/images/dr_kunal_stamp_sign.png";
+import drPratibhaVBandekar from "../assets/images/drPratibhaVBandekar.png";
 
 // Register Times fonts for classic look
 Font.register({
@@ -196,6 +197,8 @@ const MaharashtraFactRule = ({
     switch (signature) {
       case "Dr_Jaydip_Saxena.png":
         return Dr_Jaydip_Saxena;
+      case "drPratibhaVBandekar.png":
+        return drPratibhaVBandekar;
       case "dr_kunal_stamp_sign.png":
       default:
         return dr_kunal_stamp_sign;
@@ -246,7 +249,12 @@ const MaharashtraFactRule = ({
     {
       id: 16,
       label: "Signature with date of Certifying Surgeon",
-      value: <Image src={Dr_Jaydip_Saxena} style={{ height: 60, width: 80 }} />,
+      value: (
+        <Image
+          src={getSignatureImage()}
+          style={{ height: 60, width: 80 }}
+        />
+      ),
     },
   ];
 
@@ -360,7 +368,7 @@ const MaharashtraFactRule = ({
                     ]}
                   >
                     <Image
-                      src={Dr_Jaydip_Saxena}
+                      src={getSignatureImage()}
                       style={{ height: 50, width: 80 }}
                     />
                   </View>

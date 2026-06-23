@@ -5,6 +5,10 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
+import unoHeaderCiplaLtd from "../assets/images/UnoHeaderCIplaLtd.png";
+
+// const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
+// const TARGET_CAMP_CYCLE_ID = "423119";
 
 const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
 const TARGET_CAMP_CYCLE_ID = "423157";
@@ -19,9 +23,21 @@ const addDepartmentOnFirstPage = async (xrayUrl, department) => {
     }
 
     const firstPage = pages[0];
+    const { width, height } = firstPage.getSize();
     const font = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
     const safeDepartment = `${department || "-"}`;
     const departmentText = `DEPARTMENT   :   ${safeDepartment}`;
+    const headerImageBytes = await fetch(unoHeaderCiplaLtd).then((response) =>
+        response.arrayBuffer()
+    );
+    const headerImage = await pdfDoc.embedPng(headerImageBytes);
+    firstPage.drawImage(headerImage, {
+        x: 0,
+        y: height - 100,
+        width,
+        height: 80,
+    });
+
 
     // Coordinates tuned for UNO Care X-Ray first-page template
     firstPage.drawText(departmentText, {
@@ -66,7 +82,29 @@ const CiplaBommaSandraXrayModifier = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.empId === "H195637");
+            const filtered = result.data.filter((item) => ([
+                "820",
+                "673",
+                "600",
+                "540",
+                "541",
+                "542",
+                "354",
+                "208",
+                "301",
+                "5",
+                "10",
+                "24",
+                "29",
+                "53",
+                "57",
+                "58",
+                "61",
+                "98",
+                "125",
+                "143",
+                "144"
+            ].includes(item?.tokenNumber) && item?.xrayUrl));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -274,7 +312,14 @@ const CiplaBommaSandraXrayModifier = ({
             <div>Uploaded Files: {uploadedCount}</div> <br />
             {list.map((item, index) => (
                 <div key={item.empId || index} style={{ display: "flex", gap: "8px" }}>
-                    <div>{`${index + 1}. ${item.empId} ${item.name} | Dept: ${item?.department || "-"} URL : ${item?.xrayUrl || "-"}`}</div>
+                    <div>{`${index + 1}. ${item.empId} ${item.name} | Dept: ${item?.department || "-"}`}</div>
+                    {item?.xrayUrl ? (
+                        <a href={item.xrayUrl} target="_blank" rel="noreferrer">
+                            {item.xrayUrl}
+                        </a>
+                    ) : (
+                        <span>-</span>
+                    )}
                 </div>
             ))}
         </div>

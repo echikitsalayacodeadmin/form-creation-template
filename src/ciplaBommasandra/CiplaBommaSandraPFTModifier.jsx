@@ -7,9 +7,14 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import unoHeaderCiplaLtd from "../assets/images/UnoHeaderCIplaLtd.png";
 
+// const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
+// const TARGET_CAMP_CYCLE_ID = "423119";
+
 const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
 const TARGET_CAMP_CYCLE_ID = "423157";
-const HEADER_HEIGHT = 95;
+
+// const HEADER_HEIGHT = 95;
+const HEADER_HEIGHT = 48;
 
 const modifyPftPdf = async (pftUrl, department) => {
     const pdfBytes = await fetch(pftUrl).then((response) => response.arrayBuffer());
@@ -24,10 +29,16 @@ const modifyPftPdf = async (pftUrl, department) => {
     const { width, height } = page.getSize();
     const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
     const safeDepartment = `${department || "-"}`;
-    const refByX = 18;
-    const refByY = height - 95;
-    const refByWidth = 310;
-    const refByHeight = 20;
+    // const refByX = 18;
+    // const refByY = height - 95;
+    // const refByHeight = 20;
+    // const fontSize = 18;
+
+    const refByX = 8;
+    const refByY = height - 20;
+    const refByHeight = 12;
+    const fontSize = 9;
+
 
     page.drawRectangle({
         x: 0,
@@ -60,7 +71,7 @@ const modifyPftPdf = async (pftUrl, department) => {
     page.drawText(`Department : ${safeDepartment}`, {
         x: refByX + 3,
         y: refByY - 54,
-        size: 18,
+        size: fontSize,
         font,
         color: rgb(0, 0, 0),
     });
@@ -81,6 +92,7 @@ const CiplaBommaSandraPFTModifier = ({
     const [manualEmpId, setManualEmpId] = useState("");
     const [manualFile, setManualFile] = useState(null);
     const [isManualUploading, setIsManualUploading] = useState(false);
+    const [failedEmployees, setFailedEmployees] = useState([]);
 
     const isTargetBatch =
         corpId === TARGET_CORP_ID && campCycleId === TARGET_CAMP_CYCLE_ID;
@@ -99,7 +111,20 @@ const CiplaBommaSandraPFTModifier = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.empId === "H195637");
+            const filtered = result.data.filter((item) => ([
+                "41000458",
+                "41000546",
+                "172690",
+                "166916",
+                "41000289",
+                "165509",
+                "140577",
+                "175764",
+                "9516",
+                "41000550",
+                "152996",
+                "177144",
+                "166192"].includes(item?.empId) && item?.pftUrl));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -116,7 +141,7 @@ const CiplaBommaSandraPFTModifier = ({
 
     const modifyAndUploadPft = async (employee) => {
         if (!employee?.pftUrl) {
-            return;
+            throw new Error("Missing PFT URL");
         }
 
         const modifiedBytes = await modifyPftPdf(
@@ -124,6 +149,22 @@ const CiplaBommaSandraPFTModifier = ({
             employee?.department
         );
         const modifiedBlob = new Blob([modifiedBytes], { type: "application/pdf" });
+
+        // const previewUrl = URL.createObjectURL(modifiedBlob);
+        // window.open(previewUrl, "_blank");
+
+        // const fileName = `${employee?.pftUrl?.split("/").pop() || `${employee.empId}_pft.pdf`}`
+
+        // const url = URL.createObjectURL(modifiedBlob);
+
+        // const a = document.createElement("a");
+        // a.href = url;
+        // a.download = fileName;
+        // document.body.appendChild(a);
+        // a.click();
+        // document.body.removeChild(a);
+
+        // URL.revokeObjectURL(url);
 
         // const previewUrl = URL.createObjectURL(modifiedBlob);
         // window.open(previewUrl, "_blank");
@@ -160,21 +201,43 @@ const CiplaBommaSandraPFTModifier = ({
 
         setIsProcessing(true);
         setUploadedCount(0);
+        setFailedEmployees([]);
 
-        try {
-            for (let i = 0; i < list.length; i += 1) {
-                await modifyAndUploadPft(list[i]);
+        let successCount = 0;
+
+        for (let i = 0; i < list.length; i += 1) {
+            const employee = list[i];
+            try {
+                await modifyAndUploadPft(employee);
+                successCount += 1;
+            } catch (error) {
+                console.error(`PFT modify/upload failed for ${employee.empId}:`, error);
+                setFailedEmployees((prev) => [
+                    ...prev,
+                    {
+                        empId: employee.empId,
+                        name: employee.name,
+                        error: error?.message || "Unknown error",
+                    },
+                ]);
             }
+        }
+
+        setIsProcessing(false);
+
+        if (successCount === list.length) {
             enqueueSnackbar("Header and department added for all PFT reports.", {
                 variant: "success",
             });
-        } catch (error) {
-            console.error("PFT modify/upload failed:", error);
-            enqueueSnackbar("Stopped due to an error while modifying/uploading PFT.", {
+        } else if (successCount > 0) {
+            enqueueSnackbar(
+                `Completed with errors: ${successCount} uploaded, ${list.length - successCount} failed.`,
+                { variant: "warning" }
+            );
+        } else {
+            enqueueSnackbar("All PFT uploads failed. Check failed employee list.", {
                 variant: "error",
             });
-        } finally {
-            setIsProcessing(false);
         }
     };
 
@@ -303,9 +366,22 @@ const CiplaBommaSandraPFTModifier = ({
             {manualFile && <div>Selected File: {manualFile.name}</div>}
             <div>Total Employees: {totalEmployees}</div> <br />
             <div>Uploaded Files: {uploadedCount}</div> <br />
+            {failedEmployees.length > 0 && (
+                <>
+                    <h4>Failed Employees ({failedEmployees.length})</h4>
+                    <ul>
+                        {failedEmployees.map((item) => (
+                            <li key={item.empId}>
+                                {item.empId} - {item.name} ({item.error})
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            )}
+            <br />
             {list.map((item, index) => (
                 <div key={item.empId || index} style={{ display: "flex", gap: "8px" }}>
-                    <div>{`${index + 1}. ${item.empId} ${item.name} | Dept: ${item?.department || "-"}`}</div>
+                    <div>{`${item.tokenNumber}. ${item.empId} ${item.name} | Dept: ${item?.department || "-"}`}</div>
                     {item?.pftUrl ? (
                         <a href={item.pftUrl} target="_blank" rel="noreferrer">
                             {item.pftUrl}

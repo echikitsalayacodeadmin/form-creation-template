@@ -15,12 +15,11 @@
 import { useSnackbar } from "notistack";
 import { PDFDocument } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-import prashantDeshmukh from "../assets/images/prashantDeshmukh.png";
-import normalPft from "../assets/images/normalPft.png";
+import normalPftWithoutSign from "../assets/images/normalPftWithoutSign.png";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
-import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
+import { sortDataByName } from "../assets/utils";
 
 // ✅ Load official PDF.js build + worker from CDN dynamically
 async function loadPdfJs() {
@@ -121,13 +120,13 @@ const modifyPftPdf = async (pdfUrl, normalPftImage) => {
 
 // ✅ React Component
 const UnocarePFTNormalReport = ({
-    corpId = '14dca1f0-fa04-4526-ba01-f5f83e0f2494',
-    campCycleId = '410802',
+    corpId = '058c1ace-4ade-4dab-a13e-4f75c49339f2',
+    campCycleId = '424248',
     // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     // campCycleId = "396613",
     // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
     // campCycleId = "403772",
-    fileType = "FITNESS_CERTIFICATE_FOOD",
+    fileType = "PFT",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -141,8 +140,47 @@ const UnocarePFTNormalReport = ({
         if (result && result.data) {
             const temp = result?.data
                 ?.filter((item) => [
-                    "900098",
-                    "318033"
+                    "54201653",
+                    "AL1",
+                    "AL5",
+                    "54201574",
+                    "54201414",
+                    "54201413",
+                    "54201623",
+                    "54201283",
+                    "54201153",
+                    "54201218",
+                    "54201311",
+                    "54201466",
+                    "54201529",
+                    "54201444",
+                    "54201487",
+                    "54201507",
+                    "54201211",
+                    "54101463",
+                    "54201289",
+                    "54201315",
+                    "54201251",
+                    "54201510",
+                    "54201157",
+                    "54201418",
+                    "54201675",
+                    "54201243",
+                    "54201270",
+                    "54201208",
+                    "54201599",
+                    "54201598",
+                    "54201673",
+                    "54201627",
+                    "54201612",
+                    "AL2",
+                    "54201642",
+                    "54201691",
+                    "AL14",
+                    "54201643",
+                    "54201618",
+                    "54201573",
+                    "54201692"
                 ]?.includes(item?.empId) && item?.pftUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
@@ -169,7 +207,7 @@ const UnocarePFTNormalReport = ({
             // Step 2️⃣: Modify the PDF (apply rectangle + image)
             const modifiedBlob = await modifyPftPdf(
                 pftUrl,
-                normalPft // ✅ your actual signature
+                normalPftWithoutSign // ✅ your actual signature
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)
