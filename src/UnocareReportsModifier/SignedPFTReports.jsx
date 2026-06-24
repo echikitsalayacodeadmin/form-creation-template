@@ -62,8 +62,8 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedPFTReports = ({
-    corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
-    campCycleId = "425836",
+    corpId = "1f084b0a-0423-47ec-a812-345500977336",
+    campCycleId = "425856",
     fileType = "PFT",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -76,7 +76,8 @@ const SignedPFTReports = ({
         const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
         if (result && result.data) {
-            const temp = result?.data?.filter((item) => item.pftUrl && ["221153", "182025"].includes(item?.empId));
+            const temp = result?.data
+                ?.filter((item) => (item.vitalsCreatedDate === "2026-06-15" || item.vitalsCreatedDate === "2026-06-16") && item?.pftUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);

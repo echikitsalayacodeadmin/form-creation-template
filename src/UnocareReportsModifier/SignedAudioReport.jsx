@@ -3,6 +3,7 @@ import { useSnackbar } from "notistack";
 import { PDFDocument } from "pdf-lib";
 import React, { useEffect, useState } from "react";
 import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
+import drPratibhaVBandekar from "../assets/images/drPratibhaVBandekar.png";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
@@ -42,7 +43,7 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
     const signature = await pdfDoc.embedPng(signatureBytes);
 
     // 6. Resize (IMPORTANT)
-    const scaled = signature.scale(0.25);
+    const scaled = signature.scale(0.20);
 
     // 7. Draw at bottom-right (adjusted for YOUR report layout)
     page.drawImage(signature, {
@@ -62,8 +63,8 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedAudioReport = ({
-    corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
-    campCycleId = "425836",
+    corpId = "1f084b0a-0423-47ec-a812-345500977336",
+    campCycleId = "425856",
     // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     // campCycleId = "396613",
     // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
@@ -81,7 +82,7 @@ const SignedAudioReport = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => ["221153", "182025"].includes(item?.empId) && item?.audiometryUrl);
+                ?.filter((item) => (item.vitalsCreatedDate === "2026-06-15" || item.vitalsCreatedDate === "2026-06-16") && item?.audiometryUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -107,7 +108,7 @@ const SignedAudioReport = ({
             // Step 2️⃣: Modify the PDF (apply rectangle + image)
             const modifiedBlob = await modifyPftPdf(
                 audiometryUrl,
-                Dr_Jaydip_Saxena // ✅ your actual signature
+                drPratibhaVBandekar // ✅ your actual signature
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)

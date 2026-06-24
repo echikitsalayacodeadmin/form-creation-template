@@ -32,9 +32,8 @@ const DATE_CONFIG = {
   PFT: [{ label: "Date", xOffset: 45, whiteWidth: 140 }],
 
   BLOODTEST: [
-    { label: "Registered On", xOffset: 115, whiteWidth: 59 },
-    { label: "Sample Collected On", xOffset: 115, whiteWidth: 59 },
-    { label: "Sample Reported On", xOffset: 115, whiteWidth: 57 },
+    { label: "Registered On", xOffset: 115, whiteWidth: 57 },
+    { label: "Sample Collected On", xOffset: 115, whiteWidth: 57 },
   ],
 };
 
@@ -76,9 +75,12 @@ async function loadPdfJs() {
 /* =========================================================
    FIND LABEL POSITION
 ========================================================= */
-async function findLabelPosition(pdfUrl, labelText) {
+async function findLabelPosition(pdfBytes, labelText) {
+  if (!pdfBytes) return null;
+
   const pdfjsLib = await loadPdfJs();
-  const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+  const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
+  const pdf = await loadingTask.promise;
   const page = await pdf.getPage(1);
   const textContent = await page.getTextContent();
 
@@ -86,32 +88,52 @@ async function findLabelPosition(pdfUrl, labelText) {
     const text = item.str?.trim();
     if (text && text.startsWith(labelText)) {
       const [x, y] = item.transform.slice(4, 6);
-      await pdf.destroy();
+      if (loadingTask.destroy) await loadingTask.destroy();
       return { x, y, height: item.height || 10 };
     }
   }
 
-  await pdf.destroy();
+  if (loadingTask.destroy) await loadingTask.destroy();
   return null;
 }
 
 /* =========================================================
    REPLACE DATE IN PDF
 ========================================================= */
-async function replaceDateInPdf({ pdfUrl, fileType, customDate }) {
+async function replaceDateInPdf({
+  pdfUrl,
+  fileType,
+  customDate,
+  bloodReportedDate,
+}) {
   const configs = DATE_CONFIG[fileType];
-  if (!configs) return null;
+  if (!configs || !pdfUrl) return null;
 
   const pdfBytes = await fetch(pdfUrl).then((r) => r.arrayBuffer());
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const page = pdfDoc.getPages()[0];
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-  for (const cfg of configs) {
-    const labelPos = await findLabelPosition(pdfUrl, cfg.label);
+  const bloodReportedCfg =
+    fileType === "BLOODTEST" && bloodReportedDate
+      ? {
+        label: "Sample Reported On",
+        xOffset: 115,
+        whiteWidth: 57,
+        date: bloodReportedDate,
+      }
+      : null;
+
+  const allConfigs = bloodReportedCfg
+    ? [...configs, bloodReportedCfg]
+    : configs;
+
+  for (const cfg of allConfigs) {
+    const labelPos = await findLabelPosition(pdfBytes, cfg.label);
     if (!labelPos) continue;
 
     const drawCfg = DRAW_CONFIG[fileType] || DRAW_CONFIG.BLOODTEST;
+    const dateToDraw = cfg.date || customDate;
 
     const VALUE_X = labelPos.x + cfg.xOffset + 3;
     const VALUE_Y = labelPos.y + drawCfg.yOffset;
@@ -126,7 +148,7 @@ async function replaceDateInPdf({ pdfUrl, fileType, customDate }) {
     });
 
     // DRAW NEW DATE
-    page.drawText(customDate, {
+    page.drawText(dateToDraw, {
       x: VALUE_X + 3,
       y: VALUE_Y + drawCfg.textYOffset,
       size: drawCfg.textSize,
@@ -147,6 +169,7 @@ async function processEmployee({
   campCycleId,
   enqueueSnackbar,
   customDate,
+  bloodReportedDate,
 }) {
   for (const key of Object.keys(FILE_CONFIG)) {
     const config = FILE_CONFIG[key];
@@ -158,6 +181,8 @@ async function processEmployee({
         pdfUrl,
         fileType: config.fileType,
         customDate,
+        bloodReportedDate:
+          config.fileType === "BLOODTEST" ? bloodReportedDate : undefined,
       });
 
       if (!modifiedBlob) {
@@ -196,8 +221,9 @@ async function processEmployee({
 ========================================================= */
 const AartiCustomDateOnReport = ({
   corpId = "058c1ace-4ade-4dab-a13e-4f75c49339f2",
-  campCycleId = "369186",
-  CUSTOM_DATE = "29-Dec-2025",
+  campCycleId = "424248",
+  CUSTOM_DATE = "11-Jun-2026",
+  BLOOD_REPORTED_DATE = "13-Jun-2026",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [employees, setEmployees] = useState([]);
@@ -210,38 +236,10 @@ const AartiCustomDateOnReport = ({
 
       const filtered =
         res?.data?.filter(
-          (item) =>  [
-            "54201590",
-            "54201380",
-            "54201620",
-            "54201276",
-            "54201609",
-            "54201578",
-            "54201510",
-            "54201505",
-            "54201451",
-            "54201367",
-            "54201291",
-            "54201350",
-            "54201386",
-            "542021128",
-            "54207409",
-            "54201384",
-            "54101463",
-            "54201548",
-            "54201667",
-            "54201692",
-            "54201244",
-            "54201366",
-            "54201311",
-            "54201283",
-            "54201671",
-            "54201597",
-            "54201528",
-            "PEM-800",
-            "54201273"
+          (item) => [
+            "54201591", "54201578", "AL8", "54201696", "54201548", "54201575", "AL15", "54201629", "54201355", "AL18", "54201590"
           ].includes(item?.empId)
-          
+
           // item?.bloodTestUrl || item?.pftUrl || item?.audiometryUrl
         ) || [];
 
@@ -259,6 +257,7 @@ const AartiCustomDateOnReport = ({
         campCycleId,
         enqueueSnackbar,
         customDate: CUSTOM_DATE,
+        bloodReportedDate: BLOOD_REPORTED_DATE,
       });
       setProcessed((p) => p + 1);
     }

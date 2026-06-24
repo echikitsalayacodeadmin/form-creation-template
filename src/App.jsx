@@ -145,6 +145,8 @@ import CiplaBommaSandraPFTModifier from "./ciplaBommasandra/CiplaBommaSandraPFTM
 import CiplaBommaSandraECGModifier from "./ciplaBommasandra/CiplaBommaSandraECGModifier";
 import ModifyHeightInPFT from "./skodaCustomForms/ModifyHeightInPFT";
 import CiplaBommaSandraAudioModifier from "./ciplaBommasandra/CiplaBommaSandraAudioModifier";
+import CiplaBommaSandraBloodReport from "./ciplaBommasandra/CiplaBommaSandraBloodReport";
+import SkodaHeaderInsertorV2 from "./skodaCustomForms/SkodaHeaderInsertorV2";
 
 const App = () => {
   return (
@@ -153,7 +155,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <CiplaBommaSandraXrayModifier />
+        <SkodaHeaderInsertor />
 
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}

@@ -83,28 +83,23 @@ const CiplaBommaSandraXrayModifier = ({
 
         if (result?.data) {
             const filtered = result.data.filter((item) => ([
-                "820",
-                "673",
-                "600",
-                "540",
-                "541",
-                "542",
-                "354",
-                "208",
-                "301",
-                "5",
-                "10",
-                "24",
-                "29",
-                "53",
-                "57",
-                "58",
-                "61",
-                "98",
-                "125",
-                "143",
-                "144"
-            ].includes(item?.tokenNumber) && item?.xrayUrl));
+                "41000362",
+                "41000276",
+                "41000352",
+                "41000351",
+                "41000343",
+                "41000161",
+                "41000490",
+                "41000546",
+                "168420",
+                "166917",
+                "41000342",
+                "169688",
+                "41000606",
+                "162545",
+                "41000344",
+                "NE002"
+            ].includes(item?.empId) && item?.xrayUrl));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);

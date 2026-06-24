@@ -10,68 +10,50 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import dayjs from "dayjs";
 import uncareheader from "../assets/images/uncareheader.png";
 
-async function removeAddressFromHeaderInReport(reportPdfBytes) {
-  const reportPdf = await PDFDocument.load(reportPdfBytes);
-  const mergedPdf = await PDFDocument.create();
 
-  const [page] = await mergedPdf.copyPages(reportPdf, [0]);
-  const { width, height } = page.getSize();
 
-  // White-out from top of page till 90 height (full width)
-  page.drawRectangle({
-    x: 0,
-    // Xray
-    y: height - 105, // 90px down from top
-    width: width, // full page width
-    height: 105,
-
-    // Form35
-    // y: height - 75, // 90px down from top
-    // width: width, // full page width
-    // height: 75,
-
-    color: rgb(1, 1, 1),
-  });
-
-  mergedPdf.addPage(page);
-  return await mergedPdf.save();
-}
 async function mergeHeaderWithReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
   const mergedPdf = await PDFDocument.create();
 
-  // Import header image
-  const headerImageBytes = await fetch(uncareheader).then((res) =>
+  const headerImageBytes = await fetch(drRaviHeaderSkoda).then((res) =>
     res.arrayBuffer()
   );
   const headerImage = await mergedPdf.embedPng(headerImageBytes);
 
+  const whiteOutHeight = 100;
   const headerHeight = 90;
 
-  // Get original page
-  const [origPage] = await reportPdf.getPages();
+  const [origPage] = reportPdf.getPages();
   const { width, height } = origPage.getSize();
 
-  // Embed original page as an embedded page
   const embeddedOrigPage = await mergedPdf.embedPage(origPage);
 
-  // Create new single page output
   const newPage = mergedPdf.addPage([width, height]);
 
-  // Draw header
+  // Draw original page at full size (NO shifting/scaling)
+  newPage.drawPage(embeddedOrigPage, {
+    x: 0,
+    y: 0,
+    width,
+    height,
+  });
+
+  // White-out top area
+  newPage.drawRectangle({
+    x: 0,
+    y: height - whiteOutHeight,
+    width,
+    height: whiteOutHeight,
+    color: rgb(1, 1, 1),
+  });
+
+  // Draw header on top
   newPage.drawImage(headerImage, {
     x: 0,
     y: height - headerHeight,
     width,
     height: headerHeight,
-  });
-
-  // Draw the original content shifted down
-  newPage.drawPage(embeddedOrigPage, {
-    x: 0,
-    y: 0,
-    width,
-    height: height - headerHeight,
   });
 
   return await mergedPdf.save();
@@ -123,9 +105,9 @@ async function cleanAndRewriteHeader(reportPdfBytes) {
   return await mergedPdf.save();
 }
 
-const SkodaHeaderInsertor = ({
-  corpId = "1f084b0a-0423-47ec-a812-345500977336", // atlas copco corpId
-  campCycleId = "425856", // atlas copco campCycleId
+const SkodaHeaderInsertorV2 = ({
+  corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
+  campCycleId = "410953",// atlas copco campCycleId
   // corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
   // campCycleId = "410953", // atlas copco campCycleId
   // corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
@@ -206,11 +188,21 @@ const SkodaHeaderInsertor = ({
 
       const cutoff = dayjs("2025-11-30").endOf("day");
 
+      const temp =
+        result?.data?.filter(
+          (item) =>
+            [
+              "40050966",
+              "40035239"
 
-      const temp = result?.data
-        ?.filter((item) => (item.vitalsCreatedDate === "2026-06-15" || item.vitalsCreatedDate === "2026-06-16") && !["132557", "172036", "255019", "132251", "262069", "102170", "112440"].includes(item?.empId) &&
-          item?.[urlType]
+            ].includes(item?.empId) &&
+            item?.[urlType]
         ) || [];
+      // item?.vitalsCreatedDate === "2025-11-26" ||
+      // item?.vitalsCreatedDate === "2025-11-27" ||
+      // item?.vitalsCreatedDate === "2025-11-28" ||
+      // item?.vitalsCreatedDate === "2025-11-29" ||
+      // item?.vitalsCreatedDate === "2025-11-30"
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;
@@ -287,4 +279,4 @@ const SkodaHeaderInsertor = ({
   );
 };
 
-export default SkodaHeaderInsertor;
+export default SkodaHeaderInsertorV2;

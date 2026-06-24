@@ -173,18 +173,24 @@ const CiplaBommaSandraAudioModifier = ({
         if (result?.data) {
             const filtered = result.data.filter(
                 (item) =>
-                (item?.audiometryUrl && ["157118",
-                    "41000350",
-                    "148988",
-                    "171125",
-                    "108579",
-                    "41000353",
-                    "158863",
-                    "41000207",
-                    "41000423",
-                    "106927",
-                    "168133",
-                    "146987"].includes(item?.empId))
+                (item?.audiometryUrl && [
+                    "41000362",
+                    "41000276",
+                    "41000352",
+                    "41000351",
+                    "41000343",
+                    "41000161",
+                    "41000490",
+                    "41000546",
+                    "168420",
+                    "166917",
+                    "41000342",
+                    "169688",
+                    "41000606",
+                    "162545",
+                    "41000344",
+                    "NE002"
+                ].includes(item?.empId))
 
             );
             const sorted = sortDataByName(filtered);
