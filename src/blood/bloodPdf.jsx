@@ -78,7 +78,7 @@
 // //       pdfBlob,
 // //       `${item?.cholestrolData?.["BLOOD_PATIENT_NAME_REPORT"]}.pdf`
 // //     );
-// //     const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=VACCINATION_CERTIFICATE&corpId=${corpId}&campCycleId=`;
+// //     const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=VACCINATION_CERTIFICATE&corpId=${corpId}&campCycleId=`;
 // //     const result = await uploadFile(url, formData);
 // //     if (result && result.data) {
 // //       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -95,7 +95,7 @@
 // //   };
 
 // //   const fetchListOfEmployees = async () => {
-// //     const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
+// //     const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
 // //     const result = await getData(url);
 // //     if (result && result.data) {
 // //       console.log("Fetched Data successfully");
@@ -113,7 +113,7 @@
 
 // //   const deleteFiles = async (data) => {
 // //     // Fetch employees from the API starting from the currentIndex
-// //     const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=VACCINATION_CERTIFICATE&empId=${data.empId}`;
+// //     const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=VACCINATION_CERTIFICATE&empId=${data.empId}`;
 // //     const result = await updateData(url);
 // //     if (result && result.data) {
 // //       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -458,7 +458,7 @@ const BloodPdf = ({
         pdfBlob,
         `${employee?.bloodTestUrl?.split("/").pop() || "Report"}.pdf`
       );
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
       const result = await uploadFile(url, formData);
       if (result && result.data) {
         enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
@@ -480,7 +480,7 @@ const BloodPdf = ({
   // Fetch the list of employees
   const fetchListOfEmployees = async () => {
     try {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
         const temp = result.data.filter(

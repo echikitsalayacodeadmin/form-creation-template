@@ -78,11 +78,11 @@ const SignedAudioReport = ({
 
     // Fetch employee list
     const fetchListOfEmployees = async () => {
-        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+        const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => (item.vitalsCreatedDate === "2026-06-15" || item.vitalsCreatedDate === "2026-06-16") && item?.audiometryUrl);
+                ?.filter((item) => (item.vitalsCreatedDate === "2026-06-15" || item.vitalsCreatedDate === "2026-06-16" || item.vitalsCreatedDate === "2026-06-17" || item.vitalsCreatedDate === "2026-06-18" || item.vitalsCreatedDate === "2026-06-19") && item?.audiometryUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -120,7 +120,7 @@ const SignedAudioReport = ({
             const formData = new FormData();
             formData.append("file", modifiedBlob, `Audio_${data?.empId}.pdf`);
 
-            const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
 
             const result = await uploadFile(uploadUrl, formData);
 
@@ -150,7 +150,7 @@ const SignedAudioReport = ({
     };
 
     const deleteFiles = async (data) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+        const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
         const result = await updateData(url);
         if (result && result.data) {
             enqueueSnackbar("Successfully Uploaded PDF!", {

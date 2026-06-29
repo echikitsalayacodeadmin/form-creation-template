@@ -8,18 +8,18 @@ import { sortDataByName } from "../assets/utils";
 import dayjs from "dayjs";
 
 const ZestPharmaPhysicalFitnessForm = ({
-  corpId = "fae5d4c3-7f90-4ee9-95c5-21bf2b1b6037",
-  campCycleId = "272711",
-  fileType = "CONSOLIDATED_REPORT",
+   corpId = "fae5d4c3-7f90-4ee9-95c5-21bf2b1b6037",
+   campCycleId = "272711",
+   fileType = "CONSOLIDATED_REPORT",
 }) => {
-  const { enqueueSnackbar } = useSnackbar();
-  const batchSize = 50;
-  const [list, setList] = useState([]);
-  const [totalEmployees, setTotalEmployees] = useState(0);
-  const [uploadedCount, setUploadedCount] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const generatePDF = async (data) => {
-    const content = `
+   const { enqueueSnackbar } = useSnackbar();
+   const batchSize = 50;
+   const [list, setList] = useState([]);
+   const [totalEmployees, setTotalEmployees] = useState(0);
+   const [uploadedCount, setUploadedCount] = useState(0);
+   const [currentIndex, setCurrentIndex] = useState(0);
+   const generatePDF = async (data) => {
+      const content = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
    <head>
@@ -1442,16 +1442,15 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-transform:capitalize;
                   "
                   >
-                 ${
-                   ["borderline", "abnormal", "normal"].find((val) =>
-                     data?.cholestrolData?.["ECG.INTERPRETATION"]
-                       ?.toLowerCase()
-                       ?.replaceAll("\tr", "")
-                       .includes(val)
-                   ) ||
-                   "" ||
-                   ""
-                 }
+                 ${["borderline", "abnormal", "normal"].find((val) =>
+         data?.cholestrolData?.["ECG.INTERPRETATION"]
+            ?.toLowerCase()
+            ?.replaceAll("\tr", "")
+            .includes(val)
+      ) ||
+         "" ||
+         ""
+         }
                </p>
             </td>
             <td
@@ -1518,11 +1517,10 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-align: left;
                   "
                   >
-                  ${
-                    data?.cholestrolData?.["HB"]
-                      ? data?.cholestrolData?.["HB"] + " g/dl"
-                      : ""
-                  }
+                  ${data?.cholestrolData?.["HB"]
+            ? data?.cholestrolData?.["HB"] + " g/dl"
+            : ""
+         }
                </p>
             </td>
             <td
@@ -1589,11 +1587,10 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-align: left;
                   "
                   >
-                  ${
-                    data?.cholestrolData?.["RBC"]
-                      ? data?.cholestrolData?.["RBC"] + " milli./cu.mm"
-                      : ""
-                  }
+                  ${data?.cholestrolData?.["RBC"]
+            ? data?.cholestrolData?.["RBC"] + " milli./cu.mm"
+            : ""
+         }
                </p>
             </td>
             <td
@@ -1660,11 +1657,10 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-align: left;
                   "
                   >
-                  ${
-                    data?.cholestrolData?.["WBC"]
-                      ? data?.cholestrolData?.["WBC"] + " /cumm"
-                      : ""
-                  }
+                  ${data?.cholestrolData?.["WBC"]
+            ? data?.cholestrolData?.["WBC"] + " /cumm"
+            : ""
+         }
                </p>
             </td>
             <td
@@ -1731,11 +1727,10 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-align: left;
                   "
                   >
-                  ${
-                    data?.cholestrolData?.["PLATELET"]
-                      ? data?.cholestrolData?.["PLATELET"] + " Lakh/cumm"
-                      : ""
-                  }
+                  ${data?.cholestrolData?.["PLATELET"]
+            ? data?.cholestrolData?.["PLATELET"] + " Lakh/cumm"
+            : ""
+         }
                </p>
             </td>
             <td
@@ -1802,11 +1797,10 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-align: left;
                   "
                   >
-                  ${
-                    data?.cholestrolData?.["BLOOD SUGAR RANDOM"]
-                      ? data?.cholestrolData?.["BLOOD SUGAR RANDOM"]
-                      : ""
-                  }
+                  ${data?.cholestrolData?.["BLOOD SUGAR RANDOM"]
+            ? data?.cholestrolData?.["BLOOD SUGAR RANDOM"]
+            : ""
+         }
                </p>
             </td>
             <td
@@ -1873,11 +1867,10 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-align: left;
                   "
                   >
-                  ${
-                    data?.cholestrolData?.["ESR"]
-                      ? data?.cholestrolData?.["ESR"] + " mm/1hr"
-                      : ""
-                  }
+                  ${data?.cholestrolData?.["ESR"]
+            ? data?.cholestrolData?.["ESR"] + " mm/1hr"
+            : ""
+         }
                </p>
             </td>
             <td
@@ -2011,18 +2004,17 @@ const ZestPharmaPhysicalFitnessForm = ({
                   text-align: left;
                   "
                   >
-                  ${
-                    [
-                      "10106",
-                      "10114",
-                      "10113",
-                      "10110",
-                      "10177",
-                      "10148",
-                    ].includes(data?.empId)
-                      ? "Glucose Present"
-                      : "NAD"
-                  }
+                  ${[
+            "10106",
+            "10114",
+            "10113",
+            "10110",
+            "10177",
+            "10148",
+         ].includes(data?.empId)
+            ? "Glucose Present"
+            : "NAD"
+         }
                </p>
             </td>
             <td
@@ -2113,94 +2105,94 @@ const ZestPharmaPhysicalFitnessForm = ({
 </html>
     `;
 
-    const pdfBlob = await html2pdf()
-      .from(content)
-      .output("blob")
-      .then((data) => {
-        return data;
-      });
+      const pdfBlob = await html2pdf()
+         .from(content)
+         .output("blob")
+         .then((data) => {
+            return data;
+         });
 
-    const formData = new FormData();
-    formData.append("file", pdfBlob, `${data.empId}_consolidatedReport.pdf`);
+      const formData = new FormData();
+      formData.append("file", pdfBlob, `${data.empId}_consolidatedReport.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-    const result = await uploadFile(url, formData);
-    if (result && result.data) {
-      enqueueSnackbar("Successfully Uploaded PDF!", {
-        variant: "success",
-      });
-      setUploadedCount((prevCount) => prevCount + 1);
-      // const url = URL.createObjectURL(pdfBlob);
-      // window.open(url, "_blank");
-    } else {
-      enqueueSnackbar("An error Occurred!", {
-        variant: "error",
-      });
-    }
-  };
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await uploadFile(url, formData);
+      if (result && result.data) {
+         enqueueSnackbar("Successfully Uploaded PDF!", {
+            variant: "success",
+         });
+         setUploadedCount((prevCount) => prevCount + 1);
+         // const url = URL.createObjectURL(pdfBlob);
+         // window.open(url, "_blank");
+      } else {
+         enqueueSnackbar("An error Occurred!", {
+            variant: "error",
+         });
+      }
+   };
 
-  const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const result = await getData(url);
-    if (result && result.data) {
-      console.log("Fetched Data successfully");
-      const temp = result.data.filter((item) => item.vitalsCreatedDate);
-      setList(sortDataByName(temp));
-      setTotalEmployees(temp.length);
-    } else {
-      console.log("An error Occurred");
-    }
-  };
+   const fetchListOfEmployees = async () => {
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const result = await getData(url);
+      if (result && result.data) {
+         console.log("Fetched Data successfully");
+         const temp = result.data.filter((item) => item.vitalsCreatedDate);
+         setList(sortDataByName(temp));
+         setTotalEmployees(temp.length);
+      } else {
+         console.log("An error Occurred");
+      }
+   };
 
-  useEffect(() => {
-    fetchListOfEmployees();
-  }, []);
+   useEffect(() => {
+      fetchListOfEmployees();
+   }, []);
 
-  const handleGeneratePDFs = async () => {
-    for (let i = 0; i < list.length; i++) {
-      await generatePDF(list[i]);
-    }
-  };
-  const handleDeletePDF = async () => {
-    for (let i = 0; i < list.length; i++) {
-      await deleteFiles(list[i]);
-    }
-  };
+   const handleGeneratePDFs = async () => {
+      for (let i = 0; i < list.length; i++) {
+         await generatePDF(list[i]);
+      }
+   };
+   const handleDeletePDF = async () => {
+      for (let i = 0; i < list.length; i++) {
+         await deleteFiles(list[i]);
+      }
+   };
 
-  const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
-    const result = await updateData(url);
-    if (result && result.data) {
-      enqueueSnackbar("Successfully Uploaded PDF!", {
-        variant: "success",
-      });
-      setUploadedCount((prevCount) => prevCount + 1);
-    } else {
-      enqueueSnackbar("An error Occurred!", {
-        variant: "error",
-      });
-    }
-  };
+   const deleteFiles = async (data) => {
+      const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+      const result = await updateData(url);
+      if (result && result.data) {
+         enqueueSnackbar("Successfully Uploaded PDF!", {
+            variant: "success",
+         });
+         setUploadedCount((prevCount) => prevCount + 1);
+      } else {
+         enqueueSnackbar("An error Occurred!", {
+            variant: "error",
+         });
+      }
+   };
 
-  return (
-    <div>
+   return (
       <div>
-        <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
-        <button onClick={handleDeletePDF}>Delete Files</button>
-        <div>Total Employees: {totalEmployees}</div> <br />
-        <div>Uploaded Files: {uploadedCount}</div> <br />
-        {list.map((item, index) => (
-          <div key={index} style={{ display: "flex" }}>
-            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-            <a href={item.consolidatedRUrl}>
-              <div key={index}>{item.consolidatedRUrl}</div>
-            </a>
-            <br />
-          </div>
-        ))}
+         <div>
+            <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
+            <button onClick={handleDeletePDF}>Delete Files</button>
+            <div>Total Employees: {totalEmployees}</div> <br />
+            <div>Uploaded Files: {uploadedCount}</div> <br />
+            {list.map((item, index) => (
+               <div key={index} style={{ display: "flex" }}>
+                  <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+                  <a href={item.consolidatedRUrl}>
+                     <div key={index}>{item.consolidatedRUrl}</div>
+                  </a>
+                  <br />
+               </div>
+            ))}
+         </div>
       </div>
-    </div>
-  );
+   );
 };
 
 export default ZestPharmaPhysicalFitnessForm;

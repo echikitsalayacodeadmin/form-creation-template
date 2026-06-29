@@ -179,7 +179,7 @@ const ReplaceGenderInAudiometery = ({
   const [uploadedCount, setUploadedCount] = useState(0);
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
 
     if (result && result.data) {
@@ -264,7 +264,7 @@ const ReplaceGenderInAudiometery = ({
       // Step 4: Upload the modified PDF
       const formData = new FormData();
       formData.append("file", modifiedBlob, `AUDIOMETRY_${data?.empId}.pdf`);
-      const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(uploadUrl, formData);
 
       if (result && result.data) {
@@ -296,7 +296,7 @@ const ReplaceGenderInAudiometery = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Deleted PDF!", {

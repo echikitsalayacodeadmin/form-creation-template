@@ -215,14 +215,13 @@ const IsconBalajiLudhiana = ({
             "
           >
             Shri/ Smt.
-            <span style=" text-transform: capitalize; text-decoration: underline"> ${
-              data?.name.toLowerCase() || ""
-            }</span>
+            <span style=" text-transform: capitalize; text-decoration: underline"> ${data?.name.toLowerCase() || ""
+      }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
               >&nbsp;&nbsp;&nbsp;${dayjs(data?.vitalsCreatedDate).format(
-                "DD MMM YYYY"
-              )}&nbsp;
+        "DD MMM YYYY"
+      )}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -333,7 +332,7 @@ const IsconBalajiLudhiana = ({
     //formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
     formData.append("file", pdfBlob, `${data.empId}_physical_fitness_form.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -350,8 +349,8 @@ const IsconBalajiLudhiana = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -387,7 +386,7 @@ const IsconBalajiLudhiana = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

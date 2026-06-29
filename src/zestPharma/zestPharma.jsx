@@ -65,12 +65,11 @@ const ZestPharma = ({
       formData.append(
         "file",
         pdfBlob,
-        `${
-          employee?.physicalFitnessFormUrl?.split("/").pop() ||
-          employee?.empId + "_ZestPharma"
+        `${employee?.physicalFitnessFormUrl?.split("/").pop() ||
+        employee?.empId + "_ZestPharma"
         }.pdf`
       );
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
       if (result && result.data) {
         enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
@@ -92,7 +91,7 @@ const ZestPharma = ({
   // Fetch the list of employees
   const fetchListOfEmployees = async () => {
     try {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
         const empIds = [
@@ -135,7 +134,7 @@ const ZestPharma = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?empId=${data?.empId}&toDeletefiletype=${fileType}&corpId=${corpId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?empId=${data?.empId}&toDeletefiletype=${fileType}&corpId=${corpId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Deleted PDF!", {

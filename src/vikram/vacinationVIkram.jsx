@@ -212,7 +212,7 @@ const VacinationVIkram = ({
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_VacinationCertificate.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=VACCINATION_CERTIFICATE&corpId=${corpId}&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=VACCINATION_CERTIFICATE&corpId=${corpId}&campCycleId=`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -230,8 +230,8 @@ const VacinationVIkram = ({
 
   const fetchListOfEmployees = async () => {
     // Fetch employees from the API starting from the currentIndex
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
     // const result = await getData(url);
     // if (result && result.data) {
     //   console.log("Fetched Data successfully");
@@ -1930,7 +1930,7 @@ const VacinationVIkram = ({
 
   const deleteFiles = async (data) => {
     // Fetch employees from the API starting from the currentIndex
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=VACCINATION_CERTIFICATE&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=VACCINATION_CERTIFICATE&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

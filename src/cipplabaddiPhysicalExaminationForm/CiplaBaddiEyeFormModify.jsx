@@ -119,7 +119,7 @@ const CiplaBaddiEyeFormModify = ({
   /* ===================== FETCH EMPLOYEES ===================== */
   const fetchListOfEmployees = async () => {
     try {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
 
       if (result?.data) {
@@ -287,7 +287,7 @@ const CiplaBaddiEyeFormModify = ({
         `${data?.eyeTestUrl?.split("/").pop()}`
       );
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
@@ -315,7 +315,7 @@ const CiplaBaddiEyeFormModify = ({
   /* ===================== DELETE ===================== */
   const handleDeletePDF = async () => {
     for (let item of list) {
-      const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${item.empId}`;
+      const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${item.empId}`;
       await updateData(url);
       setUploadedCount((c) => c + 1);
     }

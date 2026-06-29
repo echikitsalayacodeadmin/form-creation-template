@@ -47,7 +47,7 @@ const SunPharmaBangalore = ({
       const formData = new FormData();
       formData.append("file", pdfBlob, `${data?.empId}_FORM24.pdf`);
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
@@ -69,8 +69,8 @@ const SunPharmaBangalore = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -103,7 +103,7 @@ const SunPharmaBangalore = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

@@ -179,7 +179,7 @@ const SkodaHeaderInsertor = ({
       // const url2 = URL.createObjectURL(mergedBlob);
       // window.open(url2, "_blank");
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
@@ -198,8 +198,8 @@ const SkodaHeaderInsertor = ({
     }
   };
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -208,7 +208,7 @@ const SkodaHeaderInsertor = ({
 
 
       const temp = result?.data
-        ?.filter((item) => (item.vitalsCreatedDate === "2026-06-15" || item.vitalsCreatedDate === "2026-06-16") && !["132557", "172036", "255019", "132251", "262069", "102170", "112440"].includes(item?.empId) &&
+        ?.filter((item) => (item.vitalsCreatedDate === "2026-06-17" || item.vitalsCreatedDate === "2026-06-18" || item.vitalsCreatedDate === "2026-06-19") &&
           item?.[urlType]
         ) || [];
 
@@ -238,7 +238,7 @@ const SkodaHeaderInsertor = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

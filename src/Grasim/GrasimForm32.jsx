@@ -402,11 +402,10 @@ const GrasimForm32 = ({
 
       <div> 
         <div style="height:240px;">
-         ${
-           data?.isSign
-             ? `<img src=${KUNALSIGNBASE64} style="height:240px;"/>`
-             : ""
-         } 
+         ${data?.isSign
+        ? `<img src=${KUNALSIGNBASE64} style="height:240px;"/>`
+        : ""
+      } 
          </div>
         <span><br/>.............................</span>
        <p>Signature of<br />Certifying Surgeon</p> 
@@ -442,10 +441,9 @@ const GrasimForm32 = ({
             min-width: 0;
           "
         >
-          ${
-            data?.empId ||
-            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          }
+          ${data?.empId ||
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      }
         </span>
       </p>
       <p
@@ -466,13 +464,12 @@ const GrasimForm32 = ({
             text-transform: capitalize;
           "
         >
-          ${
-            data?.name?.toLowerCase()
-              ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data?.name?.toLowerCase() +
-                "&nbsp;&nbsp;&nbsp;&nbsp;"
-              : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          }
+          ${data?.name?.toLowerCase()
+        ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
+        data?.name?.toLowerCase() +
+        "&nbsp;&nbsp;&nbsp;&nbsp;"
+        : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      }
         </span>
         (Name) son/daughter of
         <span
@@ -484,13 +481,12 @@ const GrasimForm32 = ({
              text-transform: capitalize;
           "
         >
-          ${
-            data?.fathersName
-              ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data?.fathersName?.toLowerCase() +
-                "&nbsp;&nbsp;&nbsp;&nbsp;"
-              : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          }
+          ${data?.fathersName
+        ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
+        data?.fathersName?.toLowerCase() +
+        "&nbsp;&nbsp;&nbsp;&nbsp;"
+        : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      }
         </span>
         (Father’s name) residing at 
         <span
@@ -502,13 +498,12 @@ const GrasimForm32 = ({
              text-transform: capitalize;
           "
         >
-          ${
-            data?.address
-              ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data?.address?.toLowerCase() +
-                "&nbsp;&nbsp;&nbsp;&nbsp;"
-              : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          }
+          ${data?.address
+        ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
+        data?.address?.toLowerCase() +
+        "&nbsp;&nbsp;&nbsp;&nbsp;"
+        : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      }
         </span>
         (Address) who  <span
           style="
@@ -528,13 +523,12 @@ const GrasimForm32 = ({
             text-transform: capitalize;
           "
         >
-          ${
-            data?.department
-              ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                data?.department?.toLowerCase() +
-                "&nbsp;&nbsp;&nbsp;&nbsp;"
-              : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          } </span
+          ${data?.department
+        ? "&nbsp;&nbsp;&nbsp;&nbsp;" +
+        data?.department?.toLowerCase() +
+        "&nbsp;&nbsp;&nbsp;&nbsp;"
+        : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      } </span
         > (Department and process), and that as nearly as can be ascertained from
         my examination, is <span class="h4">fit</span><span class="h2"></span
         ><span class="h4"></span> for employment at the above noted
@@ -558,9 +552,9 @@ const GrasimForm32 = ({
               "
             >
               &nbsp;&nbsp;${
-                // data?.department?.toLowerCase() || ""
-                ""
-              }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      // data?.department?.toLowerCase() || ""
+      ""
+      }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>
           </p>
         </li>
@@ -681,11 +675,10 @@ const GrasimForm32 = ({
       <div> 
        <div>
        <div style="height:240px;">
-         ${
-           data?.isSign
-             ? `<img src=${KUNALSIGNBASE64} style="height:240px;"/>`
-             : ""
-         } 
+         ${data?.isSign
+        ? `<img src=${KUNALSIGNBASE64} style="height:240px;"/>`
+        : ""
+      } 
          </div>
   
         <span><br/>.............................</span>
@@ -744,7 +737,7 @@ const GrasimForm32 = ({
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_${data?.name}.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -761,8 +754,8 @@ const GrasimForm32 = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -808,7 +801,7 @@ const GrasimForm32 = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

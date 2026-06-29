@@ -280,19 +280,16 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Diet: <span>Veg${
-              false
-                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
-                : "&nbsp;"
-            }</span><span>/&nbsp;&nbsp;Non-Veg${
-      false
+            Diet: <span>Veg${false
+        ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+        : "&nbsp;"
+      }</span><span>/&nbsp;&nbsp;Non-Veg${false
         ? `<span style="position: relative;top:-10px;left:-25px;">&#x2714;</span>`
         : "&nbsp;"
-    }</span><span>/&nbsp;&nbsp;Mixed${
-      false
+      }</span><span>/&nbsp;&nbsp;Mixed${false
         ? `<span style="position: relative;top:-10px;left:-20px;">&#x2714;</span>`
         : "&nbsp;"
-    }</span>
+      }</span>
           </td>
           <td
             colspan="2"
@@ -303,15 +300,13 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Smoking: <span>No${
-              !data?.smoking
-                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
-                : "&nbsp;"
-            }</span> <span>/&nbsp;&nbsp;Yes${
-      data?.smoking
+            Smoking: <span>No${!data?.smoking
         ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
         : "&nbsp;"
-    }</span>
+      }</span> <span>/&nbsp;&nbsp;Yes${data?.smoking
+        ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+        : "&nbsp;"
+      }</span>
           </td>
           <td
             style="
@@ -321,15 +316,13 @@ const GrasimAgencyStaff = ({
               text-align: left;
             "
           >
-            Tobacco chewing: <span>No${
-              false
-                ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
-                : "&nbsp;"
-            }</span> <span>/&nbsp;&nbsp;Yes${
-      false
+            Tobacco chewing: <span>No${false
         ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
         : "&nbsp;"
-    }</span>
+      }</span> <span>/&nbsp;&nbsp;Yes${false
+        ? `<span style="position: relative;top:-10px;left:-10px;">&#x2714;</span>`
+        : "&nbsp;"
+      }</span>
           </td>
         </tr>
         <tr>
@@ -972,18 +965,14 @@ const GrasimAgencyStaff = ({
         </tr>
         <tr>
           <td style="border: 1px solid black; padding: 8px">Without Glass</td>
-          <td style="border: 1px solid black; padding: 8px"> ${
-            data?.farRightEyeSight || ""
-          } </td>
-          <td style="border: 1px solid black; padding: 8px"> ${
-            data?.farLeftEyeSight || ""
-          } </td>
-          <td style="border: 1px solid black; padding: 8px"> ${
-            data?.nearRightEyeSight || ""
-          } </td>
-          <td style="border: 1px solid black; padding: 8px"> ${
-            data?.nearLeftEyeSight || ""
-          } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${data?.farRightEyeSight || ""
+      } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${data?.farLeftEyeSight || ""
+      } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${data?.nearRightEyeSight || ""
+      } </td>
+          <td style="border: 1px solid black; padding: 8px"> ${data?.nearLeftEyeSight || ""
+      } </td>
         </tr>
 
         <tr>
@@ -1272,9 +1261,8 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Total Cholesterol: ${
-              data?.cholestrolData?.["S.CHOLESTEROL"] || ""
-            } mg/dl
+            Total Cholesterol: ${data?.cholestrolData?.["S.CHOLESTEROL"] || ""
+      } mg/dl
           </td>
         </tr>
         <tr>
@@ -1286,9 +1274,8 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            B. Sugar R: ${
-              data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""
-            } mg/dl
+            B. Sugar R: ${data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""
+      } mg/dl
           </td>
           <td
             colspan="2"
@@ -1342,9 +1329,8 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            HDL Cholesterol: ${
-              data?.cholestrolData?.["HDL Cholesterol"] || ""
-            }mg/dl
+            HDL Cholesterol: ${data?.cholestrolData?.["HDL Cholesterol"] || ""
+      }mg/dl
           </td>
         </tr>
       </table>
@@ -1416,9 +1402,8 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            S. Triglycerides:: ${
-              `data?.cholestrolData?.["S.TRIGLYCERIDE"]` || ""
-            }mg/dl
+            S. Triglycerides:: ${`data?.cholestrolData?.["S.TRIGLYCERIDE"]` || ""
+      }mg/dl
           </td>
         </tr>
         <tr>
@@ -1472,9 +1457,8 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Urine R/M: Colour: ${
-              data?.cholestrolData?.["URINE.COLOUR"] || ""
-            }<br />Ph: 
+            Urine R/M: Colour: ${data?.cholestrolData?.["URINE.COLOUR"] || ""
+      }<br />Ph: 
           </td>
         </tr>
         <tr>
@@ -1535,9 +1519,8 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-            Total Platelet count:  ${
-              data?.cholestrolData?.["PLATELET"] || ""
-            }/cmm
+            Total Platelet count:  ${data?.cholestrolData?.["PLATELET"] || ""
+      }/cmm
           </td>
 
           <td
@@ -1551,12 +1534,10 @@ const GrasimAgencyStaff = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Pus cells: ${
-              data?.cholestrolData?.["URINE.PUS_CELLS"] || ""
-            } </span>
-            <span style="width: 50%">RBCs: ${
-              data?.cholestrolData?.["RBC"] || ""
-            }</span>
+            <span style="width: 50%">Pus cells: ${data?.cholestrolData?.["URINE.PUS_CELLS"] || ""
+      } </span>
+            <span style="width: 50%">RBCs: ${data?.cholestrolData?.["RBC"] || ""
+      }</span>
           </td>
         </tr>
         <tr>
@@ -1593,12 +1574,10 @@ const GrasimAgencyStaff = ({
               display: flex;
             "
           >
-            <span style="width: 50%">Cast: ${
-              data?.cholestrolData?.["URINE.CASTS"] || ""
-            }</span>
-            <span style="width: 50%">Crystals: ${
-              data?.cholestrolData?.["URINE.CRYSTALS"] || ""
-            }</span>
+            <span style="width: 50%">Cast: ${data?.cholestrolData?.["URINE.CASTS"] || ""
+      }</span>
+            <span style="width: 50%">Crystals: ${data?.cholestrolData?.["URINE.CRYSTALS"] || ""
+      }</span>
           </td>
         </tr>
         <tr>
@@ -1635,14 +1614,11 @@ const GrasimAgencyStaff = ({
               font-weight: bold;
             "
           >
-              PFT Report: ${
-                data?.cholestrolData?.["PFT"] || "----------"
-              } <span style="width: 50%">FVC:${
-      data?.cholestrolData?.["FVC"] || "----------"
-    } </span>
-            <span style="width: 50%">FEV1/FVC: ${
-              data?.cholestrolData?.["FEV1/FVC"] || "----------"
-            }</span>
+              PFT Report: ${data?.cholestrolData?.["PFT"] || "----------"
+      } <span style="width: 50%">FVC:${data?.cholestrolData?.["FVC"] || "----------"
+      } </span>
+            <span style="width: 50%">FEV1/FVC: ${data?.cholestrolData?.["FEV1/FVC"] || "----------"
+      }</span>
           </td>
           <td
             colspan="3"
@@ -1758,11 +1734,10 @@ const GrasimAgencyStaff = ({
               background-color: #fff;
               font-weight: bold;
               height: 100px;">
-              ${
-                data?.isSign
-                  ? `<img src=${KUNALSIGNBASE64} style="height:250px;"/>`
-                  : ""
-              }
+              ${data?.isSign
+        ? `<img src=${KUNALSIGNBASE64} style="height:250px;"/>`
+        : ""
+      }
           </td>
         </tr>
       </table>
@@ -1786,7 +1761,7 @@ const GrasimAgencyStaff = ({
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data?.empId}_consolidated.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -1803,8 +1778,8 @@ const GrasimAgencyStaff = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -1874,7 +1849,7 @@ const GrasimAgencyStaff = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data?.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data?.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

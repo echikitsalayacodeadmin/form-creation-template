@@ -51,7 +51,7 @@ const GenericFormGenerator = () => {
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_${fileName}.pdf`);
     if (fileType && corpId) {
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=138858`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=138858`;
       const result = await uploadFile(url, formData);
       if (result && result.data) {
         setUploadedCount((prevCount) => prevCount + 1);
@@ -64,7 +64,7 @@ const GenericFormGenerator = () => {
   const fetchListOfEmployees = async () => {
     if (corpId) {
       const url = `
-      https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=138858`;
+      https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=138858`;
       const result = await getData(url);
       if (result && result.data) {
         console.log("Fetched Data successfully");
@@ -104,7 +104,7 @@ const GenericFormGenerator = () => {
 
   const deleteFiles = async (data) => {
     if (fileType && corpId) {
-      const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+      const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
       const result = await updateData(url);
       if (result && result.data) {
         enqueueSnackbar("Successfully Uploaded PDF!", {

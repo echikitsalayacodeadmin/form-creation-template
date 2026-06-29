@@ -7,11 +7,11 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import unoHeaderCiplaLtd from "../assets/images/UnoHeaderCIplaLtd.png";
 
-// const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
-// const TARGET_CAMP_CYCLE_ID = "423119";
+const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
+const TARGET_CAMP_CYCLE_ID = "423119";
 
-const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
-const TARGET_CAMP_CYCLE_ID = "423157";
+// const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
+// const TARGET_CAMP_CYCLE_ID = "423157";
 
 // const HEADER_HEIGHT = 95;
 const HEADER_HEIGHT = 48;
@@ -107,24 +107,52 @@ const CiplaBommaSandraPFTModifier = ({
             return;
         }
 
-        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+        const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => ([
-                "41000458",
-                "41000546",
-                "172690",
-                "166916",
-                "41000289",
-                "165509",
-                "140577",
-                "175764",
-                "9516",
-                "41000550",
-                "152996",
-                "177144",
-                "166192"].includes(item?.empId) && item?.pftUrl));
+            const filtered = result.data.filter((item) => item?.pftUrl && [
+                "746",
+                "359",
+                "750",
+                "350",
+                "70",
+                "63",
+                "349",
+                "60",
+                "759",
+                "58",
+                "354",
+                "355",
+                "679",
+                "468",
+                "345",
+                "59",
+                "700",
+                "92",
+                "747",
+                "41",
+                "85",
+                "344",
+                "50",
+                "343",
+                "1",
+                "290",
+                "353",
+                "415",
+                "7",
+                "140",
+                "194",
+                "42",
+                "551",
+                "243",
+                "758",
+                "13",
+                "84",
+                "347",
+                "268",
+                "346"
+            ].includes(item?.tokenNumber));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -176,7 +204,7 @@ const CiplaBommaSandraPFTModifier = ({
             `${employee?.pftUrl?.split("/").pop() || `${employee.empId}_pft.pdf`}`
         );
 
-        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+        const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
         const uploadResult = await uploadFile(uploadUrl, formData);
 
         if (!uploadResult?.data) {
@@ -242,7 +270,7 @@ const CiplaBommaSandraPFTModifier = ({
     };
 
     const deleteFiles = async (employee) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
+        const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
         const result = await updateData(url);
 
         if (!result?.data) {
@@ -301,7 +329,7 @@ const CiplaBommaSandraPFTModifier = ({
             const formData = new FormData();
             formData.append("file", manualFile, manualFile.name);
 
-            const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${trimmedEmpId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${trimmedEmpId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
             const uploadResult = await uploadFile(uploadUrl, formData);
 
             if (!uploadResult?.data) {
@@ -381,7 +409,7 @@ const CiplaBommaSandraPFTModifier = ({
             <br />
             {list.map((item, index) => (
                 <div key={item.empId || index} style={{ display: "flex", gap: "8px" }}>
-                    <div>{`${item.tokenNumber}. ${item.empId} ${item.name} | Dept: ${item?.department || "-"}`}</div>
+                    <div>{`${index}  EmpId - ${item.empId}`}</div>
                     {item?.pftUrl ? (
                         <a href={item.pftUrl} target="_blank" rel="noreferrer">
                             {item.pftUrl}

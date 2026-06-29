@@ -503,7 +503,7 @@ const HealthCheckupPDF = ({ data = {} }) => (
               <View style={styles.tableCell}>
                 <Text>
                   {data?.nearRightEyeSightWithGlasses ||
-                  data?.nearLeftEyeSightWithGlasses
+                    data?.nearLeftEyeSightWithGlasses
                     ? "With Glasses"
                     : "Without Glasses"}
                 </Text>
@@ -527,7 +527,7 @@ const HealthCheckupPDF = ({ data = {} }) => (
               <View style={styles.tableCell}>
                 <Text>
                   {data?.farRightEyeSightWithGlasses ||
-                  data?.farLeftEyeSightWithGlasses
+                    data?.farLeftEyeSightWithGlasses
                     ? "With Glasses"
                     : "Without Glasses"}
                 </Text>
@@ -830,9 +830,9 @@ const HealthCheckupPDF = ({ data = {} }) => (
           {bloodReportRemarks.filter((item) => item.empId === data?.empId)
             .length > 0
             ? bloodReportRemarks
-                .filter((item) => item.empId === data?.empId)
-                .map((item) => `${item.parameter}: ${item.remarks}`)
-                .join("\n")
+              .filter((item) => item.empId === data?.empId)
+              .map((item) => `${item.parameter}: ${item.remarks}`)
+              .join("\n")
             : "NAD"}
         </Text>
         <Text
@@ -867,9 +867,9 @@ const HealthCheckupPDF = ({ data = {} }) => (
             .filter((item) => item.empId === data?.empId)
             .map((item) => `${item.parameter}: ${item.remarks}`).length > 0
             ? audioRemarks
-                .filter((item) => item.empId === data?.empId)
-                .map((item) => `${item.parameter}: ${item.remarks}`)
-                .join("\n")
+              .filter((item) => item.empId === data?.empId)
+              .map((item) => `${item.parameter}: ${item.remarks}`)
+              .join("\n")
             : "NAD"}
         </Text>
       </View>
@@ -1030,7 +1030,7 @@ const SuzlonFormNew = ({
       const formData = new FormData();
       formData.append("file", blob, `${data.empId}_consolidatedReport.pdf`);
 
-      // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      // const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       // const result = await uploadFile(url, formData);
 
       // if (result && result.data) {
@@ -1052,7 +1052,7 @@ const SuzlonFormNew = ({
 
   const deleteFiles = async (data) => {
     try {
-      const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+      const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
       const result = await updateData(url, "");
 
       if (result && result.data) {
@@ -1072,7 +1072,7 @@ const SuzlonFormNew = ({
   };
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");

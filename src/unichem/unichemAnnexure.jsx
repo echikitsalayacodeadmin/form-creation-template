@@ -165,23 +165,21 @@ const UnichemAnnexure = ({
       >
         <div style="width: 80%">
           <p>
-            Name:- ${data?.name || ""} ${" "} ${
-      data?.empId ? `(${data?.empId})` : ""
-    }
+            Name:- ${data?.name || ""} ${" "} ${data?.empId ? `(${data?.empId})` : ""
+      }
           </p>
           <p style="margin-left: 40px; margin-top: -10px">
             ...................................................................
           </p>
         </div>
         <div style="width: 20%">
-           <p>Date:- ${
-             data?.cholestrolData?.["SAMPLE_REPORTED_DATE"]
-               ? dayjs(
-                   data.cholestrolData["SAMPLE_REPORTED_DATE"].split("  ")[0],
-                   "DD-MMM-YYYY"
-                 ).format("DD/MM/YY")
-               : ""
-           }</p>
+           <p>Date:- ${data?.cholestrolData?.["SAMPLE_REPORTED_DATE"]
+        ? dayjs(
+          data.cholestrolData["SAMPLE_REPORTED_DATE"].split("  ")[0],
+          "DD-MMM-YYYY"
+        ).format("DD/MM/YY")
+        : ""
+      }</p>
           <p style="margin-left: 40px; margin-top: -10px">.................</p>
         </div>
       </div>
@@ -893,11 +891,10 @@ const UnichemAnnexure = ({
               Random Blood Sugar
 
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["BLOOD SUGAR RANDOM"]
-                    ? data?.cholestrolData?.["BLOOD SUGAR RANDOM"] + " mg/dl"
-                    : ""
-                }
+                >${data?.cholestrolData?.["BLOOD SUGAR RANDOM"]
+        ? data?.cholestrolData?.["BLOOD SUGAR RANDOM"] + " mg/dl"
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -951,11 +948,10 @@ const UnichemAnnexure = ({
               Blood Group &amp;Rh factor
 
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["Rh"]
-                    ? data?.cholestrolData?.["Rh"]?.replace(/\\/g, "")
-                    : ""
-                }
+                >${data?.cholestrolData?.["Rh"]
+        ? data?.cholestrolData?.["Rh"]?.replace(/\\/g, "")
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -1010,11 +1006,10 @@ const UnichemAnnexure = ({
             >
               HB%
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["HB"]
-                    ? data?.cholestrolData?.["HB"] + " gms/dl"
-                    : ""
-                }
+                >${data?.cholestrolData?.["HB"]
+        ? data?.cholestrolData?.["HB"] + " gms/dl"
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -1067,11 +1062,10 @@ const UnichemAnnexure = ({
             >
               T&amp;D
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["WBC"]
-                    ? data?.cholestrolData?.["WBC"] + " /cumm"
-                    : ""
-                }
+                >${data?.cholestrolData?.["WBC"]
+        ? data?.cholestrolData?.["WBC"] + " /cumm"
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -1127,11 +1121,10 @@ const UnichemAnnexure = ({
               Cholesterol
 
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["S.CHOLESTEROL"]
-                    ? data?.cholestrolData?.["S.CHOLESTEROL"] + " mg/dl"
-                    : ""
-                }
+                >${data?.cholestrolData?.["S.CHOLESTEROL"]
+        ? data?.cholestrolData?.["S.CHOLESTEROL"] + " mg/dl"
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -1292,18 +1285,16 @@ const UnichemAnnexure = ({
             >
               Liver function test
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["SGPT"]
-                    ? "SGPT -" + data?.cholestrolData?.["SGPT"] + " u/l"
-                    : ""
-                }
+                >${data?.cholestrolData?.["SGPT"]
+        ? "SGPT -" + data?.cholestrolData?.["SGPT"] + " u/l"
+        : ""
+      }
               </span>
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["SGOT"]
-                    ? "SGOT -" + data?.cholestrolData?.["SGOT"] + " u/l"
-                    : ""
-                }
+                >${data?.cholestrolData?.["SGOT"]
+        ? "SGOT -" + data?.cholestrolData?.["SGOT"] + " u/l"
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -1358,11 +1349,10 @@ const UnichemAnnexure = ({
             >
               V.D.R.L
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["V.D.R.L"]
-                    ? data?.cholestrolData?.["V.D.R.L"]
-                    : ""
-                }
+                >${data?.cholestrolData?.["V.D.R.L"]
+        ? data?.cholestrolData?.["V.D.R.L"]
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -1415,22 +1405,20 @@ const UnichemAnnexure = ({
             >
               Kidney function test
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["S.CREATININE"]
-                    ? "S.CREATININE -" +
-                      data?.cholestrolData?.["S.CREATININE"] +
-                      " mg/dl"
-                    : ""
-                }
+                >${data?.cholestrolData?.["S.CREATININE"]
+        ? "S.CREATININE -" +
+        data?.cholestrolData?.["S.CREATININE"] +
+        " mg/dl"
+        : ""
+      }
               </span>
               <span style="float: right; margin-right: 30px"
-                >${
-                  data?.cholestrolData?.["Blood Urea"]
-                    ? "Blood Urea -" +
-                      data?.cholestrolData?.["Blood Urea"] +
-                      " mg/dl"
-                    : ""
-                }
+                >${data?.cholestrolData?.["Blood Urea"]
+        ? "Blood Urea -" +
+        data?.cholestrolData?.["Blood Urea"] +
+        " mg/dl"
+        : ""
+      }
               </span>
             </p>
           </td>
@@ -1686,7 +1674,7 @@ const UnichemAnnexure = ({
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -1703,8 +1691,8 @@ const UnichemAnnexure = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -1739,7 +1727,7 @@ const UnichemAnnexure = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

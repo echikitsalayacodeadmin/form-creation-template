@@ -127,9 +127,8 @@ const UltraTech = () => {
               Result of examination of eye sight:
             </p>
             <p style="font-size: 15px; font-weight: bold; width: 50%; border-bottom: 1px solid black; ">
-            NEAR (R-${data?.nearRightEyeSight || ""} L-${
-      data?.nearLeftEyeSight || ""
-    }) FAR (R-${data?.farRightEyeSight || ""} L-${data?.farLeftEyeSight || ""})
+            NEAR (R-${data?.nearRightEyeSight || ""} L-${data?.nearLeftEyeSight || ""
+      }) FAR (R-${data?.farRightEyeSight || ""} L-${data?.farLeftEyeSight || ""})
             </p>
           </div>
           <div class="form-group">
@@ -2032,21 +2031,19 @@ const UltraTech = () => {
         ANNUAL HEALTH CHECKUP SUMMARY REPORT
       </div>
       <div style="margin-left: 70%">Date: ${dayjs(data.date).format(
-        "DD/MM/YYYY"
-      )}</div>
+      "DD/MM/YYYY"
+    )}</div>
     </div>
 
     <div class="section">
       <div class="section-title">A) PERSONAL DETAILS :</div>
       <div class="content-line" >
-      <div style="width: 60%">1. Name of employee <span style="margin-left:5px">:</span> ${
-        data?.name || ""
+      <div style="width: 60%">1. Name of employee <span style="margin-left:5px">:</span> ${data?.name || ""
       }</div>
       <div style="width: 40%">3. Age: ${data?.age || ""}</div>
       </div>
       <div class="content-line">
-      <div style="width: 60%">2. Employee ID <span style="margin-left:48px">:</span> ${
-        data.empId || ""
+      <div style="width: 60%">2. Employee ID <span style="margin-left:48px">:</span> ${data.empId || ""
       }</div>
       <div style="width: 40%">4. Sex: ${data?.gender || ""}</div>
       </div>
@@ -2070,43 +2067,33 @@ const UltraTech = () => {
 
     <div class="section">
       <div class="section-title">C) PHYSICAL EXAMINATION :</div>
-      <div>1. Height <span style="margin-left: 160px">:</span> ${
-        data?.height || ""
+      <div>1. Height <span style="margin-left: 160px">:</span> ${data?.height || ""
       } cm</div>
-      <div>2. Weight <span style="margin-left: 157px">:</span>  ${
-        data?.weight || ""
+      <div>2. Weight <span style="margin-left: 157px">:</span>  ${data?.weight || ""
       } Kg</div>
-      <div>3. BMI <span style="margin-left: 178px">:</span> ${
-        data.bmi || ""
+      <div>3. BMI <span style="margin-left: 178px">:</span> ${data.bmi || ""
       }</div>
-      <div>4. Pulse <span style="margin-left: 166px">:</span> ${
-        data?.pulseRate || ""
+      <div>4. Pulse <span style="margin-left: 166px">:</span> ${data?.pulseRate || ""
       }/Min</div>
       <div>
-        5. B.P. <span style="margin-left: 178px">:</span> ${
-          data?.bp || ""
-        } mm of Hg
+        5. B.P. <span style="margin-left: 178px">:</span> ${data?.bp || ""
+      } mm of Hg
       </div>
       <div>
-        6. Distance vision <span style="margin-left: 98px">:</span> Right ${
-          data?.farRightEyeSight || ""
-        },
-        Left  ${data?.farLeftEyeSight || ""} ${
-      data?.eyeSightWithGlasses ? "with specs" : "without specs"
-    }
+        6. Distance vision <span style="margin-left: 98px">:</span> Right ${data?.farRightEyeSight || ""
+      },
+        Left  ${data?.farLeftEyeSight || ""} ${data?.eyeSightWithGlasses ? "with specs" : "without specs"
+      }
       </div>
       <div>
-        7. Near Vision <span style="margin-left: 123px">:</span> Right ${
-          data?.nearRightEyeSight || ""
-        },
-        Left ${data?.nearLeftEyeSight || ""} ${
-      data?.eyeSightWithGlasses ? "with specs" : "without specs"
-    }
+        7. Near Vision <span style="margin-left: 123px">:</span> Right ${data?.nearRightEyeSight || ""
+      },
+        Left ${data?.nearLeftEyeSight || ""} ${data?.eyeSightWithGlasses ? "with specs" : "without specs"
+      }
       </div>
       <div>
-        8. Colour Vision <span style="margin-left: 110px">:</span> ${
-          data?.colourVision || ""
-        }
+        8. Colour Vision <span style="margin-left: 110px">:</span> ${data?.colourVision || ""
+      }
       </div>
     </div>
 
@@ -2132,48 +2119,40 @@ const UltraTech = () => {
       <div style="margin-block: 10px">
         <div class="content-line">
           <div style="width: 33%">
-            Haemoglobin <span style="margin-left: 30px">:</span> ${
-              data?.cholestrolData?.HB || ""
-            } <span style="font-size:10px">g/dl</span>
+            Haemoglobin <span style="margin-left: 30px">:</span> ${data?.cholestrolData?.HB || ""
+      } <span style="font-size:10px">g/dl</span>
           </div>
           <div style="width: 33%">
-            SGPT <span style="margin-left: 50px">:</span> ${
-              data?.cholestrolData?.SGPT || ""
-            } <span style="font-size:10px">U/L</span>
+            SGPT <span style="margin-left: 50px">:</span> ${data?.cholestrolData?.SGPT || ""
+      } <span style="font-size:10px">U/L</span>
           </div>
           <div style="width: 33%">
-            S. Cholesterol <span style="margin-left: 10px">:</span> ${
-              data?.cholestrolData?.["S.CHOLESTEROL"] || ""
-            } <span style="font-size:10px">mg/dL</span>
+            S. Cholesterol <span style="margin-left: 10px">:</span> ${data?.cholestrolData?.["S.CHOLESTEROL"] || ""
+      } <span style="font-size:10px">mg/dL</span>
           </div>
         </div>
         <div class="content-line">
           <div style="width: 33%">
-            Total WBC count <span style="margin-left: 5px">:</span>  ${
-              data?.cholestrolData?.WBC || ""
-            } <span style="font-size:10px">/cumm</span>
+            Total WBC count <span style="margin-left: 5px">:</span>  ${data?.cholestrolData?.WBC || ""
+      } <span style="font-size:10px">/cumm</span>
           </div>
           <div style="width: 33%">
-            S. Creatinine <span style="margin-left: 1px">:</span>  ${
-              data?.cholestrolData?.["S.CREATININE"] || ""
-            } <span style="font-size:10px">mg/dL</span>
+            S. Creatinine <span style="margin-left: 1px">:</span>  ${data?.cholestrolData?.["S.CREATININE"] || ""
+      } <span style="font-size:10px">mg/dL</span>
           </div>
           <div style="width: 33%">
-            HDL <span style="margin-left: 80px">:</span>  ${
-              data?.cholestrolData?.["S.DHDL"] || ""
-            } <span style="font-size:10px">mg/dL</span>
+            HDL <span style="margin-left: 80px">:</span>  ${data?.cholestrolData?.["S.DHDL"] || ""
+      } <span style="font-size:10px">mg/dL</span>
           </div>
         </div>
         <div class="content-line">
           <div style="width: 33%">
-            Platelet count <span style="margin-left: 27px">:</span> ${
-              data?.cholestrolData?.PLATELET || ""
-            } <span style="font-size:10px">Lakh/cumm</span>
+            Platelet count <span style="margin-left: 27px">:</span> ${data?.cholestrolData?.PLATELET || ""
+      } <span style="font-size:10px">Lakh/cumm</span>
           </div>
           <div style="width: 33%">
-            S. TSH <span style="margin-left: 42px">:</span>  ${
-              data?.cholestrolData?.TSH || ""
-            } <span style="font-size:10px">uIU/ml</span>
+            S. TSH <span style="margin-left: 42px">:</span>  ${data?.cholestrolData?.TSH || ""
+      } <span style="font-size:10px">uIU/ml</span>
           </div>
           <div style="width: 33%">
             LDL <span style="margin-left: 82px">:</span>
@@ -2181,39 +2160,33 @@ const UltraTech = () => {
         </div>
         <div class="content-line">
           <div style="width: 33%">
-            Blood Sugar <span style="margin-left: 35px">:</span>  ${
-              data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""
-            } <span style="font-size:10px">mg/dL</span>
+            Blood Sugar <span style="margin-left: 35px">:</span>  ${data?.cholestrolData?.["BLOOD SUGAR RANDOM"] || ""
+      } <span style="font-size:10px">mg/dL</span>
           </div>
           <div style="width: 33%">
             Urine-R/M <span style="margin-left: 20px">:</span>
           </div>
           <div style="width: 33%">
-            VLDL<span style="margin-left: 75px">:</span>  ${
-              data?.cholestrolData?.VLDL || ""
-            } <span style="font-size:10px">mg/dL</span>
+            VLDL<span style="margin-left: 75px">:</span>  ${data?.cholestrolData?.VLDL || ""
+      } <span style="font-size:10px">mg/dL</span>
           </div>
         </div>
       </div>
       <div style="min-height: 20px">
-        2. X-Ray Chest <span style="margin-left: 15px">: ${
-          data.xrayUrl ? "NAD" : "Not Available"
-        }</span>
+        2. X-Ray Chest <span style="margin-left: 15px">: ${data.xrayUrl ? "NAD" : "Not Available"
+      }</span>
       </div>
       <div style="min-height: 20px">
-        3. ECG <span style="margin-left: 70px">: ${
-          data.ecgUrl ? "NAD" : "Not Available"
-        }</span>
+        3. ECG <span style="margin-left: 70px">: ${data.ecgUrl ? "NAD" : "Not Available"
+      }</span>
       </div>
       <div style="min-height: 20px">
-        4. PFT <span style="margin-left: 75px">: ${
-          data.pftUrl ? "NAD" : "Not Available"
-        }</span>
+        4. PFT <span style="margin-left: 75px">: ${data.pftUrl ? "NAD" : "Not Available"
+      }</span>
       </div>
       <div style="min-height: 20px">
-        5. Audiometry <span style="margin-left: 25px">: ${
-          data.audiometryUrl ? "NAD" : "Not Available"
-        }</span>
+        5. Audiometry <span style="margin-left: 25px">: ${data.audiometryUrl ? "NAD" : "Not Available"
+      }</span>
       </div>
     </div>
 
@@ -2244,8 +2217,8 @@ const UltraTech = () => {
 
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_form35.pdf`);
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&campCycleId=`;
+    // const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=FORM_35&corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&campCycleId=`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -2263,8 +2236,8 @@ const UltraTech = () => {
 
   const fetchListOfEmployees = async () => {
     // Fetch employees from the API starting from the currentIndex
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&campCycleId=`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
+    const url = `https://apitest.uno.care/api/org/detailed/all?corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -2297,7 +2270,7 @@ const UltraTech = () => {
 
   const deleteFiles = async (data) => {
     // Fetch employees from the API starting from the currentIndex
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&toDeletefiletype=FORM_35&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=3ee08e3d-1d0e-4f2e-bf25-43f7d4560347&toDeletefiletype=FORM_35&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

@@ -860,9 +860,8 @@ const RebelMERForm = ({
                 >
                   Age and Gender:
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${data?.age ? data?.age + " " + "Years" : ""} ${
-      data?.gender?.toLowerCase() || ""
-    }</span
+                    >${data?.age ? data?.age + " " + "Years" : ""} ${data?.gender?.toLowerCase() || ""
+      }</span
                   >
                 </p>
               </td>
@@ -1353,11 +1352,10 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.waistGirth && data?.hipGirth
-                        ? (data?.waistGirth / data?.hipGirth).toFixed(2)
-                        : ""
-                    }</span
+                    >${data?.waistGirth && data?.hipGirth
+        ? (data?.waistGirth / data?.hipGirth).toFixed(2)
+        : ""
+      }</span
                   >
                 </p>
               </td>
@@ -1505,9 +1503,8 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.spO2Percent ? data?.spO2Percent + " " + "%" : ""
-                    }</span
+                    >${data?.spO2Percent ? data?.spO2Percent + " " + "%" : ""
+      }</span
                   >
                 </p>
               </td>
@@ -1630,9 +1627,8 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.nearLeftEyeSight ? data?.nearLeftEyeSight : ""
-                    }</span
+                    >${data?.nearLeftEyeSight ? data?.nearLeftEyeSight : ""
+      }</span
                   >
                 </p>
               </td>
@@ -1677,9 +1673,8 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.nearRightEyeSight ? data?.nearRightEyeSight : ""
-                    }</span
+                    >${data?.nearRightEyeSight ? data?.nearRightEyeSight : ""
+      }</span
                   >
                 </p>
               </td>
@@ -1748,9 +1743,8 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      data?.farRightEyeSight ? data?.farRightEyeSight : ""
-                    }</span
+                    >${data?.farRightEyeSight ? data?.farRightEyeSight : ""
+      }</span
                   >
                 </p>
               </td>
@@ -1774,17 +1768,16 @@ const RebelMERForm = ({
                     text-indent: 0pt;
                     text-align: left;">
                   <span style="text-transform: capitalize; font-weight: 400"
-                    >${
-                      ""
-                      // data?.colourVision ? data?.colourVision : ""
-                      // updatedDataArray.find(
-                      //   (item) => item.empId === data?.empId
-                      // )?.colourVision
-                      //   ? updatedDataArray.find(
-                      //       (item) => item.empId === data?.empId
-                      //     )?.colourVision
-                      //   : ""
-                    }</span
+                    >${""
+      // data?.colourVision ? data?.colourVision : ""
+      // updatedDataArray.find(
+      //   (item) => item.empId === data?.empId
+      // )?.colourVision
+      //   ? updatedDataArray.find(
+      //       (item) => item.empId === data?.empId
+      //     )?.colourVision
+      //   : ""
+      }</span
                   >
                 </p>
               </td>
@@ -1939,7 +1932,7 @@ const RebelMERForm = ({
     formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
     // formData.append("file", pdfBlob, `${data.empId}_physical_fitness_form.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -1956,8 +1949,8 @@ const RebelMERForm = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -1992,7 +1985,7 @@ const RebelMERForm = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

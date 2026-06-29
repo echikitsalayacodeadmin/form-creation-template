@@ -34,7 +34,7 @@ const ForceMotorsPuneVertigoFormMain = ({
         `${data?.empId}_VERTIGO_FORM.pdf`
       );
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
@@ -63,7 +63,7 @@ const ForceMotorsPuneVertigoFormMain = ({
   const fetchListOfEmployees = async () => {
     if (!corpId || !campCycleId) return;
 
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
 
     if (result && result.data) {
@@ -100,7 +100,7 @@ const ForceMotorsPuneVertigoFormMain = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully deleted PDF!", { variant: "success" });

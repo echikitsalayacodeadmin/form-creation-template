@@ -164,21 +164,16 @@ const UshaKiranPalace = ({
         </p>
         <p style="display: flex; justify-content: space-between">
           <span style="width: 50%"
-            >Vision: ${
-              data?.farRightEyeSight || data?.farLeftEyeSight
-                ? `FAR ( ${
-                    data?.farRightEyeSight ? "R-" + data?.farRightEyeSight : ""
-                  }  ${
-                    data?.farLeftEyeSight ? "L-" + data?.farLeftEyeSight : ""
-                  })`
-                : ""
-            } ${
-      data?.nearRightEyeSight || data?.nearLeftEyeSight
-        ? `NEAR ( ${
-            data?.nearRightEyeSight ? "R-" + data?.nearRightEyeSight : ""
-          }  ${data?.nearLeftEyeSight ? "L-" + data?.nearLeftEyeSight : ""})`
+            >Vision: ${data?.farRightEyeSight || data?.farLeftEyeSight
+        ? `FAR ( ${data?.farRightEyeSight ? "R-" + data?.farRightEyeSight : ""
+        }  ${data?.farLeftEyeSight ? "L-" + data?.farLeftEyeSight : ""
+        })`
         : ""
-    }
+      } ${data?.nearRightEyeSight || data?.nearLeftEyeSight
+        ? `NEAR ( ${data?.nearRightEyeSight ? "R-" + data?.nearRightEyeSight : ""
+        }  ${data?.nearLeftEyeSight ? "L-" + data?.nearLeftEyeSight : ""})`
+        : ""
+      }
             
             <span style="text-decoration: underline; white-space: pre">
             </span
@@ -295,7 +290,7 @@ const UshaKiranPalace = ({
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_bloodTest.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -312,7 +307,7 @@ const UshaKiranPalace = ({
   };
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -340,7 +335,7 @@ const UshaKiranPalace = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

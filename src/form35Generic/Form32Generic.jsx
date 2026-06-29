@@ -78,7 +78,7 @@ const Form32Generic = () => {
         `${data?.empId}_PhysicalFitnessForm.pdf`
       );
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
@@ -100,7 +100,7 @@ const Form32Generic = () => {
   };
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -182,7 +182,7 @@ const Form32Generic = () => {
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -222,7 +222,7 @@ const Form32Generic = () => {
   const [bloodData, setBloodData] = useState([]);
   const [excludedTestKeys, setExcludedTestKeys] = useState("");
   const getTestDetails = async () => {
-    const url = `https://apibackend.uno.care/api/org/testsconfig`;
+    const url = `https://apitest.uno.care/api/org/testsconfig`;
     const result = await getData(url);
     if (result.error) {
       console.log(result.error);
@@ -263,7 +263,7 @@ const Form32Generic = () => {
       .filter(
         (item) =>
           stringValuesUrine?.["UNHEALTHY_VALUES"]?.includes[
-            item.cholestrolData?.["URINE.GLUCOSE"]
+          item.cholestrolData?.["URINE.GLUCOSE"]
           ]
       )
       .map((item) => ({

@@ -36,7 +36,7 @@ const BPCLForm21Main = ({
 
 
 
-            const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
             const result = await uploadFile(url, formData);
 
 
@@ -68,9 +68,9 @@ const BPCLForm21Main = ({
         if (!corpId || !campCycleId) return;
 
         try {
-            const vitalsUrl = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+            const vitalsUrl = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
 
-            const form21Url = `https://apibackend.uno.care/api/org/form21?corpId=${corpId}&campCycleId=${campCycleId}`;
+            const form21Url = `https://apitest.uno.care/api/org/form21?corpId=${corpId}&campCycleId=${campCycleId}`;
 
             // fetch both APIs together
             const [vitalsResult, form21Result] = await Promise.all([
@@ -122,7 +122,7 @@ const BPCLForm21Main = ({
     };
 
     const deleteFiles = async (data) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+        const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
         const result = await updateData(url);
         if (result && result.data) {
             enqueueSnackbar("Successfully Uploaded PDF!", {

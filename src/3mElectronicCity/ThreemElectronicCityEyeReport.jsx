@@ -75,7 +75,7 @@ const ThreemElectronicCityEyeReport = ({
     const [uploadedCount, setUploadedCount] = useState(0);
 
     const fetchListOfEmployees = async () => {
-        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+        const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
 
         const result = await getData(url);
 
@@ -131,7 +131,7 @@ const ThreemElectronicCityEyeReport = ({
             const formData = new FormData();
             formData.append("file", modifiedBlob, `Eye_Test_Report_${data?.empId}.pdf`);
 
-            const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
 
             const result = await uploadFile(uploadUrl, formData);
 
@@ -170,7 +170,7 @@ const ThreemElectronicCityEyeReport = ({
     };
 
     const deleteFiles = async (data) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+        const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
 
         const result = await updateData(url);
 

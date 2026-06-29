@@ -7,10 +7,11 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import ciplaAudioUnoHeader from "../assets/images/ciplaAudioUnoHeader.png";
 
-// const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
-// const TARGET_CAMP_CYCLE_ID = "423119";
-const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
-const TARGET_CAMP_CYCLE_ID = "423157";
+const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
+const TARGET_CAMP_CYCLE_ID = "423119";
+
+// const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
+// const TARGET_CAMP_CYCLE_ID = "423157";
 
 
 
@@ -35,67 +36,17 @@ const modifyAudioPdf = async (audiometryUrl, department, empId) => {
 
     const headerImage = await pdfDoc.embedPng(headerImageBytes);
 
-    page.drawImage(headerImage, {
-        x: width - 440,
-        y: height - 50,
-        width: 250,
-        height: 50,
-    });
-
-    // // With Header
-    const departmentX = 62;
-    const departmentY = height - 255;
-    const departmentWidth = 260;
-    const departmentHeight = 10;
-
-    page.drawRectangle({
-        x: departmentX,
-        y: departmentY,
-        width: departmentWidth,
-        height: departmentHeight,
-        color: rgb(1, 1, 1),
-    });
-
-    page.drawText(`EMP CODE`, {
-        x: 299,
-        y: departmentY + 3,
-        size: 7,
-        font: fontBold,
-        color: rgb(0, 0, 0),
-    });
-    page.drawText(`: ${empId}`, {
-        x: 420,
-        y: departmentY + 3,
-        size: 7,
-        font: fontNormal,
-        color: rgb(0, 0, 0),
-    });
-
-    page.drawText(`DEPARTMENT`, {
-        x: departmentX + 2,
-        y: departmentY + 3,
-        size: 7,
-        font: fontBold,
-        color: rgb(0, 0, 0),
-    });
-    page.drawText(`: ${safeDepartment}`, {
-        x: 122 + 2,
-        y: departmentY + 3,
-        size: 7,
-        font: fontNormal,
-        color: rgb(0, 0, 0),
-    });
-
-    // // Without Header
     // page.drawImage(headerImage, {
     //     x: width - 440,
     //     y: height - 50,
     //     width: 250,
     //     height: 50,
     // });
-    // const departmentX = 10;
-    // const departmentY = height - 135;
-    // const departmentWidth = 500;
+
+    // // // With Header
+    // const departmentX = 62;
+    // const departmentY = height - 255;
+    // const departmentWidth = 260;
     // const departmentHeight = 10;
 
     // page.drawRectangle({
@@ -107,34 +58,84 @@ const modifyAudioPdf = async (audiometryUrl, department, empId) => {
     // });
 
     // page.drawText(`EMP CODE`, {
-    //     x: 330,
-    //     y: departmentY + 1,
-    //     size: 9,
+    //     x: 299,
+    //     y: departmentY + 3,
+    //     size: 7,
     //     font: fontBold,
     //     color: rgb(0, 0, 0),
     // });
     // page.drawText(`: ${empId}`, {
-    //     x: 452,
-    //     y: departmentY + 1,
-    //     size: 9,
+    //     x: 420,
+    //     y: departmentY + 3,
+    //     size: 7,
     //     font: fontNormal,
     //     color: rgb(0, 0, 0),
     // });
 
     // page.drawText(`DEPARTMENT`, {
-    //     x: departmentX,
-    //     y: departmentY + 1,
-    //     size: 9,
+    //     x: departmentX + 2,
+    //     y: departmentY + 3,
+    //     size: 7,
     //     font: fontBold,
     //     color: rgb(0, 0, 0),
     // });
-    // page.drawText(`:  ${safeDepartment}`, {
-    //     x: 98 + 2,
-    //     y: departmentY + 1,
-    //     size: 9,
+    // page.drawText(`: ${safeDepartment}`, {
+    //     x: 122 + 2,
+    //     y: departmentY + 3,
+    //     size: 7,
     //     font: fontNormal,
     //     color: rgb(0, 0, 0),
     // });
+
+    // Without Header
+    page.drawImage(headerImage, {
+        x: width - 440,
+        y: height - 50,
+        width: 250,
+        height: 50,
+    });
+    const departmentX = 10;
+    const departmentY = height - 135;
+    const departmentWidth = 500;
+    const departmentHeight = 10;
+
+    page.drawRectangle({
+        x: departmentX,
+        y: departmentY,
+        width: departmentWidth,
+        height: departmentHeight,
+        color: rgb(1, 1, 1),
+    });
+
+    page.drawText(`EMP CODE`, {
+        x: 330,
+        y: departmentY + 1,
+        size: 9,
+        font: fontBold,
+        color: rgb(0, 0, 0),
+    });
+    page.drawText(`: ${empId}`, {
+        x: 452,
+        y: departmentY + 1,
+        size: 9,
+        font: fontNormal,
+        color: rgb(0, 0, 0),
+    });
+
+    page.drawText(`DEPARTMENT`, {
+        x: departmentX,
+        y: departmentY + 1,
+        size: 9,
+        font: fontBold,
+        color: rgb(0, 0, 0),
+    });
+    page.drawText(`:  ${safeDepartment}`, {
+        x: 98 + 2,
+        y: departmentY + 1,
+        size: 9,
+        font: fontNormal,
+        color: rgb(0, 0, 0),
+    });
 
     return pdfDoc.save();
 };
@@ -167,30 +168,13 @@ const CiplaBommaSandraAudioModifier = ({
             return;
         }
 
-        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+        const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
 
         if (result?.data) {
             const filtered = result.data.filter(
                 (item) =>
-                (item?.audiometryUrl && [
-                    "41000362",
-                    "41000276",
-                    "41000352",
-                    "41000351",
-                    "41000343",
-                    "41000161",
-                    "41000490",
-                    "41000546",
-                    "168420",
-                    "166917",
-                    "41000342",
-                    "169688",
-                    "41000606",
-                    "162545",
-                    "41000344",
-                    "NE002"
-                ].includes(item?.empId))
+                    (item?.audiometryUrl && !["111633", "174973", "31000839", "31001227", "157340", "31001198", "3832", "59870", "159318", "172479", "31000835", "31000830"].includes(item?.empId))
 
             );
             const sorted = sortDataByName(filtered);
@@ -232,7 +216,7 @@ const CiplaBommaSandraAudioModifier = ({
 
 
 
-        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+        const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
         const uploadResult = await uploadFile(uploadUrl, formData);
 
         if (!uploadResult?.data) {
@@ -298,7 +282,7 @@ const CiplaBommaSandraAudioModifier = ({
     };
 
     const deleteFiles = async (employee) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
+        const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
         const result = await updateData(url);
 
         if (!result?.data) {
@@ -357,7 +341,7 @@ const CiplaBommaSandraAudioModifier = ({
             const formData = new FormData();
             formData.append("file", manualFile, manualFile.name);
 
-            const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${trimmedEmpId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${trimmedEmpId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
             const uploadResult = await uploadFile(uploadUrl, formData);
 
             if (!uploadResult?.data) {

@@ -6,16 +6,7 @@ import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 
-const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
-const TARGET_CAMP_CYCLE_ID = "423119";
-const CLIENT_NAME = "Cipla Limited Virgonagar";
-// const CLIENT_NAME = "Cipla Limited Bommasandra";
-// const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
-// const TARGET_CAMP_CYCLE_ID = "423157";
-
-const REPLACE_CLIENT_TEXT = "Unocare Camp";
 const TEXT_SIZE = 9;
-const CLIENT_TEXT_SIZE = 8.5;
 
 async function loadPdfJs() {
     const pdfjsLib = await import(
@@ -53,17 +44,15 @@ function groupTextIntoLines(items) {
     });
 }
 
-function findSubstringBox(parts, substring, caseInsensitive = true) {
+function findAgeNumberBox(parts, font, newAge) {
     const fullText = parts.map((part) => part.text).join("");
-    const haystack = caseInsensitive ? fullText.toLowerCase() : fullText;
-    const needle = caseInsensitive ? substring.toLowerCase() : substring;
-    const startIdx = haystack.indexOf(needle);
-    if (startIdx < 0) return null;
+    const match = fullText.match(/(\d{1,3})\s*Years/i);
+    if (!match) return null;
 
-    const endIdx = startIdx + substring.length;
+    const oldAge = match[1];
+    const startIdx = match.index;
     let charCount = 0;
     let startX = null;
-    let endX = null;
     let y = parts[0]?.y ?? 0;
     let height = Math.max(...parts.map((part) => part.height), 10);
 
@@ -71,198 +60,109 @@ function findSubstringBox(parts, substring, caseInsensitive = true) {
         const partLen = part.text.length;
         const avgCharWidth = partLen > 0 ? part.width / partLen : 5;
 
-        if (startX === null && charCount + partLen > startIdx) {
+        if (charCount + partLen > startIdx) {
             const offsetInPart = startIdx - charCount;
             startX = part.x + offsetInPart * avgCharWidth;
             y = part.y;
-        }
-
-        if (endX === null && charCount + partLen >= endIdx) {
-            const offsetInPart = endIdx - charCount;
-            endX = part.x + offsetInPart * avgCharWidth;
+            break;
         }
 
         charCount += partLen;
     }
 
-    if (startX === null || endX === null) return null;
+    if (startX === null) return null;
 
-    return {
-        x: startX,
-        y,
-        width: Math.max(endX - startX, 1),
-        height,
-        text: fullText.slice(startIdx, endIdx),
-    };
+    const width = Math.max(
+        font.widthOfTextAtSize(oldAge, TEXT_SIZE) + 6,
+        font.widthOfTextAtSize(String(newAge), TEXT_SIZE) + 6
+    );
+
+    return { x: startX, y, width, height, oldAge };
 }
 
-function findCharIndexBox(parts, charIndex) {
-    let charCount = 0;
-
-    for (const part of parts) {
-        const partLen = part.text.length;
-        const avgCharWidth = partLen > 0 ? part.width / partLen : 5;
-
-        if (charCount + partLen > charIndex) {
-            const offsetInPart = charIndex - charCount;
-            return {
-                x: part.x + offsetInPart * avgCharWidth,
-                y: part.y,
-                height: part.height || 10,
-            };
-        }
-
-        charCount += partLen;
-    }
-
-    return null;
-}
-
-async function extractPdfPageLines(pdfBytes) {
+async function findAgeMatchesPerPage(pdfBytes, font, newAge) {
     const pdfjsLib = await loadPdfJs();
     const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
     const pdf = await loadingTask.promise;
-    const pageLines = [];
+    const matches = [];
 
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum += 1) {
         const page = await pdf.getPage(pageNum);
-        const textContent = await page.getTextContent();
-        const lines = groupTextIntoLines(textContent.items);
-        pageLines.push({ pageNum, lines });
-    }
+        const lines = groupTextIntoLines((await page.getTextContent()).items);
+        const ageLabelLine = lines.find(
+            (line) => /age/i.test(line.text) && /sex/i.test(line.text)
+        );
 
-    if (loadingTask.destroy) await loadingTask.destroy();
-    return pageLines;
-}
+        let pageMatch = null;
 
-function findClientNameMatches(pageLines) {
-    const matches = [];
-
-    for (const { pageNum, lines } of pageLines) {
         for (const line of lines) {
-            const match = findSubstringBox(line.parts, REPLACE_CLIENT_TEXT);
-            if (match) {
-                matches.push({ pageNum, ...match });
+            const box = findAgeNumberBox(line.parts, font, newAge);
+            if (!box) continue;
+
+            if (ageLabelLine && Math.abs(line.y - ageLabelLine.y) > 8) {
+                continue;
             }
+
+            pageMatch = box;
+            break;
+        }
+
+        if (pageMatch) {
+            matches.push({ pageNum, ...pageMatch });
         }
     }
 
+    if (loadingTask.destroy) await loadingTask.destroy();
     return matches;
 }
 
-function findPatientNameSuffixMatch(pageLines, font, empId) {
-    const patientLabelLine = pageLines
-        .flatMap(({ pageNum, lines }) => lines.map((line) => ({ pageNum, line })))
-        .find(({ line }) => line.text.includes("Patient Name"));
-
-    if (!patientLabelLine) return null;
-
-    const { pageNum, line: labelLine } = patientLabelLine;
-    const labelX = labelLine.parts[0]?.x ?? 0;
-    const candidateLines = pageLines
-        .find((page) => page.pageNum === pageNum)
-        ?.lines.filter(
-            (line) =>
-                line.text.includes("_") &&
-                line.y <= labelLine.y + 2 &&
-                line.y >= labelLine.y - 24
-        ) || [];
-
-    const targetLine =
-        candidateLines.find((line) => line.y === labelLine.y) ||
-        candidateLines.find((line) => line.parts[0]?.x > labelX + 30) ||
-        candidateLines.sort((a, b) => b.y - a.y)[0];
-
-    if (!targetLine) return null;
-
-    const underscoreIdx = targetLine.text.indexOf("_");
-    if (underscoreIdx < 0) return null;
-
-    const oldSuffix = targetLine.text.slice(underscoreIdx + 1).trim();
-    const suffixStart = findCharIndexBox(targetLine.parts, underscoreIdx + 1);
-    if (!suffixStart) return null;
-
-    const suffixWidth = Math.max(
-        font.widthOfTextAtSize(oldSuffix, TEXT_SIZE) + 12,
-        font.widthOfTextAtSize(String(empId), TEXT_SIZE) + 8
-    );
-
-    return {
-        pageNum,
-        x: suffixStart.x,
-        y: suffixStart.y,
-        width: suffixWidth,
-        height: Math.max(suffixStart.height + 2, 12),
-        oldSuffix,
-    };
-}
-
-function drawTextReplacement(page, font, { x, y, width, height, text, size = TEXT_SIZE }) {
+function drawAgeReplacement(page, font, match, newAge) {
     page.drawRectangle({
-        x: x - 1,
-        y: y - 2,
-        width: 120,
-        height: height + 3,
+        x: match.x - 1,
+        y: match.y - 2,
+        width: 12,
+        height: match.height + 3,
         color: rgb(1, 1, 1),
     });
-    page.drawText(text, {
-        x,
-        y: y + 1,
-        size,
+
+    page.drawText(String(newAge), {
+        x: match.x,
+        y: match.y + 1,
+        size: TEXT_SIZE,
         font,
         color: rgb(0, 0, 0),
     });
 }
 
 const modifyBloodPdf = async (bloodTestUrl, employee) => {
-    const existingPdfBytes = await fetch(bloodTestUrl).then((response) =>
-        response.arrayBuffer()
-    );
-    const pdfDoc = await PDFDocument.load(existingPdfBytes);
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-    const empId = `_${String(employee?.empId)}`;
-
-    const pageLines = await extractPdfPageLines(existingPdfBytes);
-    const clientMatches = findClientNameMatches(pageLines);
-    const patientSuffix = findPatientNameSuffixMatch(pageLines, font, empId);
-
-    for (const match of clientMatches) {
-        const page = pdfDoc.getPages()[match.pageNum - 1];
-        const newWidth = Math.max(
-            match.width + 10,
-            font.widthOfTextAtSize(CLIENT_NAME, CLIENT_TEXT_SIZE) + 8
-        );
-
-        drawTextReplacement(page, font, {
-            x: match.x - 3,
-            y: match.y,
-            width: newWidth,
-            height: match.height,
-            text: CLIENT_NAME,
-            size: CLIENT_TEXT_SIZE,
-        });
+    const newAge = employee?.age;
+    if (newAge === undefined || newAge === null || newAge === "") {
+        throw new Error("Missing employee age");
     }
 
-    if (patientSuffix) {
-        const page = pdfDoc.getPages()[patientSuffix.pageNum - 1];
-        drawTextReplacement(page, fontBold, {
-            x: patientSuffix.x,
-            y: patientSuffix.y,
-            width: patientSuffix.width,
-            height: patientSuffix.height,
-            text: empId,
-            size: TEXT_SIZE,
-        });
+    const pdfBytes = await fetch(bloodTestUrl).then((response) =>
+        response.arrayBuffer()
+    );
+    const pdfDoc = await PDFDocument.load(pdfBytes);
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const ageMatches = await findAgeMatchesPerPage(pdfBytes, font, newAge);
+
+    if (!ageMatches.length) {
+        throw new Error("Age value not found in PDF");
+    }
+
+    for (const match of ageMatches) {
+        const page = pdfDoc.getPages()[match.pageNum - 1];
+        drawAgeReplacement(page, font, match, newAge);
     }
 
     return pdfDoc.save();
 };
 
-const CiplaBommaSandraBloodReport = ({
-    corpId = TARGET_CORP_ID,
-    campCycleId = TARGET_CAMP_CYCLE_ID,
-    fileType = "TMT",
+const BrigdeStoneChakanBloodModify = ({
+    corpId = '1f084b0a-0423-47ec-a812-345500977336',
+    campCycleId = '425856',
+    fileType = "BLOODTEST",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -271,14 +171,9 @@ const CiplaBommaSandraBloodReport = ({
     const [isProcessing, setIsProcessing] = useState(false);
     const [failedEmployees, setFailedEmployees] = useState([]);
 
-    const isTargetBatch =
-        corpId === TARGET_CORP_ID && campCycleId === TARGET_CAMP_CYCLE_ID;
-
     const fetchListOfEmployees = async () => {
-        if (!isTargetBatch) {
-            enqueueSnackbar("This modifier is locked to the requested corp + camp cycle.", {
-                variant: "warning",
-            });
+        if (!corpId || !campCycleId) {
+            enqueueSnackbar("Set corpId and campCycleId props.", { variant: "warning" });
             setList([]);
             setTotalEmployees(0);
             return;
@@ -288,7 +183,7 @@ const CiplaBommaSandraBloodReport = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.bloodTestUrl);
+            const filtered = result.data.filter((item) => item?.bloodTestUrl && ["112168",].includes(item?.empId));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -332,10 +227,8 @@ const CiplaBommaSandraBloodReport = ({
     };
 
     const handleGeneratePDFs = async () => {
-        if (!isTargetBatch) {
-            enqueueSnackbar("corpId/campCycleId mismatch for this task.", {
-                variant: "error",
-            });
+        if (!corpId || !campCycleId) {
+            enqueueSnackbar("corpId and campCycleId are required.", { variant: "error" });
             return;
         }
 
@@ -356,7 +249,7 @@ const CiplaBommaSandraBloodReport = ({
                 await modifyAndUploadBlood(employee);
                 successCount += 1;
             } catch (error) {
-                console.error(`Blood modify/upload failed for ${employee.empId}:`, error);
+                console.error(`Blood age modify failed for ${employee.empId}:`, error);
                 setFailedEmployees((prev) => [
                     ...prev,
                     {
@@ -371,9 +264,7 @@ const CiplaBommaSandraBloodReport = ({
         setIsProcessing(false);
 
         if (successCount === list.length) {
-            enqueueSnackbar("Client name and patient name updated for all blood reports.", {
-                variant: "success",
-            });
+            enqueueSnackbar("Age updated for all blood reports.", { variant: "success" });
         } else if (successCount > 0) {
             enqueueSnackbar(
                 `Completed with errors: ${successCount} uploaded, ${list.length - successCount} failed.`,
@@ -410,9 +301,9 @@ const CiplaBommaSandraBloodReport = ({
 
     return (
         <div>
-            <h3>Cipla Bommasandra Blood Report Modifier</h3>
-            <div>corpId: {corpId}</div>
-            <div>campCycleId: {campCycleId}</div>
+            <h3>Bridgestone Chakan Blood Age Modifier</h3>
+            <div>corpId: {corpId || "-"}</div>
+            <div>campCycleId: {campCycleId || "-"}</div>
             <br />
             <button onClick={handleGeneratePDFs} disabled={isProcessing}>
                 {isProcessing ? "Processing..." : "Start Generating"}
@@ -438,7 +329,7 @@ const CiplaBommaSandraBloodReport = ({
             <br />
             {list.map((item, index) => (
                 <div key={item.empId || index} style={{ display: "flex", gap: "8px" }}>
-                    <div>{`${index + 1}. ${item.empId} ${item.name}`}</div>
+                    <div>{`${index + 1}. ${item.empId} ${item.name} (age: ${item?.age ?? "-"})`}</div>
                     {item?.bloodTestUrl ? (
                         <a href={item.bloodTestUrl} target="_blank" rel="noreferrer">
                             {item.bloodTestUrl}
@@ -452,4 +343,4 @@ const CiplaBommaSandraBloodReport = ({
     );
 };
 
-export default CiplaBommaSandraBloodReport;
+export default BrigdeStoneChakanBloodModify;

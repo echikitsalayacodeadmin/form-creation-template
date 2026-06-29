@@ -123,7 +123,7 @@ const ShrijiPolymerBlood = ({
         pdfBlob,
         `${employee?.bloodTestUrl?.split("/").pop() || "Report"}.pdf`
       );
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
       if (result && result.data) {
         enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
@@ -145,7 +145,7 @@ const ShrijiPolymerBlood = ({
   // Fetch the list of employees
   const fetchListOfEmployees = async () => {
     try {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
         let temp = oldBloodGroup.map((employee) => {
@@ -198,7 +198,7 @@ const ShrijiPolymerBlood = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?empId=${data?.empId}&toDeletefiletype=${fileType}&corpId=${corpId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?empId=${data?.empId}&toDeletefiletype=${fileType}&corpId=${corpId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Deleted PDF!", {

@@ -7,11 +7,13 @@ import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 import unoHeaderCiplaLtd from "../assets/images/UnoHeaderCIplaLtd.png";
 
-// const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
-// const TARGET_CAMP_CYCLE_ID = "423119";
+const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
+const TARGET_CAMP_CYCLE_ID = "423119";
 
-const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
-const TARGET_CAMP_CYCLE_ID = "423157";
+// const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
+// const TARGET_CAMP_CYCLE_ID = "423157";
+
+
 
 const addDepartmentOnFirstPage = async (xrayUrl, department) => {
     const pdfBytes = await fetch(xrayUrl).then((response) => response.arrayBuffer());
@@ -78,28 +80,14 @@ const CiplaBommaSandraXrayModifier = ({
             return;
         }
 
-        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+        const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => ([
-                "41000362",
-                "41000276",
-                "41000352",
-                "41000351",
-                "41000343",
-                "41000161",
-                "41000490",
-                "41000546",
-                "168420",
-                "166917",
-                "41000342",
-                "169688",
-                "41000606",
-                "162545",
-                "41000344",
-                "NE002"
-            ].includes(item?.empId) && item?.xrayUrl));
+            const filtered = result.data.filter((item) => item?.xrayUrl && [
+                "177819", "172654", "31000989", "31000250", "31000209", "116719", "154302"
+            ]
+                .includes(item?.empId));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -137,7 +125,7 @@ const CiplaBommaSandraXrayModifier = ({
 
 
 
-        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+        const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
         const uploadResult = await uploadFile(uploadUrl, formData);
 
         if (!uploadResult?.data) {
@@ -181,7 +169,7 @@ const CiplaBommaSandraXrayModifier = ({
     };
 
     const deleteFiles = async (employee) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
+        const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
         const result = await updateData(url);
 
         if (!result?.data) {
@@ -240,7 +228,7 @@ const CiplaBommaSandraXrayModifier = ({
             const formData = new FormData();
             formData.append("file", manualFile, manualFile.name);
 
-            const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${trimmedEmpId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${trimmedEmpId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
             const uploadResult = await uploadFile(uploadUrl, formData);
 
             if (!uploadResult?.data) {
@@ -307,7 +295,7 @@ const CiplaBommaSandraXrayModifier = ({
             <div>Uploaded Files: {uploadedCount}</div> <br />
             {list.map((item, index) => (
                 <div key={item.empId || index} style={{ display: "flex", gap: "8px" }}>
-                    <div>{`${index + 1}. ${item.empId} ${item.name} | Dept: ${item?.department || "-"}`}</div>
+                    <div>{`${index + 1}. EmpId - ${item.empId} Token - ${item.tokenNumber}`}</div>
                     {item?.xrayUrl ? (
                         <a href={item.xrayUrl} target="_blank" rel="noreferrer">
                             {item.xrayUrl}

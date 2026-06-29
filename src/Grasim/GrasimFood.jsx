@@ -121,9 +121,8 @@ const GrasimFood = ({
                 >${data?.vitalsCreatedDate || ""}</span
               ></div>
             <div style="padding: 2px">Age / Gender: <span style="text-transform: capitalize; font-weight: 400;"
-                >${data?.age?.toLowerCase() || ""} / ${
-      data?.gender?.toLowerCase() || ""
-    }</span
+                >${data?.age?.toLowerCase() || ""} / ${data?.gender?.toLowerCase() || ""
+      }</span
               ></div>
             <div style="padding: 2px">Phone no: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.mobileNo || ""}</span
@@ -207,24 +206,21 @@ const GrasimFood = ({
               >
               <span style="width: 110px; display: inline-block">
                 Chest:(in): <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.chestInspiration ? data?.chestInspiration + " cm" : ""
-                }</span> </span
+                >${data?.chestInspiration ? data?.chestInspiration + " cm" : ""
+      }</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >(ex): <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.chestExpiration ? data?.chestExpiration + " cm" : ""
-                }</span> </span
+                >${data?.chestExpiration ? data?.chestExpiration + " cm" : ""
+      }</span> </span
               >
             </div>
             <div style="padding: 2px">
               <span style="width: 80px; display: inline-block"></span>
               <span style="width: 110px; display: inline-block"
                 >Pulse : <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.pulseRate ? data?.pulseRate + " bpm" : ""
-                }</span> </span
+                >${data?.pulseRate ? data?.pulseRate + " bpm" : ""
+      }</span> </span
               >
               <span style="width: 110px; display: inline-block"
                 >B.P. : <span style="text-transform: capitalize; font-weight: 400;"
@@ -236,9 +232,8 @@ const GrasimFood = ({
               >
               <span style="width: 110px; display: inline-block">
                 R.R. : <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  data?.respRate ? data?.respRate + " bpm" : "-----"
-                }</span> </span
+                >${data?.respRate ? data?.respRate + " bpm" : "-----"
+      }</span> </span
               >
             </div>
             <div style="padding: 2px">
@@ -309,9 +304,8 @@ const GrasimFood = ({
               >Investigations: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.investigations || ""}</span></span
             >
-            <span style="width: 100px; display: inline-block">Hb: <span style="text-transform: capitalize; font-weight: 400;">${
-              data?.cholestrolData?.["HB"] || ""
-            }</span> </span>
+            <span style="width: 100px; display: inline-block">Hb: <span style="text-transform: capitalize; font-weight: 400;">${data?.cholestrolData?.["HB"] || ""
+      }</span> </span>
             <span style="width: 100px; display: inline-block">Tc: <span style="text-transform: capitalize; font-weight: 400;"
                 >${data?.cholestrolData?.["WBC"] || ""}</span> </span>
             <span style="width: 100px; display: inline-block">Dc: <span style="text-transform: capitalize; font-weight: 400;"
@@ -343,9 +337,8 @@ const GrasimFood = ({
           style="width: 100%; font-size: 12px; font-weight: bold"
         >
           <div style="padding: 2px">Stool Exam : <span style="text-transform: capitalize; font-weight: 400;"
-                >${
-                  FoodhandlerNAD.includes(data?.empId) ? "NAD" : "NA"
-                }</span></div>
+                >${FoodhandlerNAD.includes(data?.empId) ? "NAD" : "NA"
+      }</span></div>
         </div>
         <div
           class="section"
@@ -373,19 +366,17 @@ const GrasimFood = ({
           class="section"
           style="display: flex; font-size: 12px; font-weight: bold"
         >
-          <div style="width: 30%; padding: 2px">Date : <span style="font-weight: normal""> ${
-            data?.vitalsCreatedDate || ""
-          }</span></div>
+          <div style="width: 30%; padding: 2px">Date : <span style="font-weight: normal""> ${data?.vitalsCreatedDate || ""
+      }</span></div>
           <div style="width: 35%">
             <div style="padding: 2px">Signature & Seal</div>
             <div style="padding: 2px">Examining Doctor</div>
           </div>
            <div style="width: 35%">
-           ${
-             data?.isSign
-               ? `<img src=${KUNALSIGNBASE64} style="height:200px;"/>`
-               : ""
-           }
+           ${data?.isSign
+        ? `<img src=${KUNALSIGNBASE64} style="height:200px;"/>`
+        : ""
+      }
           </div>
         </div>
       </div>
@@ -408,7 +399,7 @@ const GrasimFood = ({
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -425,8 +416,8 @@ const GrasimFood = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -485,7 +476,7 @@ const GrasimFood = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

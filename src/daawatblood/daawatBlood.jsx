@@ -151,7 +151,7 @@ const DaawatBlood = ({
         pdfBlob,
         `${employee?.bloodTestUrl?.split("/").pop() || "Report"}.pdf`
       );
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
       const result = await uploadFile(url, formData);
       if (result && result.data) {
         enqueueSnackbar("Successfully Uploaded PDF!", { variant: "success" });
@@ -173,8 +173,8 @@ const DaawatBlood = ({
   // Fetch the list of employees
   const fetchListOfEmployees = async () => {
     try {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
-      // const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25&campCycleId=237640`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      // const url = `https://apitest.uno.care/api/org/superMasterData?corpId=8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25&campCycleId=237640`;
       const result = await getData(url);
       if (result && result.data) {
         const temp = result.data.map((item) => ({
@@ -268,7 +268,7 @@ const DaawatBlood = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?empId=${data?.empId}&toDeletefiletype=${fileType}&corpId=${corpId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?empId=${data?.empId}&toDeletefiletype=${fileType}&corpId=${corpId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Deleted PDF!", {

@@ -438,22 +438,20 @@ const Hershey = ({
         <div class="content">
           <p style="font-size: 14px">
             It is certified that Shri/Smt./Miss
-            <span style="text-decoration: underline; text-transform: capitalize;">${
-              data.name?.toLowerCase() || ""
-            }</span>
+            <span style="text-decoration: underline; text-transform: capitalize;">${data.name?.toLowerCase() || ""
+      }</span>
             employed with M/s.
             <strong>HERSHEY INDIA PRIVATE LIMITED, MANDIDEEP</strong>, coming in
             direct contact with food items has been carefully examined * by me
             on date
            <span style="text-decoration: underline">
-  ${
-    data?.cholestrolData?.SAMPLE_REPORTED_DATE
-      ? dayjs(
+  ${data?.cholestrolData?.SAMPLE_REPORTED_DATE
+        ? dayjs(
           data?.cholestrolData?.SAMPLE_REPORTED_DATE?.split(" ")[0],
           "DD-MMM-YYYY"
         ).format("DD/MM/YYYY")
-      : dayjs(data?.vitalsCreatedDate).add(2, "day").format("DD/MM/YYYY") || ""
-  }
+        : dayjs(data?.vitalsCreatedDate).add(2, "day").format("DD/MM/YYYY") || ""
+      }
 </span>
             . Based on the medical examination conducted, he/she is found free
             from any infectious or communicable diseases and the person is fit
@@ -514,13 +512,12 @@ const Hershey = ({
         <p style="text-align: right">
           Date
           <span style="text-decoration: underline">
-  ${
-    dayjs(
-      data?.cholestrolData?.SAMPLE_REPORTED_DATE?.split(" ")[0],
-      "DD-MMM-YYYY"
-    ).format("DD/MM/YYYY") ||
-    dayjs(data?.vitalsCreatedDate).add(2, "day").format("DD/MM/YYYY")
-  }
+  ${dayjs(
+        data?.cholestrolData?.SAMPLE_REPORTED_DATE?.split(" ")[0],
+        "DD-MMM-YYYY"
+      ).format("DD/MM/YYYY") ||
+      dayjs(data?.vitalsCreatedDate).add(2, "day").format("DD/MM/YYYY")
+      }
 </span>
         </p>
         <p>
@@ -530,13 +527,11 @@ const Hershey = ({
 
         <p>
           1. I certify that I have personally examined Mr./ Mrs.
-          <span style="text-decoration: underline; text-transform: capitalize;">${
-            data.name?.toLowerCase() || ""
-          }</span>
+          <span style="text-decoration: underline; text-transform: capitalize;">${data.name?.toLowerCase() || ""
+      }</span>
           s/o Mr.
-          <span style="text-decoration: underline; text-transform: capitalize;">${
-            data.fathersName?.toLowerCase() || ""
-          }</span>
+          <span style="text-decoration: underline; text-transform: capitalize;">${data.fathersName?.toLowerCase() || ""
+      }</span>
           employed at
         
           <strong
@@ -545,19 +540,17 @@ const Hershey = ({
           >
           in 
           <span style="text-decoration: underline; text-transform: capitalize;">
-  ${
-    data?.department
-      ? data.department.charAt(0).toUpperCase() +
+  ${data?.department
+        ? data.department.charAt(0).toUpperCase() +
         data.department.slice(1).toLowerCase()
-      : ""
-  }
+        : ""
+      }
 </span>
           <span 
-            > ${
-              !data?.department?.toLowerCase()
-                ? "______________________________"
-                : ""
-            }</span
+            > ${!data?.department?.toLowerCase()
+        ? "______________________________"
+        : ""
+      }</span
           > 
            (Department and process)
           
@@ -639,48 +632,41 @@ const Hershey = ({
         <p style="text-align: right">
           Date
           <span style="text-decoration: underline">
-  ${
-    dayjs(
-      data?.cholestrolData?.SAMPLE_REPORTED_DATE?.split(" ")[0],
-      "DD-MMM-YYYY"
-    ).format("DD/MM/YYYY") ||
-    dayjs(data?.vitalsCreatedDate).add(2, "day").format("DD/MM/YYYY")
-  }
+  ${dayjs(
+        data?.cholestrolData?.SAMPLE_REPORTED_DATE?.split(" ")[0],
+        "DD-MMM-YYYY"
+      ).format("DD/MM/YYYY") ||
+      dayjs(data?.vitalsCreatedDate).add(2, "day").format("DD/MM/YYYY")
+      }
 </span>
         </p>
 
         <ul class="list">
-          <li>1. Serial Number  <span style="text-decoration: underline; text-transform: capitalize;">${
-            data?.empId || ""
-          }</span></li>
+          <li>1. Serial Number  <span style="text-decoration: underline; text-transform: capitalize;">${data?.empId || ""
+      }</span></li>
           <li>
             2. Name of person examined
-            <span style="text-decoration: underline; text-transform: capitalize;">${
-              data.name?.toLowerCase() || ""
-            }</span>
+            <span style="text-decoration: underline; text-transform: capitalize;">${data.name?.toLowerCase() || ""
+      }</span>
           </li>
           <li>
             3. Father's name
-            <span style="text-decoration: underline;  text-transform: capitalize;">${
-              data.fathersName?.toLowerCase() || ""
-            }</span>
-             <span>${
-               !data.fathersName ? " _____________________" : ""
-             } ${" "}</span>
+            <span style="text-decoration: underline;  text-transform: capitalize;">${data.fathersName?.toLowerCase() || ""
+      }</span>
+             <span>${!data.fathersName ? " _____________________" : ""
+      } ${" "}</span>
 
           </li>
           <li>
             4. Age
-            <span style="text-decoration: underline">${
-              data.age || ""
-            } ${" "}</span>
+            <span style="text-decoration: underline">${data.age || ""
+      } ${" "}</span>
 
             <span>${!data.age ? "_______" : ""} ${" "}</span>
 
             Sex
-            <span style="text-decoration: underline; text-transform: capitalize;"> ${
-              data.gender || ""
-            }</span>
+            <span style="text-decoration: underline; text-transform: capitalize;"> ${data.gender || ""
+      }</span>
 
              <span>${!data.gender ? "_______" : ""} ${" "}</span>
           </li>
@@ -702,12 +688,11 @@ const Hershey = ({
             7. Process of department in which employed/wishes to be employed
             
             <span style="text-decoration: underline; text-transform: capitalize; text-underline-offset: 2px">
-  ${
-    data?.department
-      ? data.department.charAt(0).toUpperCase() +
+  ${data?.department
+        ? data.department.charAt(0).toUpperCase() +
         data.department.slice(1).toLowerCase()
-      : ""
-  }
+        : ""
+      }
 </span>
           </li>
           <li>8. Whether certificate granted  <span style="text-decoration: underline; text-underline-offset: 2px"
@@ -720,12 +705,11 @@ const Hershey = ({
             >
           </li>
           <li>10. Process of Department <span style="text-transform: capitalize; text-decoration: underline; text-underline-offset: 2px"> <span style="text-decoration: underline; text-transform: capitalize; text-underline-offset: 2px">
-  ${
-    data?.department
-      ? data.department.charAt(0).toUpperCase() +
+  ${data?.department
+        ? data.department.charAt(0).toUpperCase() +
         data.department.slice(1).toLowerCase()
-      : ""
-  }
+        : ""
+      }
 </span>
           </li>
           <li>
@@ -780,7 +764,7 @@ const Hershey = ({
     const formData = new FormData();
     formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=`;
     const result = await uploadFile(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -797,7 +781,7 @@ const Hershey = ({
   };
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -833,7 +817,7 @@ const Hershey = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

@@ -109,6 +109,8 @@ import unoHeaderCiplaLtd from "../assets/images/UnoHeaderCIplaLtd.png";
 
 const TARGET_CORP_ID = "928c489f-29e9-4612-be11-9b1a27ecb996";
 const TARGET_CAMP_CYCLE_ID = "423119";
+// const TARGET_CORP_ID = "b3148da9-7f8a-4712-a9a9-dfe8e3296137";
+// const TARGET_CAMP_CYCLE_ID = "423157";
 const HEADER_HEIGHT_PAGE_1 = 110;
 // const HEADER_HEIGHT_PAGE_2 = 60;
 const HEADER_HEIGHT_PAGE_2 = 87;
@@ -228,11 +230,39 @@ const CiplaBommaSandraECGModifier = ({
             return;
         }
 
-        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+        const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.ecgUrl && ["31001221"].includes(item?.empId));
+            const filtered = result.data.filter((item) => item?.ecgUrl && ["12",
+                "102",
+                "645",
+                "290",
+                "182",
+                "96",
+                "865",
+                "415",
+                "99",
+                "194",
+                "287",
+                "333",
+                "220",
+                "89",
+                "708",
+                "386",
+                "659",
+                "789",
+                "851",
+                "115",
+                "119",
+                "20",
+                "80",
+                "106",
+                "527",
+                "769",
+                "314",
+                "112",
+                "75"]?.includes(item?.tokenNumber));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -278,7 +308,7 @@ const CiplaBommaSandraECGModifier = ({
             `${employee?.ecgUrl?.split("/").pop() || `${employee.empId}_ecg.pdf`}`
         );
 
-        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+        const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
         const uploadResult = await uploadFile(uploadUrl, formData);
 
         if (!uploadResult?.data) {
@@ -344,7 +374,7 @@ const CiplaBommaSandraECGModifier = ({
     };
 
     const deleteFiles = async (employee) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
+        const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${employee.empId}`;
         const result = await updateData(url);
 
         if (!result?.data) {

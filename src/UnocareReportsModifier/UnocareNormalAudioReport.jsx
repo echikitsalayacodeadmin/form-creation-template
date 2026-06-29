@@ -173,7 +173,7 @@ async function processEmployee({
         const formData = new FormData();
         formData.append("file", modifiedBlob, `AUDIOMETRY_${employee.empId}.pdf`);
 
-        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=AUDIOMETRY&corpId=${corpId}&campCycleId=${campCycleId}`;
+        const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=AUDIOMETRY&corpId=${corpId}&campCycleId=${campCycleId}`;
 
         await uploadFile(uploadUrl, formData);
 
@@ -218,7 +218,7 @@ const UnocareNormalAudioReport = ({
 
     useEffect(() => {
         const fetchEmployees = async () => {
-            const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+            const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
             const res = await getData(url);
 
             const filteredData =

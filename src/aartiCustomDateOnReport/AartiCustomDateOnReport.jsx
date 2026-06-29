@@ -202,7 +202,7 @@ async function processEmployee({
       const formData = new FormData();
       formData.append("file", modifiedBlob, originalFileName);
 
-      const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${config.fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${config.fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       await uploadFile(uploadUrl, formData);
       enqueueSnackbar(`${key} uploaded for ${employee.empId}`, {
         variant: "success",
@@ -231,7 +231,7 @@ const AartiCustomDateOnReport = ({
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const res = await getData(url);
 
       const filtered =

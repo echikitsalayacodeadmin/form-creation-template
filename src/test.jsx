@@ -63,25 +63,22 @@ const Test = () => {
             <div style="flex-grow: 1; padding-bottom: 10pt">
               <p class="s2" style="text-indent: 0pt; text-align: right">
                 Date:
-                <span style="text-decoration: underline; white-space: pre;">${
-                  data.date || ""
-                }</span>
+                <span style="text-decoration: underline; white-space: pre;">${data.date || ""
+      }</span>
               </p>
             </div>
             <div style="flex-grow: 1; padding-bottom: 10pt">
               <p class="s2" style="text-indent: 0pt; text-align: left">
                 Name:
-                <span style="text-decoration: underline; white-space: pre;">${
-                  data.name || ""
-                }</span>
+                <span style="text-decoration: underline; white-space: pre;">${data.name || ""
+      }</span>
               </p>
             </div>
             <div style="flex-grow: 1; padding-bottom: 10pt">
               <p class="s2" style="text-indent: 0pt; text-align: left">
                 Age:
-                <span style="text-decoration: underline; white-space: pre;">${
-                  data.age || ""
-                }</span>
+                <span style="text-decoration: underline; white-space: pre;">${data.age || ""
+      }</span>
               </p>
             </div>
             <div
@@ -94,9 +91,8 @@ const Test = () => {
             >
               <p class="s2" style="text-indent: 0pt; text-align: left">
                 Address:
-                <span style="text-decoration: underline; white-space: pre;">${
-                  data.address || ""
-                }</span>
+                <span style="text-decoration: underline; white-space: pre;">${data.address || ""
+      }</span>
               </p>
     
               <p class="s2" style="text-indent: 0pt; text-align: left">
@@ -114,17 +110,15 @@ const Test = () => {
               <div style="width: 50%">
                 <p class="s2" style="text-indent: 0pt; text-align: left">
                   Employee Code No:
-                  <span style="text-decoration: underline; white-space: pre;">${
-                    data.empId || ""
-                  }</span>
+                  <span style="text-decoration: underline; white-space: pre;">${data.empId || ""
+      }</span>
                 </p>
               </div>
               <div style="width: 50%">
                 <p class="s2" style="text-indent: 0pt; text-align: left">
                   Location:
-                  <span style="text-decoration: underline; white-space: pre;">${
-                    data.location || ""
-                  }</span>
+                  <span style="text-decoration: underline; white-space: pre;">${data.location || ""
+      }</span>
                 </p>
               </div>
             </div>
@@ -177,7 +171,7 @@ const Test = () => {
     const formData = new FormData();
     formData.append("file", pdfBlob, "filename.pdf");
 
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=MISCELLANEOUS&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=MISCELLANEOUS&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
 
     const result = await uploadFile(url, formData);
     if (result && result.data) {
@@ -194,7 +188,7 @@ const Test = () => {
 
   const fetchListOfEmployees = async () => {
     // Fetch employees from the API starting from the currentIndex
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
+    const url = `https://apitest.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=138858`;
 
     const result = await getData(url);
     if (result && result.data) {

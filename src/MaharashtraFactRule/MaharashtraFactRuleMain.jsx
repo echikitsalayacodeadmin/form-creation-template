@@ -65,7 +65,7 @@ const MaharashtraFactRuleMain = () => {
         <MaharashtraFactRule
           data={data}
           fitStatus={fitStatus}
-          certifyingSurgeonName="Dr Jaydip Saxsena"
+          certifyingSurgeonName={signature === "dr_kunal_stamp_sign.png" ? "Dr Kunal Sharma" : signature === "Dr_Jaydip_Saxena.png" ? "Dr Jaydip Saxsena" : "Dr Pratibha V Bandekar"}
           signature={signature}
         />
       ).toBlob();
@@ -73,7 +73,7 @@ const MaharashtraFactRuleMain = () => {
       const formData = new FormData();
       formData.append("file", pdfBlob, `${data?.empId}_FORM7.pdf`);
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
@@ -96,7 +96,7 @@ const MaharashtraFactRuleMain = () => {
 
   const fetchListOfEmployees = async () => {
     if (corpId && campCycleId) {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
         console.log("Fetched Data successfully");
@@ -149,7 +149,7 @@ const MaharashtraFactRuleMain = () => {
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {
@@ -192,7 +192,7 @@ const MaharashtraFactRuleMain = () => {
   const [bloodData, setBloodData] = useState([]);
   const [excludedTestKeys, setExcludedTestKeys] = useState("");
   const getTestDetails = async () => {
-    const url = `https://apibackend.uno.care/api/org/testsconfig`;
+    const url = `https://apitest.uno.care/api/org/testsconfig`;
     const result = await getData(url);
     if (result.error) {
       console.log(result.error);
@@ -444,16 +444,13 @@ const MaharashtraFactRuleMain = () => {
                 <div key={index}>{item.annexureUrl}</div>
               </a>
             </div>
-
-
-
             <br />
           </div>
         ))}
       </div>
 
       <PDFViewer style={{ width: "100%", height: "calc(100vh - 64px)" }}>
-        <MaharashtraFactRule signature={signature} data={filteredList[0]} />
+        <MaharashtraFactRule signature={signature} data={filteredList[0]} certifyingSurgeonName={signature === "dr_kunal_stamp_sign.png" ? "Dr Kunal Sharma" : signature === "Dr_Jaydip_Saxena.png" ? "Dr Jaydip Saxsena" : "Dr Pratibha V Bandekar"} />
       </PDFViewer>
     </Fragment>
   );

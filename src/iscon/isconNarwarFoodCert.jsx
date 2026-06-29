@@ -10,21 +10,21 @@ import { data3 } from "./isconBalaji";
 import { uploadFile } from "../assets/services/PostApiCall";
 
 const IsconNarwarFoodCert = ({
-    corpId = "95905bf8-e11d-469c-9447-4d64cf296bd1",
-    campCycleId = "392448",
-    fileType = "FITNESS_CERTIFICATE_FOOD",
-    corpName = "Iscon Balaji Foods Pvt. Ltd",
+  corpId = "95905bf8-e11d-469c-9447-4d64cf296bd1",
+  campCycleId = "392448",
+  fileType = "FITNESS_CERTIFICATE_FOOD",
+  corpName = "Iscon Balaji Foods Pvt. Ltd",
 
 }) => {
-    const { enqueueSnackbar } = useSnackbar();
-    const batchSize = 50;
-    const [list, setList] = useState([]);
-    const [totalEmployees, setTotalEmployees] = useState(0);
-    const [uploadedCount, setUploadedCount] = useState(0);
-    const [currentIndex, setCurrentIndex] = useState(0);
+  const { enqueueSnackbar } = useSnackbar();
+  const batchSize = 50;
+  const [list, setList] = useState([]);
+  const [totalEmployees, setTotalEmployees] = useState(0);
+  const [uploadedCount, setUploadedCount] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    const generatePDF = async (data, index) => {
-        const FITNESS_CERTIFICATE_FOOD = `
+  const generatePDF = async (data, index) => {
+    const FITNESS_CERTIFICATE_FOOD = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
@@ -216,12 +216,12 @@ const IsconNarwarFoodCert = ({
           >
             Shri/ Smt.
             <span style=" text-transform: capitalize; text-decoration: underline"> ${data?.name.toLowerCase() || ""
-            }</span>
+      }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
               >&nbsp;&nbsp;&nbsp;${dayjs(data?.vitalsCreatedDate).format(
-                "DD MMM YYYY"
-            )}&nbsp;
+        "DD MMM YYYY"
+      )}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -318,110 +318,110 @@ const IsconNarwarFoodCert = ({
           </ol>
         </div>
     `;
-        const pdfBlob = await html2pdf()
-            .from(FITNESS_CERTIFICATE_FOOD)
-            .output("blob")
-            .then((data) => {
-                return data;
-            });
+    const pdfBlob = await html2pdf()
+      .from(FITNESS_CERTIFICATE_FOOD)
+      .output("blob")
+      .then((data) => {
+        return data;
+      });
 
-        // const url1 = URL.createObjectURL(pdfBlob);
-        // window.open(url1, "_blank");
+    // const url1 = URL.createObjectURL(pdfBlob);
+    // window.open(url1, "_blank");
 
-        const formData = new FormData();
-        //formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
-        formData.append("file", pdfBlob, `${data.empId}_food_certificate_form.pdf`);
+    const formData = new FormData();
+    //formData.append("file", pdfBlob, `${data.empId}_consolidated.pdf`);
+    formData.append("file", pdfBlob, `${data.empId}_food_certificate_form.pdf`);
 
-        const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-        const result = await uploadFile(url, formData);
-        if (result && result.data) {
-            enqueueSnackbar("Successfully Uploaded PDF!", {
-                variant: "success",
-            });
-            setUploadedCount((prevCount) => prevCount + 1);
-            // const url = URL.createObjectURL(pdfBlob);
-            // window.open(url, "_blank");
-        } else {
-            enqueueSnackbar("An error Occurred!", {
-                variant: "error",
-            });
-        }
-    };
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await uploadFile(url, formData);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+      // const url = URL.createObjectURL(pdfBlob);
+      // window.open(url, "_blank");
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
+  };
 
-    const fetchListOfEmployees = async () => {
-        // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-        const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
-        const result = await getData(url);
-        if (result && result.data) {
-            console.log("Fetched Data successfully");
+  const fetchListOfEmployees = async () => {
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const result = await getData(url);
+    if (result && result.data) {
+      console.log("Fetched Data successfully");
 
-            const temp = result?.data.filter(
-                (item) => item?.vitalsCreatedDate === "2026-03-07"
-            );
+      const temp = result?.data.filter(
+        (item) => item?.vitalsCreatedDate === "2026-03-07"
+      );
 
-            console.log({ list: temp.map((item) => item.empId).join(",") });
-            const length = temp.length;
-            console.log({ length });
-            setList(sortDataByName(temp));
-            setTotalEmployees(temp.length);
-            console.log({ empLisy: sortDataByName(temp) });
-        } else {
-            console.log("An error Occurred");
-        }
-    };
+      console.log({ list: temp.map((item) => item.empId).join(",") });
+      const length = temp.length;
+      console.log({ length });
+      setList(sortDataByName(temp));
+      setTotalEmployees(temp.length);
+      console.log({ empLisy: sortDataByName(temp) });
+    } else {
+      console.log("An error Occurred");
+    }
+  };
 
-    useEffect(() => {
-        fetchListOfEmployees();
-    }, []);
+  useEffect(() => {
+    fetchListOfEmployees();
+  }, []);
 
-    const handleGeneratePDFs = async () => {
-        for (let i = 0; i < list.length; i++) {
-            await generatePDF(list[i], i);
-        }
-    };
-    const handleDeletePDF = async () => {
-        for (let i = 0; i < list.length; i++) {
-            await deleteFiles(list[i]);
-        }
-    };
+  const handleGeneratePDFs = async () => {
+    for (let i = 0; i < list.length; i++) {
+      await generatePDF(list[i], i);
+    }
+  };
+  const handleDeletePDF = async () => {
+    for (let i = 0; i < list.length; i++) {
+      await deleteFiles(list[i]);
+    }
+  };
 
-    const deleteFiles = async (data) => {
-        const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
-        const result = await updateData(url);
-        if (result && result.data) {
-            enqueueSnackbar("Successfully Uploaded PDF!", {
-                variant: "success",
-            });
-            setUploadedCount((prevCount) => prevCount + 1);
-        } else {
-            enqueueSnackbar("An error Occurred!", {
-                variant: "error",
-            });
-        }
-    };
+  const deleteFiles = async (data) => {
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const result = await updateData(url);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded PDF!", {
+        variant: "success",
+      });
+      setUploadedCount((prevCount) => prevCount + 1);
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
+  };
 
-    console.log({ data3 });
+  console.log({ data3 });
 
-    return (
-        <div>
-            <div>
-                <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
-                <button onClick={handleDeletePDF}>Delete Files</button>
-                <div>Total Employees: {totalEmployees}</div> <br />
-                <div>Uploaded Files: {uploadedCount}</div> <br />
-                {list.map((item, index) => (
-                    <div key={index} style={{ display: "flex" }}>
-                        <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
-                        <a href={item.medicalFitnessFoodUrl}>
-                            <div key={index}>{item.medicalFitnessFoodUrl}</div>
-                        </a>
+  return (
+    <div>
+      <div>
+        <button onClick={handleGeneratePDFs}>Start Generating</button> <br />
+        <button onClick={handleDeletePDF}>Delete Files</button>
+        <div>Total Employees: {totalEmployees}</div> <br />
+        <div>Uploaded Files: {uploadedCount}</div> <br />
+        {list.map((item, index) => (
+          <div key={index} style={{ display: "flex" }}>
+            <div key={index}>{`${index}- ${item.empId} ${item.name}`}</div>
+            <a href={item.medicalFitnessFoodUrl}>
+              <div key={index}>{item.medicalFitnessFoodUrl}</div>
+            </a>
 
-                        <br />
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+            <br />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default IsconNarwarFoodCert;

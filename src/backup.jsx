@@ -564,9 +564,8 @@ const App = () => {
                   style="padding-left: 2pt; text-indent: 0pt; text-align: left"
                 >
                   Height:
-                  <span style="padding-left:10px">${
-                    data.height || ""
-                  }${" "} Cms</span>
+                  <span style="padding-left:10px">${data.height || ""
+      }${" "} Cms</span>
                 </p>
               </td>
               <td style="width: 76pt">
@@ -616,9 +615,8 @@ const App = () => {
                         "
                 >
                   Weight:
-                  <span style="padding-left:10px">${
-                    data.height || ""
-                  }${" "} Kgs</span>
+                  <span style="padding-left:10px">${data.height || ""
+      }${" "} Kgs</span>
                 </p>
               </td>
               <td style="width: 76pt">
@@ -879,13 +877,12 @@ const App = () => {
                             text-align: left;
                           "
                   >
-                    without Glasses : ${
-                      data.eyeSightWithGlasses === true
-                        ? "No"
-                        : data.eyeSightWithGlasses === false
-                        ? "Yes"
-                        : ""
-                    }
+                    without Glasses : ${data.eyeSightWithGlasses === true
+        ? "No"
+        : data.eyeSightWithGlasses === false
+          ? "Yes"
+          : ""
+      }
                   </p>
                   <p
                     class="s4"
@@ -896,13 +893,12 @@ const App = () => {
                             text-align: left;
                           "
                   >
-                    without Glasses : ${
-                      data.eyeSightWithGlasses === true
-                        ? "No"
-                        : data.eyeSightWithGlasses === false
-                        ? "Yes"
-                        : ""
-                    }
+                    without Glasses : ${data.eyeSightWithGlasses === true
+        ? "No"
+        : data.eyeSightWithGlasses === false
+          ? "Yes"
+          : ""
+      }
                   </p>
                 </td>
               </tr>
@@ -1462,9 +1458,8 @@ const App = () => {
           <div style="height: 70pt">
             <h3>Blood:</h3>
             <span class="s4"
-              >${
-                data.bloodUrl === null || data.bloodUrl === "" ? "" : "Yes"
-              }</span
+              >${data.bloodUrl === null || data.bloodUrl === "" ? "" : "Yes"
+      }</span
             >
           </div>
           <div style="height: 70pt">
@@ -1476,11 +1471,10 @@ const App = () => {
           <div style="height: 70pt">
             <h3>Audiometry:</h3>
             <span class="s4"
-              >${
-                data.audiometryUrl === null || data.audiometryUrl === ""
-                  ? ""
-                  : "Yes"
-              }</span
+              >${data.audiometryUrl === null || data.audiometryUrl === ""
+        ? ""
+        : "Yes"
+      }</span
             >
           </div>
         </div>
@@ -6339,8 +6333,8 @@ const App = () => {
     formData.append("file", pdfBlob, `${data.empId}_Annexture_report.pdf`);
     // const url = URL.createObjectURL(pdfBlob);
     // window.open(url, "_blank");
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=`;
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
+    // const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
 
     const result = await uploadFile(url, formData);
     if (result && result.data) {
@@ -6359,8 +6353,8 @@ const App = () => {
 
   const fetchListOfEmployees = async () => {
     // Fetch employees from the API starting from the currentIndex
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=`;
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/detailed/all?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -6388,7 +6382,7 @@ const App = () => {
 
   const deleteFiles = async (data) => {
     // Fetch employees from the API starting from the currentIndex
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&toDeletefiletype=CONSOLIDATED_REPORT&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&toDeletefiletype=CONSOLIDATED_REPORT&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

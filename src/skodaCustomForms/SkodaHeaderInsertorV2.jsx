@@ -16,12 +16,12 @@ async function mergeHeaderWithReport(reportPdfBytes) {
   const reportPdf = await PDFDocument.load(reportPdfBytes);
   const mergedPdf = await PDFDocument.create();
 
-  const headerImageBytes = await fetch(drRaviHeaderSkoda).then((res) =>
+  const headerImageBytes = await fetch(uncareheader).then((res) =>
     res.arrayBuffer()
   );
   const headerImage = await mergedPdf.embedPng(headerImageBytes);
 
-  const whiteOutHeight = 100;
+  const whiteOutHeight = 180;
   const headerHeight = 90;
 
   const [origPage] = reportPdf.getPages();
@@ -106,8 +106,8 @@ async function cleanAndRewriteHeader(reportPdfBytes) {
 }
 
 const SkodaHeaderInsertorV2 = ({
-  corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
-  campCycleId = "410953",// atlas copco campCycleId
+  corpId = "1f084b0a-0423-47ec-a812-345500977336", // atlas copco corpId
+  campCycleId = "425856",
   // corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
   // campCycleId = "410953", // atlas copco campCycleId
   // corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
@@ -161,7 +161,7 @@ const SkodaHeaderInsertorV2 = ({
       // const url2 = URL.createObjectURL(mergedBlob);
       // window.open(url2, "_blank");
 
-      const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(url, formData);
 
       if (result && result.data) {
@@ -180,22 +180,18 @@ const SkodaHeaderInsertorV2 = ({
     }
   };
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const cutoff = dayjs("2025-11-30").endOf("day");
 
       const temp =
         result?.data?.filter(
           (item) =>
-            [
-              "40050966",
-              "40035239"
+            (item.vitalsCreatedDate === "2026-06-17" || item.vitalsCreatedDate === "2026-06-18" || item.vitalsCreatedDate === "2026-06-19") &&
 
-            ].includes(item?.empId) &&
             item?.[urlType]
         ) || [];
       // item?.vitalsCreatedDate === "2025-11-26" ||
@@ -230,7 +226,7 @@ const SkodaHeaderInsertorV2 = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

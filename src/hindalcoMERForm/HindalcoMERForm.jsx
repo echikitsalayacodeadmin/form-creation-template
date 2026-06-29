@@ -119,9 +119,8 @@ const HindalcoMERForm = ({
               <td class="label">Emp ID :</td>
               <td>${data?.empId}</td>
               <td class="label">Date of Examination :</td>
-              <td>${
-                dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY") || ""
-              }</td>
+              <td>${dayjs(data?.vitalsCreatedDate).format("DD-MM-YYYY") || ""
+      }</td>
               <td class="label">Date of Joining:</td>
               <td>${data?.dateOfJoining || ""}</td>
             </tr>
@@ -149,17 +148,15 @@ const HindalcoMERForm = ({
             <tr>
               <td  class="label">Present complaint/s, if any:</td>
               <td >
-                ${
-                  data?.pemMedicalFormData?.clinical_complaints ||
-                  "No Complaint revealed"
-                }
+                ${data?.pemMedicalFormData?.clinical_complaints ||
+      "No Complaint revealed"
+      }
               </td>
               <td  class="label">Present disease/s, if any:</td>
               <td >
-                ${
-                  data?.pemMedicalFormData?.clinical_diseases ||
-                  "Not revealed at the time of examination"
-                }
+                ${data?.pemMedicalFormData?.clinical_diseases ||
+      "Not revealed at the time of examination"
+      }
               </td>
             </tr>
             <tr>
@@ -167,19 +164,17 @@ const HindalcoMERForm = ({
                 Regular medication/s, if any:
               </td>
               <td >
-                ${
-                  data?.pemMedicalFormData?.clinical_medications ||
-                  "Not revealed at the time of examination"
-                }
+                ${data?.pemMedicalFormData?.clinical_medications ||
+      "Not revealed at the time of examination"
+      }
               </td>
               <td  class="label">
                 Hospitalization /surgery since last PME:
               </td>
               <td >
-                ${
-                  data?.pemMedicalFormData?.clinical_hospitalization ||
-                  "No (As per the candidate self declaration)"
-                }
+                ${data?.pemMedicalFormData?.clinical_hospitalization ||
+      "No (As per the candidate self declaration)"
+      }
               </td>
             </tr>
           </table>
@@ -199,32 +194,27 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td colspan="2" class="label">Pulse:</td>
-              <td colspan="2">${
-                data?.pulseRate ? data?.pulseRate + " bpm" : ""
-              }</td>
+              <td colspan="2">${data?.pulseRate ? data?.pulseRate + " bpm" : ""
+      }</td>
               <td colspan="2" class="label">Blood Pressure:</td>
               <td colspan="2">${data?.bp ? data?.bp + " mm/hg" : ""}</td>
               <td colspan="2" class="label">Resp Rate:</td>
-              <td colspan="2">${
-                data?.respRate ? data?.respRate + " / min" : ""
-              }</td>
+              <td colspan="2">${data?.respRate ? data?.respRate + " / min" : ""
+      }</td>
             </tr>
             <tr>
               <td colspan="2" class="label">Chest Inspiration:</td>
-              <td colspan="2">${
-                data?.chestInspiration ? data?.chestInspiration + " cm" : ""
-              }</td>
+              <td colspan="2">${data?.chestInspiration ? data?.chestInspiration + " cm" : ""
+      }</td>
               <td colspan="2" class="label">Chest Expiration:</td>
-              <td colspan="2">${
-                data?.chestExpiration ? data?.chestExpiration + " cm" : ""
-              }</td>
+              <td colspan="2">${data?.chestExpiration ? data?.chestExpiration + " cm" : ""
+      }</td>
               <td colspan="2" class="label">Chest Expansion:</td>
               <td colspan="2">
-                ${
-                  data?.pemMedicalFormData?.general_chest_expansion
-                    ? data?.pemMedicalFormData?.general_chest_expansion + " cm"
-                    : ""
-                }
+                ${data?.pemMedicalFormData?.general_chest_expansion
+        ? data?.pemMedicalFormData?.general_chest_expansion + " cm"
+        : ""
+      }
               </td>
             </tr>
             <tr>
@@ -232,17 +222,15 @@ const HindalcoMERForm = ({
                 Pallor / Icterus / Lymphadenopathy / Clubbing / Edema:
               </td>
               <td colspan="6">
-                ${
-                  data?.pemMedicalFormData?.general_pallor_or_edema ||
-                  "Not found at the time of examination"
-                }
+                ${data?.pemMedicalFormData?.general_pallor_or_edema ||
+      "Not found at the time of examination"
+      }
               </td>
             </tr>
             <tr>
               <td colspan="6" class="label">Remarks:</td>
-              <td colspan="6">${
-                data?.pemMedicalFormData?.general_remarks || "NIL"
-              }</td>
+              <td colspan="6">${data?.pemMedicalFormData?.general_remarks || "NIL"
+      }</td>
             </tr>
           </table>
           <table>
@@ -253,20 +241,17 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td class="label">Squint:</td>
-              <td>${
-                data?.pemMedicalFormData?.eyes_squint ||
-                "Not found at the time of examination"
-              }</td>
+              <td>${data?.pemMedicalFormData?.eyes_squint ||
+      "Not found at the time of examination"
+      }</td>
               <td class="label">Nystagmus:</td>
-              <td>${
-                data?.pemMedicalFormData?.eyes_nystagmus ||
-                "Not found at the time of examination"
-              }</td>
+              <td>${data?.pemMedicalFormData?.eyes_nystagmus ||
+      "Not found at the time of examination"
+      }</td>
               <td class="label">Ptosis:</td>
-              <td>${
-                data?.pemMedicalFormData?.eyes_ptosis ||
-                "Not found at the time of exam"
-              }</td>
+              <td>${data?.pemMedicalFormData?.eyes_ptosis ||
+      "Not found at the time of exam"
+      }</td>
             </tr>
             <tr>
               <td colspan="2"></td>
@@ -303,13 +288,12 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td colspan="2" class="label">Colour Vision</td>
-              <td colspan="4">${
-                data?.colourVision === "Both"
-                  ? "BOTH EYES (L + R)"
-                  : data?.colourVision === "NAD"
-                  ? "Candidate identified basic colours easily"
-                  : data?.colourVision || "Within Normal Limits"
-              }</td>
+              <td colspan="4">${data?.colourVision === "Both"
+        ? "BOTH EYES (L + R)"
+        : data?.colourVision === "NAD"
+          ? "Candidate identified basic colours easily"
+          : data?.colourVision || "Within Normal Limits"
+      }</td>
             </tr>
             <tr>
               <td colspan="2" class="label">Titmus / Key stone Vision</td>
@@ -326,26 +310,22 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td class="label">Whispered Voice</td>
-              <td>[R] ${
-                data?.pemMedicalFormData?.ent_voice_right ||
-                "Audible at the time of examination"
-              }</td>
-              <td>[L] ${
-                data?.pemMedicalFormData?.ent_voice_left ||
-                "Audible at the time of examination"
-              }</td>
+              <td>[R] ${data?.pemMedicalFormData?.ent_voice_right ||
+      "Audible at the time of examination"
+      }</td>
+              <td>[L] ${data?.pemMedicalFormData?.ent_voice_left ||
+      "Audible at the time of examination"
+      }</td>
               <td></td>
             </tr>
             <tr>
               <td class="label">Tympanic Membrane</td>
-              <td>[R] ${
-                data?.pemMedicalFormData?.ent_tympanic_right ||
-                "Healthy & Intact"
-              }</td>
-              <td>[L] ${
-                data?.pemMedicalFormData?.ent_tympanic_left ||
-                "Healthy & Intact"
-              }</td>
+              <td>[R] ${data?.pemMedicalFormData?.ent_tympanic_right ||
+      "Healthy & Intact"
+      }</td>
+              <td>[L] ${data?.pemMedicalFormData?.ent_tympanic_left ||
+      "Healthy & Intact"
+      }</td>
               <td></td>
             </tr>
             <tr>
@@ -356,21 +336,18 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td class="label">Tongue</td>
-              <td>${
-                data?.pemMedicalFormData?.ent_tongue ||
-                "No ulcer found at the time of examination"
-              }</td>
+              <td>${data?.pemMedicalFormData?.ent_tongue ||
+      "No ulcer found at the time of examination"
+      }</td>
               <td class="label">Tonsils:</td>
-              <td>${
-                data?.pemMedicalFormData?.ent_tonsils || "Non Palpable"
-              }</td>
+              <td>${data?.pemMedicalFormData?.ent_tonsils || "Non Palpable"
+      }</td>
             </tr>
             <tr>
               <td class="label">Any Disease</td>
-              <td colspan="3">${
-                data?.pemMedicalFormData?.ent_disease ||
-                "Not revealed at the time of examination"
-              }</td>
+              <td colspan="3">${data?.pemMedicalFormData?.ent_disease ||
+      "Not revealed at the time of examination"
+      }</td>
             </tr>
           </table>
           <table>
@@ -381,12 +358,10 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td class="label">Heart Sounds</td>
-              <td>S1 + ${
-                data?.pemMedicalFormData?.cardio_heart_sound_s1 || ""
-              }</td>
-              <td>S2 + ${
-                data?.pemMedicalFormData?.cardio_heart_sound_s2 || ""
-              }</td>
+              <td>S1 + ${data?.pemMedicalFormData?.cardio_heart_sound_s1 || ""
+      }</td>
+              <td>S2 + ${data?.pemMedicalFormData?.cardio_heart_sound_s2 || ""
+      }</td>
               <td>
                 <span class="label">Murmur:</span>
                 ${data?.pemMedicalFormData?.cardio_murmur || "Not Audible"}
@@ -394,9 +369,8 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td class="label">Others</td>
-              <td colspan="3">${
-                data?.pemMedicalFormData?.cardio_other || "NIL"
-              }</td>
+              <td colspan="3">${data?.pemMedicalFormData?.cardio_other || "NIL"
+      }</td>
             </tr>
           </table>
           <table>
@@ -408,39 +382,34 @@ const HindalcoMERForm = ({
             <tr>
               <td class="label">Chest Deformity:</td>
               <td colspan="2">
-                ${
-                  data?.pemMedicalFormData?.respiratory_chest_deformity ||
-                  "B/L Symetrical No external deformity seen"
-                }
+                ${data?.pemMedicalFormData?.respiratory_chest_deformity ||
+      "B/L Symetrical No external deformity seen"
+      }
               </td>
               <td class="label">Lungs:</td>
-              <td>${
-                data?.pemMedicalFormData?.respiratory_lungs || "B/L AE +"
-              }</td>
+              <td>${data?.pemMedicalFormData?.respiratory_lungs || "B/L AE +"
+      }</td>
             </tr>
             <tr>
               <td class="label">Breath sounds:</td>
               <td colspan="2">
-                ${
-                  data?.pemMedicalFormData?.respiratory_breath_sounds ||
-                  "B/L Clear"
-                }
+                ${data?.pemMedicalFormData?.respiratory_breath_sounds ||
+      "B/L Clear"
+      }
               </td>
               <td class="label">Adventitious sounds:</td>
               <td>
-                ${
-                  data?.pemMedicalFormData?.respiratory_adventitious_sounds ||
-                  "Not Audible"
-                }
+                ${data?.pemMedicalFormData?.respiratory_adventitious_sounds ||
+      "Not Audible"
+      }
               </td>
             </tr>
             <tr>
               <td colspan="5" class="label">
                 Others:
                 <span style="font-weight: 400"
-                  >${
-                    data?.pemMedicalFormData?.respiratory_others || "NIL"
-                  }</span
+                  >${data?.pemMedicalFormData?.respiratory_others || "NIL"
+      }</span
                 >
               </td>
             </tr>
@@ -482,10 +451,9 @@ const HindalcoMERForm = ({
             <tr>
               <td colspan="3">
                 <span class="label">Skin & Genitals:</span>
-                ${
-                  data?.pemMedicalFormData?.abdomen_genitals ||
-                  "No rashes and pigmentation seen. Externally genital apears normal"
-                }
+                ${data?.pemMedicalFormData?.abdomen_genitals ||
+      "No rashes and pigmentation seen. Externally genital apears normal"
+      }
               </td>
             </tr>
           </table>
@@ -501,25 +469,21 @@ const HindalcoMERForm = ({
               <td class="label">Speech:</td>
               <td>${data?.pemMedicalFormData?.cns_speech || "Clear"}</td>
               <td class="label">Cranial Nerve:</td>
-              <td>${
-                data?.pemMedicalFormData?.cns_cranial_nerve || "Well Functional"
-              }</td>
+              <td>${data?.pemMedicalFormData?.cns_cranial_nerve || "Well Functional"
+      }</td>
               <td class="label">Reflexes deep:</td>
-              <td>${
-                data?.pemMedicalFormData?.cns_reflex_deep ||
-                "Within Normal Limits"
-              }</td>
+              <td>${data?.pemMedicalFormData?.cns_reflex_deep ||
+      "Within Normal Limits"
+      }</td>
             </tr>
             <tr>
               <td class="label">Reflexes superficial:</td>
-              <td>${
-                data?.pemMedicalFormData?.cns_reflex_superficial ||
-                "Within Normat Limits"
-              }</td>
+              <td>${data?.pemMedicalFormData?.cns_reflex_superficial ||
+      "Within Normat Limits"
+      }</td>
               <td class="label">Sensory Nerves:</td>
-              <td>${
-                data?.pemMedicalFormData?.cns_sensory || "Well Functional"
-              }</td>
+              <td>${data?.pemMedicalFormData?.cns_sensory || "Well Functional"
+      }</td>
               <td class="label">Appearance:</td>
               <td>${data?.pemMedicalFormData?.cns_appearance || "Healthy"}</td>
               <td class="label">Behavior:</td>
@@ -527,9 +491,8 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td class="label">Posture:</td>
-              <td>${
-                data?.pemMedicalFormData?.cns_posture || "Healthy dynamics"
-              }</td>
+              <td>${data?.pemMedicalFormData?.cns_posture || "Healthy dynamics"
+      }</td>
               <td colspan="6" class="label">
                 Remarks:
                 <span style="font-weight: 400"
@@ -546,20 +509,17 @@ const HindalcoMERForm = ({
             </tr>
             <tr>
               <td class="label">Limbs:</td>
-              <td colspan="2">${
-                data?.pemMedicalFormData?.skeletal_limbs || "B/L Symetrical"
-              }</td>
+              <td colspan="2">${data?.pemMedicalFormData?.skeletal_limbs || "B/L Symetrical"
+      }</td>
               <td class="label">Spine:</td>
-              <td colspan="3">${
-                data?.pemMedicalFormData?.skeletal_spine ||
-                "No external deformity seen"
-              }</td>
+              <td colspan="3">${data?.pemMedicalFormData?.skeletal_spine ||
+      "No external deformity seen"
+      }</td>
             </tr>
             <tr>
               <td class="label">Any Other:</td>
-              <td colspan="7">${
-                data?.pemMedicalFormData?.skeletal_other || "NIL"
-              }</td>
+              <td colspan="7">${data?.pemMedicalFormData?.skeletal_other || "NIL"
+      }</td>
             </tr>
           </table>
           <table>
@@ -635,8 +595,8 @@ const HindalcoMERForm = ({
   };
 
   const fetchListOfEmployees = async () => {
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
-    const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=${campCycleId}`;
+    const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -675,7 +635,7 @@ const HindalcoMERForm = ({
   };
 
   const deleteFiles = async (data) => {
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=${corpId}&toDeletefiletype=${fileType}&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

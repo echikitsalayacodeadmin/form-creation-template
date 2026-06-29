@@ -237,7 +237,7 @@ async function processEmployee({
         const formData = new FormData();
         formData.append("file", modifiedBlob, `BLOOD_${employee.empId}.pdf`);
 
-        const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=BLOODTEST&corpId=${corpId}&campCycleId=${campCycleId}`;
+        const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=BLOODTEST&corpId=${corpId}&campCycleId=${campCycleId}`;
         await uploadFile(uploadUrl, formData);
 
         enqueueSnackbar(`Blood report uploaded for ${employee.empId}`, {
@@ -288,7 +288,7 @@ const GenericBloodReportGenerator = ({
 
     useEffect(() => {
         const fetchEmployees = async () => {
-            const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+            const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
             const res = await getData(url);
 
             const filteredData =

@@ -39,7 +39,7 @@ const UltratechDepartmentWise = ({
   const [downloadCount, setDownloadCount] = useState(0);
 
   const fetchListOfEmployees = async () => {
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/detailed/all?corpId=${corpId}&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -56,7 +56,7 @@ const UltratechDepartmentWise = ({
   }, []);
 
   const fetchDepartment = async () => {
-    const url = `https://apibackend.uno.care/api/org/departments?corpId=${corpId}`;
+    const url = `https://apitest.uno.care/api/org/departments?corpId=${corpId}`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -77,7 +77,7 @@ const UltratechDepartmentWise = ({
   }, [selectedDepartment, employeeList]);
 
   const downloadEmployeeReport = async (employee) => {
-    const url = `https://apibackend.uno.care/api/org/print/tests`;
+    const url = `https://apitest.uno.care/api/org/print/tests`;
     const payload = {
       corpId: corpId,
       empId: employee.empId,

@@ -123,7 +123,7 @@ const DaawatStoolReportCreation = ({
       const formData = new FormData();
       formData.append("file", pdfBlob, `Stool_Report_${employee?.empId}.pdf`);
 
-      const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee?.empId}&fileType=${"TMT"}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee?.empId}&fileType=${"TMT"}&corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await uploadFile(uploadUrl, formData);
 
       if (result && result.data) {
@@ -149,7 +149,7 @@ const DaawatStoolReportCreation = ({
   // Fetch the list of employees
   const fetchListOfEmployees = async () => {
     try {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const result = await getData(url);
       if (result && result.data) {
         const temp = result.data.filter(

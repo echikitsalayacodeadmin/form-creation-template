@@ -563,9 +563,8 @@ const SuzlonForm = () => {
                   style="padding-left: 2pt; text-indent: 0pt; text-align: left"
                 >
                   Height:
-                  <span style="padding-left:10px">${
-                    data.height || ""
-                  }${" "} Cms</span>
+                  <span style="padding-left:10px">${data.height || ""
+      }${" "} Cms</span>
                 </p>
               </td>
               <td style="width: 76pt">
@@ -615,9 +614,8 @@ const SuzlonForm = () => {
                         "
                 >
                   Weight:
-                  <span style="padding-left:10px">${
-                    data.weight || ""
-                  }${" "} Kgs</span>
+                  <span style="padding-left:10px">${data.weight || ""
+      }${" "} Kgs</span>
                 </p>
               </td>
               <td style="width: 76pt">
@@ -878,13 +876,12 @@ const SuzlonForm = () => {
                             text-align: left;
                           "
                   >
-                    Without Glasses : ${
-                      data.eyeSightWithGlasses === true
-                        ? "No"
-                        : data.eyeSightWithGlasses === false
-                        ? "Yes"
-                        : ""
-                    }
+                    Without Glasses : ${data.eyeSightWithGlasses === true
+        ? "No"
+        : data.eyeSightWithGlasses === false
+          ? "Yes"
+          : ""
+      }
                   </p>
                   <p
                     class="s4"
@@ -895,13 +892,12 @@ const SuzlonForm = () => {
                             text-align: left;
                           "
                   >
-                    Without Glasses : ${
-                      data.eyeSightWithGlasses === true
-                        ? "No"
-                        : data.eyeSightWithGlasses === false
-                        ? "Yes"
-                        : ""
-                    }
+                    Without Glasses : ${data.eyeSightWithGlasses === true
+        ? "No"
+        : data.eyeSightWithGlasses === false
+          ? "Yes"
+          : ""
+      }
                   </p>
                 </td>
               </tr>
@@ -1495,8 +1491,8 @@ const SuzlonForm = () => {
     formData.append("file", pdfBlob, `${data.empId}_Annexture_report.pdf`);
     // const url2 = URL.createObjectURL(pdfBlob);
     // window.open(url2, "_blank");
-    const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=252188`;
-    // const url = `https://apibackend.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=252188`;
+    // const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=CONSOLIDATED_REPORT&corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
 
     const result = await uploadFile(url, formData);
     if (result && result.data) {
@@ -1515,8 +1511,8 @@ const SuzlonForm = () => {
 
   const fetchListOfEmployees = async () => {
     // Fetch employees from the API starting from the currentIndex
-    const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=252188`;
-    // const url = `https://apibackend.uno.care/api/org/detailed/all?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
+    const url = `https://apitest.uno.care/api/org/detailed/all?corpId=872cd841-9f7a-432d-b8e9-422b780bca10&campCycleId=252188`;
+    // const url = `https://apitest.uno.care/api/org/detailed/all?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&campCycleId=`;
     const result = await getData(url);
     if (result && result.data) {
       console.log("Fetched Data successfully");
@@ -1544,7 +1540,7 @@ const SuzlonForm = () => {
 
   const deleteFiles = async (data) => {
     // Fetch employees from the API starting from the currentIndex
-    const url = `https://apibackend.uno.care/api/org/employee/delete/file?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&toDeletefiletype=CONSOLIDATED_REPORT&empId=${data.empId}`;
+    const url = `https://apitest.uno.care/api/org/employee/delete/file?corpId=5cc0376c-1038-4260-9fc3-ee553bfc33b1&toDeletefiletype=CONSOLIDATED_REPORT&empId=${data.empId}`;
     const result = await updateData(url);
     if (result && result.data) {
       enqueueSnackbar("Successfully Uploaded PDF!", {

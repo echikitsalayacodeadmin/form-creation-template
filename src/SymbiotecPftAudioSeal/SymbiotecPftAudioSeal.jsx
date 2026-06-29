@@ -128,7 +128,7 @@ async function processEmployee({
       const formData = new FormData();
       formData.append("file", modifiedBlob, `${key}_${employee.empId}.pdf`);
 
-      const uploadUrl = `https://apibackend.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+      const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
 
       await uploadFile(uploadUrl, formData);
 
@@ -158,7 +158,7 @@ const SymbiotecPftAudioSeal = ({
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const url = `https://apibackend.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+      const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
       const res = await getData(url);
       setEmployees(
         sortDataByName(res?.data?.filter((item) => item?.audiometryUrl) || [])
