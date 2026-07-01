@@ -124,8 +124,8 @@ async function cleanAndRewriteHeader(reportPdfBytes) {
 }
 
 const SkodaHeaderInsertor = ({
-  corpId = "1f084b0a-0423-47ec-a812-345500977336", // atlas copco corpId
-  campCycleId = "425856", // atlas copco campCycleId
+  corpId = "1f084b0a-0423-47ec-a812-345500977336", // Chakan,
+  campCycleId = "425856",
   // corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
   // campCycleId = "410953", // atlas copco campCycleId
   // corpId = "c14dd57c-d2a1-492a-8eb3-3c11d2eb7ac5", // atlas copco corpId
@@ -204,11 +204,10 @@ const SkodaHeaderInsertor = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const cutoff = dayjs("2025-11-30").endOf("day");
 
 
       const temp = result?.data
-        ?.filter((item) => (item.vitalsCreatedDate === "2026-06-17" || item.vitalsCreatedDate === "2026-06-18" || item.vitalsCreatedDate === "2026-06-19") &&
+        ?.filter((item) => (dayjs(item.vitalsCreatedDate).isAfter("2026-06-19")) &&
           item?.[urlType]
         ) || [];
 

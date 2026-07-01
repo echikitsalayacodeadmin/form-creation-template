@@ -8,6 +8,7 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
+import dayjs from "dayjs";
 
 // ✅ Load official PDF.js build + worker from CDN dynamically
 async function loadPdfJs() {
@@ -63,10 +64,10 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedAudioReport = ({
-    corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
-    campCycleId = "425836",
-    // corpId = "1f084b0a-0423-47ec-a812-345500977336",
-    // campCycleId = "425856",
+    // corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
+    // campCycleId = "425836",
+    corpId = "1f084b0a-0423-47ec-a812-345500977336", // Chakan,
+    campCycleId = "425856",
     // corpId = "94180f9d-b1bf-4794-b81c-5f21a908ad9c",
     // campCycleId = "396613",
     // corpId = "0bcd762b-3523-46eb-90c4-eed8154cd479",
@@ -84,7 +85,7 @@ const SignedAudioReport = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => item?.audiometryUrl);
+                ?.filter((item) => item?.audiometryUrl && dayjs(item?.vitalsCreatedDate).isAfter(dayjs("2026-06-19")));
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);
@@ -110,7 +111,7 @@ const SignedAudioReport = ({
             // Step 2️⃣: Modify the PDF (apply rectangle + image)
             const modifiedBlob = await modifyPftPdf(
                 audiometryUrl,
-                Dr_Jaydip_Saxena // ✅ your actual signature
+                drPratibhaVBandekar // ✅ your actual signature
             );
 
             // Step 3️⃣: Open for preview (uncomment if needed)
