@@ -179,7 +179,11 @@ const DottedField = ({ value = "", style }) => (
 
 const DottedFieldImage = ({ value = "", style }) => (
     <View style={[styles.dotted, style]}>
-        <Image src={value} style={{ width: 100, height: 70 }} />
+        {value ? (
+            <Image src={value} style={{ width: 100, height: 70 }} />
+        ) : (
+            <Text style={styles.dottedText}> </Text>
+        )}
     </View>
 );
 
@@ -201,7 +205,7 @@ const formatDOB = (value) =>
 const getTestStatus = (data = {}) => ({
     physical: Boolean(data?.height || data?.weight || data?.vitalsCreatedDate),
     pft: Boolean(data?.pftUrl),
-    xray: Boolean(data?.xrayUrl || data?.xrayFilmUrl),
+    xray: Boolean(data?.xrayUrl),
     cbc: Boolean(data?.bloodTestUrl),
     vision: Boolean(
         data?.nearVision ||
@@ -255,12 +259,12 @@ const SamsungForm27Template = ({ data = {} }) => {
                     <View style={styles.tableRowLast}>
                         <Text style={styles.tableLabelCell}>Completed</Text>
                         <Text style={styles.tableCell}>{markDone(data.height)}</Text>
-                        <Text style={styles.tableCell}>{markDone(data.pft)}</Text>
-                        <Text style={styles.tableCell}>{markDone(data.xray)}</Text>
-                        <Text style={styles.tableCell}>{markDone(data.bloodTest)}</Text>
+                        <Text style={styles.tableCell}>{markDone(data.pftUrl)}</Text>
+                        <Text style={styles.tableCell}>{markDone(data.xrayUrl)}</Text>
+                        <Text style={styles.tableCell}>{markDone(data.bloodTestUrl)}</Text>
                         <Text style={styles.tableCell}>{markDone(data.visionRemark)}</Text>
                         <Text style={styles.tableCellLast}>
-                            {markDone(data.audiometry)}
+                            {markDone(data.audiometryUrl)}
                         </Text>
                     </View>
                 </View>
@@ -347,7 +351,7 @@ const SamsungForm27Template = ({ data = {} }) => {
 
                 <Text style={{ marginTop: 8, marginBottom: 6, fontSize: 10 }}>
                     Past work history (in chronological order, most recent being first) [
-                    <Text style={styles.bold}> </Text>] Yes / [ <Text style={styles.bold}> </Text>
+                    <Text style={styles.bold}> </Text>] Yes / [ <Image src={checkmark} style={{ width: 10, height: 10 }} />
                     ] NO
                 </Text>
 
@@ -390,7 +394,7 @@ const SamsungForm27Template = ({ data = {} }) => {
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>c. Past medical history :</Text>
-                    <DottedField value={""} />
+                    <DottedField value={"No"} />
                 </View>
 
                 <Text style={styles.sectionTitle}>
@@ -459,7 +463,7 @@ const SamsungForm27Template = ({ data = {} }) => {
                     </View>
                     <View style={styles.halfRow}>
                         <Text style={styles.label}>Eye signs :</Text>
-                        <DottedField value={data?.eyeSigns || "NA"} />
+                        <DottedField value={"Normal"} />
                     </View>
                 </View>
 
@@ -491,11 +495,11 @@ const SamsungForm27Template = ({ data = {} }) => {
                 <View style={styles.signatureBlock}>
                     <View style={styles.row}>
                         <Text style={styles.label}>Signature of employee:</Text>
-                        <DottedFieldImage value={'https://storage-echikitsalaya.s3.ap-south-1.amazonaws.com/org/33525031-d147-41e3-8dc6-c330be785f88/SIGNATURE/1cc929ea-9816-4bdb-9a73-c24aae856a7a/IMG_20260623_185146.jpg'} />
+                        <DottedFieldImage value={data.signatureUrl} />
                     </View>
                     <View style={[styles.row, { marginTop: 14 }]}>
                         <Text style={styles.label}>
-                            Signature of Certifying Surgeon with date:
+                            Signature of Certifying Surgeon with date: {dayjs(data?.vitalsCreatedDate).add(3, "days").format("DD-MM-YYYY")}
                         </Text>
                         <DottedFieldImage value={dr_kunal_stamp_sign} />
                     </View>

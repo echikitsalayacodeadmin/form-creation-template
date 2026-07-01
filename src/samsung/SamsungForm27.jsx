@@ -67,7 +67,7 @@ const SamsungForm27 = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const temp = result.data.filter((item) => item.empId === "8512638");
+            const temp = result.data.filter((item) => (item.vitalsCreatedDate === "2026-06-22" || item.vitalsCreatedDate === "2026-06-23" || item.vitalsCreatedDate === "2026-06-24"));
             const sorted = sortDataByName(temp);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -139,7 +139,7 @@ const SamsungForm27 = ({
                 <br />
                 {list.map((item, index) => (
                     <div key={item.empId || index}>
-                        {index + 1}. {item.empId} - {item.name} :
+                        {index + 1}. {item.empId} - {item.name} Xray -{item.xrayUrl ? "Yes" : "No"} :
                         <a href={item.annexureUrl}>{item.annexureUrl}</a>
                         <br />
                     </div>

@@ -1,6 +1,6 @@
 
 import { useSnackbar } from "notistack";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, rgb } from "pdf-lib";
 import React, { useEffect, useState } from "react";
 import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
 import { getData } from "../assets/services/GetApiCall";
@@ -44,15 +44,27 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
     // 6. Resize (IMPORTANT)
     const scaled = signature.scale(0.30);
 
-    // 7. Draw at bottom-right (adjusted for YOUR report layout)
+    const sigX = width - scaled.width - 40;
+    const sigY = 70;
+
+    // // 7. White-out existing signature area before placing new one
+    // page.drawRectangle({
+    //     x: sigX - 10,
+    //     y: sigY - 5,
+    //     width: scaled.width + 20,
+    //     height: scaled.height + 30,
+    //     color: rgb(1, 1, 1),
+    // });
+
+    // 8. Draw at bottom-right (adjusted for YOUR report layout)
     page.drawImage(signature, {
-        x: width - scaled.width - 40, // right margin
-        y: 70, // slightly above footer text (important)
+        x: sigX,
+        y: sigY,
         width: scaled.width,
         height: scaled.height,
     });
 
-    // 8. Save
+    // 9. Save
     const pdfBytes = await pdfDoc.save();
 
     return new Blob([pdfBytes], { type: "application/pdf" });
@@ -62,8 +74,10 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedPFTReports = ({
-    corpId = "1f084b0a-0423-47ec-a812-345500977336",
-    campCycleId = "425856",
+    // corpId = "1f084b0a-0423-47ec-a812-345500977336", Chakan
+    // campCycleId = "425856",
+    corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
+    campCycleId = "425836",
     fileType = "PFT",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -77,7 +91,7 @@ const SignedPFTReports = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => (item.vitalsCreatedDate === "2026-06-15" || item.vitalsCreatedDate === "2026-06-16" || item.vitalsCreatedDate === "2026-06-17" || item.vitalsCreatedDate === "2026-06-18" || item.vitalsCreatedDate === "2026-06-19") && item?.pftUrl);
+                ?.filter((item) => item?.pftUrl);
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);

@@ -149,6 +149,7 @@ import CiplaBommaSandraBloodReport from "./ciplaBommasandra/CiplaBommaSandraBloo
 import SkodaHeaderInsertorV2 from "./skodaCustomForms/SkodaHeaderInsertorV2";
 import BrigdeStoneChakanBloodModify from "./bridgeStonChakanBlood/BrigdeStoneChakanBloodModify";
 import SamsungForm27 from "./samsung/SamsungForm27";
+import RahejaFassi from "./rahejaFassai/RahejaFassi";
 
 const App = () => {
   return (
@@ -157,7 +158,7 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <MaharashtraFactRuleMain />
+        <SamsungForm27 />
 
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
