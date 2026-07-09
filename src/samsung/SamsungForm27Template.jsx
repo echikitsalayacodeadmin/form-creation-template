@@ -249,12 +249,14 @@ const SamsungForm27Template = ({ data = {} }) => {
                     </View>
                     <View style={styles.tableRow}>
                         <Text style={styles.tableLabelCell}>Applicable</Text>
-                        <Text style={styles.tableCell}>Yes</Text>
-                        <Text style={styles.tableCell}>Yes</Text>
-                        <Text style={styles.tableCell}>Yes</Text>
-                        <Text style={styles.tableCell}>Yes</Text>
-                        <Text style={styles.tableCell}>Yes</Text>
-                        <Text style={styles.tableCellLast}>Yes</Text>
+                        <Text style={styles.tableCell}>{markDone(data.height)}</Text>
+                        <Text style={styles.tableCell}>{markDone(data.pftUrl)}</Text>
+                        <Text style={styles.tableCell}>{markDone(data.xrayUrl)}</Text>
+                        <Text style={styles.tableCell}>{markDone(data.bloodTestUrl)}</Text>
+                        <Text style={styles.tableCell}>{markDone(data.visionRemark)}</Text>
+                        <Text style={styles.tableCellLast}>
+                            {markDone(data.audiometryUrl)}
+                        </Text>
                     </View>
                     <View style={styles.tableRowLast}>
                         <Text style={styles.tableLabelCell}>Completed</Text>
@@ -346,7 +348,7 @@ const SamsungForm27Template = ({ data = {} }) => {
 
                 <View style={styles.row}>
                     <Text style={styles.label}>Nature of work:</Text>
-                    <DottedField value={data?.natureOfWork || data?.designation || ""} />
+                    <DottedField value={data?.subDepartment || ""} />
                 </View>
 
                 <Text style={{ marginTop: 8, marginBottom: 6, fontSize: 10 }}>

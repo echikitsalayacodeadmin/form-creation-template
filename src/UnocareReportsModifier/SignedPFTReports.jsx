@@ -2,7 +2,7 @@
 import { useSnackbar } from "notistack";
 import { PDFDocument, rgb } from "pdf-lib";
 import React, { useEffect, useState } from "react";
-// import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
+import Dr_Jaydip_Saxena from "../assets/images/Dr_Jaydip_Saxena.png";
 import pratibhaVBandekar from "../assets/images/drPratibhaVBandekar.png";
 import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
@@ -76,10 +76,10 @@ const modifyPftPdf = async (pdfUrl, signatureImage) => {
 
 // ✅ React Component
 const SignedPFTReports = ({
-    corpId = "1f084b0a-0423-47ec-a812-345500977336", // Chakan,
-    campCycleId = "425856",
-    // corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537",
-    // campCycleId = "425836",
+    // corpId = "1f084b0a-0423-47ec-a812-345500977336", // Chakan,
+    // campCycleId = "425856",
+    corpId = "b1cd1ee7-1c0d-4702-b9e8-39c3dc4a6537", // Indore
+    campCycleId = "425836",
     fileType = "PFT",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -93,7 +93,10 @@ const SignedPFTReports = ({
         const result = await getData(url);
         if (result && result.data) {
             const temp = result?.data
-                ?.filter((item) => item?.pftUrl && dayjs(item?.vitalsCreatedDate).isAfter(dayjs("2026-06-19")));
+                ?.filter((item) => item?.pftUrl &&
+                    item.vitalsCreatedDate === "2026-07-03"
+                    // dayjs(item?.vitalsCreatedDate).isAfter(dayjs("2026-06-29"))
+                );
             const sorted = sortDataByName(temp);
             setList(sorted);
             console.log("Total PFT employees:", sorted.length);

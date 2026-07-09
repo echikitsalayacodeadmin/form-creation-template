@@ -183,7 +183,32 @@ const BrigdeStoneChakanBloodModify = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.bloodTestUrl && ["112168",].includes(item?.empId));
+            const filtered = result.data.filter((item) => item?.bloodTestUrl && [
+                "252190",
+                "255044",
+                "102384",
+                "132016",
+                "92295",
+                "252204",
+                "262019",
+                "122514",
+                "255040",
+                "255010",
+                "251298",
+                "102092",
+                "252340",
+                "242300",
+                "112283",
+                "132584",
+                "142176",
+                "132423",
+                "132045",
+                "111409",
+                "122142",
+                "122311",
+                "132155",
+                "112280",
+            ].includes(item?.empId));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);

@@ -5,12 +5,15 @@ import { getData } from "../assets/services/GetApiCall";
 import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
-import SamsungForm27Template from "./SamsungForm27Template";
+import SuzlonOMSCheckupTemplate from "./SuzlonOMSCheckupTemplate";
+import { mapSuzlonOMSCheckupData } from "./SuzlonOMSCheckupMapper";
 
-const SamsungForm27 = ({
-    corpId = '33525031-d147-41e3-8dc6-c330be785f88',
-    campCycleId = '428775',
-    fileType = "ANNEXURE",
+const SuzlonOMSCheckupMain = ({
+    corpId = "5cc0376c-1038-4260-9fc3-ee553bfc33b1",
+    campCycleId = "433841",
+    fileType = "CONSOLIDATED_REPORT",
+    checkUpDateFrom = "25/2/2026",
+    checkUpDateTo = "26/2/2026",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -20,35 +23,37 @@ const SamsungForm27 = ({
     const [errorEmpIDs, setErrorEmpIDs] = useState([]);
     const [isProcessing, setIsProcessing] = useState(false);
 
-    const generatePDF = async (data) => {
+    const generatePDF = async (data, serialNo) => {
         try {
+            const model = mapSuzlonOMSCheckupData(data, serialNo);
             const pdfBlob = await pdf(
-                <SamsungForm27Template data={data} />
+                <SuzlonOMSCheckupTemplate model={model} />
             ).toBlob();
 
-            // const url2 = URL.createObjectURL(pdfBlob);
-            // window.open(url2, "_blank");
 
-            const formData = new FormData();
-            formData.append("file", pdfBlob, `${data?.empId}_FORM27.pdf`);
+            const url = URL.createObjectURL(pdfBlob);
+            window.open(url, "_blank");
 
-            const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-            const result = await uploadFile(url, formData);
+            // const formData = new FormData();
+            // formData.append("file", pdfBlob, `${data?.empId}_consolidatedReport.pdf`);
 
-            if (result?.data) {
-                enqueueSnackbar(`Form 27 uploaded for ${data.empId}`, {
-                    variant: "success",
-                });
-                setUploadedCount((prev) => prev + 1);
-            } else {
-                enqueueSnackbar(`Upload failed for ${data.empId}`, {
-                    variant: "error",
-                });
-                setErrorEmpCount((prev) => prev + 1);
-                setErrorEmpIDs((prev) => [...prev, data.empId]);
-            }
+            // const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            // const result = await uploadFile(url, formData);
+
+            // if (result?.data) {
+            //     enqueueSnackbar(`Report uploaded for ${data.empId}`, {
+            //         variant: "success",
+            //     });
+            //     setUploadedCount((prev) => prev + 1);
+            // } else {
+            //     enqueueSnackbar(`Upload failed for ${data.empId}`, {
+            //         variant: "error",
+            //     });
+            //     setErrorEmpCount((prev) => prev + 1);
+            //     setErrorEmpIDs((prev) => [...prev, data.empId]);
+            // }
         } catch (error) {
-            console.error("Error generating/uploading Form 27:", error);
+            console.error("Error generating/uploading report:", error);
             enqueueSnackbar(`Error for ${data?.empId}`, { variant: "error" });
             setErrorEmpCount((prev) => prev + 1);
             setErrorEmpIDs((prev) => [...prev, data.empId]);
@@ -67,8 +72,7 @@ const SamsungForm27 = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const temp = result.data.filter((item) => (["18783442"].includes(item.empId)));
-            const sorted = sortDataByName(temp);
+            const sorted = sortDataByName(result.data.filter(item => item.empId === "RTSFS06139"));
             setList(sorted);
             setTotalEmployees(sorted.length);
             return;
@@ -95,8 +99,8 @@ const SamsungForm27 = ({
         setErrorEmpCount(0);
         setErrorEmpIDs([]);
 
-        for (let i = 0; i < list.length; i += 1) {
-            await generatePDF(list[i]);
+        for (let i = 0; i < 1; i += 1) {
+            await generatePDF(list[i], i + 1);
         }
 
         setIsProcessing(false);
@@ -122,9 +126,10 @@ const SamsungForm27 = ({
     return (
         <Fragment>
             <div>
-                <h3>Samsung Form 27 Health Register</h3>
+                <h3>Suzlon OMS Medical Check-up Report</h3>
                 <div>corpId: {corpId || "-"}</div>
                 <div>campCycleId: {campCycleId || "-"}</div>
+                <div>Check-Up Date: {checkUpDateFrom} To {checkUpDateTo}</div>
                 <br />
                 <button onClick={handleGeneratePDFs} disabled={isProcessing}>
                     {isProcessing ? "Processing..." : "Start Generating"}
@@ -139,20 +144,30 @@ const SamsungForm27 = ({
                 <br />
                 {list.map((item, index) => (
                     <div key={item.empId || index}>
-                        {index + 1}. {item.empId} - {item.name} Nature of work: {item.subDepartment} Xray -{item.xrayUrl ? "Yes" : "No"} :
-                        <a href={item.annexureUrl}>{item.annexureUrl}</a>
+                        {index + 1}. {item.empId} - {item.name}
+                        {item.consolidatedRUrl ? (
+                            <>
+                                {" "}
+                                : <a href={item.consolidatedRUrl}>{item.consolidatedRUrl}</a>
+                            </>
+                        ) : null}
                         <br />
                     </div>
                 ))}
             </div>
 
             {list[0] && (
-                <PDFViewer style={{ width: "100%", height: "calc(100vh - 220px)" }}>
-                    <SamsungForm27Template data={list[0]} />
+                <PDFViewer style={{ width: "100%", height: "calc(100vh - 260px)" }}>
+                    <SuzlonOMSCheckupTemplate
+                        model={mapSuzlonOMSCheckupData(
+                            list[0],
+                            list[0]?.tokenNumber || 1
+                        )}
+                    />
                 </PDFViewer>
             )}
         </Fragment>
     );
 };
 
-export default SamsungForm27;
+export default SuzlonOMSCheckupMain;

@@ -150,6 +150,7 @@ import SkodaHeaderInsertorV2 from "./skodaCustomForms/SkodaHeaderInsertorV2";
 import BrigdeStoneChakanBloodModify from "./bridgeStonChakanBlood/BrigdeStoneChakanBloodModify";
 import SamsungForm27 from "./samsung/SamsungForm27";
 import RahejaFassi from "./rahejaFassai/RahejaFassi";
+import SuzlonOMSCheckupMain from "./suzlon/SuzlonOMSCheckupMain";
 
 const App = () => {
   return (
@@ -158,8 +159,11 @@ const App = () => {
         {/* <VacinationCertificate /> */}
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
-        <SkodaHeaderInsertor />
 
+        {/* <SignedPFTReports /> */}
+        <SignedAudioReport />
+
+        {/* <BrigdeStoneChakanBloodModify /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
