@@ -161,7 +161,7 @@ const App = () => {
         {/* <UploadDataOPD /> */}
 
         {/* <SignedPFTReports /> */}
-        <SignedAudioReport />
+        <BrigdeStoneChakanBloodModify />
 
         {/* <BrigdeStoneChakanBloodModify /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
