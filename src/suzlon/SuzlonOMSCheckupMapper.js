@@ -80,15 +80,13 @@ const getHabits = (data) => {
   return `Tobacco: ${tobacco}, Alcohol: ${alcohol}, Smoking: ${smoking}`;
 };
 
+const hasValue = (value) => value != null && String(value).trim() !== "";
+
 const hasGlasses = (data) =>
-  Boolean(
-    data?.eyeSightWithGlasses ||
-      data?.eyeSightWithContactLens ||
-      data?.nearRightEyeSightWithGlasses ||
-      data?.nearLeftEyeSightWithGlasses ||
-      data?.farRightEyeSightWithGlasses ||
-      data?.farLeftEyeSightWithGlasses
-  );
+  hasValue(data?.nearRightEyeSightWithGlasses) ||
+  hasValue(data?.nearLeftEyeSightWithGlasses) ||
+  hasValue(data?.farRightEyeSightWithGlasses) ||
+  hasValue(data?.farLeftEyeSightWithGlasses);
 
 const getInvestigationStatus = (url, remark, defaultValue = "WNL") => {
   if (remark) return remark;
@@ -126,12 +124,9 @@ const getRemark = (data) =>
   "This Employee is free from communicable disease and fit for job";
 
 export const mapSuzlonOMSCheckupData = (data = {}, serialNo = "") => {
-  const examDate = data?.vitalsCreatedDate || data?.empCreatedDate;
-  const checkUpFrom = formatCheckUpDate(examDate);
-  const checkUpTo = formatCheckUpDate(
-    pick(data, "SAMPLE_REPORTED_DATE") || examDate
-  );
-
+  const examDate = data?.vitalsCreatedDate;
+  const vitalsDate = formatCheckUpDate(examDate);
+  const withSpecs = hasGlasses(data);
   return {
     empId: data?.empId || "",
     tokenNumber: data?.tokenNumber || "",
@@ -172,15 +167,12 @@ export const mapSuzlonOMSCheckupData = (data = {}, serialNo = "") => {
     nails: data?.nails || "Normal",
     skin: "NAD",
     throat: "Normal",
-    eyeVision: hasGlasses(data) ? "With Spects" : "Without Spects",
+    eyeVision: "Without Specs",
     colourVision: nilIfEmpty(data?.colourVision, "Normal"),
-    nearRightEye:
-      data?.nearRightEyeSight || data?.nearRightEyeSightWithGlasses || "",
-    farRightEye:
-      data?.farRightEyeSight || data?.farRightEyeSightWithGlasses || "",
-    nearLeftEye:
-      data?.nearLeftEyeSight || data?.nearLeftEyeSightWithGlasses || "",
-    farLeftEye: data?.farLeftEyeSight || data?.farLeftEyeSightWithGlasses || "",
+    nearRightEye: data?.nearRightEyeSight || "",
+    farRightEye: data?.farRightEyeSight || "",
+    nearLeftEye: data?.nearLeftEyeSight || "",
+    farLeftEye: data?.farLeftEyeSight || "",
     rs: "NAD",
     cvs: "NAD",
     git: "NAD",
@@ -201,8 +193,7 @@ export const mapSuzlonOMSCheckupData = (data = {}, serialNo = "") => {
     bloodExam: getBloodExamRemark(data),
     advice: getAdvice(data),
     remark: getRemark(data),
-    checkUpDateFrom: checkUpFrom,
-    checkUpDateTo: checkUpTo,
+    vitalsDate: vitalsDate,
     pathology: {
       haemoglobin: pick(data, "HB"),
       rbc: pick(data, "RBC"),
@@ -266,7 +257,7 @@ export const mapSuzlonOMSCheckupData = (data = {}, serialNo = "") => {
       otherSpecialTest: pick(data, "OTHER SPECIAL TEST"),
       widalTest: pick(data, "WIDAL", "WIDAL TEST"),
       stoolExam: pick(data, "STOOL EXAM", "STOOL"),
-      advice: getPathologyAdvice(data),
+      advice: data?.remarks?.advice || "",
     },
   };
 };

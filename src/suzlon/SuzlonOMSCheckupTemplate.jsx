@@ -160,7 +160,7 @@ const LabLine = ({ label, value = "", unit = "", range = "" }) => (
 
 const SuzlonOMSCheckupTemplate = ({ model = {} }) => {
     const p = model.pathology || {};
-    const checkUpDateValue = `${model.checkUpDateFrom || ""} To ${model.checkUpDateTo || ""}`;
+
 
     return (
         <Document>
@@ -189,7 +189,7 @@ const SuzlonOMSCheckupTemplate = ({ model = {} }) => {
                         <View style={[styles.cellLast, { width: "100%" }]}>
                             <View style={[styles.fieldRow, styles.center]}>
                                 <Text style={styles.fieldLabel}>Check-Up Date: </Text>
-                                <Text style={styles.fieldValue}>{checkUpDateValue}</Text>
+                                <Text style={styles.fieldValue}>{model.vitalsDate}</Text>
                             </View>
                         </View>
                     </View>
@@ -378,7 +378,7 @@ const SuzlonOMSCheckupTemplate = ({ model = {} }) => {
                         <Cell last>
                             <View style={styles.fieldRow}>
                                 <Text style={styles.fieldLabel}>Check-Up Date :  </Text>
-                                <Text style={styles.fieldValue}>{checkUpDateValue}</Text>
+                                <Text style={styles.fieldValue}>{model.vitalsDate}</Text>
                             </View>
                         </Cell>
                     </View>

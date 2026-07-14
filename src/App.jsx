@@ -148,6 +148,7 @@ import CiplaBommaSandraAudioModifier from "./ciplaBommasandra/CiplaBommaSandraAu
 import CiplaBommaSandraBloodReport from "./ciplaBommasandra/CiplaBommaSandraBloodReport";
 import SkodaHeaderInsertorV2 from "./skodaCustomForms/SkodaHeaderInsertorV2";
 import BrigdeStoneChakanBloodModify from "./bridgeStonChakanBlood/BrigdeStoneChakanBloodModify";
+import BrigdeStoneChakanAudiometryModify from "./bridgeStonChakanBlood/BrigdeStoneChakanAudiometryModify";
 import SamsungForm27 from "./samsung/SamsungForm27";
 import RahejaFassi from "./rahejaFassai/RahejaFassi";
 import SuzlonOMSCheckupMain from "./suzlon/SuzlonOMSCheckupMain";
@@ -160,9 +161,10 @@ const App = () => {
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
 
-        {/* <SignedPFTReports /> */}
-        <BrigdeStoneChakanBloodModify />
+        <SuzlonOMSCheckupMain />
+        {/* <MaharashtraFactRuleMain /> */}
 
+        {/* <BrigdeStoneChakanAudiometryModify /> */}
         {/* <BrigdeStoneChakanBloodModify /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}

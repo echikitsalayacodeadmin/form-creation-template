@@ -6,7 +6,35 @@ import { updateData } from "../assets/services/PatchApi";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { sortDataByName } from "../assets/utils";
 
-const TEXT_SIZE = 9;
+const TEXT_SIZE = 10;
+
+const BRIDGESTONE_EMP_IDS = [
+    "C178",
+    "C238",
+    "C483",
+    "C719",
+    "251074",
+    "C212",
+    "C173",
+    "C618",
+    "C649",
+    "C502",
+    "C171",
+    "C2086",
+    "C168",
+    "C35",
+    "C802",
+    "C518",
+    "C231",
+    "C195",
+    "C16",
+    "C626",
+    "C2045",
+    "C556",
+    "C2046",
+    "C781",
+    "C501"
+];
 
 async function loadPdfJs() {
     const pdfjsLib = await import(
@@ -46,11 +74,11 @@ function groupTextIntoLines(items) {
 
 function findAgeNumberBox(parts, font, newAge) {
     const fullText = parts.map((part) => part.text).join("");
-    const match = fullText.match(/(\d{1,3})\s*Years/i);
+    const match = fullText.match(/Age[^0-9]{0,15}(\d{1,3})/i);
     if (!match) return null;
 
     const oldAge = match[1];
-    const startIdx = match.index;
+    const startIdx = match.index + match[0].indexOf(oldAge);
     let charCount = 0;
     let startX = null;
     let y = parts[0]?.y ?? 0;
@@ -80,6 +108,26 @@ function findAgeNumberBox(parts, font, newAge) {
     return { x: startX, y, width, height, oldAge };
 }
 
+async function findAgeLabelPosition(pdfBytes) {
+    const pdfjsLib = await loadPdfJs();
+    const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(1);
+    const textContent = await page.getTextContent();
+
+    for (const item of textContent.items) {
+        const text = item.str?.trim();
+        if (text && /^Age/i.test(text)) {
+            const [x, y] = item.transform.slice(4, 6);
+            if (loadingTask.destroy) await loadingTask.destroy();
+            return { x, y, height: item.height || 10 };
+        }
+    }
+
+    if (loadingTask.destroy) await loadingTask.destroy();
+    return null;
+}
+
 async function findAgeMatchesPerPage(pdfBytes, font, newAge) {
     const pdfjsLib = await loadPdfJs();
     const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
@@ -107,6 +155,22 @@ async function findAgeMatchesPerPage(pdfBytes, font, newAge) {
             break;
         }
 
+        if (!pageMatch && pageNum === 1) {
+            const ageLabel = await findAgeLabelPosition(pdfBytes);
+            if (ageLabel) {
+                pageMatch = {
+                    x: ageLabel.x + 20,
+                    y: ageLabel.y,
+                    width: Math.max(
+                        font.widthOfTextAtSize(String(newAge), TEXT_SIZE) + 6,
+                        20
+                    ),
+                    height: ageLabel.height,
+                    oldAge: "",
+                };
+            }
+        }
+
         if (pageMatch) {
             matches.push({ pageNum, ...pageMatch });
         }
@@ -118,29 +182,29 @@ async function findAgeMatchesPerPage(pdfBytes, font, newAge) {
 
 function drawAgeReplacement(page, font, match, newAge) {
     page.drawRectangle({
-        x: match.x - 1,
-        y: match.y - 2,
-        width: 12,
+        x: match.x + 38,
+        y: match.y - 3,
+        width: match.width,
         height: match.height + 3,
         color: rgb(1, 1, 1),
     });
 
     page.drawText(String(newAge), {
-        x: match.x,
-        y: match.y + 1,
+        x: match.x + 40,
+        y: match.y - 1,
         size: TEXT_SIZE,
         font,
         color: rgb(0, 0, 0),
     });
 }
 
-const modifyBloodPdf = async (bloodTestUrl, employee) => {
+const modifyAudiometryPdf = async (audiometryUrl, employee) => {
     const newAge = employee?.age;
     if (newAge === undefined || newAge === null || newAge === "") {
         throw new Error("Missing employee age");
     }
 
-    const pdfBytes = await fetch(bloodTestUrl).then((response) =>
+    const pdfBytes = await fetch(audiometryUrl).then((response) =>
         response.arrayBuffer()
     );
     const pdfDoc = await PDFDocument.load(pdfBytes);
@@ -159,10 +223,10 @@ const modifyBloodPdf = async (bloodTestUrl, employee) => {
     return pdfDoc.save();
 };
 
-const BrigdeStoneChakanBloodModify = ({
-    corpId = '1f084b0a-0423-47ec-a812-345500977336',
-    campCycleId = '425856',
-    fileType = "BLOODTEST",
+const BrigdeStoneChakanAudiometryModify = ({
+    corpId = "1f084b0a-0423-47ec-a812-345500977336",
+    campCycleId = "425856",
+    fileType = "AUDIOMETRY",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -183,109 +247,11 @@ const BrigdeStoneChakanBloodModify = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.bloodTestUrl && [
-                "C483",
-                "C505",
-                "C802",
-                "142046",
-                "251035",
-                "SS0636",
-                "C212",
-                "251081",
-                "C195",
-                "C2043",
-                "121267",
-                "SS0652",
-                "C56",
-                "251120",
-                "231173",
-                "251311",
-                "C178",
-                "SS0846",
-                "71155",
-                "SS0863",
-                "C472",
-                "C180",
-                "C276",
-                "C253",
-                "C257",
-                "C664",
-                "C193",
-                "C522",
-                "C40",
-                "C204",
-                "C579",
-                "C538",
-                "C518",
-                "C494",
-                "C776",
-                "C5",
-                "C429",
-                "C260",
-                "C77",
-                "C639",
-                "C586",
-                "C795",
-                "C14",
-                "C159",
-                "C201",
-                "C203",
-                "221282",
-                "C553",
-                "C35",
-                "C490",
-                "C166",
-                "C568",
-                "C137",
-                "C71",
-                "C508",
-                "C512",
-                "C171",
-                "C627",
-                "C258",
-                "C473",
-                "C803",
-                "C189",
-                "C18",
-                "C4",
-                "C162",
-                "172048",
-                "C596",
-                "C36",
-                "C719",
-                "C38",
-                "C168",
-                "C573",
-                "C309",
-                "C45",
-                "C227",
-                "C583",
-                "C502",
-                "C231",
-                "C595",
-                "C235",
-                "C602",
-                "C618",
-                "C76",
-                "C78",
-                "C252",
-                "C173",
-                "C631",
-                "C642",
-                "131133",
-                "241155",
-                "C645",
-                "C177",
-                "C649",
-                "C179",
-                "C696",
-                "C537",
-                "C161",
-                "C200",
-                "C2045",
-                "C97",
-                "C529"
-            ].includes(item?.empId));
+            const filtered = result.data.filter(
+                (item) =>
+                    item?.audiometryUrl &&
+                    BRIDGESTONE_EMP_IDS.includes(item?.empId)
+            );
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -300,12 +266,15 @@ const BrigdeStoneChakanBloodModify = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [corpId, campCycleId]);
 
-    const modifyAndUploadBlood = async (employee) => {
-        if (!employee?.bloodTestUrl) {
-            throw new Error("Missing Blood URL");
+    const modifyAndUploadAudiometry = async (employee) => {
+        if (!employee?.audiometryUrl) {
+            throw new Error("Missing Audiometry URL");
         }
 
-        const modifiedBytes = await modifyBloodPdf(employee.bloodTestUrl, employee);
+        const modifiedBytes = await modifyAudiometryPdf(
+            employee.audiometryUrl,
+            employee
+        );
         const modifiedBlob = new Blob([modifiedBytes], { type: "application/pdf" });
 
         // const previewUrl = URL.createObjectURL(modifiedBlob);
@@ -315,7 +284,7 @@ const BrigdeStoneChakanBloodModify = ({
         formData.append(
             "file",
             modifiedBlob,
-            `${employee?.bloodTestUrl?.split("/").pop() || `${employee.empId}_blood.pdf`}`
+            `${employee?.audiometryUrl?.split("/").pop() || `${employee.empId}_audiometry.pdf`}`
         );
 
         const uploadUrl = `https://apitest.uno.care/api/org/upload?empId=${employee.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
@@ -335,7 +304,7 @@ const BrigdeStoneChakanBloodModify = ({
         }
 
         if (!list.length) {
-            enqueueSnackbar("No Blood files found to modify.", { variant: "warning" });
+            enqueueSnackbar("No Audiometry files found to modify.", { variant: "warning" });
             return;
         }
 
@@ -348,10 +317,10 @@ const BrigdeStoneChakanBloodModify = ({
         for (let i = 0; i < list.length; i += 1) {
             const employee = list[i];
             try {
-                await modifyAndUploadBlood(employee);
+                await modifyAndUploadAudiometry(employee);
                 successCount += 1;
             } catch (error) {
-                console.error(`Blood age modify failed for ${employee.empId}:`, error);
+                console.error(`Audiometry age modify failed for ${employee.empId}:`, error);
                 setFailedEmployees((prev) => [
                     ...prev,
                     {
@@ -366,14 +335,14 @@ const BrigdeStoneChakanBloodModify = ({
         setIsProcessing(false);
 
         if (successCount === list.length) {
-            enqueueSnackbar("Age updated for all blood reports.", { variant: "success" });
+            enqueueSnackbar("Age updated for all audiometry reports.", { variant: "success" });
         } else if (successCount > 0) {
             enqueueSnackbar(
                 `Completed with errors: ${successCount} uploaded, ${list.length - successCount} failed.`,
                 { variant: "warning" }
             );
         } else {
-            enqueueSnackbar("All blood uploads failed. Check failed employee list.", {
+            enqueueSnackbar("All audiometry uploads failed. Check failed employee list.", {
                 variant: "error",
             });
         }
@@ -403,7 +372,7 @@ const BrigdeStoneChakanBloodModify = ({
 
     return (
         <div>
-            <h3>Bridgestone Chakan Blood Age Modifier</h3>
+            <h3>Bridgestone Chakan Audiometry Age Modifier</h3>
             <div>corpId: {corpId || "-"}</div>
             <div>campCycleId: {campCycleId || "-"}</div>
             <br />
@@ -432,9 +401,9 @@ const BrigdeStoneChakanBloodModify = ({
             {list.map((item, index) => (
                 <div key={item.empId || index} style={{ display: "flex", gap: "8px" }}>
                     <div>{`${index + 1}. ${item.empId} ${item.name} (age: ${item?.age ?? "-"})`}</div>
-                    {item?.bloodTestUrl ? (
-                        <a href={item.bloodTestUrl} target="_blank" rel="noreferrer">
-                            {item.bloodTestUrl}
+                    {item?.audiometryUrl ? (
+                        <a href={item.audiometryUrl} target="_blank" rel="noreferrer">
+                            {item.audiometryUrl}
                         </a>
                     ) : (
                         <span>-</span>
@@ -445,4 +414,4 @@ const BrigdeStoneChakanBloodModify = ({
     );
 };
 
-export default BrigdeStoneChakanBloodModify;
+export default BrigdeStoneChakanAudiometryModify;

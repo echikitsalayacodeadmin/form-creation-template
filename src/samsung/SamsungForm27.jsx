@@ -67,7 +67,7 @@ const SamsungForm27 = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const temp = result.data.filter((item) => (["18783442"].includes(item.empId)));
+            const temp = result.data.filter((item) => (item.vitalsCreatedDate === "2026-07-08" || item.vitalsCreatedDate === "2026-07-09"));
             const sorted = sortDataByName(temp);
             setList(sorted);
             setTotalEmployees(sorted.length);
@@ -83,6 +83,8 @@ const SamsungForm27 = ({
         fetchListOfEmployees();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [corpId, campCycleId]);
+
+
 
     const handleGeneratePDFs = async () => {
         if (!list.length) {
@@ -136,6 +138,7 @@ const SamsungForm27 = ({
                 <div>Uploaded Files: {uploadedCount}</div>
                 <div>Error Files: {errorEmpCount}</div>
                 <div>Error EmpIDs: {errorEmpIDs.join(", ")}</div>
+                <div>Non Signature: {list.filter((item) => !item.signatureUrl).map((item) => item.empId).join(",")}</div>
                 <br />
                 {list.map((item, index) => (
                     <div key={item.empId || index}>

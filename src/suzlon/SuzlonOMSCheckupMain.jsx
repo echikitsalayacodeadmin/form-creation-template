@@ -11,9 +11,7 @@ import { mapSuzlonOMSCheckupData } from "./SuzlonOMSCheckupMapper";
 const SuzlonOMSCheckupMain = ({
     corpId = "5cc0376c-1038-4260-9fc3-ee553bfc33b1",
     campCycleId = "433841",
-    fileType = "CONSOLIDATED_REPORT",
-    checkUpDateFrom = "25/2/2026",
-    checkUpDateTo = "26/2/2026",
+    fileType = "ANNEXURE",
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [list, setList] = useState([]);
@@ -31,27 +29,27 @@ const SuzlonOMSCheckupMain = ({
             ).toBlob();
 
 
-            const url = URL.createObjectURL(pdfBlob);
-            window.open(url, "_blank");
+            // const url = URL.createObjectURL(pdfBlob);
+            // window.open(url, "_blank");
 
-            // const formData = new FormData();
-            // formData.append("file", pdfBlob, `${data?.empId}_consolidatedReport.pdf`);
+            const formData = new FormData();
+            formData.append("file", pdfBlob, `${data?.empId}_consolidatedReport.pdf`);
 
-            // const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
-            // const result = await uploadFile(url, formData);
+            const url = `https://apitest.uno.care/api/org/upload?empId=${data?.empId}&fileType=${fileType}&corpId=${corpId}&campCycleId=${campCycleId}`;
+            const result = await uploadFile(url, formData);
 
-            // if (result?.data) {
-            //     enqueueSnackbar(`Report uploaded for ${data.empId}`, {
-            //         variant: "success",
-            //     });
-            //     setUploadedCount((prev) => prev + 1);
-            // } else {
-            //     enqueueSnackbar(`Upload failed for ${data.empId}`, {
-            //         variant: "error",
-            //     });
-            //     setErrorEmpCount((prev) => prev + 1);
-            //     setErrorEmpIDs((prev) => [...prev, data.empId]);
-            // }
+            if (result?.data) {
+                enqueueSnackbar(`Report uploaded for ${data.empId}`, {
+                    variant: "success",
+                });
+                setUploadedCount((prev) => prev + 1);
+            } else {
+                enqueueSnackbar(`Upload failed for ${data.empId}`, {
+                    variant: "error",
+                });
+                setErrorEmpCount((prev) => prev + 1);
+                setErrorEmpIDs((prev) => [...prev, data.empId]);
+            }
         } catch (error) {
             console.error("Error generating/uploading report:", error);
             enqueueSnackbar(`Error for ${data?.empId}`, { variant: "error" });
@@ -69,10 +67,11 @@ const SuzlonOMSCheckupMain = ({
         }
 
         const url = `https://apitest.uno.care/api/org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId}`;
+
         const result = await getData(url);
 
         if (result?.data) {
-            const sorted = sortDataByName(result.data.filter(item => item.empId === "RTSFS06139"));
+            const sorted = sortDataByName(result.data.filter(item => ["2026-07-03", "2026-07-04"].includes(item.vitalsCreatedDate)) && item.empId === "RTRDH01479");
             setList(sorted);
             setTotalEmployees(sorted.length);
             return;
@@ -99,7 +98,7 @@ const SuzlonOMSCheckupMain = ({
         setErrorEmpCount(0);
         setErrorEmpIDs([]);
 
-        for (let i = 0; i < 1; i += 1) {
+        for (let i = 0; i < list.length; i += 1) {
             await generatePDF(list[i], i + 1);
         }
 
@@ -129,7 +128,6 @@ const SuzlonOMSCheckupMain = ({
                 <h3>Suzlon OMS Medical Check-up Report</h3>
                 <div>corpId: {corpId || "-"}</div>
                 <div>campCycleId: {campCycleId || "-"}</div>
-                <div>Check-Up Date: {checkUpDateFrom} To {checkUpDateTo}</div>
                 <br />
                 <button onClick={handleGeneratePDFs} disabled={isProcessing}>
                     {isProcessing ? "Processing..." : "Start Generating"}
@@ -144,28 +142,17 @@ const SuzlonOMSCheckupMain = ({
                 <br />
                 {list.map((item, index) => (
                     <div key={item.empId || index}>
-                        {index + 1}. {item.empId} - {item.name}
-                        {item.consolidatedRUrl ? (
+                        {index + 1}. {item.empId} - {item.name} BMI: {item.bmi}
+                        {item.annexureUrl ? (
                             <>
                                 {" "}
-                                : <a href={item.consolidatedRUrl}>{item.consolidatedRUrl}</a>
+                                : <a href={item.annexureUrl}>{item.annexureUrl}</a>
                             </>
                         ) : null}
                         <br />
                     </div>
                 ))}
             </div>
-
-            {list[0] && (
-                <PDFViewer style={{ width: "100%", height: "calc(100vh - 260px)" }}>
-                    <SuzlonOMSCheckupTemplate
-                        model={mapSuzlonOMSCheckupData(
-                            list[0],
-                            list[0]?.tokenNumber || 1
-                        )}
-                    />
-                </PDFViewer>
-            )}
         </Fragment>
     );
 };
