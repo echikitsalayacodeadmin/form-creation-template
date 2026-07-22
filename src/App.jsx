@@ -161,8 +161,8 @@ const App = () => {
         {/* <GlobalCalciumDoctorConsultationForm /> */}
         {/* <UploadDataOPD /> */}
 
-        <SuzlonOMSCheckupMain />
-        {/* <MaharashtraFactRuleMain /> */}
+        {/* <SkodaHeaderInsertor /> */}
+        <AhcBulkUploadData />
 
         {/* <BrigdeStoneChakanAudiometryModify /> */}
         {/* <BrigdeStoneChakanBloodModify /> */}

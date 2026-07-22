@@ -8,6 +8,42 @@ import { sortDataByName } from "../assets/utils";
 import SuzlonOMSCheckupTemplate from "./SuzlonOMSCheckupTemplate";
 import { mapSuzlonOMSCheckupData } from "./SuzlonOMSCheckupMapper";
 
+const SUZLON_HARDCODED_PATHOLOGY = {
+    "2481": {
+        haemoglobin: "16.9",
+        pcv: "54.2",
+        platelet: "3.18 Lakh",
+        wbc: "7650",
+        neutrophils: "55",
+        monocytes: "07",
+        eosinophils: "03",
+        basophils: "00",
+    },
+    "RTSFS02461": {
+        haemoglobin: "11.4",
+        pcv: "38.4",
+        platelet: "3.01 Lakh",
+        wbc: "6800",
+        neutrophils: "60",
+        monocytes: "05",
+        eosinophils: "03",
+        basophils: "00",
+    },
+};
+
+const applyHardcodedPathology = (model, empId) => {
+    const hardcodedPathology = SUZLON_HARDCODED_PATHOLOGY[empId];
+    if (!hardcodedPathology) return model;
+
+    return {
+        ...model,
+        pathology: {
+            ...model.pathology,
+            ...hardcodedPathology,
+        },
+    };
+};
+
 const SuzlonOMSCheckupMain = ({
     corpId = "5cc0376c-1038-4260-9fc3-ee553bfc33b1",
     campCycleId = "433841",
@@ -23,7 +59,10 @@ const SuzlonOMSCheckupMain = ({
 
     const generatePDF = async (data, serialNo) => {
         try {
-            const model = mapSuzlonOMSCheckupData(data, serialNo);
+            const model = applyHardcodedPathology(
+                mapSuzlonOMSCheckupData(data, serialNo),
+                data?.empId
+            );
             const pdfBlob = await pdf(
                 <SuzlonOMSCheckupTemplate model={model} />
             ).toBlob();
@@ -71,7 +110,7 @@ const SuzlonOMSCheckupMain = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const sorted = sortDataByName(result.data.filter(item => ["2026-07-03", "2026-07-04"].includes(item.vitalsCreatedDate)) && item.empId === "RTRDH01479");
+            const sorted = sortDataByName(result.data.filter(item => ["RTSFS02461", "2481", "2194", "RTSFS06140"].includes(item.empId)));
             setList(sorted);
             setTotalEmployees(sorted.length);
             return;

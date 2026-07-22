@@ -203,7 +203,7 @@ const AhcBulkUploadData = () => {
                 });
 
                 console.log("Original CSV Data:", csvData);
-                console.log("Transformed Data:", finalData?.filter((item) => item?.remarks));
+                console.log("Transformed Data:", finalData);
             },
         });
     };

@@ -210,7 +210,7 @@ const SkodaHeaderInsertor = ({
 
       const temp = result?.data
         ?.filter((item) => (
-          item.vitalsCreatedDate === "2026-07-07"
+          item.vitalsCreatedDate === "2026-07-08" || item.vitalsCreatedDate === "2026-07-09" || item.vitalsCreatedDate === "2026-07-10"
           // dayjs(item.vitalsCreatedDate).isAfter("2026-06-29")
         ) &&
           item?.[urlType]
