@@ -152,6 +152,7 @@ import BrigdeStoneChakanAudiometryModify from "./bridgeStonChakanBlood/BrigdeSto
 import SamsungForm27 from "./samsung/SamsungForm27";
 import RahejaFassi from "./rahejaFassai/RahejaFassi";
 import SuzlonOMSCheckupMain from "./suzlon/SuzlonOMSCheckupMain";
+import BatchAutomationDashboard from "./employeeLoginAutomation/BatchAutomationDashboard";
 
 const App = () => {
   return (
@@ -162,7 +163,7 @@ const App = () => {
         {/* <UploadDataOPD /> */}
 
         {/* <SkodaHeaderInsertor /> */}
-        <AhcBulkUploadData />
+        <BatchAutomationDashboard />
 
         {/* <BrigdeStoneChakanAudiometryModify /> */}
         {/* <BrigdeStoneChakanBloodModify /> */}
