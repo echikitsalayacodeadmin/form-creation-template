@@ -2192,7 +2192,8 @@ export function cityByLabel(label) {
 }
 
 export const cityList = [
-  { label: "Bangalore", coordinates: [12.9716, 77.5946] },
+  { label: "Pune", coordinates: [18.5204, 73.8567] },
+  { label: "Indore", coordinates: [22.7196, 75.8577] },
 ];
 export const cityListV2 = [
   "Agar",

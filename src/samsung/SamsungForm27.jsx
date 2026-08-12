@@ -67,8 +67,7 @@ const SamsungForm27 = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const temp = result.data.filter((item) => ([2758,
-                2802].map((item) => String(item)).includes(item.tokenNumber)));
+            const temp = result.data.filter((item) => (["SSPL004", "SSPL003", 7960303, 15797942, 1625087, 3586194, 16807756, 16807757, 17766406, 11539697, 9530424, 18788072, 10537531, 13530439, 16784689].map((item) => String(item)).includes(item.empId)));
             const sorted = sortDataByName(temp);
             setList(sorted);
             setTotalEmployees(sorted.length);

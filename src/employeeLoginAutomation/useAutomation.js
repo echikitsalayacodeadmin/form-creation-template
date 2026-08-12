@@ -4,8 +4,10 @@ import {
   verifyOtp,
   getPatientByAuthId,
   getLabs,
+  getPackages,
 } from "./services/api";
 import { useState } from "react";
+import { buildCityReportFields } from "./reportUtils";
 
 const useAutomation = () => {
   const [report, setReport] = useState(null);
@@ -26,14 +28,26 @@ const useAutomation = () => {
       const empId = patient.empId;
       const corpId = patient.corpId;
 
-      const labs = await getLabs({
+      const requestParams = {
         lat: 22.7196,
         lng: 75.8577,
-        corpId: corpId,
-        empId: empId,
-      });
+        corpId,
+        empId,
+        city: "Indore",
+      };
 
-      const reportData = { auth, patient, labs };
+      const [labs, packages] = await Promise.all([
+        getLabs(requestParams),
+        getPackages(requestParams),
+      ]);
+
+      const reportData = {
+        auth,
+        patient,
+        labs,
+        packages,
+        summary: buildCityReportFields("Indore", labs, packages),
+      };
       setReport(reportData);
 
       return reportData;

@@ -110,7 +110,7 @@ const SuzlonOMSCheckupMain = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const sorted = sortDataByName(result.data.filter(item => ["RTSFS02461", "2481", "2194", "RTSFS06140"].includes(item.empId)));
+            const sorted = sortDataByName(result.data.filter(item => ["1202"].includes(item.empId)));
             setList(sorted);
             setTotalEmployees(sorted.length);
             return;

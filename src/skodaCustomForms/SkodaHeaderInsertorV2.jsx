@@ -106,7 +106,7 @@ async function cleanAndRewriteHeader(reportPdfBytes) {
 }
 
 const SkodaHeaderInsertorV2 = ({
-  corpId = "1f084b0a-0423-47ec-a812-345500977336", // atlas copco corpId
+  corpId = "1f084b0a-0423-47ec-a812-345500977336", // Chakan,
   campCycleId = "425856",
   // corpId = "35693879-486b-44b6-8a6a-15d57f111a08", // atlas copco corpId
   // campCycleId = "410953", // atlas copco campCycleId
@@ -190,8 +190,7 @@ const SkodaHeaderInsertorV2 = ({
       const temp =
         result?.data?.filter(
           (item) =>
-            (item.vitalsCreatedDate === "2026-06-17" || item.vitalsCreatedDate === "2026-06-18" || item.vitalsCreatedDate === "2026-06-19") &&
-
+            ["92277", "C44", "51103", "C629", "C3053"].includes(item.empId) &&
             item?.[urlType]
         ) || [];
       // item?.vitalsCreatedDate === "2025-11-26" ||

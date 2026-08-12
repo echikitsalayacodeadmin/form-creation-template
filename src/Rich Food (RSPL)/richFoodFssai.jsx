@@ -7,14 +7,14 @@ import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
 import dayjs from "dayjs";
-import { JAY_DIP_SIGNBASE64 } from "../assets/images/base64Images";
+import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
 
 const RichFoodFssai = ({
   corpId = "47f6ab07-4fc2-45f8-83e0-38c88504861a",
-  campCycleId = "353014",
+  campCycleId = "445072",
   fileType = "FITNESS_CERTIFICATE_FOOD",
   corpName = "RPSPL PRIVATE LIMITED",
-  campDate = "26th Sept, 2026",
+  campDate = "23th July, 2026",
   year = "2026",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -233,7 +233,7 @@ const RichFoodFssai = ({
           <br />
           <br />
           
-          <img src=${JAY_DIP_SIGNBASE64} 
+          <img src=${KUNALSIGNBASE64} 
           style="height:200px;"
           />
           <br />
@@ -355,7 +355,7 @@ const RichFoodFssai = ({
       console.log("Fetched Data successfully");
 
 
-      const temp = result?.data.filter((item) => item.vitalsCreatedDate === "2026-02-26");
+      const temp = result?.data.filter((item) => item.vitalsCreatedDate === "2026-07-23");
 
       console.log({ list: temp.map((item) => item.empId).join(",") });
       const length = temp.length;

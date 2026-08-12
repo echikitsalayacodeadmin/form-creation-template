@@ -4,9 +4,11 @@ import {
   verifyOtp,
   getPatientByAuthId,
   getLabs,
+  getPackages,
 } from "./services/api";
 import { jwtDecode } from "jwt-decode";
-import { cityByLabel, cityList } from "./data";
+import { cityList } from "./data";
+import { buildCityReportFields } from "./reportUtils";
 
 const CONCURRENCY_LIMIT = 3; // run 3 numbers at once
 
@@ -20,6 +22,7 @@ export default function useAutomationBatch() {
     try {
       await sendOtp(mobile);
       const auth = await verifyOtp(mobile, otp);
+      console.log({ auth });
       localStorage.setItem("ACCESS_TOKEN", auth.token);
 
       const docodedAuth = jwtDecode(auth.token);
@@ -38,7 +41,6 @@ export default function useAutomationBatch() {
       //   empId: empId,
       // });
 
-   
       // console.log({ cityByLabel: cityByLabel("Jaisalmer") });
 
       // const labsNimbahera = await getLabs({
@@ -48,48 +50,43 @@ export default function useAutomationBatch() {
       //   corpId: corpId,
       //   empId: empId,
       // });
-    
 
-      // Loop through all cities in cityList and get labs for each city
-      const labsByCity = {};
-      for (const {label, coordinates} of cityList) {
+      const cityReportFields = {};
+      for (const { label, coordinates } of cityList) {
+        const requestParams = {
+          lat: coordinates[0],
+          lng: coordinates[1],
+          corpId,
+          empId,
+          city: label,
+        };
+
+        let labs = [];
+        let packages = [];
+
         try {
-          labsByCity[label] = await getLabs({
-            label,
-            lat:coordinates[0],
-            lng: coordinates[1],
-            corpId: corpId,
-            empId: empId,
-          });
+          [labs, packages] = await Promise.all([
+            getLabs(requestParams),
+            getPackages(requestParams),
+          ]);
         } catch (err) {
-          labsByCity[label] = [];
+          labs = [];
+          packages = [];
         }
+
+        Object.assign(
+          cityReportFields,
+          buildCityReportFields(label, labs, packages)
+        );
       }
 
-      console.log({ labsByCity });
+      console.log({ cityReportFields });
 
       row = {
         mobile,
         patientId: patient?.patientId || "",
         name: patient?.name || "",
-        // labCount_indore: labs?.length || 0,
-
-        // For each city in labsByCity, add a field 'labCount_<city>' showing count of labs
-        ...Object.fromEntries(
-          Object.entries(labsByCity).flatMap(([city, labs]) => [
-            [
-              `labCount_${city.replace(/ /g, "_")}`,
-              Array.isArray(labs) ? labs.length : 0,
-            ],
-            [
-              `labNames_${city.replace(/ /g, "_")}`,
-              Array.isArray(labs)
-                ? labs.map((lab) => lab.labName || lab.name || "").join(" || ")
-                : "",
-            ],
-          ])
-        ),
-
+        ...cityReportFields,
         status: "Success",
         isLabFlowEnabled: patient.isLabFlowEnabled,
         role: docodedAuth.role,

@@ -80,11 +80,85 @@ function findAgeNumberBox(parts, font, newAge) {
     return { x: startX, y, width, height, oldAge };
 }
 
-async function findAgeMatchesPerPage(pdfBytes, font, newAge) {
+// Right-hand column headers that sit on the same visual line as "Name"
+const NEXT_FIELD_LABEL =
+    /(Reg\.?\s*No|Reg\.?\s*Date|Collection|Received|Report|Barcode|Age\s*[\\/]?\s*Sex|Referred\s*By|Referral\s*Dr)/i;
+
+function charIndexToPosition(parts, targetIdx) {
+    let charCount = 0;
+
+    for (const part of parts) {
+        const partLen = part.text.length;
+
+        if (charCount + partLen > targetIdx) {
+            const avgCharWidth = partLen > 0 ? part.width / partLen : 5;
+            return {
+                x: part.x + (targetIdx - charCount) * avgCharWidth,
+                y: part.y,
+                height: part.height,
+            };
+        }
+
+        charCount += partLen;
+    }
+
+    const last = parts[parts.length - 1];
+    if (!last) return null;
+
+    return { x: last.x + last.width, y: last.y, height: last.height };
+}
+
+function findColumnBreakX(parts, afterX) {
+    for (let i = 1; i < parts.length; i += 1) {
+        const prevEnd = parts[i - 1].x + parts[i - 1].width;
+        if (parts[i].x > afterX && parts[i].x - prevEnd > 15) {
+            return parts[i].x;
+        }
+    }
+
+    return null;
+}
+
+function findNameValueBox(parts) {
+    const fullText = parts.map((part) => part.text).join("");
+    const match = fullText.match(/\bName\s*:\s*/i);
+    if (!match) return null;
+
+    const valueStart = match.index + match[0].length;
+    const rest = fullText.slice(valueStart);
+    const nextLabel = rest.match(NEXT_FIELD_LABEL);
+    const valueEnd = nextLabel ? valueStart + nextLabel.index : fullText.length;
+
+    const rawValue = fullText.slice(valueStart, valueEnd);
+    const oldName = rawValue.trim();
+    if (!oldName) return null;
+
+    const start = charIndexToPosition(parts, valueStart);
+    const end = charIndexToPosition(parts, valueStart + rawValue.trimEnd().length);
+    if (!start || !end) return null;
+
+    const labelLimit = charIndexToPosition(parts, valueEnd);
+    const columnBreak = findColumnBreakX(parts, start.x);
+    const limitCandidates = [labelLimit?.x, columnBreak].filter(
+        (value) => typeof value === "number" && value > start.x
+    );
+
+    return {
+        x: start.x,
+        y: start.y,
+        width: Math.max(end.x - start.x, 10),
+        limitX: limitCandidates.length ? Math.min(...limitCandidates) : end.x,
+        height: Math.max(...parts.map((part) => part.height), 10),
+        oldName,
+    };
+}
+
+async function findMatchesPerPage(pdfBytes, font, newAge) {
     const pdfjsLib = await loadPdfJs();
     const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice(0) });
     const pdf = await loadingTask.promise;
-    const matches = [];
+    const ageMatches = [];
+    const nameMatches = [];
 
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum += 1) {
         const page = await pdf.getPage(pageNum);
@@ -108,12 +182,20 @@ async function findAgeMatchesPerPage(pdfBytes, font, newAge) {
         }
 
         if (pageMatch) {
-            matches.push({ pageNum, ...pageMatch });
+            ageMatches.push({ pageNum, ...pageMatch });
+        }
+
+        for (const line of lines) {
+            const box = findNameValueBox(line.parts);
+            if (!box) continue;
+
+            nameMatches.push({ pageNum, ...box });
+            break;
         }
     }
 
     if (loadingTask.destroy) await loadingTask.destroy();
-    return matches;
+    return { ageMatches, nameMatches };
 }
 
 function drawAgeReplacement(page, font, match, newAge) {
@@ -134,10 +216,50 @@ function drawAgeReplacement(page, font, match, newAge) {
     });
 }
 
+const NAME_TITLE = /^(MR|MRS|MS|MISS|DR|SMT|SHRI)\.?\s*/i;
+
+function buildCorrectedName(oldName, employeeName) {
+    const titleMatch = oldName.match(NAME_TITLE);
+    const title = titleMatch ? titleMatch[1].toUpperCase() : "";
+    const prefix = title ? `${title}.` : "";
+
+    return `${prefix}${employeeName.toUpperCase()}`;
+}
+
+function drawNameReplacement(page, font, match, newName) {
+    page.drawRectangle({
+        x: match.x - 1,
+        y: match.y - 2,
+        width: match.width + 2,
+        height: match.height + 3,
+        color: rgb(1, 1, 1),
+    });
+
+    const availableWidth = Math.max(match.limitX - match.x - 2, 20);
+    let size = TEXT_SIZE;
+
+    while (size > 5 && font.widthOfTextAtSize(newName, size) > availableWidth) {
+        size -= 0.5;
+    }
+
+    page.drawText(newName, {
+        x: match.x,
+        y: match.y + 1,
+        size,
+        font,
+        color: rgb(0, 0, 0),
+    });
+}
+
 const modifyBloodPdf = async (bloodTestUrl, employee) => {
     const newAge = employee?.age;
     if (newAge === undefined || newAge === null || newAge === "") {
         throw new Error("Missing employee age");
+    }
+
+    const employeeName = String(employee?.name || "").trim();
+    if (!employeeName) {
+        throw new Error("Missing employee name");
     }
 
     const pdfBytes = await fetch(bloodTestUrl).then((response) =>
@@ -145,15 +267,33 @@ const modifyBloodPdf = async (bloodTestUrl, employee) => {
     );
     const pdfDoc = await PDFDocument.load(pdfBytes);
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const ageMatches = await findAgeMatchesPerPage(pdfBytes, font, newAge);
+    const { ageMatches, nameMatches } = await findMatchesPerPage(
+        pdfBytes,
+        font,
+        newAge
+    );
 
     if (!ageMatches.length) {
         throw new Error("Age value not found in PDF");
     }
 
+    if (!nameMatches.length) {
+        throw new Error("Name value not found in PDF");
+    }
+
+    const pages = pdfDoc.getPages();
+
     for (const match of ageMatches) {
-        const page = pdfDoc.getPages()[match.pageNum - 1];
-        drawAgeReplacement(page, font, match, newAge);
+        drawAgeReplacement(pages[match.pageNum - 1], font, match, newAge);
+    }
+
+    for (const match of nameMatches) {
+        drawNameReplacement(
+            pages[match.pageNum - 1],
+            font,
+            match,
+            buildCorrectedName(match.oldName, employeeName)
+        );
     }
 
     return pdfDoc.save();
@@ -183,40 +323,12 @@ const BrigdeStoneChakanBloodModify = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.bloodTestUrl && [
-                "61077",
-                "PTS2990",
-                "PTS2235",
-                "81095",
-                "161015",
-                "251030",
-                "C2111",
-                "221154",
-                "C2098",
-                "C2099",
-                "251003",
-                "C2095",
-                "C2096",
-                "121510",
-                "C2100",
-                "C2097",
-                "221225",
-                "261159",
-                "221249",
-                "111542",
-                "C2112",
-                "241104",
-                "251246",
-                "251058",
-                "251107",
-                "171191",
-            ].includes(item?.empId));
+            const filtered = result.data.filter((item) => item?.bloodTestUrl && ["2026-07-31"].includes(item?.vitalsCreatedDate));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);
             return;
         }
-
         enqueueSnackbar("Error fetching employee list", { variant: "error" });
     };
 
@@ -276,7 +388,7 @@ const BrigdeStoneChakanBloodModify = ({
                 await modifyAndUploadBlood(employee);
                 successCount += 1;
             } catch (error) {
-                console.error(`Blood age modify failed for ${employee.empId}:`, error);
+                console.error(`Blood age/name modify failed for ${employee.empId}:`, error);
                 setFailedEmployees((prev) => [
                     ...prev,
                     {
@@ -291,7 +403,9 @@ const BrigdeStoneChakanBloodModify = ({
         setIsProcessing(false);
 
         if (successCount === list.length) {
-            enqueueSnackbar("Age updated for all blood reports.", { variant: "success" });
+            enqueueSnackbar("Age and name updated for all blood reports.", {
+                variant: "success",
+            });
         } else if (successCount > 0) {
             enqueueSnackbar(
                 `Completed with errors: ${successCount} uploaded, ${list.length - successCount} failed.`,
@@ -328,7 +442,7 @@ const BrigdeStoneChakanBloodModify = ({
 
     return (
         <div>
-            <h3>Bridgestone Chakan Blood Age Modifier</h3>
+            <h3>Bridgestone Chakan Blood Age &amp; Name Modifier</h3>
             <div>corpId: {corpId || "-"}</div>
             <div>campCycleId: {campCycleId || "-"}</div>
             <br />

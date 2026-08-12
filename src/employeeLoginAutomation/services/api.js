@@ -29,10 +29,22 @@ export const getPatientByAuthId = async (authId, mobile) => {
   return res.data;
 };
 
+const buildLabQuery = ({ lat, lng, corpId, empId, city }) =>
+  `/lab/all?city=${city}&userLocationCoordinates=${lat}%2C${lng}&corpId=${corpId}&empId=${empId}`;
+
 // 4️⃣ Get labs
 export const getLabs = async ({ lat, lng, corpId, empId, city }) => {
+  const res = await API.get(buildLabQuery({ lat, lng, corpId, empId, city }));
+  return res.data;
+};
+
+// 5️⃣ Get packages
+export const getPackages = async ({ lat, lng, corpId, empId, city }) => {
   const res = await API.get(
-    `/lab/all?city=${city}&userLocationCoordinates=${lat}%2C${lng}&corpId=${corpId}&empId=${empId}`
+    buildLabQuery({ lat, lng, corpId, empId, city }).replace(
+      "/lab/all?",
+      "/lab/package/all?"
+    )
   );
   return res.data;
 };

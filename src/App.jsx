@@ -150,9 +150,13 @@ import SkodaHeaderInsertorV2 from "./skodaCustomForms/SkodaHeaderInsertorV2";
 import BrigdeStoneChakanBloodModify from "./bridgeStonChakanBlood/BrigdeStoneChakanBloodModify";
 import BrigdeStoneChakanAudiometryModify from "./bridgeStonChakanBlood/BrigdeStoneChakanAudiometryModify";
 import SamsungForm27 from "./samsung/SamsungForm27";
+import SamsungXrayFilmMain from "./samsung/SamsungXrayFilmMain";
+import SayajiHotelIndoreFssai from "./sayajiHotelIndore/SayajiHotelIndoreFssai";
 import RahejaFassi from "./rahejaFassai/RahejaFassi";
 import SuzlonOMSCheckupMain from "./suzlon/SuzlonOMSCheckupMain";
 import BatchAutomationDashboard from "./employeeLoginAutomation/BatchAutomationDashboard";
+import Hershey from "./hershey/hershey";
+import AdaniWilmarFssai from "./adaniWilmar/AdaniWilmarFssai";
 
 const App = () => {
   return (
@@ -163,10 +167,13 @@ const App = () => {
         {/* <UploadDataOPD /> */}
 
         {/* <SkodaHeaderInsertor /> */}
-        <BatchAutomationDashboard />
+        {/* <AhcBulkUploadData /> */}
+        {/* <SkodaHeaderInsertor /> */}
+        {/* <SamsungXrayFilmMain /> */}
 
         {/* <BrigdeStoneChakanAudiometryModify /> */}
-        {/* <BrigdeStoneChakanBloodModify /> */}
+        <AhcBulkUploadData />
+        {/* <Hershey /> */}
         {/* <ThreeMPhysicalFitnessFrom /> */}
         {/* <GenericFormGenerator /> */}
       </SnackbarProvider>
