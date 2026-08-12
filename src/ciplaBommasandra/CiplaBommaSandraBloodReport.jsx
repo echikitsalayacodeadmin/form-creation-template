@@ -288,7 +288,7 @@ const CiplaBommaSandraBloodReport = ({
         const result = await getData(url);
 
         if (result?.data) {
-            const filtered = result.data.filter((item) => item?.bloodTestUrl);
+            const filtered = result.data.filter((item) => item?.bloodTestUrl && ["24878", "176666", "175352", "177518", "31000466", "30121", "CIPV11", "CIPV09", "176494", "123875", "CIPV10", "171377", "3599", "3815", "CIPV08"].includes(item.empId));
             const sorted = sortDataByName(filtered);
             setList(sorted);
             setTotalEmployees(sorted.length);

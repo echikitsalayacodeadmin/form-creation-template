@@ -6,14 +6,32 @@ import { updateData } from "../assets/services/PatchApi";
 import { sortDataByName } from "../assets/utils";
 import { uploadFile } from "../assets/services/PostApiCall";
 import { LogoImage, LogoImageFSSAI } from "./assets";
-import { JaydipSaxsenaBase64 } from "../effotelFassai/assets";
+import { KUNALSIGNBASE64 } from "../assets/images/base64Images";
+
+const EMP_CAMP_DATES = {
+  KC0001: "11th July, 2026",
+  KC0004: "11th July, 2026",
+  KC0005: "11th July, 2026",
+  KC0009: "11th July, 2026",
+  "711397": "11th July, 2026",
+  "1210060": "11th July, 2026",
+  KC0002: "13th July, 2026",
+  KC00021: "13th July, 2026",
+  KC0015: "14th July, 2026",
+  KC0024: "14th July, 2026",
+  KC0017: "15th July, 2026",
+  KC0021: "15th July, 2026",
+  KC0018: "15th July, 2026",
+  KC0025: "15th July, 2026",
+  MAXX1783: "17th July, 2026",
+};
 
 const DaawatFoodFssai = ({
   corpId = "8047e6d8-e51b-4d6d-b3e2-bc0ccd13be25",
-  campCycleId = "364062",
+  campCycleId = "441888",
   fileType = "FITNESS_CERTIFICATE_FOOD",
   corpName = "Daawat Foods Limited",
-  campDate = "24 Mar, 2026",
+  campDate = "13th July, 2026",
   year = "2026",
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -24,6 +42,7 @@ const DaawatFoodFssai = ({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const generatePDF = async (data, index) => {
+    const employeeCampDate = EMP_CAMP_DATES[data?.empId] || campDate;
     const FoodCertificate = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -219,7 +238,7 @@ const DaawatFoodFssai = ({
       }</span>
             employed with <b>M/S ${corpName} </b>coming in direct
             contact with food items has been carefully examined* by me on date <u
-              >&nbsp;&nbsp;&nbsp;${campDate}&nbsp;
+              >&nbsp;&nbsp;&nbsp;${employeeCampDate}&nbsp;
             </u> Based
             on the medical examination conducted, he/she is found free from any
             infectious or communicable diseases and the person is fit to work in the
@@ -232,7 +251,7 @@ const DaawatFoodFssai = ({
           <br />
           <br />
           
-          <img src=${JaydipSaxsenaBase64} 
+          <img src=${KUNALSIGNBASE64} 
           style="height:200px;"
           />
           <br />
@@ -353,12 +372,10 @@ const DaawatFoodFssai = ({
     if (result && result.data) {
       console.log("Fetched Data successfully");
 
-      const empIds = [
-        "KC0005", 'KC0009', 'KC0014'
-      ]
+      const empIds = Object.keys(EMP_CAMP_DATES);
 
       const temp = result?.data.filter((item) =>
-        empIds.includes(item.empId)
+        ['KC0025'].includes(item.empId)
       );
 
       const length = temp.length;
